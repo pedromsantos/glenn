@@ -23,7 +23,9 @@
     "@types/react-helmet": "^6.1.2",
     "eslint": "^7.11.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "ts-jest": "^26.4.2",
+    "ts-node-dev": "^1.1.8"
   },
   "scripts": {
     "start": "react-scripts start",
