@@ -1,5 +1,5 @@
 describe('App', () => {
-  test('renders learn react link', () => {
+  test('tests work', () => {
     expect(true).toBe(true);
   });
 });
