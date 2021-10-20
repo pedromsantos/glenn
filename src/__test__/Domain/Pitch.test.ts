@@ -4,243 +4,141 @@ import Pitch from '../../Domain/Pitch';
 describe('Pitch', () => {
   describe('sharp should raise it by half a tone', () => {
     test('sharp C is C#', () => {
-      const pitch = Pitch.C;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.CSharp);
+      expect(Pitch.C.sharp()).toBe(Pitch.CSharp);
     });
 
     test('sharp C# is D', () => {
-      const pitch = Pitch.CSharp;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.D);
+      expect(Pitch.CSharp.sharp()).toBe(Pitch.D);
     });
 
     test('sharp Db is D', () => {
-      const pitch = Pitch.DFlat;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.D);
+      expect(Pitch.DFlat.sharp()).toBe(Pitch.D);
     });
 
     test('sharp D is D#', () => {
-      const pitch = Pitch.D;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.DSharp);
+      expect(Pitch.D.sharp()).toBe(Pitch.DSharp);
     });
 
     test('sharp D# is E', () => {
-      const pitch = Pitch.DSharp;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.E);
+      expect(Pitch.DSharp.sharp()).toBe(Pitch.E);
     });
 
     test('sharp EFlat is E', () => {
-      const pitch = Pitch.EFlat;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.E);
+      expect(Pitch.EFlat.sharp()).toBe(Pitch.E);
     });
 
     test('sharp E is F', () => {
-      const pitch = Pitch.E;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.F);
+      expect(Pitch.E.sharp()).toBe(Pitch.F);
     });
 
     test('sharp F is F#', () => {
-      const pitch = Pitch.E;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.F);
+      expect(Pitch.E.sharp()).toBe(Pitch.F);
     });
 
     test('sharp F# is G', () => {
-      const pitch = Pitch.FSharp;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.G);
+      expect(Pitch.FSharp.sharp()).toBe(Pitch.G);
     });
 
     test('sharp Gb is G', () => {
-      const pitch = Pitch.GFlat;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.G);
+      expect(Pitch.GFlat.sharp()).toBe(Pitch.G);
     });
 
     test('sharp G is G#', () => {
-      const pitch = Pitch.G;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.GSharp);
+      expect(Pitch.G.sharp()).toBe(Pitch.GSharp);
     });
 
     test('sharp G# is A', () => {
-      const pitch = Pitch.GSharp;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.A);
+      expect(Pitch.GSharp.sharp()).toBe(Pitch.A);
     });
 
     test('sharp Ab is G', () => {
-      const pitch = Pitch.AFlat;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.A);
+      expect(Pitch.AFlat.sharp()).toBe(Pitch.A);
     });
 
     test('sharp A is A#', () => {
-      const pitch = Pitch.A;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.ASharp);
+      expect(Pitch.A.sharp()).toBe(Pitch.ASharp);
     });
 
     test('sharp A# is B', () => {
-      const pitch = Pitch.ASharp;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.B);
+      expect(Pitch.ASharp.sharp()).toBe(Pitch.B);
     });
 
     test('sharp Bb is B', () => {
-      const pitch = Pitch.BFlat;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.B);
+      expect(Pitch.BFlat.sharp()).toBe(Pitch.B);
     });
 
     test('sharp B is C', () => {
-      const pitch = Pitch.B;
-      const sharpedPitch = pitch.sharp();
-
-      expect(sharpedPitch).toBe(Pitch.C);
+      expect(Pitch.B.sharp()).toBe(Pitch.C);
     });
   });
 
   describe('flat should lower it by half a tone', () => {
     test('sharp C is B', () => {
-      const pitch = Pitch.C;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.B);
+      expect(Pitch.C.flat()).toBe(Pitch.B);
     });
 
     test('flat C# is C', () => {
-      const pitch = Pitch.CSharp;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.C);
+      expect(Pitch.CSharp.flat()).toBe(Pitch.C);
     });
 
     test('flat Db is C', () => {
-      const pitch = Pitch.DFlat;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.C);
+      expect(Pitch.DFlat.flat()).toBe(Pitch.C);
     });
 
     test('flat D is Db', () => {
-      const pitch = Pitch.D;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.DFlat);
+      expect(Pitch.D.flat()).toBe(Pitch.DFlat);
     });
 
     test('flat D# is D', () => {
-      const pitch = Pitch.DSharp;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.D);
+      expect(Pitch.DSharp.flat()).toBe(Pitch.D);
     });
 
     test('flat EFlat is D', () => {
-      const pitch = Pitch.EFlat;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.D);
+      expect(Pitch.EFlat.flat()).toBe(Pitch.D);
     });
 
     test('flat E is Eb', () => {
-      const pitch = Pitch.E;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.EFlat);
+      expect(Pitch.E.flat()).toBe(Pitch.EFlat);
     });
 
     test('flat F is E', () => {
-      const pitch = Pitch.F;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.E);
+      expect(Pitch.F.flat()).toBe(Pitch.E);
     });
 
     test('flat F# is G', () => {
-      const pitch = Pitch.FSharp;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.F);
+      expect(Pitch.FSharp.flat()).toBe(Pitch.F);
     });
 
     test('flat Gb is F', () => {
-      const pitch = Pitch.GFlat;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.F);
+      expect(Pitch.GFlat.flat()).toBe(Pitch.F);
     });
 
     test('flat G is Gb', () => {
-      const pitch = Pitch.G;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.GFlat);
+      expect(Pitch.G.flat()).toBe(Pitch.GFlat);
     });
 
     test('sharp G# is G', () => {
-      const pitch = Pitch.GSharp;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.G);
+      expect(Pitch.GSharp.flat()).toBe(Pitch.G);
     });
 
     test('flat Ab is G', () => {
-      const pitch = Pitch.AFlat;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.G);
+      expect(Pitch.AFlat.flat()).toBe(Pitch.G);
     });
 
     test('flat A is Ab', () => {
-      const pitch = Pitch.A;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.AFlat);
+      expect(Pitch.A.flat()).toBe(Pitch.AFlat);
     });
 
     test('flat A# is A', () => {
-      const pitch = Pitch.ASharp;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.A);
+      expect(Pitch.ASharp.flat()).toBe(Pitch.A);
     });
 
     test('flat Bb is A', () => {
-      const pitch = Pitch.BFlat;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.A);
+      expect(Pitch.BFlat.flat()).toBe(Pitch.A);
     });
 
     test('flat B is Bb', () => {
-      const pitch = Pitch.B;
-      const sharpedPitch = pitch.flat();
-
-      expect(sharpedPitch).toBe(Pitch.BFlat);
+      expect(Pitch.B.flat()).toBe(Pitch.BFlat);
     });
   });
   describe('measure semitones between ', () => {
