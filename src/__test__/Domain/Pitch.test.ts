@@ -141,7 +141,7 @@ describe('Pitch', () => {
       expect(Pitch.B.flat()).toBe(Pitch.BFlat);
     });
   });
-  describe('measure semitones between ', () => {
+  describe('measure semitones between', () => {
     test('C and C to zero semitones', () => {
       expect(Pitch.C.absoluteDistance(Pitch.C)).toBe(0);
     });
