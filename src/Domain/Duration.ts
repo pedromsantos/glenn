@@ -1,8 +1,20 @@
 export class TimeSignature {
-  constructor(public beats: number, public duration: Duration) {}
+  constructor(private beats: number, private duration: Duration) {}
 
   get beatDuration(): number {
     return this.duration.value / this.beats;
+  }
+
+  get beatValue(): number {
+    return this.duration.value;
+  }
+
+  toBeats(duration: Duration): number {
+    return duration.value / this.beatDuration / this.beats;
+  }
+
+  toFill(duration: Duration): number {
+    return (this.beatValue / duration.value) * this.beats;
   }
 }
 
@@ -36,11 +48,11 @@ export class Duration {
   );
 
   toBeats(timeSignature: TimeSignature): number {
-    return this.duration / timeSignature.beatDuration / timeSignature.beats;
+    return timeSignature.toBeats(this);
   }
 
   toFill(timeSignature: TimeSignature): number {
-    return (timeSignature.duration.value / this.duration) * timeSignature.beats;
+    return timeSignature.toFill(this);
   }
 
   get value() {
