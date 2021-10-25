@@ -46,4 +46,90 @@ describe('Duration', () => {
       expect(Duration.Eighth.toFillMeasure(timeSignature)).toBe(8);
     });
   });
+
+  describe('Number of notes remaining fill measure in 4/4', () => {
+    const timeSignature = new TimeSignature(4, Duration.Quarter);
+
+    describe('when measure contains a whole note its full', () => {
+      test('cannot fit a whole note', () => {
+        expect(
+          Duration.Whole.remainingFillMeasure(
+            timeSignature,
+            [Duration.Whole],
+            Duration.Whole
+          )
+        ).toBe(0);
+      });
+
+      test('cannot fit a half note', () => {
+        expect(
+          Duration.Whole.remainingFillMeasure(
+            timeSignature,
+            [Duration.Whole],
+            Duration.Half
+          )
+        ).toBe(0);
+      });
+
+      test('cannot fit a quarter note', () => {
+        expect(
+          Duration.Whole.remainingFillMeasure(
+            timeSignature,
+            [Duration.Whole],
+            Duration.Quarter
+          )
+        ).toBe(0);
+      });
+
+      test('cannot fit a eighth note', () => {
+        expect(
+          Duration.Whole.remainingFillMeasure(
+            timeSignature,
+            [Duration.Whole],
+            Duration.Eighth
+          )
+        ).toBe(0);
+      });
+    });
+
+    test('when measure contains quarter note a whole note does not fit', () => {
+      expect(
+        Duration.Whole.remainingFillMeasure(
+          timeSignature,
+          [Duration.Quarter],
+          Duration.Whole
+        )
+      ).toBe(0);
+    });
+
+    test('when measure contains a half note it has space for two quarter notes', () => {
+      expect(
+        Duration.Whole.remainingFillMeasure(
+          timeSignature,
+          [Duration.Half],
+          Duration.Quarter
+        )
+      ).toBe(2);
+    });
+
+    test('when measure contains a half note it has space for four eighth notes', () => {
+      expect(
+        Duration.Whole.remainingFillMeasure(
+          timeSignature,
+          [Duration.Half],
+          Duration.Quarter
+        )
+      ).toBe(2);
+    });
+
+    test('when measure contains a quarter note it has space for three quarter notes', () => {
+      expect(
+        Duration.Whole.remainingFillMeasure(
+          timeSignature,
+          [Duration.Quarter],
+          Duration.Quarter
+        )
+      ).toBe(3);
+    });
+  });
 });

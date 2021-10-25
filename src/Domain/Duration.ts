@@ -55,6 +55,18 @@ export class Duration {
     return timeSignature.toFillMeasure(this);
   }
 
+  remainingFillMeasure(
+    timeSignature: TimeSignature,
+    durations: Duration[],
+    durationIn: Duration
+  ): number {
+    return Math.max(
+      0,
+      timeSignature.toFillMeasure(durationIn) -
+        durations.reduce((acc, cur) => acc + cur.toBeats(timeSignature), 0)
+    );
+  }
+
   get value() {
     return this.duration;
   }
