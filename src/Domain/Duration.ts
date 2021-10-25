@@ -13,7 +13,7 @@ export class TimeSignature {
     return duration.value / this.beatDuration / this.beats;
   }
 
-  toFill(duration: Duration): number {
+  toFillMeasure(duration: Duration): number {
     return (this.beatValue / duration.value) * this.beats;
   }
 }
@@ -51,8 +51,8 @@ export class Duration {
     return timeSignature.toBeats(this);
   }
 
-  toFill(timeSignature: TimeSignature): number {
-    return timeSignature.toFill(this);
+  toFillMeasure(timeSignature: TimeSignature): number {
+    return timeSignature.toFillMeasure(this);
   }
 
   get value() {

@@ -1,58 +1,49 @@
-import * as Duration from '../../Domain/Duration';
+import { Duration, TimeSignature } from '../../Domain/Duration';
 
 describe('Duration', () => {
   describe('converted to beats in 4/4', () => {
-    const timeSignature = new Duration.TimeSignature(
-      4,
-      Duration.Duration.Quarter
-    );
+    const timeSignature = new TimeSignature(4, Duration.Quarter);
     test('Whole note is four beats', () => {
-      expect(Duration.Duration.Whole.toBeats(timeSignature)).toBe(4.0);
+      expect(Duration.Whole.toBeats(timeSignature)).toBe(4.0);
     });
 
     test('Quarter note is a beat', () => {
-      expect(Duration.Duration.Quarter.toBeats(timeSignature)).toBe(1.0);
+      expect(Duration.Quarter.toBeats(timeSignature)).toBe(1.0);
     });
 
     test('Eighth note in is a half a beat', () => {
-      expect(Duration.Duration.Eighth.toBeats(timeSignature)).toBe(1.0 / 2.0);
+      expect(Duration.Eighth.toBeats(timeSignature)).toBe(1.0 / 2.0);
     });
   });
 
   describe('converted to beats in 3/4', () => {
-    const timeSignature = new Duration.TimeSignature(
-      3,
-      Duration.Duration.Quarter
-    );
+    const timeSignature = new TimeSignature(3, Duration.Quarter);
     test('Quarter note is a beat', () => {
-      expect(Duration.Duration.Quarter.toBeats(timeSignature)).toBe(1.0);
+      expect(Duration.Quarter.toBeats(timeSignature)).toBe(1.0);
     });
 
     test('Eighth note is half a beat', () => {
-      expect(Duration.Duration.Eighth.toBeats(timeSignature)).toBe(1.0 / 2.0);
+      expect(Duration.Eighth.toBeats(timeSignature)).toBe(1.0 / 2.0);
     });
   });
 
   describe('Number of notes to fill measure in 4/4', () => {
-    const timeSignature = new Duration.TimeSignature(
-      4,
-      Duration.Duration.Quarter
-    );
+    const timeSignature = new TimeSignature(4, Duration.Quarter);
 
     test('One Whole note', () => {
-      expect(Duration.Duration.Whole.toFill(timeSignature)).toBe(1);
+      expect(Duration.Whole.toFillMeasure(timeSignature)).toBe(1);
     });
 
     test('Two Half notes', () => {
-      expect(Duration.Duration.Half.toFill(timeSignature)).toBe(2);
+      expect(Duration.Half.toFillMeasure(timeSignature)).toBe(2);
     });
 
     test('Four Quarter notes', () => {
-      expect(Duration.Duration.Quarter.toFill(timeSignature)).toBe(4);
+      expect(Duration.Quarter.toFillMeasure(timeSignature)).toBe(4);
     });
 
     test('Eighth Eighth notes', () => {
-      expect(Duration.Duration.Eighth.toFill(timeSignature)).toBe(8);
+      expect(Duration.Eighth.toFillMeasure(timeSignature)).toBe(8);
     });
   });
 });
