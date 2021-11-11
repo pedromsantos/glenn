@@ -55,6 +55,13 @@ export class Duration {
     return timeSignature.toFillMeasure(this);
   }
 
+  usedBeatsInInstanceDuration(
+    timeSignature: TimeSignature,
+    usedBeats: number
+  ): number {
+    return usedBeats / this.toBeats(timeSignature);
+  }
+
   remainingToFillMeasure(
     timeSignature: TimeSignature,
     durations: Duration[]
@@ -69,11 +76,11 @@ export class Duration {
     if (usedBeats >= maxBeats) return 0;
     if (needsBeats > usedBeats) return 0;
 
-    const beatsForDuration = this.toBeats(timeSignature);
-    const beatsToFillMeasure = this.toFillMeasure(timeSignature);
-    const usedBeatsInInstanceDuration = usedBeats / beatsForDuration;
-
-    return Math.max(0, beatsToFillMeasure - usedBeatsInInstanceDuration);
+    return Math.max(
+      0,
+      this.toFillMeasure(timeSignature) -
+        this.usedBeatsInInstanceDuration(timeSignature, usedBeats)
+    );
   }
 
   get value() {
