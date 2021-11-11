@@ -1,3 +1,6 @@
+import { AnySrvRecord } from 'dns';
+import { threadId } from 'worker_threads';
+
 export class TimeSignature {
   constructor(private beats: number, private duration: Duration) {}
 
@@ -9,11 +12,11 @@ export class TimeSignature {
     return this.duration.value;
   }
 
-  toBeats(duration: Duration): number {
+  toBeats(duration: Duration = this.duration): number {
     return duration.value / this.beatDuration / this.beats;
   }
 
-  toFillMeasure(duration: Duration): number {
+  toFillMeasure(duration: Duration = this.duration): number {
     return (this.beatValue / duration.value) * this.beats;
   }
 }
@@ -55,16 +58,25 @@ export class Duration {
     return timeSignature.toFillMeasure(this);
   }
 
-  remainingFillMeasure(
+  remainingToFillMeasure(
     timeSignature: TimeSignature,
-    durations: Duration[],
-    durationIn: Duration
+    durations: Duration[]
   ): number {
-    return Math.max(
-      0,
-      timeSignature.toFillMeasure(durationIn) -
-        durations.reduce((acc, cur) => acc + cur.toBeats(timeSignature), 0)
+    const maxBeats = timeSignature.toFillMeasure();
+    const needsBeats: number = this.toBeats(timeSignature);
+    const usedBeats = durations.reduce(
+      (acc, cur) => acc + cur.toBeats(timeSignature),
+      0
     );
+
+    if (usedBeats >= maxBeats) return 0;
+    if (needsBeats > usedBeats) return 0;
+
+    const beatsForDuration = this.toBeats(timeSignature);
+    const beatsToFillMeasure = this.toFillMeasure(timeSignature);
+    const usedBeatsInInstanceDuration = usedBeats / beatsForDuration;
+
+    return Math.max(0, beatsToFillMeasure - usedBeatsInInstanceDuration);
   }
 
   get value() {
