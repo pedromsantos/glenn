@@ -1,6 +1,3 @@
-import { AnySrvRecord } from 'dns';
-import { threadId } from 'worker_threads';
-
 export class TimeSignature {
   constructor(private beats: number, private duration: Duration) {}
 
@@ -65,7 +62,7 @@ export class Duration {
     const maxBeats = timeSignature.toFillMeasure();
     const needsBeats: number = this.toBeats(timeSignature);
     const usedBeats = durations.reduce(
-      (acc, cur) => acc + cur.toBeats(timeSignature),
+      (acc, d) => acc + d.toBeats(timeSignature),
       0
     );
 
