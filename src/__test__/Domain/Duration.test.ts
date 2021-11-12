@@ -1,4 +1,4 @@
-import { Duration, TimeSignature } from '../../Domain/Duration';
+import { Duration, Measure, TimeSignature } from '../../Domain/Duration';
 
 describe('Duration', () => {
   describe('converted to beats in 4/4', () => {
@@ -51,59 +51,52 @@ describe('Duration', () => {
     const timeSignature = new TimeSignature(4, Duration.Quarter);
 
     describe('when measure contains a whole note its full', () => {
+      const measure = new Measure(timeSignature);
+      measure.add(Duration.Whole);
+
       test('cannot fit a whole note', () => {
-        expect(
-          Duration.Whole.remainingToFillMeasure(timeSignature, [Duration.Whole])
-        ).toBe(0);
+        expect(Duration.Whole.toFillMeasure(timeSignature, measure)).toBe(0);
       });
 
       test('cannot fit a half note', () => {
-        expect(
-          Duration.Whole.remainingToFillMeasure(timeSignature, [Duration.Whole])
-        ).toBe(0);
+        expect(Duration.Whole.toFillMeasure(timeSignature, measure)).toBe(0);
       });
 
       test('cannot fit a quarter note', () => {
-        expect(
-          Duration.Quarter.remainingToFillMeasure(timeSignature, [
-            Duration.Whole,
-          ])
-        ).toBe(0);
+        expect(Duration.Quarter.toFillMeasure(timeSignature, measure)).toBe(0);
       });
 
       test('cannot fit a eighth note', () => {
-        expect(
-          Duration.Eighth.remainingToFillMeasure(timeSignature, [
-            Duration.Whole,
-          ])
-        ).toBe(0);
+        expect(Duration.Eighth.toFillMeasure(timeSignature, measure)).toBe(0);
       });
     });
 
     test('when measure contains quarter note a whole note does not fit', () => {
-      expect(
-        Duration.Whole.remainingToFillMeasure(timeSignature, [Duration.Quarter])
-      ).toBe(0);
+      const measure = new Measure(timeSignature);
+      measure.add(Duration.Quarter);
+
+      expect(Duration.Whole.toFillMeasure(timeSignature, measure)).toBe(0);
     });
 
     test('when measure contains a half note it has space for two quarter notes', () => {
-      expect(
-        Duration.Quarter.remainingToFillMeasure(timeSignature, [Duration.Half])
-      ).toBe(2);
+      const measure = new Measure(timeSignature);
+      measure.add(Duration.Half);
+
+      expect(Duration.Quarter.toFillMeasure(timeSignature, measure)).toBe(2);
     });
 
     test('when measure contains a half note it has space for four eighth notes', () => {
-      expect(
-        Duration.Eighth.remainingToFillMeasure(timeSignature, [Duration.Half])
-      ).toBe(4);
+      const measure = new Measure(timeSignature);
+      measure.add(Duration.Half);
+
+      expect(Duration.Eighth.toFillMeasure(timeSignature, measure)).toBe(4);
     });
 
     test('when measure contains a quarter note it has space for three quarter notes', () => {
-      expect(
-        Duration.Quarter.remainingToFillMeasure(timeSignature, [
-          Duration.Quarter,
-        ])
-      ).toBe(3);
+      const measure = new Measure(timeSignature);
+      measure.add(Duration.Quarter);
+
+      expect(Duration.Quarter.toFillMeasure(timeSignature, measure)).toBe(3);
     });
   });
 });

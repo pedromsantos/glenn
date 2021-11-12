@@ -1,3 +1,5 @@
+import { time } from 'console';
+
 export class TimeSignature {
   constructor(private beats: number, private duration: Duration) {}
 
@@ -51,30 +53,13 @@ export class Duration {
     return timeSignature.toBeats(this);
   }
 
-  toFillMeasure(timeSignature: TimeSignature): number {
-    return timeSignature.toFillMeasure(this);
-  }
+  toFillMeasure(timeSignature: TimeSignature, measure?: Measure): number {
+    if (measure == undefined) return timeSignature.toFillMeasure(this);
 
-  usedBeatsInInstanceDuration(
-    timeSignature: TimeSignature,
-    usedBeats: number
-  ): number {
-    return usedBeats / this.toBeats(timeSignature);
-  }
+    const needsBeats = this.toBeats(timeSignature);
+    const usedBeats = measure.usedBets();
 
-  remainingToFillMeasure(
-    timeSignature: TimeSignature,
-    durations: Duration[]
-  ): number {
-    const maxBeats = timeSignature.toFillMeasure();
-    const needsBeats: number = this.toBeats(timeSignature);
-    const usedBeats = durations.reduce(
-      (acc, d) => acc + d.toBeats(timeSignature),
-      0
-    );
-
-    if (usedBeats >= maxBeats) return 0;
-    if (needsBeats > usedBeats) return 0;
+    if (usedBeats >= measure.maxBeats() || needsBeats > usedBeats) return 0;
 
     return Math.max(
       0,
@@ -85,5 +70,37 @@ export class Duration {
 
   get value() {
     return this.duration;
+  }
+
+  private usedBeatsInInstanceDuration(
+    timeSignature: TimeSignature,
+    usedBeats: number
+  ): number {
+    return usedBeats / this.toBeats(timeSignature);
+  }
+}
+
+export class Measure {
+  private durations: Duration[];
+  private timeSignature: TimeSignature;
+
+  constructor(timeSignature: TimeSignature) {
+    this.durations = [];
+    this.timeSignature = timeSignature;
+  }
+
+  maxBeats(): number {
+    return this.timeSignature.toFillMeasure();
+  }
+
+  add(duration: Duration) {
+    this.durations.push(duration);
+  }
+
+  usedBets(): number {
+    return this.durations.reduce(
+      (acc, d) => acc + d.toBeats(this.timeSignature),
+      0
+    );
   }
 }
