@@ -1,8 +1,14 @@
-import { Duration, Measure, TimeSignature } from '../../Domain/Duration';
+import { time } from 'console';
+import {
+  Duration,
+  Measure,
+  SimpleTimeSignature,
+  CompoundTimeSignature,
+} from '../../Domain/Duration';
 
 describe('Duration', () => {
   describe('converted to beats in 4/4', () => {
-    const timeSignature = new TimeSignature(4, Duration.Quarter);
+    const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
     test('Whole note is four beats', () => {
       expect(Duration.Whole.toBeats(timeSignature)).toBe(4.0);
     });
@@ -17,7 +23,7 @@ describe('Duration', () => {
   });
 
   describe('converted to beats in 3/4', () => {
-    const timeSignature = new TimeSignature(3, Duration.Quarter);
+    const timeSignature = new SimpleTimeSignature(3, Duration.Quarter);
     test('Quarter note is a beat', () => {
       expect(Duration.Quarter.toBeats(timeSignature)).toBe(1.0);
     });
@@ -27,8 +33,19 @@ describe('Duration', () => {
     });
   });
 
+  describe('converted to beats in 6/8', () => {
+    const timeSignature = new CompoundTimeSignature(3, Duration.Eighth);
+    test('Doted Quarter note is a beat', () => {
+      expect(timeSignature.beatValue).toBe(Duration.Eighth.value * 3);
+    });
+
+    test(' Beat sub-duration is an eight note', () => {
+      expect(timeSignature.beatDuration).toBe(Duration.Eighth.value);
+    });
+  });
+
   describe('Number of notes to fill measure in 4/4', () => {
-    const timeSignature = new TimeSignature(4, Duration.Quarter);
+    const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
 
     test('One Whole note', () => {
       expect(Duration.Whole.toFillMeasure(timeSignature)).toBe(1);
@@ -48,7 +65,7 @@ describe('Duration', () => {
   });
 
   describe('Number of notes remaining to fill a measure in 4/4', () => {
-    const timeSignature = new TimeSignature(4, Duration.Quarter);
+    const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
 
     describe('when measure contains a whole note its full', () => {
       const measure = new Measure(timeSignature);

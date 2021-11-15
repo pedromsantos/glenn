@@ -8,7 +8,7 @@ interface IntervalMap {
 export default class Pitch {
   constructor(
     private name: string,
-    private value: Number,
+    private value: number,
     public sharp: () => Pitch,
     public flat: () => Pitch,
     public natural: () => Pitch,
@@ -33,6 +33,10 @@ export default class Pitch {
     const transposingInterval = this.intervals().find((it) => it.to() === to);
 
     return transposingInterval?.key || Interval.Unison;
+  }
+
+  getNumericValue(): number {
+    return this.value;
   }
 
   public static readonly C: Pitch = new Pitch(

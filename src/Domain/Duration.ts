@@ -1,6 +1,13 @@
 import { time } from 'console';
 
-export class TimeSignature {
+export interface TimeSignature {
+  get beatDuration(): number;
+  get beatValue(): number;
+  toBeats(duration: Duration): number;
+  toFillMeasure(duration: Duration): number;
+}
+
+export class SimpleTimeSignature implements TimeSignature {
   constructor(private beats: number, private duration: Duration) {}
 
   get beatDuration(): number {
@@ -20,7 +27,33 @@ export class TimeSignature {
   }
 }
 
-export class Duration {
+export class CompoundTimeSignature implements TimeSignature {
+  constructor(private beats: number, private duration: Duration) {}
+
+  get beatDuration(): number {
+    return (this.duration.value * 3) / this.beats;
+  }
+
+  get beatValue(): number {
+    return this.duration.value * 3;
+  }
+
+  toBeats(duration: Duration = this.duration): number {
+    return (duration.value * 3) / this.beatDuration / this.beats;
+  }
+
+  toFillMeasure(duration: Duration = this.duration): number {
+    return (this.beatValue / duration.value) * (this.beats / 3);
+  }
+}
+
+export interface RhythmicDuration {
+  toBeats(timeSignature: SimpleTimeSignature): number;
+  toFillMeasure(timeSignature: SimpleTimeSignature, measure?: Measure): number;
+  get value(): number;
+}
+
+export class Duration implements RhythmicDuration {
   constructor(private name: string, private duration: number) {}
 
   public static readonly Double: Duration = new Duration('Double', 2.0 / 1.0);
@@ -49,15 +82,15 @@ export class Duration {
     1.0 / 256.0
   );
 
-  toBeats(timeSignature: TimeSignature): number {
+  toBeats(timeSignature: SimpleTimeSignature): number {
     return timeSignature.toBeats(this);
   }
 
-  toFillMeasure(timeSignature: TimeSignature, measure?: Measure): number {
+  toFillMeasure(timeSignature: SimpleTimeSignature, measure?: Measure): number {
     if (measure == undefined) return timeSignature.toFillMeasure(this);
 
     const needsBeats = this.toBeats(timeSignature);
-    const usedBeats = measure.usedBets();
+    const usedBeats = measure.usedBeats();
 
     if (usedBeats >= measure.maxBeats() || needsBeats > usedBeats) return 0;
 
@@ -73,19 +106,51 @@ export class Duration {
   }
 
   private usedBeatsInInstanceDuration(
-    timeSignature: TimeSignature,
+    timeSignature: SimpleTimeSignature,
     usedBeats: number
   ): number {
     return usedBeats / this.toBeats(timeSignature);
   }
 }
 
-export class Measure {
-  private durations: Duration[];
-  private timeSignature: TimeSignature;
+export class DottedDuration implements RhythmicDuration {
+  protected baseDuration: RhythmicDuration;
 
-  constructor(timeSignature: TimeSignature) {
-    this.durations = [];
+  constructor(duration: Duration) {
+    this.baseDuration = duration;
+  }
+
+  toBeats(timeSignature: SimpleTimeSignature): number {
+    return 0;
+  }
+
+  toFillMeasure(timeSignature: SimpleTimeSignature, measure?: Measure): number {
+    return 0;
+  }
+
+  get value(): number {
+    return 0;
+  }
+}
+
+export class RhythmicPhrase {
+  private phrase: Duration[] = [];
+
+  beats(timeSignature: SimpleTimeSignature): number {
+    return this.phrase.reduce((acc, d) => acc + d.toBeats(timeSignature), 0);
+  }
+
+  push(duration: Duration): void {
+    this.phrase.push(duration);
+  }
+}
+
+export class Measure {
+  private phrase: RhythmicPhrase;
+  private timeSignature: SimpleTimeSignature;
+
+  constructor(timeSignature: SimpleTimeSignature) {
+    this.phrase = new RhythmicPhrase();
     this.timeSignature = timeSignature;
   }
 
@@ -94,13 +159,10 @@ export class Measure {
   }
 
   add(duration: Duration) {
-    this.durations.push(duration);
+    this.phrase.push(duration);
   }
 
-  usedBets(): number {
-    return this.durations.reduce(
-      (acc, d) => acc + d.toBeats(this.timeSignature),
-      0
-    );
+  usedBeats(): number {
+    return this.phrase.beats(this.timeSignature);
   }
 }
