@@ -164,7 +164,7 @@ export default class Interval {
     () => Interval.MinorThird
   );
 
-  private static readonly intervals = [
+  static readonly intervals = [
     Interval.Unison,
     Interval.AugmentedUnison,
     Interval.MinorSecond,

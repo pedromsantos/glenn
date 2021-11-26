@@ -1,5 +1,6 @@
 import Interval from '../../Domain/Interval';
 import Pitch from '../../Domain/Pitch';
+import * as fc from 'fast-check';
 
 describe('Pitch', () => {
   describe('sharp should raise it by half a tone', () => {
@@ -357,6 +358,224 @@ describe('Pitch', () => {
 
     test('major third from G to B', () => {
       expect(Pitch.G.transpose(Interval.MajorThird)).toBe(Pitch.B);
+    });
+  });
+
+  describe('Pitch', () => {
+    const pitches = [
+      Pitch.C,
+      Pitch.CSharp,
+      Pitch.DFlat,
+      Pitch.D,
+      Pitch.DSharp,
+      Pitch.EFlat,
+      Pitch.E,
+      Pitch.F,
+      Pitch.FSharp,
+      Pitch.GFlat,
+      Pitch.G,
+      Pitch.GSharp,
+      Pitch.AFlat,
+      Pitch.A,
+      Pitch.ASharp,
+      Pitch.BFlat,
+      Pitch.B,
+    ];
+
+    test('Sharping and flating a pitch results in the original note pitch', () => {
+      fc.assert(
+        fc.property(fc.nat({ max: pitches.length - 1 }), (index) => {
+          const pitch = pitches[index];
+
+          const newPitch = pitch.sharp().flat();
+
+          expect(newPitch.getNumericValue()).toBe(pitch.getNumericValue());
+        }),
+        { verbose: true }
+      );
+    });
+
+    test('Flating and sharping a pitch results in the original note pitch', () => {
+      fc.assert(
+        fc.property(fc.nat({ max: pitches.length - 1 }), (index) => {
+          const pitch = pitches[index];
+
+          const newPitch = pitch.flat().sharp();
+
+          expect(newPitch.getNumericValue()).toBe(pitch.getNumericValue());
+        }),
+        { verbose: true }
+      );
+    });
+
+    test('A sharped note has a higher pitch except B', () => {
+      fc.assert(
+        fc.property(fc.nat({ max: pitches.length - 1 }), (index) => {
+          const pitch = pitches[index];
+
+          if (pitch == Pitch.B) {
+            expect(pitch.sharp().getNumericValue()).toBeLessThan(
+              pitch.getNumericValue()
+            );
+          } else {
+            expect(pitch.sharp().getNumericValue()).toBeGreaterThan(
+              pitch.getNumericValue()
+            );
+          }
+        }),
+        { verbose: true }
+      );
+    });
+
+    test('A flatted note has a lower pitch except C', () => {
+      fc.assert(
+        fc.property(fc.nat({ max: pitches.length - 1 }), (index) => {
+          const pitch = pitches[index];
+
+          if (pitch == Pitch.C) {
+            expect(pitch.flat().getNumericValue()).toBeGreaterThan(
+              pitch.getNumericValue()
+            );
+          } else {
+            expect(pitch.flat().getNumericValue()).toBeLessThan(
+              pitch.getNumericValue()
+            );
+          }
+        }),
+        { verbose: true }
+      );
+    });
+
+    test('measure semitones between a note and itself sharp n times to n semitones', () => {
+      fc.assert(
+        fc.property(
+          fc.nat({ max: pitches.length - 1 }),
+          fc.nat({ max: 12 }),
+          (index, distance) => {
+            const pitch = pitches[index];
+            let transposed = pitch;
+
+            for (let i = 0; i < distance; i++) {
+              transposed = transposed.sharp();
+            }
+
+            if (distance == 12) {
+              expect(pitch.absoluteDistance(transposed)).toBe(0);
+            } else {
+              expect(pitch.absoluteDistance(transposed)).toBe(distance);
+            }
+          }
+        ),
+        { verbose: true }
+      );
+    });
+
+    test('measure semitones between a note and itself flat n times to n semitones', () => {
+      fc.assert(
+        fc.property(
+          fc.nat({ max: pitches.length - 1 }),
+          fc.nat({ max: 12 }),
+          (index, distance) => {
+            const pitch = pitches[index];
+            let transposed = pitch;
+
+            for (let i = 0; i < distance; i++) {
+              transposed = transposed.flat();
+            }
+
+            if (distance == 12 || distance == 0) {
+              expect(pitch.absoluteDistance(transposed)).toBe(0);
+            } else {
+              expect(pitch.absoluteDistance(transposed)).toBe(12 - distance);
+            }
+          }
+        ),
+        { verbose: true }
+      );
+    });
+    test('measure interval between a pitch and itself transposed by that interval to be that interval', () => {
+      fc.assert(
+        fc.property(
+          fc.nat({ max: pitches.length - 1 }),
+          fc.nat({ max: Interval.intervals.length - 1 }),
+          (pitchIndex, intervalIndex) => {
+            const pitch = pitches[pitchIndex];
+            const interval = Interval.intervals[intervalIndex];
+            let to = pitch.transpose(interval);
+            let resultingInterval = pitch.intervalTo(to);
+
+            switch (interval) {
+              case Interval.MajorNinth:
+                expect(resultingInterval).toBe(Interval.MajorSecond);
+                break;
+              case Interval.PerfectEleventh:
+                expect(resultingInterval).toBe(Interval.PerfectFourth);
+                break;
+              case Interval.AugmentedEleventh:
+                expect(resultingInterval).toBe(Interval.AugmentedFourth);
+                break;
+              case Interval.MajorThirteenth:
+                expect(resultingInterval).toBe(Interval.MajorSixth);
+                break;
+              case Interval.PerfectOctave:
+                expect(resultingInterval).toBe(Interval.Unison);
+                break;
+              case Interval.DiminishedSeventh:
+                if (
+                  resultingInterval == Interval.MajorSixth ||
+                  resultingInterval == Interval.DiminishedSeventh
+                )
+                  expect(resultingInterval).toBe(resultingInterval);
+                break;
+              case Interval.MinorThird:
+              case Interval.AugmentedNinth:
+              case Interval.AugmentedSecond:
+                if (
+                  resultingInterval == Interval.MinorThird ||
+                  resultingInterval == Interval.AugmentedSecond
+                )
+                  expect(resultingInterval).toBe(resultingInterval);
+
+                break;
+              case Interval.MinorThirteenth:
+              case Interval.MinorSixth:
+              case Interval.AugmentedFifth:
+                if (
+                  resultingInterval == Interval.MinorThirteenth ||
+                  resultingInterval == Interval.MinorSixth ||
+                  resultingInterval == Interval.AugmentedFifth
+                )
+                  expect(resultingInterval).toBe(resultingInterval);
+
+                break;
+              case Interval.Tritone:
+              case Interval.DiminishedFifth:
+              case Interval.AugmentedFourth:
+                if (
+                  resultingInterval == Interval.AugmentedFourth ||
+                  resultingInterval == Interval.DiminishedFifth
+                )
+                  expect(resultingInterval).toBe(resultingInterval);
+                break;
+
+              case Interval.MinorNinth:
+              case Interval.MinorSecond:
+              case Interval.AugmentedUnison:
+                if (
+                  resultingInterval == Interval.MinorNinth ||
+                  resultingInterval == Interval.MinorSecond ||
+                  resultingInterval == Interval.AugmentedUnison
+                )
+                  expect(resultingInterval).toBe(resultingInterval);
+                break;
+
+              default:
+                expect(resultingInterval).toBe(interval);
+            }
+          }
+        ),
+        { verbose: true }
+      );
     });
   });
 });
