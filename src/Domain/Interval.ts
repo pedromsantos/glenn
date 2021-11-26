@@ -83,7 +83,7 @@ export default class Interval {
     'Augmented Fifth',
     'A5',
     8,
-    () => Interval.MajorThird
+    () => Interval.AugmentedFourth
   );
   public static readonly MinorSixth: Interval = new Interval(
     'Minor Sixth',
