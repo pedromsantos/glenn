@@ -362,29 +362,9 @@ describe('Pitch', () => {
   });
 
   describe('properties', () => {
-    const pitches = [
-      Pitch.C,
-      Pitch.CSharp,
-      Pitch.DFlat,
-      Pitch.D,
-      Pitch.DSharp,
-      Pitch.EFlat,
-      Pitch.E,
-      Pitch.F,
-      Pitch.FSharp,
-      Pitch.GFlat,
-      Pitch.G,
-      Pitch.GSharp,
-      Pitch.AFlat,
-      Pitch.A,
-      Pitch.ASharp,
-      Pitch.BFlat,
-      Pitch.B,
-    ];
-
     test('sharping and flating a pitch results in the original note pitch', () => {
       fc.assert(
-        fc.property(fc.constantFrom(...pitches), (pitch) => {
+        fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
           const newPitch = pitch.sharp().flat();
 
           expect(newPitch.getNumericValue()).toBe(pitch.getNumericValue());
@@ -395,7 +375,7 @@ describe('Pitch', () => {
 
     test('flating and sharping a pitch results in the original note pitch', () => {
       fc.assert(
-        fc.property(fc.constantFrom(...pitches), (pitch) => {
+        fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
           const newPitch = pitch.flat().sharp();
 
           expect(newPitch.getNumericValue()).toBe(pitch.getNumericValue());
@@ -406,7 +386,7 @@ describe('Pitch', () => {
 
     test('a sharped note has a higher pitch except B', () => {
       fc.assert(
-        fc.property(fc.constantFrom(...pitches), (pitch) => {
+        fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
           if (pitch == Pitch.B) {
             expect(pitch.sharp().getNumericValue()).toBeLessThan(
               pitch.getNumericValue()
@@ -423,7 +403,7 @@ describe('Pitch', () => {
 
     test('a flatted note has a lower pitch except C', () => {
       fc.assert(
-        fc.property(fc.constantFrom(...pitches), (pitch) => {
+        fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
           if (pitch == Pitch.C) {
             expect(pitch.flat().getNumericValue()).toBeGreaterThan(
               pitch.getNumericValue()
@@ -441,7 +421,7 @@ describe('Pitch', () => {
     test('measure semitones between a note and itself sharp n times to n semitones', () => {
       fc.assert(
         fc.property(
-          fc.constantFrom(...pitches),
+          fc.constantFrom(...Pitch.pitches),
           fc.nat({ max: 12 }),
           (pitch, distance) => {
             let transposed = pitch;
@@ -464,7 +444,7 @@ describe('Pitch', () => {
     test('measure semitones between a note and itself flat n times to n semitones', () => {
       fc.assert(
         fc.property(
-          fc.constantFrom(...pitches),
+          fc.constantFrom(...Pitch.pitches),
           fc.nat({ max: 12 }),
           (pitch, distance) => {
             let transposed = pitch;
@@ -483,10 +463,11 @@ describe('Pitch', () => {
         { verbose: true }
       );
     });
+
     test('measure interval between a pitch and itself transposed by that interval to be that interval', () => {
       fc.assert(
         fc.property(
-          fc.constantFrom(...pitches),
+          fc.constantFrom(...Pitch.pitches),
           fc.constantFrom(...Interval.intervals),
           (pitch, interval) => {
             let to = pitch.transpose(interval);

@@ -1,8 +1,44 @@
 import Interval from './Interval';
 
 interface IntervalMap {
-  key: Interval;
-  to: () => Pitch;
+  with: Interval;
+  goesTo: () => Pitch;
+}
+
+class IntervalMapper {
+  constructor(private intervals: IntervalMap[]) {}
+
+  sharp = () => {
+    return new IntervalMapper(
+      this.intervals.map(
+        (it) =>
+          ({
+            with: it.with,
+            goesTo: it.goesTo().sharp,
+          } as IntervalMap)
+      )
+    );
+  };
+
+  flat = () => {
+    return new IntervalMapper(
+      this.intervals.map(
+        (it) =>
+          ({
+            with: it.with,
+            goesTo: it.goesTo().flat,
+          } as IntervalMap)
+      )
+    );
+  };
+
+  transposer(interval: Interval): (() => Pitch) | undefined {
+    return this.intervals.find((it) => it.with === interval)?.goesTo;
+  }
+
+  intervalTo(to: Pitch): Interval | undefined {
+    return this.intervals.find((it) => it.goesTo() === to)?.with;
+  }
 }
 
 export default class Pitch {
@@ -12,7 +48,7 @@ export default class Pitch {
     public sharp: () => Pitch,
     public flat: () => Pitch,
     public natural: () => Pitch,
-    private intervals: () => IntervalMap[]
+    private intervals: () => IntervalMapper
   ) {}
 
   absoluteDistance(to: Pitch): Number {
@@ -22,17 +58,15 @@ export default class Pitch {
   }
 
   transpose(interval: Interval): Pitch {
-    const transposingInterval = this.intervals().find(
-      (it) => it.key === interval
-    );
+    const transposer = this.intervals().transposer(interval);
 
-    return transposingInterval?.to() || this;
+    return transposer == undefined ? this : transposer();
   }
 
   intervalTo(to: Pitch): Interval {
-    const transposingInterval = this.intervals().find((it) => it.to() === to);
+    const intervalTo = this.intervals().intervalTo(to);
 
-    return transposingInterval?.key || Interval.Unison;
+    return intervalTo == undefined ? Interval.Unison : intervalTo;
   }
 
   getNumericValue(): number {
@@ -45,34 +79,35 @@ export default class Pitch {
     () => Pitch.CSharp,
     () => Pitch.B,
     () => Pitch.C,
-    () => [
-      { key: Interval.Unison, to: () => Pitch.C },
-      { key: Interval.AugmentedUnison, to: () => Pitch.CSharp },
-      { key: Interval.MinorSecond, to: () => Pitch.DFlat },
-      { key: Interval.MajorSecond, to: () => Pitch.D },
-      { key: Interval.MinorThird, to: () => Pitch.EFlat },
-      { key: Interval.AugmentedSecond, to: () => Pitch.DSharp },
-      { key: Interval.MajorThird, to: () => Pitch.E },
-      { key: Interval.PerfectFourth, to: () => Pitch.F },
-      { key: Interval.AugmentedFourth, to: () => Pitch.FSharp },
-      { key: Interval.DiminishedFifth, to: () => Pitch.GFlat },
-      { key: Interval.Tritone, to: () => Pitch.GFlat },
-      { key: Interval.PerfectFifth, to: () => Pitch.G },
-      { key: Interval.AugmentedFifth, to: () => Pitch.GSharp },
-      { key: Interval.MinorSixth, to: () => Pitch.AFlat },
-      { key: Interval.MajorSixth, to: () => Pitch.A },
-      { key: Interval.DiminishedSeventh, to: () => Pitch.A },
-      { key: Interval.MinorSeventh, to: () => Pitch.BFlat },
-      { key: Interval.MajorSeventh, to: () => Pitch.B },
-      { key: Interval.PerfectOctave, to: () => Pitch.C },
-      { key: Interval.MinorNinth, to: () => Pitch.DFlat },
-      { key: Interval.MajorNinth, to: () => Pitch.D },
-      { key: Interval.AugmentedNinth, to: () => Pitch.DSharp },
-      { key: Interval.PerfectEleventh, to: () => Pitch.F },
-      { key: Interval.AugmentedEleventh, to: () => Pitch.FSharp },
-      { key: Interval.MinorThirteenth, to: () => Pitch.AFlat },
-      { key: Interval.MajorThirteenth, to: () => Pitch.A },
-    ]
+    () =>
+      new IntervalMapper([
+        { with: Interval.Unison, goesTo: () => Pitch.C },
+        { with: Interval.AugmentedUnison, goesTo: () => Pitch.CSharp },
+        { with: Interval.MinorSecond, goesTo: () => Pitch.DFlat },
+        { with: Interval.MajorSecond, goesTo: () => Pitch.D },
+        { with: Interval.MinorThird, goesTo: () => Pitch.EFlat },
+        { with: Interval.AugmentedSecond, goesTo: () => Pitch.DSharp },
+        { with: Interval.MajorThird, goesTo: () => Pitch.E },
+        { with: Interval.PerfectFourth, goesTo: () => Pitch.F },
+        { with: Interval.AugmentedFourth, goesTo: () => Pitch.FSharp },
+        { with: Interval.DiminishedFifth, goesTo: () => Pitch.GFlat },
+        { with: Interval.Tritone, goesTo: () => Pitch.GFlat },
+        { with: Interval.PerfectFifth, goesTo: () => Pitch.G },
+        { with: Interval.AugmentedFifth, goesTo: () => Pitch.GSharp },
+        { with: Interval.MinorSixth, goesTo: () => Pitch.AFlat },
+        { with: Interval.MajorSixth, goesTo: () => Pitch.A },
+        { with: Interval.DiminishedSeventh, goesTo: () => Pitch.A },
+        { with: Interval.MinorSeventh, goesTo: () => Pitch.BFlat },
+        { with: Interval.MajorSeventh, goesTo: () => Pitch.B },
+        { with: Interval.PerfectOctave, goesTo: () => Pitch.C },
+        { with: Interval.MinorNinth, goesTo: () => Pitch.DFlat },
+        { with: Interval.MajorNinth, goesTo: () => Pitch.D },
+        { with: Interval.AugmentedNinth, goesTo: () => Pitch.DSharp },
+        { with: Interval.PerfectEleventh, goesTo: () => Pitch.F },
+        { with: Interval.AugmentedEleventh, goesTo: () => Pitch.FSharp },
+        { with: Interval.MinorThirteenth, goesTo: () => Pitch.AFlat },
+        { with: Interval.MajorThirteenth, goesTo: () => Pitch.A },
+      ])
   );
 
   public static readonly CSharp: Pitch = new Pitch(
@@ -81,7 +116,7 @@ export default class Pitch {
     () => Pitch.D,
     () => Pitch.C,
     () => Pitch.C,
-    () => Pitch.sharpIntervals(Pitch.C.intervals())
+    () => Pitch.C.intervals().sharp()
   );
 
   public static readonly DFlat: Pitch = new Pitch(
@@ -90,7 +125,7 @@ export default class Pitch {
     () => Pitch.D,
     () => Pitch.C,
     () => Pitch.D,
-    () => Pitch.flatIntervals(Pitch.D.intervals())
+    () => Pitch.D.intervals().flat()
   );
 
   public static readonly D: Pitch = new Pitch(
@@ -99,34 +134,35 @@ export default class Pitch {
     () => Pitch.DSharp,
     () => Pitch.DFlat,
     () => Pitch.D,
-    () => [
-      { key: Interval.Unison, to: () => Pitch.D },
-      { key: Interval.AugmentedUnison, to: () => Pitch.DSharp },
-      { key: Interval.MinorSecond, to: () => Pitch.EFlat },
-      { key: Interval.MajorSecond, to: () => Pitch.E },
-      { key: Interval.MinorThird, to: () => Pitch.F },
-      { key: Interval.AugmentedSecond, to: () => Pitch.ESharp },
-      { key: Interval.MajorThird, to: () => Pitch.FSharp },
-      { key: Interval.PerfectFourth, to: () => Pitch.G },
-      { key: Interval.AugmentedFourth, to: () => Pitch.GSharp },
-      { key: Interval.DiminishedFifth, to: () => Pitch.AFlat },
-      { key: Interval.Tritone, to: () => Pitch.AFlat },
-      { key: Interval.PerfectFifth, to: () => Pitch.A },
-      { key: Interval.AugmentedFifth, to: () => Pitch.ASharp },
-      { key: Interval.MinorSixth, to: () => Pitch.BFlat },
-      { key: Interval.MajorSixth, to: () => Pitch.B },
-      { key: Interval.DiminishedSeventh, to: () => Pitch.B },
-      { key: Interval.MinorSeventh, to: () => Pitch.C },
-      { key: Interval.MajorSeventh, to: () => Pitch.CSharp },
-      { key: Interval.PerfectOctave, to: () => Pitch.D },
-      { key: Interval.MinorNinth, to: () => Pitch.EFlat },
-      { key: Interval.MajorNinth, to: () => Pitch.E },
-      { key: Interval.AugmentedNinth, to: () => Pitch.ESharp },
-      { key: Interval.PerfectEleventh, to: () => Pitch.G },
-      { key: Interval.AugmentedEleventh, to: () => Pitch.GSharp },
-      { key: Interval.MinorThirteenth, to: () => Pitch.BFlat },
-      { key: Interval.MajorThirteenth, to: () => Pitch.B },
-    ]
+    () =>
+      new IntervalMapper([
+        { with: Interval.Unison, goesTo: () => Pitch.D },
+        { with: Interval.AugmentedUnison, goesTo: () => Pitch.DSharp },
+        { with: Interval.MinorSecond, goesTo: () => Pitch.EFlat },
+        { with: Interval.MajorSecond, goesTo: () => Pitch.E },
+        { with: Interval.MinorThird, goesTo: () => Pitch.F },
+        { with: Interval.AugmentedSecond, goesTo: () => Pitch.ESharp },
+        { with: Interval.MajorThird, goesTo: () => Pitch.FSharp },
+        { with: Interval.PerfectFourth, goesTo: () => Pitch.G },
+        { with: Interval.AugmentedFourth, goesTo: () => Pitch.GSharp },
+        { with: Interval.DiminishedFifth, goesTo: () => Pitch.AFlat },
+        { with: Interval.Tritone, goesTo: () => Pitch.AFlat },
+        { with: Interval.PerfectFifth, goesTo: () => Pitch.A },
+        { with: Interval.AugmentedFifth, goesTo: () => Pitch.ASharp },
+        { with: Interval.MinorSixth, goesTo: () => Pitch.BFlat },
+        { with: Interval.MajorSixth, goesTo: () => Pitch.B },
+        { with: Interval.DiminishedSeventh, goesTo: () => Pitch.B },
+        { with: Interval.MinorSeventh, goesTo: () => Pitch.C },
+        { with: Interval.MajorSeventh, goesTo: () => Pitch.CSharp },
+        { with: Interval.PerfectOctave, goesTo: () => Pitch.D },
+        { with: Interval.MinorNinth, goesTo: () => Pitch.EFlat },
+        { with: Interval.MajorNinth, goesTo: () => Pitch.E },
+        { with: Interval.AugmentedNinth, goesTo: () => Pitch.ESharp },
+        { with: Interval.PerfectEleventh, goesTo: () => Pitch.G },
+        { with: Interval.AugmentedEleventh, goesTo: () => Pitch.GSharp },
+        { with: Interval.MinorThirteenth, goesTo: () => Pitch.BFlat },
+        { with: Interval.MajorThirteenth, goesTo: () => Pitch.B },
+      ])
   );
 
   public static readonly DSharp: Pitch = new Pitch(
@@ -135,7 +171,7 @@ export default class Pitch {
     () => Pitch.E,
     () => Pitch.D,
     () => Pitch.D,
-    () => Pitch.sharpIntervals(Pitch.D.intervals())
+    () => Pitch.D.intervals().sharp()
   );
 
   public static readonly EFlat: Pitch = new Pitch(
@@ -144,7 +180,7 @@ export default class Pitch {
     () => Pitch.E,
     () => Pitch.D,
     () => Pitch.E,
-    () => Pitch.flatIntervals(Pitch.E.intervals())
+    () => Pitch.E.intervals().flat()
   );
 
   public static readonly E: Pitch = new Pitch(
@@ -153,33 +189,34 @@ export default class Pitch {
     () => Pitch.F,
     () => Pitch.EFlat,
     () => Pitch.E,
-    () => [
-      { key: Interval.Unison, to: () => Pitch.E },
-      { key: Interval.AugmentedUnison, to: () => Pitch.ESharp },
-      { key: Interval.MinorSecond, to: () => Pitch.F },
-      { key: Interval.MajorSecond, to: () => Pitch.FSharp },
-      { key: Interval.MinorThird, to: () => Pitch.G },
-      { key: Interval.AugmentedSecond, to: () => Pitch.G },
-      { key: Interval.MajorThird, to: () => Pitch.GSharp },
-      { key: Interval.PerfectFourth, to: () => Pitch.A },
-      { key: Interval.AugmentedFourth, to: () => Pitch.ASharp },
-      { key: Interval.DiminishedFifth, to: () => Pitch.BFlat },
-      { key: Interval.Tritone, to: () => Pitch.BFlat },
-      { key: Interval.PerfectFifth, to: () => Pitch.B },
-      { key: Interval.AugmentedFifth, to: () => Pitch.BSharp },
-      { key: Interval.MajorSixth, to: () => Pitch.CSharp },
-      { key: Interval.DiminishedSeventh, to: () => Pitch.CSharp },
-      { key: Interval.MinorSeventh, to: () => Pitch.D },
-      { key: Interval.MajorSeventh, to: () => Pitch.DSharp },
-      { key: Interval.PerfectOctave, to: () => Pitch.E },
-      { key: Interval.MinorNinth, to: () => Pitch.F },
-      { key: Interval.MajorNinth, to: () => Pitch.FSharp },
-      { key: Interval.AugmentedNinth, to: () => Pitch.G },
-      { key: Interval.PerfectEleventh, to: () => Pitch.A },
-      { key: Interval.AugmentedEleventh, to: () => Pitch.ASharp },
-      { key: Interval.MinorThirteenth, to: () => Pitch.C },
-      { key: Interval.MajorThirteenth, to: () => Pitch.CSharp },
-    ]
+    () =>
+      new IntervalMapper([
+        { with: Interval.Unison, goesTo: () => Pitch.E },
+        { with: Interval.AugmentedUnison, goesTo: () => Pitch.ESharp },
+        { with: Interval.MinorSecond, goesTo: () => Pitch.F },
+        { with: Interval.MajorSecond, goesTo: () => Pitch.FSharp },
+        { with: Interval.MinorThird, goesTo: () => Pitch.G },
+        { with: Interval.AugmentedSecond, goesTo: () => Pitch.G },
+        { with: Interval.MajorThird, goesTo: () => Pitch.GSharp },
+        { with: Interval.PerfectFourth, goesTo: () => Pitch.A },
+        { with: Interval.AugmentedFourth, goesTo: () => Pitch.ASharp },
+        { with: Interval.DiminishedFifth, goesTo: () => Pitch.BFlat },
+        { with: Interval.Tritone, goesTo: () => Pitch.BFlat },
+        { with: Interval.PerfectFifth, goesTo: () => Pitch.B },
+        { with: Interval.AugmentedFifth, goesTo: () => Pitch.BSharp },
+        { with: Interval.MajorSixth, goesTo: () => Pitch.CSharp },
+        { with: Interval.DiminishedSeventh, goesTo: () => Pitch.CSharp },
+        { with: Interval.MinorSeventh, goesTo: () => Pitch.D },
+        { with: Interval.MajorSeventh, goesTo: () => Pitch.DSharp },
+        { with: Interval.PerfectOctave, goesTo: () => Pitch.E },
+        { with: Interval.MinorNinth, goesTo: () => Pitch.F },
+        { with: Interval.MajorNinth, goesTo: () => Pitch.FSharp },
+        { with: Interval.AugmentedNinth, goesTo: () => Pitch.G },
+        { with: Interval.PerfectEleventh, goesTo: () => Pitch.A },
+        { with: Interval.AugmentedEleventh, goesTo: () => Pitch.ASharp },
+        { with: Interval.MinorThirteenth, goesTo: () => Pitch.C },
+        { with: Interval.MajorThirteenth, goesTo: () => Pitch.CSharp },
+      ])
   );
 
   public static readonly F: Pitch = new Pitch(
@@ -188,34 +225,35 @@ export default class Pitch {
     () => Pitch.FSharp,
     () => Pitch.E,
     () => Pitch.F,
-    () => [
-      { key: Interval.Unison, to: () => Pitch.F },
-      { key: Interval.AugmentedUnison, to: () => Pitch.FSharp },
-      { key: Interval.MinorSecond, to: () => Pitch.GFlat },
-      { key: Interval.MajorSecond, to: () => Pitch.G },
-      { key: Interval.MinorThird, to: () => Pitch.AFlat },
-      { key: Interval.AugmentedSecond, to: () => Pitch.GSharp },
-      { key: Interval.MajorThird, to: () => Pitch.A },
-      { key: Interval.PerfectFourth, to: () => Pitch.BFlat },
-      { key: Interval.AugmentedFourth, to: () => Pitch.B },
-      { key: Interval.DiminishedFifth, to: () => Pitch.CFlat },
-      { key: Interval.Tritone, to: () => Pitch.CFlat },
-      { key: Interval.PerfectFifth, to: () => Pitch.C },
-      { key: Interval.AugmentedFifth, to: () => Pitch.CSharp },
-      { key: Interval.MinorSixth, to: () => Pitch.DFlat },
-      { key: Interval.MajorSixth, to: () => Pitch.D },
-      { key: Interval.DiminishedSeventh, to: () => Pitch.D },
-      { key: Interval.MinorSeventh, to: () => Pitch.EFlat },
-      { key: Interval.MajorSeventh, to: () => Pitch.E },
-      { key: Interval.PerfectOctave, to: () => Pitch.F },
-      { key: Interval.MinorNinth, to: () => Pitch.GFlat },
-      { key: Interval.MajorNinth, to: () => Pitch.G },
-      { key: Interval.AugmentedNinth, to: () => Pitch.GSharp },
-      { key: Interval.PerfectEleventh, to: () => Pitch.BFlat },
-      { key: Interval.AugmentedEleventh, to: () => Pitch.B },
-      { key: Interval.MinorThirteenth, to: () => Pitch.DFlat },
-      { key: Interval.MajorThirteenth, to: () => Pitch.D },
-    ]
+    () =>
+      new IntervalMapper([
+        { with: Interval.Unison, goesTo: () => Pitch.F },
+        { with: Interval.AugmentedUnison, goesTo: () => Pitch.FSharp },
+        { with: Interval.MinorSecond, goesTo: () => Pitch.GFlat },
+        { with: Interval.MajorSecond, goesTo: () => Pitch.G },
+        { with: Interval.MinorThird, goesTo: () => Pitch.AFlat },
+        { with: Interval.AugmentedSecond, goesTo: () => Pitch.GSharp },
+        { with: Interval.MajorThird, goesTo: () => Pitch.A },
+        { with: Interval.PerfectFourth, goesTo: () => Pitch.BFlat },
+        { with: Interval.AugmentedFourth, goesTo: () => Pitch.B },
+        { with: Interval.DiminishedFifth, goesTo: () => Pitch.CFlat },
+        { with: Interval.Tritone, goesTo: () => Pitch.CFlat },
+        { with: Interval.PerfectFifth, goesTo: () => Pitch.C },
+        { with: Interval.AugmentedFifth, goesTo: () => Pitch.CSharp },
+        { with: Interval.MinorSixth, goesTo: () => Pitch.DFlat },
+        { with: Interval.MajorSixth, goesTo: () => Pitch.D },
+        { with: Interval.DiminishedSeventh, goesTo: () => Pitch.D },
+        { with: Interval.MinorSeventh, goesTo: () => Pitch.EFlat },
+        { with: Interval.MajorSeventh, goesTo: () => Pitch.E },
+        { with: Interval.PerfectOctave, goesTo: () => Pitch.F },
+        { with: Interval.MinorNinth, goesTo: () => Pitch.GFlat },
+        { with: Interval.MajorNinth, goesTo: () => Pitch.G },
+        { with: Interval.AugmentedNinth, goesTo: () => Pitch.GSharp },
+        { with: Interval.PerfectEleventh, goesTo: () => Pitch.BFlat },
+        { with: Interval.AugmentedEleventh, goesTo: () => Pitch.B },
+        { with: Interval.MinorThirteenth, goesTo: () => Pitch.DFlat },
+        { with: Interval.MajorThirteenth, goesTo: () => Pitch.D },
+      ])
   );
 
   public static readonly ESharp: Pitch = new Pitch(
@@ -224,7 +262,7 @@ export default class Pitch {
     () => Pitch.F,
     () => Pitch.E,
     () => Pitch.E,
-    () => Pitch.sharpIntervals(Pitch.F.intervals())
+    () => Pitch.F.intervals().sharp()
   );
 
   public static readonly FSharp: Pitch = new Pitch(
@@ -233,7 +271,7 @@ export default class Pitch {
     () => Pitch.G,
     () => Pitch.F,
     () => Pitch.F,
-    () => Pitch.sharpIntervals(Pitch.F.intervals())
+    () => Pitch.F.intervals().sharp()
   );
 
   public static readonly GFlat: Pitch = new Pitch(
@@ -242,7 +280,7 @@ export default class Pitch {
     () => Pitch.G,
     () => Pitch.F,
     () => Pitch.G,
-    () => Pitch.flatIntervals(Pitch.G.intervals())
+    () => Pitch.G.intervals().flat()
   );
 
   public static readonly G: Pitch = new Pitch(
@@ -251,34 +289,35 @@ export default class Pitch {
     () => Pitch.GSharp,
     () => Pitch.GFlat,
     () => Pitch.G,
-    () => [
-      { key: Interval.Unison, to: () => Pitch.G },
-      { key: Interval.AugmentedUnison, to: () => Pitch.GSharp },
-      { key: Interval.MinorSecond, to: () => Pitch.AFlat },
-      { key: Interval.MajorSecond, to: () => Pitch.A },
-      { key: Interval.MinorThird, to: () => Pitch.BFlat },
-      { key: Interval.AugmentedSecond, to: () => Pitch.ASharp },
-      { key: Interval.MajorThird, to: () => Pitch.B },
-      { key: Interval.PerfectFourth, to: () => Pitch.C },
-      { key: Interval.AugmentedFourth, to: () => Pitch.CSharp },
-      { key: Interval.DiminishedFifth, to: () => Pitch.DFlat },
-      { key: Interval.Tritone, to: () => Pitch.DFlat },
-      { key: Interval.PerfectFifth, to: () => Pitch.D },
-      { key: Interval.AugmentedFifth, to: () => Pitch.DSharp },
-      { key: Interval.MinorSixth, to: () => Pitch.EFlat },
-      { key: Interval.MajorSixth, to: () => Pitch.E },
-      { key: Interval.DiminishedSeventh, to: () => Pitch.E },
-      { key: Interval.MinorSeventh, to: () => Pitch.F },
-      { key: Interval.MajorSeventh, to: () => Pitch.FSharp },
-      { key: Interval.PerfectOctave, to: () => Pitch.G },
-      { key: Interval.MinorNinth, to: () => Pitch.AFlat },
-      { key: Interval.MajorNinth, to: () => Pitch.A },
-      { key: Interval.AugmentedNinth, to: () => Pitch.ASharp },
-      { key: Interval.PerfectEleventh, to: () => Pitch.C },
-      { key: Interval.AugmentedEleventh, to: () => Pitch.CSharp },
-      { key: Interval.MinorThirteenth, to: () => Pitch.EFlat },
-      { key: Interval.MajorThirteenth, to: () => Pitch.E },
-    ]
+    () =>
+      new IntervalMapper([
+        { with: Interval.Unison, goesTo: () => Pitch.G },
+        { with: Interval.AugmentedUnison, goesTo: () => Pitch.GSharp },
+        { with: Interval.MinorSecond, goesTo: () => Pitch.AFlat },
+        { with: Interval.MajorSecond, goesTo: () => Pitch.A },
+        { with: Interval.MinorThird, goesTo: () => Pitch.BFlat },
+        { with: Interval.AugmentedSecond, goesTo: () => Pitch.ASharp },
+        { with: Interval.MajorThird, goesTo: () => Pitch.B },
+        { with: Interval.PerfectFourth, goesTo: () => Pitch.C },
+        { with: Interval.AugmentedFourth, goesTo: () => Pitch.CSharp },
+        { with: Interval.DiminishedFifth, goesTo: () => Pitch.DFlat },
+        { with: Interval.Tritone, goesTo: () => Pitch.DFlat },
+        { with: Interval.PerfectFifth, goesTo: () => Pitch.D },
+        { with: Interval.AugmentedFifth, goesTo: () => Pitch.DSharp },
+        { with: Interval.MinorSixth, goesTo: () => Pitch.EFlat },
+        { with: Interval.MajorSixth, goesTo: () => Pitch.E },
+        { with: Interval.DiminishedSeventh, goesTo: () => Pitch.E },
+        { with: Interval.MinorSeventh, goesTo: () => Pitch.F },
+        { with: Interval.MajorSeventh, goesTo: () => Pitch.FSharp },
+        { with: Interval.PerfectOctave, goesTo: () => Pitch.G },
+        { with: Interval.MinorNinth, goesTo: () => Pitch.AFlat },
+        { with: Interval.MajorNinth, goesTo: () => Pitch.A },
+        { with: Interval.AugmentedNinth, goesTo: () => Pitch.ASharp },
+        { with: Interval.PerfectEleventh, goesTo: () => Pitch.C },
+        { with: Interval.AugmentedEleventh, goesTo: () => Pitch.CSharp },
+        { with: Interval.MinorThirteenth, goesTo: () => Pitch.EFlat },
+        { with: Interval.MajorThirteenth, goesTo: () => Pitch.E },
+      ])
   );
 
   public static readonly GSharp: Pitch = new Pitch(
@@ -287,7 +326,7 @@ export default class Pitch {
     () => Pitch.A,
     () => Pitch.G,
     () => Pitch.G,
-    () => Pitch.sharpIntervals(Pitch.G.intervals())
+    () => Pitch.G.intervals().sharp()
   );
 
   public static readonly AFlat: Pitch = new Pitch(
@@ -296,7 +335,7 @@ export default class Pitch {
     () => Pitch.A,
     () => Pitch.G,
     () => Pitch.A,
-    () => Pitch.flatIntervals(Pitch.A.intervals())
+    () => Pitch.A.intervals().flat()
   );
 
   public static readonly A: Pitch = new Pitch(
@@ -305,34 +344,35 @@ export default class Pitch {
     () => Pitch.ASharp,
     () => Pitch.AFlat,
     () => Pitch.A,
-    () => [
-      { key: Interval.Unison, to: () => Pitch.A },
-      { key: Interval.AugmentedUnison, to: () => Pitch.ASharp },
-      { key: Interval.MinorSecond, to: () => Pitch.BFlat },
-      { key: Interval.MajorSecond, to: () => Pitch.B },
-      { key: Interval.MinorThird, to: () => Pitch.C },
-      { key: Interval.AugmentedSecond, to: () => Pitch.BSharp },
-      { key: Interval.MajorThird, to: () => Pitch.CSharp },
-      { key: Interval.PerfectFourth, to: () => Pitch.D },
-      { key: Interval.AugmentedFourth, to: () => Pitch.DSharp },
-      { key: Interval.DiminishedFifth, to: () => Pitch.EFlat },
-      { key: Interval.Tritone, to: () => Pitch.EFlat },
-      { key: Interval.PerfectFifth, to: () => Pitch.E },
-      { key: Interval.AugmentedFifth, to: () => Pitch.ESharp },
-      { key: Interval.MinorSixth, to: () => Pitch.F },
-      { key: Interval.MajorSixth, to: () => Pitch.FSharp },
-      { key: Interval.DiminishedSeventh, to: () => Pitch.FSharp },
-      { key: Interval.MinorSeventh, to: () => Pitch.G },
-      { key: Interval.MajorSeventh, to: () => Pitch.GSharp },
-      { key: Interval.PerfectOctave, to: () => Pitch.A },
-      { key: Interval.MinorNinth, to: () => Pitch.BFlat },
-      { key: Interval.MajorNinth, to: () => Pitch.B },
-      { key: Interval.AugmentedNinth, to: () => Pitch.BSharp },
-      { key: Interval.PerfectEleventh, to: () => Pitch.D },
-      { key: Interval.AugmentedEleventh, to: () => Pitch.DSharp },
-      { key: Interval.MinorThirteenth, to: () => Pitch.F },
-      { key: Interval.MajorThirteenth, to: () => Pitch.FSharp },
-    ]
+    () =>
+      new IntervalMapper([
+        { with: Interval.Unison, goesTo: () => Pitch.A },
+        { with: Interval.AugmentedUnison, goesTo: () => Pitch.ASharp },
+        { with: Interval.MinorSecond, goesTo: () => Pitch.BFlat },
+        { with: Interval.MajorSecond, goesTo: () => Pitch.B },
+        { with: Interval.MinorThird, goesTo: () => Pitch.C },
+        { with: Interval.AugmentedSecond, goesTo: () => Pitch.BSharp },
+        { with: Interval.MajorThird, goesTo: () => Pitch.CSharp },
+        { with: Interval.PerfectFourth, goesTo: () => Pitch.D },
+        { with: Interval.AugmentedFourth, goesTo: () => Pitch.DSharp },
+        { with: Interval.DiminishedFifth, goesTo: () => Pitch.EFlat },
+        { with: Interval.Tritone, goesTo: () => Pitch.EFlat },
+        { with: Interval.PerfectFifth, goesTo: () => Pitch.E },
+        { with: Interval.AugmentedFifth, goesTo: () => Pitch.ESharp },
+        { with: Interval.MinorSixth, goesTo: () => Pitch.F },
+        { with: Interval.MajorSixth, goesTo: () => Pitch.FSharp },
+        { with: Interval.DiminishedSeventh, goesTo: () => Pitch.FSharp },
+        { with: Interval.MinorSeventh, goesTo: () => Pitch.G },
+        { with: Interval.MajorSeventh, goesTo: () => Pitch.GSharp },
+        { with: Interval.PerfectOctave, goesTo: () => Pitch.A },
+        { with: Interval.MinorNinth, goesTo: () => Pitch.BFlat },
+        { with: Interval.MajorNinth, goesTo: () => Pitch.B },
+        { with: Interval.AugmentedNinth, goesTo: () => Pitch.BSharp },
+        { with: Interval.PerfectEleventh, goesTo: () => Pitch.D },
+        { with: Interval.AugmentedEleventh, goesTo: () => Pitch.DSharp },
+        { with: Interval.MinorThirteenth, goesTo: () => Pitch.F },
+        { with: Interval.MajorThirteenth, goesTo: () => Pitch.FSharp },
+      ])
   );
 
   public static readonly ASharp: Pitch = new Pitch(
@@ -341,7 +381,7 @@ export default class Pitch {
     () => Pitch.B,
     () => Pitch.A,
     () => Pitch.A,
-    () => Pitch.sharpIntervals(Pitch.A.intervals())
+    () => Pitch.A.intervals().sharp()
   );
 
   public static readonly BFlat: Pitch = new Pitch(
@@ -350,7 +390,7 @@ export default class Pitch {
     () => Pitch.B,
     () => Pitch.A,
     () => Pitch.B,
-    () => Pitch.flatIntervals(Pitch.B.intervals())
+    () => Pitch.B.intervals().flat()
   );
 
   public static readonly B: Pitch = new Pitch(
@@ -359,34 +399,35 @@ export default class Pitch {
     () => Pitch.C,
     () => Pitch.BFlat,
     () => Pitch.B,
-    () => [
-      { key: Interval.Unison, to: () => Pitch.B },
-      { key: Interval.AugmentedUnison, to: () => Pitch.BSharp },
-      { key: Interval.MinorSecond, to: () => Pitch.C },
-      { key: Interval.MajorSecond, to: () => Pitch.CSharp },
-      { key: Interval.MinorThird, to: () => Pitch.D },
-      { key: Interval.AugmentedSecond, to: () => Pitch.D },
-      { key: Interval.MajorThird, to: () => Pitch.DSharp },
-      { key: Interval.PerfectFourth, to: () => Pitch.E },
-      { key: Interval.AugmentedFourth, to: () => Pitch.ESharp },
-      { key: Interval.DiminishedFifth, to: () => Pitch.F },
-      { key: Interval.Tritone, to: () => Pitch.F },
-      { key: Interval.PerfectFifth, to: () => Pitch.FSharp },
-      { key: Interval.AugmentedFifth, to: () => Pitch.FSharp },
-      { key: Interval.MinorSixth, to: () => Pitch.G },
-      { key: Interval.MajorSixth, to: () => Pitch.GSharp },
-      { key: Interval.DiminishedSeventh, to: () => Pitch.GSharp },
-      { key: Interval.MinorSeventh, to: () => Pitch.A },
-      { key: Interval.MajorSeventh, to: () => Pitch.ASharp },
-      { key: Interval.PerfectOctave, to: () => Pitch.B },
-      { key: Interval.MinorNinth, to: () => Pitch.C },
-      { key: Interval.MajorNinth, to: () => Pitch.CSharp },
-      { key: Interval.AugmentedNinth, to: () => Pitch.CSharp },
-      { key: Interval.PerfectEleventh, to: () => Pitch.E },
-      { key: Interval.AugmentedEleventh, to: () => Pitch.ESharp },
-      { key: Interval.MinorThirteenth, to: () => Pitch.G },
-      { key: Interval.MajorThirteenth, to: () => Pitch.GSharp },
-    ]
+    () =>
+      new IntervalMapper([
+        { with: Interval.Unison, goesTo: () => Pitch.B },
+        { with: Interval.AugmentedUnison, goesTo: () => Pitch.BSharp },
+        { with: Interval.MinorSecond, goesTo: () => Pitch.C },
+        { with: Interval.MajorSecond, goesTo: () => Pitch.CSharp },
+        { with: Interval.MinorThird, goesTo: () => Pitch.D },
+        { with: Interval.AugmentedSecond, goesTo: () => Pitch.D },
+        { with: Interval.MajorThird, goesTo: () => Pitch.DSharp },
+        { with: Interval.PerfectFourth, goesTo: () => Pitch.E },
+        { with: Interval.AugmentedFourth, goesTo: () => Pitch.ESharp },
+        { with: Interval.DiminishedFifth, goesTo: () => Pitch.F },
+        { with: Interval.Tritone, goesTo: () => Pitch.F },
+        { with: Interval.PerfectFifth, goesTo: () => Pitch.FSharp },
+        { with: Interval.AugmentedFifth, goesTo: () => Pitch.FSharp },
+        { with: Interval.MinorSixth, goesTo: () => Pitch.G },
+        { with: Interval.MajorSixth, goesTo: () => Pitch.GSharp },
+        { with: Interval.DiminishedSeventh, goesTo: () => Pitch.GSharp },
+        { with: Interval.MinorSeventh, goesTo: () => Pitch.A },
+        { with: Interval.MajorSeventh, goesTo: () => Pitch.ASharp },
+        { with: Interval.PerfectOctave, goesTo: () => Pitch.B },
+        { with: Interval.MinorNinth, goesTo: () => Pitch.C },
+        { with: Interval.MajorNinth, goesTo: () => Pitch.CSharp },
+        { with: Interval.AugmentedNinth, goesTo: () => Pitch.CSharp },
+        { with: Interval.PerfectEleventh, goesTo: () => Pitch.E },
+        { with: Interval.AugmentedEleventh, goesTo: () => Pitch.ESharp },
+        { with: Interval.MinorThirteenth, goesTo: () => Pitch.G },
+        { with: Interval.MajorThirteenth, goesTo: () => Pitch.GSharp },
+      ])
   );
 
   public static readonly BSharp: Pitch = new Pitch(
@@ -395,7 +436,7 @@ export default class Pitch {
     () => Pitch.C,
     () => Pitch.B,
     () => Pitch.B,
-    () => Pitch.sharpIntervals(Pitch.C.intervals())
+    () => Pitch.C.intervals().sharp()
   );
 
   public static readonly CFlat: Pitch = new Pitch(
@@ -404,26 +445,26 @@ export default class Pitch {
     () => Pitch.C,
     () => Pitch.B,
     () => Pitch.C,
-    () => Pitch.flatIntervals(Pitch.B.intervals())
+    () => Pitch.B.intervals().flat()
   );
 
-  private static sharpIntervals = (intervals: IntervalMap[]) => {
-    return intervals.map(
-      (it) =>
-        ({
-          key: it.key,
-          to: it.to().sharp,
-        } as IntervalMap)
-    );
-  };
-
-  private static flatIntervals = (intervals: IntervalMap[]) => {
-    return intervals.map(
-      (it) =>
-        ({
-          key: it.key,
-          to: it.to().flat,
-        } as IntervalMap)
-    );
-  };
+  public static readonly pitches = [
+    Pitch.C,
+    Pitch.CSharp,
+    Pitch.DFlat,
+    Pitch.D,
+    Pitch.DSharp,
+    Pitch.EFlat,
+    Pitch.E,
+    Pitch.F,
+    Pitch.FSharp,
+    Pitch.GFlat,
+    Pitch.G,
+    Pitch.GSharp,
+    Pitch.AFlat,
+    Pitch.A,
+    Pitch.ASharp,
+    Pitch.BFlat,
+    Pitch.B,
+  ];
 }
