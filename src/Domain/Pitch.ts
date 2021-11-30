@@ -1,43 +1,43 @@
 import Interval from './Interval';
 
-interface IntervalMap {
+interface IntervalToPitch {
   with: Interval;
   to: () => Pitch;
 }
 
-class IntervalMapper {
-  constructor(private intervals: IntervalMap[]) {}
+class IntervalsToPitches {
+  constructor(private intervalsToPitches: IntervalToPitch[]) {}
 
   sharp = () => {
-    return new IntervalMapper(
-      this.intervals.map(
+    return new IntervalsToPitches(
+      this.intervalsToPitches.map(
         (it) =>
           ({
             with: it.with,
             to: it.to().sharp,
-          } as IntervalMap)
+          } as IntervalToPitch)
       )
     );
   };
 
   flat = () => {
-    return new IntervalMapper(
-      this.intervals.map(
+    return new IntervalsToPitches(
+      this.intervalsToPitches.map(
         (it) =>
           ({
             with: it.with,
             to: it.to().flat,
-          } as IntervalMap)
+          } as IntervalToPitch)
       )
     );
   };
 
-  transposer(interval: Interval): (() => Pitch) | undefined {
-    return this.intervals.find((it) => it.with === interval)?.to;
+  transposerFor(interval: Interval): (() => Pitch) | undefined {
+    return this.intervalsToPitches.find((it) => it.with === interval)?.to;
   }
 
   intervalTo(to: Pitch): Interval | undefined {
-    return this.intervals.find((it) => it.to() === to)?.with;
+    return this.intervalsToPitches.find((it) => it.to() === to)?.with;
   }
 }
 
@@ -48,7 +48,7 @@ export default class Pitch {
     public sharp: () => Pitch,
     public flat: () => Pitch,
     public natural: () => Pitch,
-    private intervals: () => IntervalMapper
+    private intervals: () => IntervalsToPitches
   ) {}
 
   absoluteDistance(to: Pitch): Number {
@@ -58,7 +58,7 @@ export default class Pitch {
   }
 
   transpose(interval: Interval): Pitch {
-    const transposer = this.intervals().transposer(interval);
+    const transposer = this.intervals().transposerFor(interval);
 
     return transposer == undefined ? this : transposer();
   }
@@ -80,7 +80,7 @@ export default class Pitch {
     () => Pitch.B,
     () => Pitch.C,
     () =>
-      new IntervalMapper([
+      new IntervalsToPitches([
         { with: Interval.Unison, to: () => Pitch.C },
         { with: Interval.AugmentedUnison, to: () => Pitch.CSharp },
         { with: Interval.MinorSecond, to: () => Pitch.DFlat },
@@ -135,7 +135,7 @@ export default class Pitch {
     () => Pitch.DFlat,
     () => Pitch.D,
     () =>
-      new IntervalMapper([
+      new IntervalsToPitches([
         { with: Interval.Unison, to: () => Pitch.D },
         { with: Interval.AugmentedUnison, to: () => Pitch.DSharp },
         { with: Interval.MinorSecond, to: () => Pitch.EFlat },
@@ -190,7 +190,7 @@ export default class Pitch {
     () => Pitch.EFlat,
     () => Pitch.E,
     () =>
-      new IntervalMapper([
+      new IntervalsToPitches([
         { with: Interval.Unison, to: () => Pitch.E },
         { with: Interval.AugmentedUnison, to: () => Pitch.ESharp },
         { with: Interval.MinorSecond, to: () => Pitch.F },
@@ -226,7 +226,7 @@ export default class Pitch {
     () => Pitch.E,
     () => Pitch.F,
     () =>
-      new IntervalMapper([
+      new IntervalsToPitches([
         { with: Interval.Unison, to: () => Pitch.F },
         { with: Interval.AugmentedUnison, to: () => Pitch.FSharp },
         { with: Interval.MinorSecond, to: () => Pitch.GFlat },
@@ -290,7 +290,7 @@ export default class Pitch {
     () => Pitch.GFlat,
     () => Pitch.G,
     () =>
-      new IntervalMapper([
+      new IntervalsToPitches([
         { with: Interval.Unison, to: () => Pitch.G },
         { with: Interval.AugmentedUnison, to: () => Pitch.GSharp },
         { with: Interval.MinorSecond, to: () => Pitch.AFlat },
@@ -345,7 +345,7 @@ export default class Pitch {
     () => Pitch.AFlat,
     () => Pitch.A,
     () =>
-      new IntervalMapper([
+      new IntervalsToPitches([
         { with: Interval.Unison, to: () => Pitch.A },
         { with: Interval.AugmentedUnison, to: () => Pitch.ASharp },
         { with: Interval.MinorSecond, to: () => Pitch.BFlat },
@@ -400,7 +400,7 @@ export default class Pitch {
     () => Pitch.BFlat,
     () => Pitch.B,
     () =>
-      new IntervalMapper([
+      new IntervalsToPitches([
         { with: Interval.Unison, to: () => Pitch.B },
         { with: Interval.AugmentedUnison, to: () => Pitch.BSharp },
         { with: Interval.MinorSecond, to: () => Pitch.C },

@@ -7,6 +7,7 @@ export class Octave {
     private value: number,
     private midiBaseValue: number
   ) {}
+
   public static readonly SubContra: Octave = new Octave('Sub contra', -16, 0);
   public static readonly Contra: Octave = new Octave('Contra', -8, 12);
   public static readonly Great: Octave = new Octave('Great', -4, 24);
@@ -26,6 +27,20 @@ export class Octave {
   getMidiBaseValue(): number {
     return this.midiBaseValue;
   }
+
+  public static readonly octaves = [
+    Octave.SubContra,
+    Octave.Contra,
+    Octave.Great,
+    Octave.Small,
+    Octave.OneLine,
+    Octave.TwoLine,
+    Octave.Threeline,
+    Octave.FourLine,
+    Octave.FiveLine,
+    Octave.SixLine,
+    Octave.SevenLine,
+  ];
 }
 
 export class Note {
