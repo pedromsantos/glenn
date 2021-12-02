@@ -449,7 +449,7 @@ describe('Pitch', () => {
       );
     });
 
-    test('measure interval between a pitch and itself transposed by that interval to be that interval', () => {
+    test('measure interval between a pitch and itself transposed by an interval to be the interval', () => {
       fc.assert(
         fc.property(
           fc.constantFrom(...Pitch.pitches),
@@ -489,7 +489,6 @@ describe('Pitch', () => {
                   resultingInterval == Interval.AugmentedSecond
                 )
                   expect(resultingInterval).toBe(resultingInterval);
-
                 break;
               case Interval.MinorThirteenth:
               case Interval.MinorSixth:
@@ -500,7 +499,6 @@ describe('Pitch', () => {
                   resultingInterval == Interval.AugmentedFifth
                 )
                   expect(resultingInterval).toBe(resultingInterval);
-
                 break;
               case Interval.Tritone:
               case Interval.DiminishedFifth:
@@ -511,7 +509,6 @@ describe('Pitch', () => {
                 )
                   expect(resultingInterval).toBe(resultingInterval);
                 break;
-
               case Interval.MinorNinth:
               case Interval.MinorSecond:
               case Interval.AugmentedUnison:
@@ -522,7 +519,6 @@ describe('Pitch', () => {
                 )
                   expect(resultingInterval).toBe(resultingInterval);
                 break;
-
               default:
                 expect(resultingInterval).toBe(interval);
             }
