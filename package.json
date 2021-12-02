@@ -25,7 +25,6 @@
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
     "eslint": "^7.11.0",
-    "eslint-config-airbnb-typescript": "^16.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "fast-check": "^2.18.0",
     "prettier": "^2.4.1",
@@ -37,7 +36,9 @@
     "build": "react-scripts build",
     "watch": "react-scripts test",
     "test": "react-scripts test --watchAll=false --coverage=true",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "eslint": "eslint --color --ext .html,.js,.json,.jsx,.ts,.tsx src",
+    "eslint:fix": "eslint -- --fix"
   },
   "eslintConfig": {
     "extends": [
