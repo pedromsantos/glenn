@@ -12,9 +12,7 @@ describe('Note', () => {
         (pitch, octave) => {
           const note = new Note(pitch, Duration.Quarter, octave);
 
-          expect(note.midiNumber()).toBe(
-            octave.getMidiBaseValue() + pitch.getNumericValue()
-          );
+          expect(note.midiNumber()).toBe(octave.getMidiBaseValue() + pitch.getNumericValue());
         }
       ),
       { verbose: true }

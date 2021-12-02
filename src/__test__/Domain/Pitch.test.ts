@@ -388,13 +388,9 @@ describe('Pitch', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
           if (pitch == Pitch.B) {
-            expect(pitch.sharp().getNumericValue()).toBeLessThan(
-              pitch.getNumericValue()
-            );
+            expect(pitch.sharp().getNumericValue()).toBeLessThan(pitch.getNumericValue());
           } else {
-            expect(pitch.sharp().getNumericValue()).toBeGreaterThan(
-              pitch.getNumericValue()
-            );
+            expect(pitch.sharp().getNumericValue()).toBeGreaterThan(pitch.getNumericValue());
           }
         }),
         { verbose: true }
@@ -405,13 +401,9 @@ describe('Pitch', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
           if (pitch == Pitch.C) {
-            expect(pitch.flat().getNumericValue()).toBeGreaterThan(
-              pitch.getNumericValue()
-            );
+            expect(pitch.flat().getNumericValue()).toBeGreaterThan(pitch.getNumericValue());
           } else {
-            expect(pitch.flat().getNumericValue()).toBeLessThan(
-              pitch.getNumericValue()
-            );
+            expect(pitch.flat().getNumericValue()).toBeLessThan(pitch.getNumericValue());
           }
         }),
         { verbose: true }
@@ -420,46 +412,38 @@ describe('Pitch', () => {
 
     test('measure semitones between a note and itself sharp n times to n semitones', () => {
       fc.assert(
-        fc.property(
-          fc.constantFrom(...Pitch.pitches),
-          fc.nat({ max: 12 }),
-          (pitch, distance) => {
-            let transposed = pitch;
+        fc.property(fc.constantFrom(...Pitch.pitches), fc.nat({ max: 12 }), (pitch, distance) => {
+          let transposed = pitch;
 
-            for (let i = 0; i < distance; i++) {
-              transposed = transposed.sharp();
-            }
-
-            if (distance == 12) {
-              expect(pitch.absoluteDistance(transposed)).toBe(0);
-            } else {
-              expect(pitch.absoluteDistance(transposed)).toBe(distance);
-            }
+          for (let i = 0; i < distance; i++) {
+            transposed = transposed.sharp();
           }
-        ),
+
+          if (distance == 12) {
+            expect(pitch.absoluteDistance(transposed)).toBe(0);
+          } else {
+            expect(pitch.absoluteDistance(transposed)).toBe(distance);
+          }
+        }),
         { verbose: true }
       );
     });
 
     test('measure semitones between a note and itself flat n times to n semitones', () => {
       fc.assert(
-        fc.property(
-          fc.constantFrom(...Pitch.pitches),
-          fc.nat({ max: 12 }),
-          (pitch, distance) => {
-            let transposed = pitch;
+        fc.property(fc.constantFrom(...Pitch.pitches), fc.nat({ max: 12 }), (pitch, distance) => {
+          let transposed = pitch;
 
-            for (let i = 0; i < distance; i++) {
-              transposed = transposed.flat();
-            }
-
-            if (distance == 12 || distance == 0) {
-              expect(pitch.absoluteDistance(transposed)).toBe(0);
-            } else {
-              expect(pitch.absoluteDistance(transposed)).toBe(12 - distance);
-            }
+          for (let i = 0; i < distance; i++) {
+            transposed = transposed.flat();
           }
-        ),
+
+          if (distance == 12 || distance == 0) {
+            expect(pitch.absoluteDistance(transposed)).toBe(0);
+          } else {
+            expect(pitch.absoluteDistance(transposed)).toBe(12 - distance);
+          }
+        }),
         { verbose: true }
       );
     });

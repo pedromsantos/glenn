@@ -2,11 +2,7 @@ import { Duration } from './Duration';
 import Pitch from './Pitch';
 
 export class Octave {
-  constructor(
-    private octaveName: string,
-    private value: number,
-    private midiBaseValue: number
-  ) {}
+  constructor(private octaveName: string, private value: number, private midiBaseValue: number) {}
 
   public static readonly SubContra: Octave = new Octave('Sub contra', -16, 0);
   public static readonly Contra: Octave = new Octave('Contra', -8, 12);
@@ -44,11 +40,7 @@ export class Octave {
 }
 
 export class Note {
-  constructor(
-    private pitch: Pitch,
-    private duration: Duration,
-    private octave: Octave
-  ) {}
+  constructor(private pitch: Pitch, private duration: Duration, private octave: Octave) {}
 
   midiNumber(): number {
     return this.octave.getMidiBaseValue() + this.pitch.getNumericValue();
