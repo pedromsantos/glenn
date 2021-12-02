@@ -1,5 +1,3 @@
-import { time } from 'console';
-
 export interface TimeSignature {
   get beatDuration(): number;
   get beatValue(): number;
