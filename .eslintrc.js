@@ -10,7 +10,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['prettier'],
+  plugins: ['prettier', 'sonarjs'],
   rules: {
     'prettier/prettier': 'error',
   },
@@ -18,4 +18,10 @@ module.exports = {
     project: './tsconfig.json',
   },
   parser: '@typescript-eslint/parser',
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:sonarjs/recommended',
+  ],
 };

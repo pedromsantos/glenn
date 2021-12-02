@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import Interval from '../../Domain/Interval';
 import Pitch from '../../Domain/Pitch';
 import * as fc from 'fast-check';
@@ -454,8 +455,8 @@ describe('Pitch', () => {
           fc.constantFrom(...Pitch.pitches),
           fc.constantFrom(...Interval.intervals),
           (pitch, interval) => {
-            let to = pitch.transpose(interval);
-            let resultingInterval = pitch.intervalTo(to);
+            const to = pitch.transpose(interval);
+            const resultingInterval = pitch.intervalTo(to);
 
             switch (interval) {
               case Interval.MajorNinth:

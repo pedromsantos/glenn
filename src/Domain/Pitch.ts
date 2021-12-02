@@ -51,10 +51,10 @@ export default class Pitch {
     private intervals: () => IntervalsToPitches
   ) {}
 
-  absoluteDistance(to: Pitch): Number {
-    if (this.value <= to.value) return <any>to.value - <any>this.value;
+  absoluteDistance(to: Pitch): number {
+    if (this.value <= to.value) return to.value - this.value;
 
-    return 12 + (<any>to.value - <any>this.value);
+    return 12 + (to.value - this.value);
   }
 
   transpose(interval: Interval): Pitch {

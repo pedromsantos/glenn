@@ -2,7 +2,7 @@ export default class Interval {
   constructor(
     private name: string,
     private abreviature: string,
-    private distance: Number,
+    private distance: number,
     public invert: () => Interval
   ) {}
 
