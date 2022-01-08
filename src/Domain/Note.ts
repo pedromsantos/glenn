@@ -16,11 +16,11 @@ export class Octave {
   public static readonly SixLine: Octave = new Octave('Six line', 32, 108);
   public static readonly SevenLine: Octave = new Octave('Seven line', 64, 120);
 
-  getNumericValue(): number {
+  get NumericValue(): number {
     return this.value;
   }
 
-  getMidiBaseValue(): number {
+  get MidiBaseValue(): number {
     return this.midiBaseValue;
   }
 
@@ -42,8 +42,8 @@ export class Octave {
 export class Note {
   constructor(private pitch: Pitch, private duration: Duration, private octave: Octave) {}
 
-  midiNumber(): number {
-    return this.octave.getMidiBaseValue() + this.pitch.getNumericValue();
+  get MidiNumber(): number {
+    return this.octave.MidiBaseValue + this.pitch.NumericValue;
   }
 }
 

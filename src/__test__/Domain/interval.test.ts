@@ -11,7 +11,6 @@ describe('Interval', () => {
             case Interval.Tritone:
             case Interval.DiminishedFifth:
             case Interval.AugmentedFifth:
-              //TODO:"Make tests pass with these values"
               break;
             case Interval.MinorNinth:
               expect(interval.invert().invert()).toBe(Interval.MinorSecond);

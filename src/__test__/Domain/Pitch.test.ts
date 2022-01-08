@@ -368,7 +368,7 @@ describe('Pitch', () => {
         fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
           const newPitch = pitch.sharp().flat();
 
-          expect(newPitch.getNumericValue()).toBe(pitch.getNumericValue());
+          expect(newPitch.NumericValue).toBe(pitch.NumericValue);
         }),
         { verbose: true }
       );
@@ -379,7 +379,7 @@ describe('Pitch', () => {
         fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
           const newPitch = pitch.flat().sharp();
 
-          expect(newPitch.getNumericValue()).toBe(pitch.getNumericValue());
+          expect(newPitch.NumericValue).toBe(pitch.NumericValue);
         }),
         { verbose: true }
       );
@@ -389,9 +389,9 @@ describe('Pitch', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
           if (pitch == Pitch.B) {
-            expect(pitch.sharp().getNumericValue()).toBeLessThan(pitch.getNumericValue());
+            expect(pitch.sharp().NumericValue).toBeLessThan(pitch.NumericValue);
           } else {
-            expect(pitch.sharp().getNumericValue()).toBeGreaterThan(pitch.getNumericValue());
+            expect(pitch.sharp().NumericValue).toBeGreaterThan(pitch.NumericValue);
           }
         }),
         { verbose: true }
@@ -402,9 +402,9 @@ describe('Pitch', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
           if (pitch == Pitch.C) {
-            expect(pitch.flat().getNumericValue()).toBeGreaterThan(pitch.getNumericValue());
+            expect(pitch.flat().NumericValue).toBeGreaterThan(pitch.NumericValue);
           } else {
-            expect(pitch.flat().getNumericValue()).toBeLessThan(pitch.getNumericValue());
+            expect(pitch.flat().NumericValue).toBeLessThan(pitch.NumericValue);
           }
         }),
         { verbose: true }

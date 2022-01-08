@@ -69,7 +69,7 @@ export default class Pitch {
     return intervalTo == undefined ? Interval.Unison : intervalTo;
   }
 
-  getNumericValue(): number {
+  get NumericValue(): number {
     return this.value;
   }
 
