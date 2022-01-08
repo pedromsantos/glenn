@@ -31,35 +31,36 @@ export default class Key {
   public static readonly BMinor: Key = new Key(Pitch.B, 2);
 
   private flatKey(fifths: Pitch[]): Pitch[] {
-    const toFlat = fifths.slice(this.accidentals);
+    const flats = fifths.slice(this.accidentals).map((p) => p.flat());
     const naturals = fifths.slice(0, this.accidentals);
 
-    return toFlat.map((p) => p.flat()).concat(naturals);
+    return flats.concat(naturals);
   }
 
   private sharpKey(fifths: Pitch[]): Pitch[] {
-    const toSharp = fifths.slice(0, this.accidentals);
+    const toSharp = fifths.slice(0, this.accidentals).map((p) => p.sharp());
     const naturals = fifths.slice(this.accidentals);
 
-    return toSharp.map((p) => p.sharp()).concat(naturals);
+    return toSharp.concat(naturals);
   }
 
-  private unsortedNotes() {
+  private scaleNotes() {
     const fifths: Pitch[] = [Pitch.F, Pitch.C, Pitch.G, Pitch.D, Pitch.A, Pitch.E, Pitch.B];
 
-    if (this.accidentals == 0) return fifths;
+    if (this.accidentals > 0) return this.sharpKey(fifths);
     if (this.accidentals < 0) return this.flatKey(fifths);
-    return this.sharpKey(fifths);
+    return fifths;
   }
 
   public notes(): Pitch[] {
-    const unorderedNotes = this.unsortedNotes().sort((p1, p2) =>
+    const sortedScaleNotes = this.scaleNotes().sort((p1, p2) =>
       p1.NumericValue < p2.NumericValue ? -1 : 1
     );
-
-    const rootIndex = unorderedNotes.indexOf(this.root);
-    const orderedNotes = unorderedNotes.slice(rootIndex).concat(unorderedNotes.slice(0, rootIndex));
-    return orderedNotes;
+    const rootIndex = sortedScaleNotes.indexOf(this.root);
+    const scaleNotesFromRoot = sortedScaleNotes
+      .slice(rootIndex)
+      .concat(sortedScaleNotes.slice(0, rootIndex));
+    return scaleNotesFromRoot;
   }
 
   public static readonly majorKeys = [

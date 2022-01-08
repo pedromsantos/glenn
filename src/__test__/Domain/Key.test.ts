@@ -1,5 +1,4 @@
 import Pitch from '../../Domain/Pitch';
-import Interval from '../../Domain/Interval';
 import Key from '../../Domain/Key';
 import * as fc from 'fast-check';
 
