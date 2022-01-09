@@ -1,5 +1,44 @@
 import Pitch from '../../Domain/Pitch';
-import Scale, { ScalePattern } from '../../Domain/Scale';
+import { ScalePattern } from '../../Domain/Scale';
+import * as fc from 'fast-check';
+
+describe('Scale properties', () => {
+  test('any Ionian should have same notes as C Ionian transposed by the interval from C to pitch', () => {
+    fc.assert(
+      fc.property(fc.constantFrom(...Pitch.natural), (pitch) => {
+        const scalePitchesC = [
+          Pitch.C,
+          Pitch.D,
+          Pitch.EFlat,
+          Pitch.F,
+          Pitch.G,
+          Pitch.A,
+          Pitch.BFlat,
+        ];
+        const scalePitches = ScalePattern.Dorian.createScale(pitch).Pitches;
+        const intervalToC = Pitch.C.intervalTo(pitch);
+        const transposedCScale = scalePitchesC.map((pitch) => pitch.transpose(intervalToC));
+
+        expect(scalePitches).toStrictEqual(transposedCScale);
+      }),
+      { verbose: true }
+    );
+  });
+
+  test('any Dorian should have same notes as C Dorian transposed by the interval from C to pitch', () => {
+    fc.assert(
+      fc.property(fc.constantFrom(...Pitch.natural), (pitch) => {
+        const scalePitchesC = [Pitch.C, Pitch.D, Pitch.E, Pitch.F, Pitch.G, Pitch.A, Pitch.B];
+        const scalePitches = ScalePattern.Ionian.createScale(pitch).Pitches;
+        const intervalToC = Pitch.C.intervalTo(pitch);
+        const transposedCScale = scalePitchesC.map((pitch) => pitch.transpose(intervalToC));
+
+        expect(scalePitches).toStrictEqual(transposedCScale);
+      }),
+      { verbose: true }
+    );
+  });
+});
 
 describe('C Scales', () => {
   test('Ionian should have notes C, D, E, F, G, A, B', () => {

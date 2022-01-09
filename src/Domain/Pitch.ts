@@ -467,4 +467,6 @@ export default class Pitch {
     Pitch.BFlat,
     Pitch.B,
   ];
+
+  public static readonly natural = [Pitch.C, Pitch.D, Pitch.E, Pitch.F, Pitch.G, Pitch.A, Pitch.B];
 }

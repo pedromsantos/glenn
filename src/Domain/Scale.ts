@@ -248,6 +248,45 @@ export class ScalePattern {
       this.pattern.map((interval) => root.transpose(interval))
     );
   }
+
+  public static readonly ScalePatterns = [
+    ScalePattern.AlteredDominant,
+    ScalePattern.Aolian,
+    ScalePattern.Bebop,
+    ScalePattern.Blues,
+    ScalePattern.DominantDiminishedScale,
+    ScalePattern.Dominantb5DiminishedScale,
+    ScalePattern.Dorian,
+    ScalePattern.Dorianb2,
+    ScalePattern.HalfWholeDiminished,
+    ScalePattern.HarmonicMinor,
+    ScalePattern.Ionian,
+    ScalePattern.Locrian,
+    ScalePattern.LocrianSharp2,
+    ScalePattern.Lydian,
+    ScalePattern.LydianAugmented,
+    ScalePattern.LydianDominant,
+    ScalePattern.MajorPentatonic,
+    ScalePattern.MajorSixthDiminishedScale,
+    ScalePattern.MelodicMinor,
+    ScalePattern.MinorPentatonic,
+    ScalePattern.MinorSixthDiminishedScale,
+    ScalePattern.Mixolydian,
+    ScalePattern.Mixolydianb6,
+    ScalePattern.NeapolitanMinor,
+    ScalePattern.Phrygian,
+    ScalePattern.WholeTone,
+  ];
+
+  public static readonly MajorModePatterns = [
+    ScalePattern.Aolian,
+    ScalePattern.Dorian,
+    ScalePattern.Ionian,
+    ScalePattern.Locrian,
+    ScalePattern.Lydian,
+    ScalePattern.Mixolydian,
+    ScalePattern.Phrygian,
+  ];
 }
 
 export default class Scale {
