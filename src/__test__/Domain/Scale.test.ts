@@ -56,8 +56,6 @@ describe('Scale properties', () => {
           const distancesScale = convertPitchesToDistances(pattern.createScale(pitch).Pitches);
           const distancesCScale = convertPitchesToDistances(pattern.createScale(Pitch.C).Pitches);
 
-          console.log(pitch, pattern, distancesScale, distancesCScale);
-
           expect(distancesScale).toStrictEqual(distancesCScale);
         }
       ),
