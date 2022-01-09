@@ -253,7 +253,7 @@ export class ScalePattern {
 export default class Scale {
   constructor(private scalePattern: ScalePattern, private root: Pitch, private notes: Pitch[]) {}
 
-  get Notes(): Pitch[] {
+  get Pitches(): Pitch[] {
     return this.notes;
   }
 }

@@ -3,7 +3,7 @@ import Scale, { ScalePattern } from '../../Domain/Scale';
 
 describe('C Scales', () => {
   test('Ionian should have notes C, D, E, F, G, A, B', () => {
-    expect(ScalePattern.Ionian.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.Ionian.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,
@@ -15,7 +15,7 @@ describe('C Scales', () => {
   });
 
   test('Dorian should have notes C, D, Eb, F, G, A, Bb', () => {
-    expect(ScalePattern.Dorian.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.Dorian.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.EFlat,
@@ -27,7 +27,7 @@ describe('C Scales', () => {
   });
 
   test('Phrygian should have notes C, Db, Eb, F, G, Ab, Bb', () => {
-    expect(ScalePattern.Phrygian.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.Phrygian.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.DFlat,
       Pitch.EFlat,
@@ -39,7 +39,7 @@ describe('C Scales', () => {
   });
 
   test('Lydian should have notes C, D, E, F#, G, A, B', () => {
-    expect(ScalePattern.Lydian.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.Lydian.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,
@@ -50,7 +50,7 @@ describe('C Scales', () => {
     ]);
   });
   test('Mixolydian should have notes C, D, E, F, G, A, Bb', () => {
-    expect(ScalePattern.Mixolydian.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.Mixolydian.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,
@@ -62,7 +62,7 @@ describe('C Scales', () => {
   });
 
   test('Aolian should have notes C, D, Eb, F, G, Ab, Bb', () => {
-    expect(ScalePattern.Aolian.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.Aolian.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.EFlat,
@@ -74,7 +74,7 @@ describe('C Scales', () => {
   });
 
   test('Locrian should have notes C, Db, Eb, F, Gb, Ab, Bb', () => {
-    expect(ScalePattern.Locrian.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.Locrian.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.DFlat,
       Pitch.EFlat,
@@ -86,7 +86,7 @@ describe('C Scales', () => {
   });
 
   test('Major Pentatonic should have notes C, D, E, G, A', () => {
-    expect(ScalePattern.MajorPentatonic.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.MajorPentatonic.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,
@@ -96,7 +96,7 @@ describe('C Scales', () => {
   });
 
   test('Minor Pentatonic should have notes C, Eb, F, G, Bb', () => {
-    expect(ScalePattern.MinorPentatonic.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.MinorPentatonic.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.EFlat,
       Pitch.F,
@@ -106,7 +106,7 @@ describe('C Scales', () => {
   });
 
   test('Blues should have notes C, Eb, F, Gb, G, Bb', () => {
-    expect(ScalePattern.Blues.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.Blues.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.EFlat,
       Pitch.F,
@@ -117,7 +117,7 @@ describe('C Scales', () => {
   });
 
   test('Harmonic minor should have notes C; D; Eb; F; G; Ab; B', () => {
-    expect(ScalePattern.HarmonicMinor.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.HarmonicMinor.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.EFlat,
@@ -129,7 +129,7 @@ describe('C Scales', () => {
   });
 
   test('Melodic minor should have notes C; D; Eb; F; G; A; B', () => {
-    expect(ScalePattern.MelodicMinor.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.MelodicMinor.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.EFlat,
@@ -141,7 +141,7 @@ describe('C Scales', () => {
   });
 
   test('Dorianb2 should have notes C; Db; Eb; F; G; A; Bb', () => {
-    expect(ScalePattern.Dorianb2.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.Dorianb2.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.DFlat,
       Pitch.EFlat,
@@ -153,7 +153,7 @@ describe('C Scales', () => {
   });
 
   test('NeapolitanMinor should have notes C; Db; Eb; F; G; Ab; B', () => {
-    expect(ScalePattern.NeapolitanMinor.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.NeapolitanMinor.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.DFlat,
       Pitch.EFlat,
@@ -165,7 +165,7 @@ describe('C Scales', () => {
   });
 
   test('LydianAugmented should have notes C; D; E; F#; G#; A; B', () => {
-    expect(ScalePattern.LydianAugmented.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.LydianAugmented.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,
@@ -177,7 +177,7 @@ describe('C Scales', () => {
   });
 
   test('LydianDominant should have notes C; D; E; F#; G; A; Bb', () => {
-    expect(ScalePattern.LydianDominant.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.LydianDominant.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,
@@ -189,7 +189,7 @@ describe('C Scales', () => {
   });
 
   test('Mixolydianb6 should have notes C; D; E; F; G; Ab; Bb', () => {
-    expect(ScalePattern.Mixolydianb6.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.Mixolydianb6.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,
@@ -201,7 +201,7 @@ describe('C Scales', () => {
   });
 
   test('LocrianSharp2 should have notes C; D; Eb; F; Gb; Ab; Bb', () => {
-    expect(ScalePattern.LocrianSharp2.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.LocrianSharp2.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.EFlat,
@@ -213,7 +213,7 @@ describe('C Scales', () => {
   });
 
   test('AlteredDominant should have notes C; Db; D#, Eb; Gb; G#; Bb', () => {
-    expect(ScalePattern.AlteredDominant.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.AlteredDominant.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.DFlat,
       Pitch.DSharp,
@@ -225,7 +225,7 @@ describe('C Scales', () => {
   });
 
   test('HalfWholeDiminished should have notes C; Db; Eb; E; F#; G; A, Bb', () => {
-    expect(ScalePattern.HalfWholeDiminished.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.HalfWholeDiminished.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.DFlat,
       Pitch.EFlat,
@@ -238,7 +238,7 @@ describe('C Scales', () => {
   });
 
   test('WholeTone should have notes C D E Gb G# Bb', () => {
-    expect(ScalePattern.WholeTone.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.WholeTone.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,
@@ -249,7 +249,7 @@ describe('C Scales', () => {
   });
 
   test('MajorSixthDiminishedScale should have notes C D E F G G# A B', () => {
-    expect(ScalePattern.MajorSixthDiminishedScale.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.MajorSixthDiminishedScale.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,
@@ -262,7 +262,7 @@ describe('C Scales', () => {
   });
 
   test('MinorSixthDiminishedScale should have notes C D Eb F G G# A B', () => {
-    expect(ScalePattern.MinorSixthDiminishedScale.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.MinorSixthDiminishedScale.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.EFlat,
@@ -275,7 +275,7 @@ describe('C Scales', () => {
   });
 
   test('DominantDiminishedScale should have notes C D E F G G# Bb B', () => {
-    expect(ScalePattern.DominantDiminishedScale.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.DominantDiminishedScale.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,
@@ -288,7 +288,7 @@ describe('C Scales', () => {
   });
 
   test('Dominantb5DiminishedScale should have notes C D E F Gb G# Bb B', () => {
-    expect(ScalePattern.Dominantb5DiminishedScale.createScale(Pitch.C).Notes).toStrictEqual([
+    expect(ScalePattern.Dominantb5DiminishedScale.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,
