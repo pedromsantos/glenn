@@ -1,5 +1,6 @@
 import Pitch from '../../Domain/Pitch';
 import Key from '../../Domain/Key';
+import { convertPitchesToDistances } from '../utils';
 import * as fc from 'fast-check';
 
 describe('Major keys', () => {
@@ -47,15 +48,7 @@ describe('properties', () => {
     fc.assert(
       fc.property(fc.constantFrom(...Key.majorKeys), (key) => {
         const keyNotes = key.notes().concat(key.notes()[0]);
-
-        const scaleNotePairs = keyNotes
-          .reduce((result, _value, index, array) => {
-            result.push(array.slice(index, index + 2));
-            return result;
-          }, [])
-          .slice(0, -1);
-
-        const distances = scaleNotePairs.map((p) => p[0].absoluteDistance(p[1]));
+        const distances = convertPitchesToDistances(keyNotes);
 
         expect(distances).toStrictEqual(majorKeyDistances);
       }),
@@ -69,15 +62,7 @@ describe('properties', () => {
     fc.assert(
       fc.property(fc.constantFrom(...Key.minorKeys), (key) => {
         const keyNotes = key.notes().concat(key.notes()[0]);
-
-        const scaleNotePairs = keyNotes
-          .reduce((result, _value, index, array) => {
-            result.push(array.slice(index, index + 2));
-            return result;
-          }, [])
-          .slice(0, -1);
-
-        const distances = scaleNotePairs.map((p) => p[0].absoluteDistance(p[1]));
+        const distances = convertPitchesToDistances(keyNotes);
 
         expect(distances).toStrictEqual(minorKeyDistances);
       }),

@@ -1,9 +1,10 @@
 import Pitch from '../../Domain/Pitch';
 import { ScalePattern } from '../../Domain/Scale';
+import { convertPitchesToDistances } from '../utils';
 import * as fc from 'fast-check';
 
 describe('Scale properties', () => {
-  test('any Ionian should have same notes as C Ionian transposed by the interval from C to pitch', () => {
+  test('any Dorian should have same notes as C Dorian transposed by the interval from C to pitch', () => {
     fc.assert(
       fc.property(fc.constantFrom(...Pitch.natural), (pitch) => {
         const scalePitchesC = [
@@ -25,7 +26,7 @@ describe('Scale properties', () => {
     );
   });
 
-  test('any Dorian should have same notes as C Dorian transposed by the interval from C to pitch', () => {
+  test('any Ionian should have same notes as C Ionian transposed by the interval from C to pitch', () => {
     fc.assert(
       fc.property(fc.constantFrom(...Pitch.natural), (pitch) => {
         const scalePitchesC = [Pitch.C, Pitch.D, Pitch.E, Pitch.F, Pitch.G, Pitch.A, Pitch.B];
@@ -36,6 +37,31 @@ describe('Scale properties', () => {
         expect(scalePitches).toStrictEqual(transposedCScale);
       }),
       { verbose: true }
+    );
+  });
+
+  test('any Major Scale Mode should have same note distances as the corresponding C Major Scale Mode ', () => {
+    fc.assert(
+      fc.property(
+        fc.constantFrom(...Pitch.natural),
+        fc.constantFrom(
+          ...[
+            ScalePattern.Ionian,
+            ScalePattern.Dorian,
+            ScalePattern.Lydian,
+            ScalePattern.Mixolydian,
+          ]
+        ),
+        (pitch, pattern) => {
+          const distancesScale = convertPitchesToDistances(pattern.createScale(pitch).Pitches);
+          const distancesCScale = convertPitchesToDistances(pattern.createScale(Pitch.C).Pitches);
+
+          console.log(pitch, pattern, distancesScale, distancesCScale);
+
+          expect(distancesScale).toStrictEqual(distancesCScale);
+        }
+      ),
+      { verbose: false }
     );
   });
 });
