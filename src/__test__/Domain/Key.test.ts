@@ -3,7 +3,7 @@ import Key from '../../Domain/Key';
 import * as fc from 'fast-check';
 
 describe('Major keys', () => {
-  test('C should have notes C, D, E, F, G, A and B', () => {
+  test('C should have notes C, D, E, F, G, A, B', () => {
     expect(Key.CMajor.notes()).toStrictEqual([
       Pitch.C,
       Pitch.D,
