@@ -57,10 +57,7 @@ export default class Key {
       p1.NumericValue < p2.NumericValue ? -1 : 1
     );
     const rootIndex = sortedScaleNotes.indexOf(this.root);
-    const scaleNotesFromRoot = sortedScaleNotes
-      .slice(rootIndex)
-      .concat(sortedScaleNotes.slice(0, rootIndex));
-    return scaleNotesFromRoot;
+    return sortedScaleNotes.slice(rootIndex).concat(sortedScaleNotes.slice(0, rootIndex));
   }
 
   public static readonly majorKeys = [

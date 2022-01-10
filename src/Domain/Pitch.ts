@@ -73,6 +73,10 @@ export default class Pitch {
     return this.value;
   }
 
+  get Name() {
+    return this.name;
+  }
+
   public static readonly C: Pitch = new Pitch(
     'C',
     0,
