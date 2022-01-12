@@ -1,3 +1,4 @@
+// Stryker disable StringLiteral
 export default class Interval {
   constructor(
     private name: string,

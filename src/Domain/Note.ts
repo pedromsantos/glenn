@@ -1,6 +1,7 @@
 import { Duration } from './Duration';
 import Pitch from './Pitch';
 
+// Stryker disable StringLiteral
 export class Octave {
   constructor(private octaveName: string, private value: number, private midiBaseValue: number) {}
 

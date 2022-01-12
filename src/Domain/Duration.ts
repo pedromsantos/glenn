@@ -51,6 +51,7 @@ export interface RhythmicDuration {
   get value(): number;
 }
 
+// Stryker disable StringLiteral
 export class Duration implements RhythmicDuration {
   constructor(private name: string, private duration: number) {}
 

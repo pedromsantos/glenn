@@ -249,6 +249,7 @@ export class ScalePattern {
     );
   }
 
+  // Stryker disable all
   public static readonly ScalePatterns = [
     ScalePattern.AlteredDominant,
     ScalePattern.Aolian,
@@ -278,6 +279,7 @@ export class ScalePattern {
     ScalePattern.WholeTone,
   ];
 
+  // Stryker disable all
   public static readonly MajorModePatterns = [
     ScalePattern.Aolian,
     ScalePattern.Dorian,

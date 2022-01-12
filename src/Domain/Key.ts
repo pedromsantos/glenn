@@ -47,14 +47,14 @@ export default class Key {
   private scaleNotes() {
     const fifths: Pitch[] = [Pitch.F, Pitch.C, Pitch.G, Pitch.D, Pitch.A, Pitch.E, Pitch.B];
 
-    if (this.accidentals > 0) return this.sharpKey(fifths);
-    if (this.accidentals < 0) return this.flatKey(fifths);
-    return fifths;
+    if (this.accidentals >= 0) return this.sharpKey(fifths);
+
+    return this.flatKey(fifths);
   }
 
   public notes(): Pitch[] {
     const sortedScaleNotes = this.scaleNotes().sort((p1, p2) =>
-      p1.NumericValue < p2.NumericValue ? -1 : 1
+      p1.NumericValue <= p2.NumericValue ? -1 : 1
     );
     const rootIndex = sortedScaleNotes.indexOf(this.root);
     return sortedScaleNotes.slice(rootIndex).concat(sortedScaleNotes.slice(0, rootIndex));

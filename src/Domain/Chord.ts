@@ -5,11 +5,11 @@ import { Duration } from '../Domain/Duration';
 class ChordPitch {
   constructor(private _pitch: Pitch, private _func: ChordFunction) {}
 
-  get pitch() {
+  get Pitch() {
     return this._pitch;
   }
 
-  get func() {
+  get Function() {
     return this._func;
   }
 }
@@ -21,36 +21,36 @@ class ChordPitches {
     this._pitches = pattern.pitches(root);
   }
 
-  get pitches(): Pitch[] {
-    return this._pitches.map((p) => p.pitch);
+  get Pitches(): Pitch[] {
+    return this._pitches.map((p) => p.Pitch);
   }
 
-  get bass(): Pitch {
-    return this._pitches[0].pitch;
+  get Bass(): Pitch {
+    return this._pitches[0].Pitch;
   }
 
-  get lead(): Pitch {
-    return this._pitches.slice(-1)[0].pitch;
+  get Lead(): Pitch {
+    return this._pitches.slice(-1)[0].Pitch;
   }
 
   pitchForFunction(func: ChordFunction): Pitch {
-    return this._pitches.find((p) => p.func == func).pitch;
+    return this._pitches.find((p) => p.Function == func).Pitch;
   }
 
   remove(func: ChordFunction) {
-    this._pitches = this._pitches.filter((p) => p.func != func);
+    this._pitches = this._pitches.filter((p) => p.Function != func);
   }
 
-  rotate(amount: number = 1) {
+  rotate(amount = 1) {
     this._pitches = this._pitches.slice(amount).concat(this._pitches.slice(0, amount));
   }
 }
 
 interface Chord {
-  get Pitches(): Array<Pitch>;
+  get Pitches(): Pitch[];
   get Bass(): Pitch;
   get Lead(): Pitch;
-  get Name(): String;
+  get Name(): string;
   pitchForFunction(func: ChordFunction): Pitch;
   //   remove(func: ChordFunction): Chord;
   //   invert(): Chord;
@@ -73,23 +73,23 @@ class BaseChord implements Chord {
   }
 
   get Pitches(): Pitch[] {
-    return this._pitches.pitches;
+    return this._pitches.Pitches;
   }
 
   get Bass(): Pitch {
-    return this._pitches.bass;
+    return this._pitches.Bass;
   }
 
   get Lead(): Pitch {
-    return this._pitches.lead;
+    return this._pitches.Lead;
   }
 
-  get Name(): String {
-    return this.root.pitch.Name + this.pattern.Name;
+  get Name(): string {
+    return this.root.Pitch.Name + this.pattern.Name;
   }
 
-  get Abbreviation(): String {
-    return this.root.pitch.Name + this.pattern.Abbreviation;
+  get Abbreviation(): string {
+    return this.root.Pitch.Name + this.pattern.Abbreviation;
   }
 
   pitchForFunction(func: ChordFunction): Pitch {
@@ -145,6 +145,7 @@ export class ChordFunction {
   }
 }
 
+// Stryker disable StringLiteral
 export class ChordPattern {
   constructor(
     private name: string,

@@ -168,7 +168,20 @@ describe('C Scales', () => {
     ]);
   });
 
-  test('Blues should have notes C, Eb, F, Gb, G, Bb', () => {
+  test('Bebop should have notes C, Eb, F, Gb, G, Bb, B', () => {
+    expect(ScalePattern.Bebop.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.E,
+      Pitch.F,
+      Pitch.G,
+      Pitch.A,
+      Pitch.BFlat,
+      Pitch.B,
+    ]);
+  });
+
+  test('Bebop should have notes C, Eb, F, Gb, G, Bb', () => {
     expect(ScalePattern.Blues.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.EFlat,
