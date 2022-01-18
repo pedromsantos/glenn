@@ -143,6 +143,7 @@ describe('Pitch', () => {
       expect(Pitch.B.flat()).toBe(Pitch.BFlat);
     });
   });
+
   describe('measure semitones between', () => {
     test('C and C to zero semitones', () => {
       expect(Pitch.C.absoluteDistance(Pitch.C)).toBe(0);
@@ -369,6 +370,17 @@ describe('Pitch', () => {
           const newPitch = pitch.sharp().flat();
 
           expect(newPitch.NumericValue).toBe(pitch.NumericValue);
+        }),
+        { verbose: true }
+      );
+    });
+
+    test('The natural pitch of a pitch starts with the same ptch name', () => {
+      fc.assert(
+        fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
+          const newPitch = pitch.natural();
+
+          expect(newPitch.Name[0]).toBe(pitch.Name[0]);
         }),
         { verbose: true }
       );

@@ -102,25 +102,25 @@ export class Duration implements RhythmicDuration {
   }
 }
 
-export class DottedDuration implements RhythmicDuration {
-  protected baseDuration: RhythmicDuration;
+// export class DottedDuration implements RhythmicDuration {
+//   protected baseDuration: RhythmicDuration;
 
-  constructor(duration: Duration) {
-    this.baseDuration = duration;
-  }
+//   constructor(duration: Duration) {
+//     this.baseDuration = duration;
+//   }
 
-  toBeats(timeSignature: SimpleTimeSignature): number {
-    return 0;
-  }
+//   toBeats(timeSignature: SimpleTimeSignature): number {
+//     return 0;
+//   }
 
-  toFillMeasure(timeSignature: SimpleTimeSignature, measure?: Measure): number {
-    return 0;
-  }
+//   toFillMeasure(timeSignature: SimpleTimeSignature, measure?: Measure): number {
+//     return 0;
+//   }
 
-  get value(): number {
-    return 0;
-  }
-}
+//   get value(): number {
+//     return 0;
+//   }
+// }
 
 export class RhythmicPhrase {
   private phrase: Duration[] = [];

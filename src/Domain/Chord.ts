@@ -37,13 +37,13 @@ class ChordPitches {
     return this._pitches.find((p) => p.Function == func).Pitch;
   }
 
-  remove(func: ChordFunction) {
-    this._pitches = this._pitches.filter((p) => p.Function != func);
-  }
+  // remove(func: ChordFunction) {
+  //   this._pitches = this._pitches.filter((p) => p.Function != func);
+  // }
 
-  rotate(amount = 1) {
-    this._pitches = this._pitches.slice(amount).concat(this._pitches.slice(0, amount));
-  }
+  // rotate(amount = 1) {
+  //   this._pitches = this._pitches.slice(amount).concat(this._pitches.slice(0, amount));
+  // }
 }
 
 interface Chord {
