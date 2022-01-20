@@ -34,7 +34,8 @@ class ChordPitches {
   }
 
   pitchForFunction(func: ChordFunction): Pitch {
-    return this._pitches.find((p) => p.Function == func).Pitch;
+    const chordPitch = this._pitches.find((p) => p.Function == func);
+    return chordPitch == undefined ? this._pitches[0].Pitch : chordPitch.Pitch;
   }
 
   // remove(func: ChordFunction) {
