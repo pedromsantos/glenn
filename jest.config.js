@@ -4,5 +4,5 @@ module.exports = {
   preset: 'ts-jest',
   collectCoverage: false,
   testEnvironment: 'node',
-  coverageReporters: ['clover', 'json', 'lcov', ['text', { skipFull: true }]],
+  coverageReporters: [['text', { skipFull: true }]],
 };

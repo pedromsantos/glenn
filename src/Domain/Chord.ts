@@ -3,7 +3,7 @@ import Pitch from '../Domain/Pitch';
 import { Duration } from '../Domain/Duration';
 
 class ChordPitch {
-  constructor(private _pitch: Pitch, private _func: ChordFunction) {}
+  constructor(private _pitch: Pitch = Pitch.C, private _func: ChordFunction = ChordFunction.Root) {}
 
   get Pitch() {
     return this._pitch;
@@ -15,7 +15,7 @@ class ChordPitch {
 }
 
 class ChordPitches {
-  private _pitches: Array<ChordPitch>;
+  private _pitches: Array<ChordPitch> = [];
 
   constructor(root: Pitch, pattern: ChordPattern) {
     this._pitches = pattern.pitches(root);
