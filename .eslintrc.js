@@ -24,4 +24,9 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:sonarjs/recommended',
   ],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
 };
