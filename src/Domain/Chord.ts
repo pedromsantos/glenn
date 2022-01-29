@@ -83,6 +83,7 @@ export type ChordState = {
   pattern: string;
   bass: PitchState;
   lead: PitchState;
+  duration: number;
 };
 
 class BaseChord implements Chord {
@@ -130,18 +131,20 @@ class BaseChord implements Chord {
       pattern: this.pattern.To,
       bass: this.Bass.To,
       lead: this.Lead.To,
+      duration: this.duration.value,
     };
   }
 
   static From(state: ChordState): Chord | undefined {
     const root = Pitch.From(state.root);
     const pattern = ChordPattern.From(state.pattern);
+    const duration = Duration.From(state.duration);
 
     if (root === undefined || pattern === undefined) {
       return undefined;
     }
 
-    return new ClosedChord(root, pattern);
+    return new ClosedChord(root, pattern, duration !== undefined ? duration : Duration.Whole);
   }
 }
 

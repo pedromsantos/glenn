@@ -94,12 +94,29 @@ export class Duration implements RhythmicDuration {
     return this.duration;
   }
 
+  static From(value: number): Duration | undefined {
+    return Duration.durations.find((d) => d.value == value);
+  }
+
   private usedBeatsInInstanceDuration(
     timeSignature: SimpleTimeSignature,
     usedBeats: number
   ): number {
     return usedBeats / this.toBeats(timeSignature);
   }
+
+  private static durations = [
+    Duration.Double,
+    Duration.Whole,
+    Duration.Half,
+    Duration.Quarter,
+    Duration.Eighth,
+    Duration.Sixteenth,
+    Duration.ThirtySecond,
+    Duration.SixtyFourth,
+    Duration.HundredTwentyEighth,
+    Duration.TwoHundredFiftySixth,
+  ];
 }
 
 // export class DottedDuration implements RhythmicDuration {
