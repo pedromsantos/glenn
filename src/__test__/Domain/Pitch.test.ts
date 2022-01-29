@@ -423,6 +423,17 @@ describe('Pitch', () => {
       );
     });
 
+    test('pitch can be converted to and from PitchState', () => {
+      fc.assert(
+        fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
+          const from = Pitch.From(pitch.To);
+
+          expect(pitch.NumericValue).toBe(from?.NumericValue);
+        }),
+        { verbose: true }
+      );
+    });
+
     test('measure semitones between a note and itself sharp n times to n semitones', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Pitch.pitches), fc.nat({ max: 12 }), (pitch, distance) => {

@@ -1,6 +1,11 @@
 import Interval from '../Domain/Interval';
-import Pitch from '../Domain/Pitch';
+import Pitch, { PitchState } from '../Domain/Pitch';
 import { Duration } from '../Domain/Duration';
+
+export type ChordPitchState = {
+  pitch: PitchState;
+  function: string;
+};
 
 class ChordPitch {
   constructor(private _pitch: Pitch = Pitch.C, private _func: ChordFunction = ChordFunction.Root) {}
@@ -11,6 +16,13 @@ class ChordPitch {
 
   get Function() {
     return this._func;
+  }
+
+  get To(): Readonly<ChordPitchState> {
+    return {
+      pitch: this._pitch.To,
+      function: this._func.To,
+    };
   }
 }
 
@@ -38,6 +50,10 @@ class ChordPitches {
     return chordPitch == undefined ? this._pitches[0].Pitch : chordPitch.Pitch;
   }
 
+  get To(): Readonly<ChordPitchState[]> {
+    return this._pitches.map((p) => p.To);
+  }
+
   // remove(func: ChordFunction) {
   //   this._pitches = this._pitches.filter((p) => p.Function != func);
   // }
@@ -59,6 +75,15 @@ interface Chord {
   //   drop3(): Chord;
   //   closed(): Chord;
 }
+
+export type ChordState = {
+  name: string;
+  root: PitchState;
+  pitches: ChordPitchState[];
+  pattern: string;
+  bass: PitchState;
+  lead: PitchState;
+};
 
 class BaseChord implements Chord {
   protected pattern: ChordPattern;
@@ -96,19 +121,43 @@ class BaseChord implements Chord {
   pitchForFunction(func: ChordFunction): Pitch {
     return this._pitches.pitchForFunction(func);
   }
+
+  get To(): Readonly<ChordState> {
+    return {
+      name: this.Name,
+      root: this.root.Pitch.To,
+      pitches: this._pitches.To.map((p) => p),
+      pattern: this.pattern.To,
+      bass: this.Bass.To,
+      lead: this.Lead.To,
+    };
+  }
+
+  static From(state: ChordState): Chord | undefined {
+    const root = Pitch.From(state.root);
+    const pattern = ChordPattern.From(state.pattern);
+
+    if (root === undefined || pattern === undefined) {
+      return undefined;
+    }
+
+    return new ClosedChord(root, pattern);
+  }
 }
 
 export class ClosedChord extends BaseChord {}
 
 export class ChordFunction {
-  public static readonly Root: ChordFunction = new ChordFunction();
-  public static readonly Third: ChordFunction = new ChordFunction();
-  public static readonly Fifth: ChordFunction = new ChordFunction();
-  public static readonly Sixth: ChordFunction = new ChordFunction();
-  public static readonly Seventh: ChordFunction = new ChordFunction();
-  public static readonly Ninth: ChordFunction = new ChordFunction();
-  public static readonly Eleventh: ChordFunction = new ChordFunction();
-  public static readonly Thirteenth: ChordFunction = new ChordFunction();
+  constructor(private name: string) {}
+
+  public static readonly Root: ChordFunction = new ChordFunction('Root');
+  public static readonly Third: ChordFunction = new ChordFunction('Third');
+  public static readonly Fifth: ChordFunction = new ChordFunction('Fifth');
+  public static readonly Sixth: ChordFunction = new ChordFunction('Sixth');
+  public static readonly Seventh: ChordFunction = new ChordFunction('Seventh');
+  public static readonly Ninth: ChordFunction = new ChordFunction('Ninth');
+  public static readonly Eleventh: ChordFunction = new ChordFunction('Eleventh');
+  public static readonly Thirteenth: ChordFunction = new ChordFunction('Thirteenth');
 
   public static functionForInterval(interval: Interval): ChordFunction {
     switch (interval) {
@@ -144,6 +193,25 @@ export class ChordFunction {
         return ChordFunction.Root;
     }
   }
+
+  get To(): Readonly<string> {
+    return this.name;
+  }
+
+  static From(name: string): ChordFunction | undefined {
+    return ChordFunction.functions.find((f) => f.name === name);
+  }
+
+  static functions = [
+    ChordFunction.Root,
+    ChordFunction.Third,
+    ChordFunction.Fifth,
+    ChordFunction.Sixth,
+    ChordFunction.Seventh,
+    ChordFunction.Ninth,
+    ChordFunction.Eleventh,
+    ChordFunction.Thirteenth,
+  ];
 }
 
 // Stryker disable StringLiteral
@@ -378,5 +446,51 @@ export class ChordPattern {
     return this.abbreviation;
   }
 
-  public static readonly patterns = [];
+  get To(): Readonly<string> {
+    return this.Name;
+  }
+
+  static From(name: string): ChordPattern | undefined {
+    return ChordPattern.patterns.find((n) => n.Name === name);
+  }
+
+  public static readonly patterns = [
+    ChordPattern.Major,
+    ChordPattern.Augmented,
+    ChordPattern.Major6,
+    ChordPattern.Major6Add9,
+    ChordPattern.Major6Flat5Add9,
+    ChordPattern.Major7,
+    ChordPattern.Major9,
+    ChordPattern.Major9Sharp11,
+    ChordPattern.Major11,
+    ChordPattern.Major13,
+    ChordPattern.Major13Sharp11,
+    ChordPattern.Augmented7,
+    ChordPattern.Dominant7,
+    ChordPattern.Dominant7Flat5,
+    ChordPattern.Dominant7Flat9,
+    ChordPattern.Dominant7Sharp9,
+    ChordPattern.Dominant7Flat5Flat9,
+    ChordPattern.Dominant7Flat5Sharp9,
+    ChordPattern.Dominant9,
+    ChordPattern.Dominant11,
+    ChordPattern.Dominant13,
+    ChordPattern.Minor,
+    ChordPattern.Diminished,
+    ChordPattern.Minor7,
+    ChordPattern.Minor6,
+    ChordPattern.Minor6Add9,
+    ChordPattern.Minor9,
+    ChordPattern.Diminished7,
+    ChordPattern.Minor7b5,
+    ChordPattern.MinorMaj7,
+    ChordPattern.MinorMaj9,
+    ChordPattern.Sus2,
+    ChordPattern.Sus2Diminished,
+    ChordPattern.Sus2Augmented,
+    ChordPattern.Sus4,
+    ChordPattern.Sus4Diminished,
+    ChordPattern.Sus4Augmented,
+  ];
 }

@@ -41,6 +41,14 @@ class IntervalsToPitches {
   }
 }
 
+export type PitchState = {
+  name: string;
+  value: number;
+  sharp: string;
+  flat: string;
+  natural: string;
+};
+
 export default class Pitch {
   constructor(
     private name: string,
@@ -75,6 +83,20 @@ export default class Pitch {
 
   get Name() {
     return this.name;
+  }
+
+  get To(): Readonly<PitchState> {
+    return {
+      name: this.Name,
+      value: this.value,
+      sharp: this.sharp().Name,
+      flat: this.flat().Name,
+      natural: this.natural().Name,
+    };
+  }
+
+  static From(state: PitchState): Pitch | undefined {
+    return Pitch.pitches.find((p) => p.value === state.value && p.name == state.name);
   }
 
   public static readonly C: Pitch = new Pitch(

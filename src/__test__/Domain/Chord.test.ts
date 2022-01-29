@@ -1,5 +1,6 @@
 import Pitch from '../../Domain/Pitch';
 import { ClosedChord, ChordPattern, ChordFunction } from '../../Domain/Chord';
+import * as fc from 'fast-check';
 
 describe('Major Chords should', () => {
   test('Have expected pitches for C Major chord', () => {
@@ -283,5 +284,23 @@ describe('Chords should', () => {
       ChordFunction.Fifth
     );
     expect(pitch).toStrictEqual(expectedPitch);
+  });
+});
+
+describe('Properties', () => {
+  test('chord can be converted to and from ChordState', () => {
+    fc.assert(
+      fc.property(
+        fc.constantFrom(...Pitch.pitches),
+        fc.constantFrom(...ChordPattern.patterns),
+        (root, pattern) => {
+          const chord = new ClosedChord(root, pattern);
+          const from = ClosedChord.From(chord.To);
+
+          expect(chord.Name).toBe(from?.Name);
+        }
+      ),
+      { verbose: true }
+    );
   });
 });
