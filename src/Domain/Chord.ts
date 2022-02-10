@@ -457,7 +457,7 @@ export class ChordPattern {
     return ChordPattern.patterns.find((n) => n.Name === name);
   }
 
-  public static readonly patterns = [
+  static readonly patterns = [
     ChordPattern.Major,
     ChordPattern.Augmented,
     ChordPattern.Major6,
@@ -496,4 +496,6 @@ export class ChordPattern {
     ChordPattern.Sus4Diminished,
     ChordPattern.Sus4Augmented,
   ];
+
+  public static readonly patternNames = ChordPattern.patterns.map((p) => p.To);
 }

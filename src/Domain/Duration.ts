@@ -105,7 +105,7 @@ export class Duration implements RhythmicDuration {
     return usedBeats / this.toBeats(timeSignature);
   }
 
-  private static durations = [
+  static durations = [
     Duration.Double,
     Duration.Whole,
     Duration.Half,
