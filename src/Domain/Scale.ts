@@ -1,5 +1,5 @@
 import Interval from './Interval';
-import Pitch from './Pitch';
+import Pitch, { MelodicLine, MelodicLineDirection } from './Pitch';
 
 export class ScalePattern {
   constructor(private pattern: Interval[]) {}
@@ -249,6 +249,30 @@ export class ScalePattern {
     );
   }
 
+  public createScalePitches(root: Pitch): Pitch[] {
+    return new Scale(
+      this,
+      root,
+      this.pattern.map((interval) => root.transpose(interval))
+    ).Pitches;
+  }
+
+  public createMelodicLineScale(root: Pitch): MelodicLine {
+    return new Scale(
+      this,
+      root,
+      this.pattern.map((interval) => root.transpose(interval))
+    ).MelodicLine;
+  }
+
+  public createDescendingMelodicLineScale(root: Pitch): MelodicLine {
+    return new Scale(
+      this,
+      root,
+      this.pattern.map((interval) => root.transpose(interval))
+    ).DescendingMelodicLine;
+  }
+
   // Stryker disable all
   public static readonly ScalePatterns = [
     ScalePattern.AlteredDominant,
@@ -296,5 +320,13 @@ export default class Scale {
 
   get Pitches(): Pitch[] {
     return this.notes;
+  }
+
+  get MelodicLine(): MelodicLine {
+    return new MelodicLine(this.notes, MelodicLineDirection.Ascending);
+  }
+
+  get DescendingMelodicLine(): MelodicLine {
+    return new MelodicLine(this.notes, MelodicLineDirection.Descending);
   }
 }

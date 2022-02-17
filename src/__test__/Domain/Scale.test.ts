@@ -16,7 +16,7 @@ describe('Scale properties', () => {
           Pitch.A,
           Pitch.BFlat,
         ];
-        const scalePitches = ScalePattern.Dorian.createScale(pitch).Pitches;
+        const scalePitches = ScalePattern.Dorian.createScalePitches(pitch);
         const intervalToC = Pitch.C.intervalTo(pitch);
         const transposedCScale = scalePitchesC.map((pitch) => pitch.transpose(intervalToC));
 

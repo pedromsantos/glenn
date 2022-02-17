@@ -1,74 +1,108 @@
 import { Fret, GuitarMelodicLine, Position, GuitarString } from '../../Domain/Guitar';
-import Pitch, { MelodicLine } from '../../Domain/Pitch';
+import Pitch, { MelodicLine, MelodicLineDirection } from '../../Domain/Pitch';
+import { ScalePattern } from '../../Domain/Scale';
 
 describe('Sixth string should', () => {
   test('map E to open string', () => {
-    expect(GuitarString.Sixth.map(Pitch.E)).toStrictEqual(new Fret(GuitarString.Sixth, 0));
+    expect(GuitarString.Sixth.fretFor(Pitch.E)).toStrictEqual(
+      new Fret(GuitarString.Sixth, 0, Pitch.E)
+    );
   });
 
   test('map F to first fret', () => {
-    expect(GuitarString.Sixth.map(Pitch.F)).toStrictEqual(new Fret(GuitarString.Sixth, 1));
+    expect(GuitarString.Sixth.fretFor(Pitch.F)).toStrictEqual(
+      new Fret(GuitarString.Sixth, 1, Pitch.F)
+    );
   });
 
   test('map F# to second fret', () => {
-    expect(GuitarString.Sixth.map(Pitch.FSharp)).toStrictEqual(new Fret(GuitarString.Sixth, 2));
+    expect(GuitarString.Sixth.fretFor(Pitch.FSharp)).toStrictEqual(
+      new Fret(GuitarString.Sixth, 2, Pitch.FSharp)
+    );
   });
 
   test('map Gb to second fret', () => {
-    expect(GuitarString.Sixth.map(Pitch.GFlat)).toStrictEqual(new Fret(GuitarString.Sixth, 2));
+    expect(GuitarString.Sixth.fretFor(Pitch.GFlat)).toStrictEqual(
+      new Fret(GuitarString.Sixth, 2, Pitch.GFlat)
+    );
   });
 
   test('map G to third fret', () => {
-    expect(GuitarString.Sixth.map(Pitch.G)).toStrictEqual(new Fret(GuitarString.Sixth, 3));
+    expect(GuitarString.Sixth.fretFor(Pitch.G)).toStrictEqual(
+      new Fret(GuitarString.Sixth, 3, Pitch.G)
+    );
   });
 });
 
-describe('Melodic line should', () => {
-  test('map E to open string on sixth string', () => {
-    const line = new MelodicLine([Pitch.E]);
-    const guitarLine = new GuitarMelodicLine(line, Position.Open);
+describe('Guitar melodic line should', () => {
+  describe('map C major scale to guitar frets on ', () => {
+    test('C position ascending', () => {
+      const line = ScalePattern.Ionian.createMelodicLineScale(Pitch.C);
+      const guitarLine = new GuitarMelodicLine(line, Position.C);
 
-    const fret = guitarLine.fret(0);
-    expect(fret).toStrictEqual(new Fret(GuitarString.Sixth, 0));
+      const fret = guitarLine.get(0);
+      expect(fret?.isSame(new Fret(GuitarString.Fifth, 3, Pitch.C))).toBeTruthy();
+    });
+
+    test('C position descending', () => {
+      const line = ScalePattern.Ionian.createDescendingMelodicLineScale(Pitch.C);
+      const guitarLine = new GuitarMelodicLine(line, Position.C);
+
+      const fret = guitarLine.get(0);
+
+      expect(fret).toStrictEqual(new Fret(GuitarString.Second, 1, Pitch.C));
+    });
   });
 
-  test('map E to 2th fret on fourth string for C Position', () => {
-    const line = new MelodicLine([Pitch.E]);
-    const guitarLine = new GuitarMelodicLine(line, Position.C);
+  describe('map E to', () => {
+    test('open string on sixth string for open position', () => {
+      const line = new MelodicLine([Pitch.E], MelodicLineDirection.Descending);
+      const guitarLine = new GuitarMelodicLine(line, Position.Open);
 
-    const fret = guitarLine.fret(0);
-    expect(fret).toStrictEqual(new Fret(GuitarString.Fourth, 2));
-  });
+      const fret = guitarLine.get(0);
+      const expectedFret = new Fret(GuitarString.Sixth, 0, Pitch.E);
 
-  test('map E to 5th fret on second string for A Position', () => {
-    const line = new MelodicLine([Pitch.E]);
-    const guitarLine = new GuitarMelodicLine(line, Position.A);
+      expect(fret).toStrictEqual(expectedFret);
+    });
 
-    const fret = guitarLine.fret(0);
-    expect(fret).toStrictEqual(new Fret(GuitarString.Second, 5));
-  });
+    test('2th fret on fourth string for C Position', () => {
+      const line = new MelodicLine([Pitch.E]);
+      const guitarLine = new GuitarMelodicLine(line, Position.C);
 
-  test('map E to 7th fret on fifth string for G Position', () => {
-    const line = new MelodicLine([Pitch.E]);
-    const guitarLine = new GuitarMelodicLine(line, Position.G);
+      const fret = guitarLine.get(0);
+      expect(fret).toStrictEqual(new Fret(GuitarString.Fourth, 2, Pitch.E));
+    });
 
-    const fret = guitarLine.fret(0);
-    expect(fret).toStrictEqual(new Fret(GuitarString.Fifth, 7));
-  });
+    test('5th fret on second string for A Position', () => {
+      const line = new MelodicLine([Pitch.E]);
+      const guitarLine = new GuitarMelodicLine(line, Position.A);
 
-  test('map E to 9th fret on third string for E Position', () => {
-    const line = new MelodicLine([Pitch.E]);
-    const guitarLine = new GuitarMelodicLine(line, Position.E);
+      const fret = guitarLine.get(0);
+      expect(fret).toStrictEqual(new Fret(GuitarString.Second, 5, Pitch.E));
+    });
 
-    const fret = guitarLine.fret(0);
-    expect(fret).toStrictEqual(new Fret(GuitarString.Third, 9));
-  });
+    test('7th fret on fifth string for G Position', () => {
+      const line = new MelodicLine([Pitch.E]);
+      const guitarLine = new GuitarMelodicLine(line, Position.G);
 
-  test('map E to 12th fret on first string for D Position', () => {
-    const line = new MelodicLine([Pitch.E]);
-    const guitarLine = new GuitarMelodicLine(line, Position.D);
+      const fret = guitarLine.get(0);
+      expect(fret).toStrictEqual(new Fret(GuitarString.Fifth, 7, Pitch.E));
+    });
 
-    const fret = guitarLine.fret(1);
-    expect(fret).toStrictEqual(new Fret(GuitarString.First, 12));
+    test('9th fret on third string for E Position', () => {
+      const line = new MelodicLine([Pitch.E]);
+      const guitarLine = new GuitarMelodicLine(line, Position.E);
+
+      const fret = guitarLine.get(0);
+      expect(fret).toStrictEqual(new Fret(GuitarString.Third, 9, Pitch.E));
+    });
+
+    test('12th fret on first string for D Position', () => {
+      const line = new MelodicLine([Pitch.E], MelodicLineDirection.Descending);
+      const guitarLine = new GuitarMelodicLine(line, Position.D);
+
+      const fret = guitarLine.get(0);
+      expect(fret).toStrictEqual(new Fret(GuitarString.First, 12, Pitch.E));
+    });
   });
 });

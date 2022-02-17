@@ -1,5 +1,37 @@
-import { FreeBreakfastSharp } from '@material-ui/icons';
-import Pitch, { MelodicLine } from './Pitch';
+import Pitch, { MelodicLine, MelodicLineDirection } from './Pitch';
+
+export class Fret {
+  constructor(private string: GuitarString, private fret: number, private pitch: Pitch) {}
+
+  public get isOpen() {
+    return this.fret === 0;
+  }
+
+  isHigher(other: Fret) {
+    return this.fret > other.fret;
+  }
+
+  isLower(other: Fret) {
+    return this.fret < other.fret;
+  }
+
+  isSame(other: Fret) {
+    return this.fret === other.fret && this.string.isSame(other.string);
+  }
+
+  isSameFret(other: Fret) {
+    return this.fret === other.fret;
+  }
+
+  raiseOctave(): Fret {
+    this.fret += 12;
+    return this;
+  }
+
+  get Pitch(): Pitch {
+    return this.Pitch;
+  }
+}
 
 export class GuitarString {
   constructor(private name: string, private openStringPitch: Pitch, private index: number) {}
@@ -20,62 +52,60 @@ export class GuitarString {
     GuitarString.First,
   ];
 
-  map(pitch: Pitch): Fret {
-    return new Fret(this, this.openStringPitch.absoluteDistance(pitch));
+  fretFor(pitch: Pitch): Fret {
+    return new Fret(this, this.openStringPitch.absoluteDistance(pitch), pitch);
+  }
+
+  isSame(other: GuitarString): boolean {
+    return this.index === other.index;
   }
 }
 
 export class Position {
-  constructor(private name: string, private lowFret: () => Fret, private highFret: () => Fret) {}
+  constructor(private name: string, private lowFret: Fret, private highFret: Fret) {}
 
   public static readonly Open: Position = new Position(
     'Open',
-    () => new Fret(GuitarString.Sixth, 0),
-    () => new Fret(GuitarString.First, 3)
+    new Fret(GuitarString.Sixth, 0, Pitch.E),
+    new Fret(GuitarString.First, 3, Pitch.G)
   );
 
   public static readonly C: Position = new Position(
     'C',
-    () => new Fret(GuitarString.Sixth, 1),
-    () => new Fret(GuitarString.First, 4)
+    new Fret(GuitarString.Sixth, 1, Pitch.FSharp),
+    new Fret(GuitarString.First, 4, Pitch.GSharp)
   );
 
   public static readonly A: Position = new Position(
     'A',
-    () => new Fret(GuitarString.Sixth, 3),
-    () => new Fret(GuitarString.First, 6)
+    new Fret(GuitarString.Sixth, 3, Pitch.G),
+    new Fret(GuitarString.First, 6, Pitch.ASharp)
   );
 
   public static readonly G: Position = new Position(
     'G',
-    () => new Fret(GuitarString.Sixth, 5),
-    () => new Fret(GuitarString.First, 8)
+    new Fret(GuitarString.Sixth, 5, Pitch.A),
+    new Fret(GuitarString.First, 8, Pitch.C)
   );
 
   public static readonly E: Position = new Position(
     'E',
-    () => new Fret(GuitarString.Sixth, 8),
-    () => new Fret(GuitarString.First, 11)
+    new Fret(GuitarString.Sixth, 8, Pitch.C),
+    new Fret(GuitarString.First, 11, Pitch.DSharp)
   );
 
   public static readonly D: Position = new Position(
     'D',
-    () => new Fret(GuitarString.Sixth, 10),
-    () => new Fret(GuitarString.First, 13)
+    new Fret(GuitarString.Sixth, 10, Pitch.D),
+    new Fret(GuitarString.First, 13, Pitch.F)
   );
 
-  filter(frets: Fret[]) {
+  isFretInPosition(fret: Fret): boolean {
     const fretRangeFilter: (f: Fret) => boolean = (f) =>
-      (f.isHigher(this.lowFret()) || f.isSame(this.lowFret())) &&
-      (f.isLower(this.highFret()) || f.isSame(this.highFret()));
+      (f.isHigher(this.lowFret) || f.isSameFret(this.lowFret)) &&
+      (f.isLower(this.highFret) || f.isSameFret(this.highFret));
 
-    let fretsInPosition = frets.filter((f) => fretRangeFilter(f));
-
-    if (fretsInPosition.length === 0) {
-      fretsInPosition = frets.map((f) => f.raiseOctave()).filter((f) => fretRangeFilter(f));
-    }
-
-    return fretsInPosition;
+    return fretRangeFilter(fret);
   }
 
   public static readonly guitarPositions = [
@@ -88,30 +118,6 @@ export class Position {
   ];
 }
 
-export class Fret {
-  constructor(private string: GuitarString, private fret: number) {}
-
-  public get isOpen() {
-    return this.fret === 0;
-  }
-
-  isHigher(other: Fret) {
-    return this.fret > other.fret;
-  }
-
-  isLower(other: Fret) {
-    return this.fret < other.fret;
-  }
-
-  isSame(other: Fret) {
-    return this.fret === other.fret;
-  }
-
-  raiseOctave() {
-    return new Fret(this.string, this.fret + 12);
-  }
-}
-
 export class GuitarMelodicLine implements Iterable<Fret> {
   private line: Fret[];
 
@@ -120,20 +126,44 @@ export class GuitarMelodicLine implements Iterable<Fret> {
   }
 
   private create(line: MelodicLine): Fret[] {
-    let frets = [];
+    const frets: Fret[] = [];
 
-    for (const guitarString of GuitarString.guitarStrings) {
-      for (const pitch of line) {
-        frets.push(guitarString.map(pitch));
+    for (const pitch of line) {
+      if (line.Direction === MelodicLineDirection.Ascending) {
+        const fret = this.mapPitchToFret(pitch, GuitarString.guitarStrings);
+        if (fret !== undefined) {
+          frets.push(fret);
+        }
+      }
+      if (line.Direction === MelodicLineDirection.Descending) {
+        const fret = this.mapPitchToFret(pitch, GuitarString.guitarStrings.reverse());
+        if (fret !== undefined) {
+          frets.push(fret);
+        }
       }
     }
 
-    return this.position.filter(frets);
+    return frets;
   }
 
-  fret(index: number) {
+  private mapPitchToFret(pitch: Pitch, guitarStrings: GuitarString[]): Fret | undefined {
+    for (const guitarString of guitarStrings) {
+      const fret = guitarString.fretFor(pitch);
+      if (this.position.isFretInPosition(fret)) {
+        return fret;
+      }
+
+      if (this.position.isFretInPosition(fret.raiseOctave())) {
+        return fret;
+      }
+    }
+
+    return undefined;
+  }
+
+  get(index: number): Fret {
     if (index >= this.line.length) {
-      return undefined;
+      throw 'Invalid index';
     }
 
     return this.line[index];

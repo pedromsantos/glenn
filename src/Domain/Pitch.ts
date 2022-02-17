@@ -497,8 +497,24 @@ export default class Pitch {
   public static readonly natural = [Pitch.C, Pitch.D, Pitch.E, Pitch.F, Pitch.G, Pitch.A, Pitch.B];
 }
 
+export enum MelodicLineDirection {
+  Ascending,
+  Descending,
+}
+
 export class MelodicLine implements Iterable<Pitch> {
-  constructor(private line: Pitch[] = []) {}
+  constructor(
+    private line: Pitch[] = [],
+    private direction: MelodicLineDirection = MelodicLineDirection.Ascending
+  ) {}
+
+  get Direction(): MelodicLineDirection {
+    return this.direction;
+  }
+
+  get First(): Pitch {
+    return this.line[0];
+  }
 
   *[Symbol.iterator]() {
     for (const pitch of this.line) {
