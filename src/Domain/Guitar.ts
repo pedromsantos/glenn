@@ -3,10 +3,6 @@ import Pitch, { MelodicLine, MelodicLineDirection } from './Pitch';
 export class Fret {
   constructor(private string: GuitarString, private fret: number, private pitch: Pitch) {}
 
-  public get isOpen() {
-    return this.fret === 0;
-  }
-
   isHigher(other: Fret) {
     return this.fret > other.fret;
   }
@@ -26,10 +22,6 @@ export class Fret {
   raiseOctave(): Fret {
     this.fret += 12;
     return this;
-  }
-
-  get Pitch(): Pitch {
-    return this.Pitch;
   }
 }
 

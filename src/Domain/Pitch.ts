@@ -512,10 +512,6 @@ export class MelodicLine implements Iterable<Pitch> {
     return this.direction;
   }
 
-  get First(): Pitch {
-    return this.line[0];
-  }
-
   *[Symbol.iterator]() {
     for (const pitch of this.line) {
       yield pitch;
