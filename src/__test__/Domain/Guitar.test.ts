@@ -35,7 +35,7 @@ describe('Sixth string should', () => {
 });
 
 describe('Guitar melodic line should', () => {
-  describe('map C major scale to guitar frets on ', () => {
+  describe('map C major scale to guitar frets on', () => {
     test('C position ascending', () => {
       const line = ScalePattern.Ionian.createMelodicLineScale(Pitch.C);
       const guitarLine = new GuitarMelodicLine(line, Position.C);

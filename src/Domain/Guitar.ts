@@ -141,6 +141,7 @@ export class GuitarMelodicLine implements Iterable<Fret> {
   private mapPitchToFret(pitch: Pitch, guitarStrings: GuitarString[]): Fret | undefined {
     for (const guitarString of guitarStrings) {
       const fret = guitarString.fretFor(pitch);
+
       if (this.position.isFretInPosition(fret)) {
         return fret;
       }
