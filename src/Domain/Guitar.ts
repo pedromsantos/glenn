@@ -168,3 +168,33 @@ export class GuitarMelodicLine implements Iterable<Fret> {
     }
   }
 }
+
+export class TabColumn {
+  constructor(private format: (value: string) => string[]) {}
+
+  public static readonly Start: TabColumn = new TabColumn(() => Array(6).fill('||-'));
+  public static readonly Empty: TabColumn = new TabColumn(() => Array(6).fill('--'));
+  public static readonly Bar: TabColumn = new TabColumn(() => Array(6).fill('-|'));
+  public static readonly End: TabColumn = new TabColumn(() => Array(6).fill('-||'));
+  public static readonly Note: TabColumn = new TabColumn((value) => Array(6).fill(`-${value}-`));
+  public static readonly StandardTunning: TabColumn = new TabColumn(() => [
+    'e',
+    'B',
+    'G',
+    'D',
+    'A',
+    'E',
+  ]);
+
+  render(value = ''): string[] {
+    return this.format(value);
+  }
+}
+
+export class Tab {
+  render(tab: TabColumn[]) {
+    const tabElements = tab.map((t) => t.render());
+
+    return tabElements.reduce((a, b) => a.map((v, i) => v + b[i])).join('\n');
+  }
+}

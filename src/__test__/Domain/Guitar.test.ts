@@ -1,4 +1,11 @@
-import { Fret, GuitarMelodicLine, Position, GuitarString } from '../../Domain/Guitar';
+import {
+  Fret,
+  GuitarMelodicLine,
+  Position,
+  GuitarString,
+  Tab,
+  TabColumn,
+} from '../../Domain/Guitar';
 import Pitch, { MelodicLine, MelodicLineDirection } from '../../Domain/Pitch';
 import { ScalePattern } from '../../Domain/Scale';
 
@@ -104,5 +111,28 @@ describe('Guitar melodic line should', () => {
       const fret = guitarLine.get(0);
       expect(fret).toStrictEqual(new Fret(GuitarString.First, 12, Pitch.E));
     });
+  });
+});
+
+describe('Guitar tab should', () => {
+  test('render tunning', () => {
+    const tab = new Tab();
+    const renderedTab = tab.render([TabColumn.StandardTunning]);
+
+    expect(renderedTab).toBe('e\nB\nG\nD\nA\nE');
+  });
+
+  test('render tunning + start', () => {
+    const tab = new Tab();
+    const renderedTab = tab.render([TabColumn.StandardTunning, TabColumn.Start]);
+
+    expect(renderedTab).toBe('e||-\nB||-\nG||-\nD||-\nA||-\nE||-');
+  });
+
+  test('render tunning + start + end', () => {
+    const tab = new Tab();
+    const renderedTab = tab.render([TabColumn.StandardTunning, TabColumn.Start, TabColumn.End]);
+
+    expect(renderedTab).toBe('e||--||\nB||--||\nG||--||\nD||--||\nA||--||\nE||--||');
   });
 });
