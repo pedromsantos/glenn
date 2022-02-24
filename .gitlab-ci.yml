@@ -1,5 +1,10 @@
 stages:
   - build
+  - deploy
+
+variables:
+    # Replace this with your site URL
+    PUBLIC_URL: https://pedromsantos.gitlab.io/glenn/
 
 build:
   image: node:latest    # Run the job in a `node` docker image
@@ -10,3 +15,15 @@ build:
   artifacts:
     paths:
       - build/          # Save the build result as an artfact
+
+pages:
+  image: alpine:latest
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none        # Do not clone git repo
+  script:
+    # Rename the CRA `build` folder to `public`
+    - mv build public
+  artifacts:
+    paths:
+      - public
