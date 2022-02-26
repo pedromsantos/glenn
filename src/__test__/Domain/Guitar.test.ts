@@ -1,3 +1,4 @@
+import { ChordPattern, ClosedChord } from '../../Domain/Chord';
 import {
   Fret,
   GuitarMelodicLine,
@@ -5,6 +6,7 @@ import {
   GuitarString,
   Tab,
   TabColumn,
+  GuitarChord,
 } from '../../Domain/Guitar';
 import Pitch, { MelodicLine, MelodicLineDirection } from '../../Domain/Pitch';
 import { ScalePattern } from '../../Domain/Scale';
@@ -115,24 +117,146 @@ describe('Guitar melodic line should', () => {
 });
 
 describe('Guitar tab should', () => {
-  test('render tunning', () => {
-    const tab = new Tab();
-    const renderedTab = tab.render([TabColumn.StandardTunning]);
-
-    expect(renderedTab).toBe('e\nB\nG\nD\nA\nE');
-  });
-
-  test('render tunning + start', () => {
-    const tab = new Tab();
-    const renderedTab = tab.render([TabColumn.StandardTunning, TabColumn.Start]);
-
-    expect(renderedTab).toBe('e||-\nB||-\nG||-\nD||-\nA||-\nE||-');
-  });
-
   test('render tunning + start + end', () => {
     const tab = new Tab();
-    const renderedTab = tab.render([TabColumn.StandardTunning, TabColumn.Start, TabColumn.End]);
+    const renderedTab = tab.render([]);
 
-    expect(renderedTab).toBe('e||--||\nB||--||\nG||--||\nD||--||\nA||--||\nE||--||');
+    const expectedTab = `e|--|
+B|--|
+G|--|
+D|--|
+A|--|
+E|--|`;
+
+    expect(renderedTab).toBe(expectedTab);
   });
+
+  test('render tunning + start + rest + end', () => {
+    const renderedTab = new Tab().render([TabColumn.Rest]);
+
+    const expectedTab = `e|---|
+B|---|
+G|---|
+D|---|
+A|---|
+E|---|`;
+
+    expect(renderedTab).toBe(expectedTab);
+  });
+
+  test('render F on sixth string', () => {
+    const fret = new Fret(GuitarString.Sixth, 1, Pitch.F).toTab();
+    const renderedTab = new Tab().render([fret]);
+
+    const expectedTab = `e|---|
+B|---|
+G|---|
+D|---|
+A|---|
+E|-1-|`;
+
+    expect(renderedTab).toBe(expectedTab);
+  });
+
+  test('render Bb on fifth string', () => {
+    const fret = new Fret(GuitarString.Fifth, 1, Pitch.BFlat).toTab();
+    const renderedTab = new Tab().render([fret]);
+
+    const expectedTab = `e|---|
+B|---|
+G|---|
+D|---|
+A|-1-|
+E|---|`;
+
+    expect(renderedTab).toBe(expectedTab);
+  });
+
+  test('render D# on forth string', () => {
+    const fret = new Fret(GuitarString.Fourth, 1, Pitch.DSharp).toTab();
+    const renderedTab = new Tab().render([fret]);
+
+    const expectedTab = `e|---|
+B|---|
+G|---|
+D|-1-|
+A|---|
+E|---|`;
+
+    expect(renderedTab).toBe(expectedTab);
+  });
+
+  test('render D on sixth string', () => {
+    const fret = new Fret(GuitarString.Sixth, 10, Pitch.D).toTab();
+    const renderedTab = new Tab().render([fret]);
+
+    const expectedTab = `e|----|
+B|----|
+G|----|
+D|----|
+A|----|
+E|-10-|`;
+
+    expect(renderedTab).toBe(expectedTab);
+  });
+
+  test('render C E A Descending on C position', () => {
+    const line = new MelodicLine([Pitch.C, Pitch.E, Pitch.A], MelodicLineDirection.Descending);
+    const guitarLine = new GuitarMelodicLine(line, Position.C);
+    const renderedTab = new Tab().render(guitarLine.toTab());
+
+    const expectedTab = `e|-----|
+B|-----|
+G|---2-|
+D|--2--|
+A|-3---|
+E|-----|`;
+
+    expect(renderedTab).toBe(expectedTab);
+  });
+
+  // test('render C E A  ascending on C position', () => {
+  //   const line = new MelodicLine([Pitch.C, Pitch.E, Pitch.A], MelodicLineDirection.Ascending);
+  //   const guitarLine = new GuitarMelodicLine(line, Position.C);
+  //   const renderedTab = new Tab().render(guitarLine.toTab());
+
+  //   const expectedTab = `e|-----|
+  // B|-1---|
+  // G|---2-|
+  // D|--2--|
+  // A|-----|
+  // E|-----|`;
+
+  //   expect(renderedTab).toBe(expectedTab);
+  // });
+
+  test('render C Major triad on C position', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    const guitarChord = new GuitarChord(chord, Position.C);
+    const renderedTab = new Tab().render(guitarChord.toTab());
+
+    const expectedTab = `e|---|
+B|---|
+G|---|
+D|-2-|
+A|-3-|
+E|-3-|`;
+
+    expect(renderedTab).toBe(expectedTab);
+  });
+
+  //   test('render G Major triad on C position', () => {
+  //     const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+  //     const guitarChord = new GuitarChord(chord, Position.C);
+  //     const renderedTab = new Tab().render(guitarChord.toTab());
+
+  //     const expectedTab = `e|---|
+  // B|-3-|
+  // G|---|
+  // D|---|
+  // A|-2-|
+  // E|-3-|`;
+
+  //     expect(renderedTab).toBe(expectedTab);
+  //   });
 });

@@ -1,7 +1,12 @@
+import { ClosedChord } from './Chord';
 import Pitch, { MelodicLine, MelodicLineDirection } from './Pitch';
 
 export class Fret {
   constructor(private string: GuitarString, private fret: number, private pitch: Pitch) {}
+
+  get Number(): number {
+    return this.fret;
+  }
 
   isHigher(other: Fret) {
     return this.fret > other.fret;
@@ -19,9 +24,38 @@ export class Fret {
     return this.fret === other.fret;
   }
 
+  isOnString(guitarString: GuitarString): boolean {
+    if (this.string === guitarString) {
+      return true;
+    }
+
+    return false;
+  }
+
   raiseOctave(): Fret {
     this.fret += 12;
     return this;
+  }
+
+  toTab(): TabColumn {
+    const blank = this.fret < 10 ? '-' : '--';
+
+    switch (this.string) {
+      case GuitarString.Sixth:
+        return new TabColumn([blank, blank, blank, blank, blank, `${this.fret}`]);
+      case GuitarString.Fifth:
+        return new TabColumn([blank, blank, blank, blank, `${this.fret}`, blank]);
+      case GuitarString.Fourth:
+        return new TabColumn([blank, blank, blank, `${this.fret}`, blank, blank]);
+      case GuitarString.Third:
+        return new TabColumn([blank, blank, `${this.fret}`, blank, blank, blank]);
+      case GuitarString.Second:
+        return new TabColumn([blank, `${this.fret}`, blank, blank, blank, blank]);
+      case GuitarString.First:
+        return new TabColumn([`${this.fret}`, blank, blank, blank, blank, blank]);
+      default:
+        return TabColumn.Rest;
+    }
   }
 }
 
@@ -110,11 +144,66 @@ export class Position {
   ];
 }
 
+export class GuitarChord {
+  private chord: Fret[];
+
+  constructor(chord: ClosedChord, private position: Position) {
+    this.chord = this.create(chord);
+  }
+
+  toTab(): TabColumn[] {
+    const tab: string[] = [];
+
+    for (const guitarString of GuitarString.guitarStrings.reverse()) {
+      const fret = this.chord.find((f) => f.isOnString(guitarString));
+      if (fret !== undefined) {
+        tab.push(fret.Number.toString());
+      } else {
+        tab.push('-');
+      }
+    }
+    return [new TabColumn(tab)];
+  }
+
+  private create(chord: ClosedChord): Fret[] {
+    const frets: Fret[] = [];
+
+    for (const pitch of chord.Pitches) {
+      const fret = this.mapPitchToFret(pitch, GuitarString.guitarStrings);
+      if (fret !== undefined) {
+        frets.push(fret);
+      }
+    }
+
+    return frets;
+  }
+
+  private mapPitchToFret(pitch: Pitch, guitarStrings: GuitarString[]): Fret | undefined {
+    for (const guitarString of guitarStrings) {
+      const fret = guitarString.fretFor(pitch);
+
+      if (this.position.isFretInPosition(fret)) {
+        return fret;
+      }
+
+      if (this.position.isFretInPosition(fret.raiseOctave())) {
+        return fret;
+      }
+    }
+
+    return undefined;
+  }
+}
+
 export class GuitarMelodicLine implements Iterable<Fret> {
   private line: Fret[];
 
   constructor(line: MelodicLine, private position: Position) {
     this.line = this.create(line);
+  }
+
+  toTab(): TabColumn[] {
+    return this.line.map((fret) => fret.toTab());
   }
 
   private create(line: MelodicLine): Fret[] {
@@ -170,30 +259,25 @@ export class GuitarMelodicLine implements Iterable<Fret> {
 }
 
 export class TabColumn {
-  constructor(private format: (value: string) => string[]) {}
+  constructor(private values: string[]) {}
 
-  public static readonly Start: TabColumn = new TabColumn(() => Array(6).fill('||-'));
-  public static readonly Empty: TabColumn = new TabColumn(() => Array(6).fill('--'));
-  public static readonly Bar: TabColumn = new TabColumn(() => Array(6).fill('-|'));
-  public static readonly End: TabColumn = new TabColumn(() => Array(6).fill('-||'));
-  public static readonly Note: TabColumn = new TabColumn((value) => Array(6).fill(`-${value}-`));
-  public static readonly StandardTunning: TabColumn = new TabColumn(() => [
-    'e',
-    'B',
-    'G',
-    'D',
-    'A',
-    'E',
-  ]);
+  public static readonly Start: TabColumn = new TabColumn(Array(6).fill('|-'));
+  public static readonly Bar: TabColumn = new TabColumn(Array(6).fill('-|-'));
+  public static readonly End: TabColumn = new TabColumn(Array(6).fill('-|'));
+  public static readonly Rest: TabColumn = new TabColumn(Array(6).fill(`-`));
+  public static readonly StandardTunning: TabColumn = new TabColumn(['e', 'B', 'G', 'D', 'A', 'E']);
 
-  render(value = ''): string[] {
-    return this.format(value);
+  render(): string[] {
+    return this.values;
   }
 }
 
 export class Tab {
   render(tab: TabColumn[]) {
-    const tabElements = tab.map((t) => t.render());
+    const standardTabStart = [TabColumn.StandardTunning, TabColumn.Start];
+    const standardTabEnd = [TabColumn.End];
+    const tabToRender = standardTabStart.concat(tab).concat(standardTabEnd);
+    const tabElements = tabToRender.map((t) => t.render());
 
     return tabElements.reduce((a, b) => a.map((v, i) => v + b[i])).join('\n');
   }
