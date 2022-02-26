@@ -154,7 +154,7 @@ export class GuitarChord {
   toTab(): TabColumn[] {
     const tab: string[] = [];
 
-    for (const guitarString of GuitarString.guitarStrings.reverse()) {
+    for (const guitarString of GuitarString.guitarStrings) {
       const fret = this.chord.find((f) => f.isOnString(guitarString));
       if (fret !== undefined) {
         tab.push(fret.Number.toString());
@@ -162,7 +162,7 @@ export class GuitarChord {
         tab.push('-');
       }
     }
-    return [new TabColumn(tab)];
+    return [new TabColumn(tab.reverse())];
   }
 
   private create(chord: ClosedChord): Fret[] {
@@ -183,10 +183,6 @@ export class GuitarChord {
       const fret = guitarString.fretFor(pitch);
 
       if (this.position.isFretInPosition(fret)) {
-        return fret;
-      }
-
-      if (this.position.isFretInPosition(fret.raiseOctave())) {
         return fret;
       }
     }
