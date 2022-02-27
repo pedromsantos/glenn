@@ -4,20 +4,28 @@ import PatternSelector from './PatternSelector';
 import Positions from './Positions';
 
 function Chords() {
+  const onPicthSelected = (pitch: string) => {
+    console.log(pitch);
+  };
+
+  const onPatternSelected = (pattern: string) => {
+    console.log(pattern);
+  };
+
   return (
     <>
       <Grid container spacing={1}>
         <Grid item xs={2}>
           <Card variant="outlined">
             <CardContent>
-              <PitchSelector />
+              <PitchSelector onClick={onPicthSelected} />
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={3}>
           <Card variant="outlined">
             <CardContent>
-              <PatternSelector />
+              <PatternSelector onClick={onPatternSelected} />
             </CardContent>
           </Card>
         </Grid>

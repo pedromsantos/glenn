@@ -35,8 +35,10 @@ function Positions() {
         ))}
       </Tabs>
       {Position.guitarPositions.map((p, i) => (
-        <TabPanel value={activeTabIndex} index={i}>
-          {printAsciiChord(Pitch.C, ChordPattern.Major, Position.C)}
+        <TabPanel key={i} value={activeTabIndex} index={i}>
+          <pre>
+            <code>{printAsciiChord(Pitch.C, ChordPattern.Major, p)}</code>
+          </pre>
         </TabPanel>
       ))}
     </>

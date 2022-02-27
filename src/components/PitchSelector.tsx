@@ -3,7 +3,15 @@ import { Typography } from '@mui/material';
 import SelectorButton from './SelectorButton';
 import Pitch from '../Domain/Pitch';
 
-function PitchSelector() {
+type Props = {
+  onClick: (identifier: string) => void;
+};
+
+const PitchSelector: React.FC<Props> = ({ onClick }) => {
+  const onPicthSelected = (pitch: string) => {
+    onClick(pitch);
+  };
+
   return (
     <>
       <Typography align="center" sx={{ fontSize: 14 }} color="text.secondary">
@@ -18,11 +26,11 @@ function PitchSelector() {
         }}
       >
         {Pitch.pitches.map((p, i) => (
-          <SelectorButton key={i} title={p.Name} />
+          <SelectorButton key={i} title={p.Name} onClick={onPicthSelected} />
         ))}
       </List>
     </>
   );
-}
+};
 
 export default PitchSelector;
