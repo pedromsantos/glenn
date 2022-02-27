@@ -90,6 +90,10 @@ export class GuitarString {
 export class Position {
   constructor(private name: string, private lowFret: Fret, private highFret: Fret) {}
 
+  get Name() {
+    return this.name;
+  }
+
   public static readonly Open: Position = new Position(
     'Open',
     new Fret(GuitarString.Sixth, 0, Pitch.E),

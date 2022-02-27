@@ -1,13 +1,13 @@
 import { List } from '@mui/material';
 import { Typography } from '@mui/material';
 import SelectorButton from './SelectorButton';
-import Pitch from '../Domain/Pitch';
+import { ChordPattern } from '../Domain/Chord';
 
-function PitchSelector() {
+function PatternSelector() {
   return (
     <>
       <Typography align="center" sx={{ fontSize: 14 }} color="text.secondary">
-        Pitch
+        Chord type
       </Typography>
       <List
         dense={true}
@@ -17,12 +17,12 @@ function PitchSelector() {
           maxHeight: 250,
         }}
       >
-        {Pitch.pitches.map((p, i) => (
-          <SelectorButton key={i} title={p.Name} />
+        {ChordPattern.patterns.map((p, i) => (
+          <SelectorButton key={i} title={p.Abbreviation} />
         ))}
       </List>
     </>
   );
 }
 
-export default PitchSelector;
+export default PatternSelector;

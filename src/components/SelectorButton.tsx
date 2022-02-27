@@ -4,7 +4,7 @@ type Props = {
   title: string;
 };
 
-const PitchButton: React.FC<Props> = ({ title }) => {
+const SelectorButton: React.FC<Props> = ({ title }) => {
   return (
     <ListItemButton
       sx={{
@@ -16,4 +16,4 @@ const PitchButton: React.FC<Props> = ({ title }) => {
   );
 };
 
-export default PitchButton;
+export default SelectorButton;
