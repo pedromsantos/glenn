@@ -60,14 +60,49 @@ export class Fret {
 }
 
 export class GuitarString {
-  constructor(private name: string, private openStringPitch: Pitch, private index: number) {}
+  constructor(
+    private name: string,
+    private openStringPitch: Pitch,
+    private index: number,
+    public next: () => GuitarString
+  ) {}
 
-  public static readonly Sixth: GuitarString = new GuitarString('Sixth', Pitch.E, 6);
-  public static readonly Fifth: GuitarString = new GuitarString('Fifth', Pitch.A, 5);
-  public static readonly Fourth: GuitarString = new GuitarString('Fourth', Pitch.D, 4);
-  public static readonly Third: GuitarString = new GuitarString('Third', Pitch.G, 3);
-  public static readonly Second: GuitarString = new GuitarString('Second', Pitch.B, 2);
-  public static readonly First: GuitarString = new GuitarString('First', Pitch.E, 1);
+  public static readonly Sixth: GuitarString = new GuitarString(
+    'Sixth',
+    Pitch.E,
+    6,
+    () => GuitarString.Fifth
+  );
+  public static readonly Fifth: GuitarString = new GuitarString(
+    'Fifth',
+    Pitch.A,
+    5,
+    () => GuitarString.Fourth
+  );
+  public static readonly Fourth: GuitarString = new GuitarString(
+    'Fourth',
+    Pitch.D,
+    4,
+    () => GuitarString.Third
+  );
+  public static readonly Third: GuitarString = new GuitarString(
+    'Third',
+    Pitch.G,
+    3,
+    () => GuitarString.Second
+  );
+  public static readonly Second: GuitarString = new GuitarString(
+    'Second',
+    Pitch.B,
+    2,
+    () => GuitarString.First
+  );
+  public static readonly First: GuitarString = new GuitarString(
+    'First',
+    Pitch.E,
+    1,
+    () => GuitarString.First
+  );
 
   public static readonly guitarStrings = [
     GuitarString.Sixth,
@@ -191,23 +226,28 @@ export class GuitarChord {
   private create(chord: ClosedChord): Fret[] {
     const frets: Fret[] = [];
 
+    let bassString = GuitarString.Sixth;
     for (const pitch of chord.Pitches) {
-      const fret = this.mapPitchToFret(pitch, GuitarString.guitarStrings);
+      const fret = this.mapPitchToFret(pitch, bassString);
       if (fret !== undefined) {
         frets.push(fret);
       }
+      bassString = bassString.next();
     }
 
     return frets;
   }
 
-  private mapPitchToFret(pitch: Pitch, guitarStrings: GuitarString[]): Fret | undefined {
-    for (const guitarString of guitarStrings) {
+  private mapPitchToFret(pitch: Pitch, bassString: GuitarString): Fret | undefined {
+    let guitarString = bassString;
+    while (guitarString !== GuitarString.First) {
       const fret = guitarString.fretFor(pitch);
 
       if (this.position.isFretInPosition(fret)) {
         return fret;
       }
+
+      guitarString = guitarString.next();
     }
 
     return undefined;

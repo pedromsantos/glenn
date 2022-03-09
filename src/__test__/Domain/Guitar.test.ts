@@ -220,6 +220,21 @@ E|-----|`;
   });
 
   describe('render chord', () => {
+    test('C Major triad on open position', () => {
+      const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+      const guitarChord = new GuitarChord(chord, Position.Open);
+      const renderedTab = new Tab().render(guitarChord.toTab());
+
+      const expectedTab = `e|---|
+B|---|
+G|-0-|
+D|-2-|
+A|-3-|
+E|---|`;
+
+      expect(renderedTab).toBe(expectedTab);
+    });
+
     test('C Major triad on C position', () => {
       const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
       const guitarChord = new GuitarChord(chord, Position.C);
@@ -230,25 +245,10 @@ B|---|
 G|---|
 D|-2-|
 A|-3-|
-E|-3-|`;
+E|---|`;
 
       expect(renderedTab).toBe(expectedTab);
     });
-
-    //     test('C Major triad on C position', () => {
-    //       const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
-    //       const guitarChord = new GuitarChord(chord, Position.Open);
-    //       const renderedTab = new Tab().render(guitarChord.toTab());
-
-    //       const expectedTab = `e|---|
-    // B|---|
-    // G|-0-|
-    // D|---|
-    // A|-3-|
-    // E|-0-|`;
-
-    //       expect(renderedTab).toBe(expectedTab);
-    //     });
 
     test('G Major triad on C position', () => {
       const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
@@ -270,12 +270,12 @@ E|-3-|`;
       const guitarChord = new GuitarChord(chord, Position.E);
       const renderedTab = new Tab().render(guitarChord.toTab());
 
-      const expectedTab = `e|----|
-B|----|
-G|--9-|
-D|----|
-A|-10-|
-E|--8-|`;
+      const expectedTab = `e|---|
+B|-8-|
+G|-9-|
+D|---|
+A|---|
+E|-8-|`;
 
       expect(renderedTab).toBe(expectedTab);
     });
