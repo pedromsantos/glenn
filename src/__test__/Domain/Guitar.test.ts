@@ -264,5 +264,20 @@ E|-3-|`;
 
       expect(renderedTab).toBe(expectedTab);
     });
+
+    test('C Major triad on E position', () => {
+      const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+      const guitarChord = new GuitarChord(chord, Position.E);
+      const renderedTab = new Tab().render(guitarChord.toTab());
+
+      const expectedTab = `e|----|
+B|----|
+G|--9-|
+D|----|
+A|-10-|
+E|--8-|`;
+
+      expect(renderedTab).toBe(expectedTab);
+    });
   });
 });

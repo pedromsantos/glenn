@@ -160,13 +160,32 @@ export class GuitarChord {
 
     for (const guitarString of GuitarString.guitarStrings) {
       const fret = this.chord.find((f) => f.isOnString(guitarString));
-      if (fret !== undefined) {
-        tab.push(fret.Number.toString());
-      } else {
-        tab.push('-');
-      }
+
+      tab.push(this.fretToTab(fret));
     }
     return [new TabColumn(tab.reverse())];
+  }
+
+  private fretToTab(fret: Fret | undefined): string {
+    const pad = this.pad();
+
+    if (fret?.Number === undefined) {
+      return pad + '-';
+    }
+
+    if (fret?.Number < 10) {
+      return pad + fret.Number.toString();
+    }
+
+    return fret?.Number.toString();
+  }
+
+  private pad() {
+    if (this.chord.some((f) => f.Number > 9)) {
+      return '-';
+    }
+
+    return '';
   }
 
   private create(chord: ClosedChord): Fret[] {
