@@ -8,12 +8,12 @@ export class Fret {
     return this.fret;
   }
 
-  isHigher(other: Fret) {
-    return this.fret > other.fret;
+  isHigher(other: Fret, margin = 0) {
+    return this.fret + margin > other.fret;
   }
 
-  isLower(other: Fret) {
-    return this.fret < other.fret;
+  isLower(other: Fret, margin = 0) {
+    return this.fret - margin < other.fret;
   }
 
   isSame(other: Fret) {
@@ -165,10 +165,10 @@ export class Position {
     new Fret(GuitarString.First, 13, Pitch.F)
   );
 
-  isFretInPosition(fret: Fret): boolean {
+  isFretInPosition(fret: Fret, lowerMargin = 0, higherMargin = 0): boolean {
     const fretRangeFilter: (f: Fret) => boolean = (f) =>
-      (f.isHigher(this.lowFret) || f.isSameFret(this.lowFret)) &&
-      (f.isLower(this.highFret) || f.isSameFret(this.highFret));
+      (f.isHigher(this.lowFret, lowerMargin) || f.isSameFret(this.lowFret)) &&
+      (f.isLower(this.highFret, higherMargin) || f.isSameFret(this.highFret));
 
     return fretRangeFilter(fret);
   }
@@ -243,7 +243,7 @@ export class GuitarChord {
     while (guitarString !== GuitarString.First) {
       const fret = guitarString.fretFor(pitch);
 
-      if (this.position.isFretInPosition(fret)) {
+      if (this.position.isFretInPosition(fret, 1, 1)) {
         return fret;
       }
 
