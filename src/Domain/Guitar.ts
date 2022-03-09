@@ -2,7 +2,7 @@ import { ClosedChord } from './Chord';
 import Pitch, { MelodicLine, MelodicLineDirection } from './Pitch';
 
 export class Fret {
-  constructor(private string: GuitarString, private fret: number, private pitch: Pitch) {}
+  constructor(private string: GuitarString, private fret: number) {}
 
   get Number(): number {
     return this.fret;
@@ -64,7 +64,7 @@ export class GuitarString {
     private name: string,
     private openStringPitch: Pitch,
     private index: number,
-    public next: () => GuitarString
+    private next: () => GuitarString
   ) {}
 
   public static readonly Sixth: GuitarString = new GuitarString(
@@ -114,11 +114,15 @@ export class GuitarString {
   ];
 
   fretFor(pitch: Pitch): Fret {
-    return new Fret(this, this.openStringPitch.absoluteDistance(pitch), pitch);
+    return new Fret(this, this.openStringPitch.absoluteDistance(pitch));
   }
 
   isSame(other: GuitarString): boolean {
     return this.index === other.index;
+  }
+
+  get Next(): GuitarString {
+    return this.next();
   }
 }
 
@@ -131,38 +135,38 @@ export class Position {
 
   public static readonly Open: Position = new Position(
     'Open',
-    new Fret(GuitarString.Sixth, 0, Pitch.E),
-    new Fret(GuitarString.First, 3, Pitch.G)
+    new Fret(GuitarString.Sixth, 0),
+    new Fret(GuitarString.First, 3)
   );
 
   public static readonly C: Position = new Position(
     'C',
-    new Fret(GuitarString.Sixth, 1, Pitch.FSharp),
-    new Fret(GuitarString.First, 4, Pitch.GSharp)
+    new Fret(GuitarString.Sixth, 1),
+    new Fret(GuitarString.First, 3)
   );
 
   public static readonly A: Position = new Position(
     'A',
-    new Fret(GuitarString.Sixth, 3, Pitch.G),
-    new Fret(GuitarString.First, 6, Pitch.ASharp)
+    new Fret(GuitarString.Sixth, 3),
+    new Fret(GuitarString.First, 5)
   );
 
   public static readonly G: Position = new Position(
     'G',
-    new Fret(GuitarString.Sixth, 5, Pitch.A),
-    new Fret(GuitarString.First, 8, Pitch.C)
+    new Fret(GuitarString.Sixth, 5),
+    new Fret(GuitarString.First, 8)
   );
 
   public static readonly E: Position = new Position(
     'E',
-    new Fret(GuitarString.Sixth, 8, Pitch.C),
-    new Fret(GuitarString.First, 11, Pitch.DSharp)
+    new Fret(GuitarString.Sixth, 8),
+    new Fret(GuitarString.First, 10)
   );
 
   public static readonly D: Position = new Position(
     'D',
-    new Fret(GuitarString.Sixth, 10, Pitch.D),
-    new Fret(GuitarString.First, 13, Pitch.F)
+    new Fret(GuitarString.Sixth, 10),
+    new Fret(GuitarString.First, 13)
   );
 
   isFretInPosition(fret: Fret, lowerMargin = 0, higherMargin = 0): boolean {
@@ -232,7 +236,7 @@ export class GuitarChord {
       if (fret !== undefined) {
         frets.push(fret);
       }
-      bassString = bassString.next();
+      bassString = bassString.Next;
     }
 
     return frets;
@@ -247,7 +251,7 @@ export class GuitarChord {
         return fret;
       }
 
-      guitarString = guitarString.next();
+      guitarString = guitarString.Next;
     }
 
     return undefined;
