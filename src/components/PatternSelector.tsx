@@ -1,15 +1,18 @@
-import { List } from '@mui/material';
+import { List, ListItemButton, ListItemText } from '@mui/material';
 import { Typography } from '@mui/material';
-import SelectorButton from './SelectorButton';
+import { useState } from 'react';
 import { ChordPattern } from '../Domain/Chord';
 
 type Props = {
-  onClick: (identifier: string) => void;
+  onPatternSelected: (identifier: ChordPattern) => void;
 };
 
-const PatternSelector: React.FC<Props> = ({ onClick }) => {
-  const onPatternSelected = (pattern: string) => {
-    onClick(pattern);
+const PatternSelector: React.FC<Props> = ({ onPatternSelected }) => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const onClick = (pattern: ChordPattern, index: number) => {
+    setSelectedIndex(index);
+    onPatternSelected(pattern);
   };
 
   return (
@@ -26,7 +29,17 @@ const PatternSelector: React.FC<Props> = ({ onClick }) => {
         }}
       >
         {ChordPattern.patterns.map((p, i) => (
-          <SelectorButton key={i} title={p.Abbreviation} onClick={onPatternSelected} />
+          <ListItemButton
+            key={i}
+            selected={selectedIndex === i}
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            onClick={(_event) => onClick(p, i)}
+            sx={{
+              maxHeight: 18,
+            }}
+          >
+            <ListItemText primary={p.Abbreviation} />
+          </ListItemButton>
         ))}
       </List>
     </>

@@ -1,15 +1,18 @@
-import { List } from '@mui/material';
+import { List, ListItemButton, ListItemText } from '@mui/material';
 import { Typography } from '@mui/material';
-import SelectorButton from './SelectorButton';
 import Pitch from '../Domain/Pitch';
+import { useState } from 'react';
 
 type Props = {
-  onClick: (identifier: string) => void;
+  onPicthSelected: (identifier: Pitch) => void;
 };
 
-const PitchSelector: React.FC<Props> = ({ onClick }) => {
-  const onPicthSelected = (pitch: string) => {
-    onClick(pitch);
+const PitchSelector: React.FC<Props> = ({ onPicthSelected }) => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const onClick = (pitch: Pitch, index: number) => {
+    setSelectedIndex(index);
+    onPicthSelected(pitch);
   };
 
   return (
@@ -26,7 +29,17 @@ const PitchSelector: React.FC<Props> = ({ onClick }) => {
         }}
       >
         {Pitch.pitches.map((p, i) => (
-          <SelectorButton key={i} title={p.Name} onClick={onPicthSelected} />
+          <ListItemButton
+            key={i}
+            selected={selectedIndex === i}
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            onClick={(_event) => onClick(p, i)}
+            sx={{
+              maxHeight: 18,
+            }}
+          >
+            <ListItemText primary={p.Name} />
+          </ListItemButton>
         ))}
       </List>
     </>

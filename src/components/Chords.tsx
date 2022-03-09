@@ -2,14 +2,20 @@ import { Card, CardContent, Grid } from '@mui/material';
 import PitchSelector from './PitchSelector';
 import PatternSelector from './PatternSelector';
 import Positions from './Positions';
+import Pitch from '../Domain/Pitch';
+import { ChordPattern } from '../Domain/Chord';
+import { useState } from 'react';
 
 function Chords() {
-  const onPicthSelected = (pitch: string) => {
-    console.log(pitch);
+  const [selectedPitch, setSelectedPitch] = useState(Pitch.C);
+  const [selectedPattern, setSelectedPattern] = useState(ChordPattern.Major);
+
+  const onPicthSelected = (pitch: Pitch) => {
+    setSelectedPitch(pitch);
   };
 
-  const onPatternSelected = (pattern: string) => {
-    console.log(pattern);
+  const onPatternSelected = (pattern: ChordPattern) => {
+    setSelectedPattern(pattern);
   };
 
   return (
@@ -18,21 +24,21 @@ function Chords() {
         <Grid item xs={2}>
           <Card variant="outlined">
             <CardContent>
-              <PitchSelector onClick={onPicthSelected} />
+              <PitchSelector onPicthSelected={onPicthSelected} />
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={3}>
           <Card variant="outlined">
             <CardContent>
-              <PatternSelector onClick={onPatternSelected} />
+              <PatternSelector onPatternSelected={onPatternSelected} />
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={7}>
           <Card variant="outlined">
             <CardContent>
-              <Positions />
+              <Positions pitch={selectedPitch} pattern={selectedPattern} />
             </CardContent>
           </Card>
         </Grid>

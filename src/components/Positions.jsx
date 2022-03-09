@@ -1,8 +1,7 @@
 import { Box, Tab, Tabs } from '@mui/material';
 import React from 'react';
 import { Position, Tab as GuitarTab, GuitarChord } from '../Domain/Guitar';
-import { ClosedChord, ChordPattern } from '../Domain/Chord';
-import Pitch from '../Domain/Pitch';
+import { ClosedChord } from '../Domain/Chord';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -15,7 +14,7 @@ function printAsciiChord(pitch, pattern, position) {
   return new GuitarTab().render(guitarChord.toTab());
 }
 
-function Positions() {
+const Positions = ({ pitch, pattern }) => {
   const [activeTabIndex, setActiveTabIndex] = React.useState(0);
 
   return (
@@ -37,12 +36,12 @@ function Positions() {
       {Position.guitarPositions.map((p, i) => (
         <TabPanel key={i} value={activeTabIndex} index={i}>
           <pre>
-            <code>{printAsciiChord(Pitch.C, ChordPattern.Major, p)}</code>
+            <code>{printAsciiChord(pitch, pattern, p)}</code>
           </pre>
         </TabPanel>
       ))}
     </>
   );
-}
+};
 
 export default Positions;
