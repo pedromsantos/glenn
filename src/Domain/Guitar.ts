@@ -25,11 +25,7 @@ export class Fret {
   }
 
   isOnString(guitarString: GuitarString): boolean {
-    if (this.string === guitarString) {
-      return true;
-    }
-
-    return false;
+    return this.string === guitarString;
   }
 
   raiseOctave(): Fret {

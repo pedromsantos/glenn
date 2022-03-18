@@ -57,12 +57,6 @@ describe('Major Chords should', () => {
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
-  test('Have expected pitches for CMaj9#11 chord', () => {
-    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B, Pitch.D, Pitch.FSharp];
-    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Major9Sharp11).Pitches;
-    expect(chordPitches).toStrictEqual(expectedPitches);
-  });
-
   test('Have expected pitches for CAug chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.GSharp];
     const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Augmented).Pitches;
@@ -71,12 +65,6 @@ describe('Major Chords should', () => {
 });
 
 describe('Dominant Chords should', () => {
-  test('Have expected pitches for C7 chord', () => {
-    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.BFlat];
-    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Dominant7).Pitches;
-    expect(chordPitches).toStrictEqual(expectedPitches);
-  });
-
   test('Have expected pitches for C7 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.BFlat];
     const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Dominant7).Pitches;
