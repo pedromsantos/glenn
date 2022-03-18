@@ -132,5 +132,5 @@
     "hooks": {
       "pre-commit": "yarn lint && yarn test"
     }
-  },
+  }
 }
