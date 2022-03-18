@@ -22,6 +22,7 @@ pages:
   script:
     # Rename the CRA `build` folder to `public`
     - mv build public
+    - cp public/index.html
   artifacts:
     paths:
       - public
