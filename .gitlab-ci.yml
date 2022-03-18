@@ -17,11 +17,9 @@ pages:
   stage: deploy
   variables:
     GIT_STRATEGY: none        # Do not clone git repo
-    NODE_ENV: production
-    PUBLIC_URL: https://pedro_m_santos.gitlab.io/glenn/
   script:
     # Rename the CRA `build` folder to `public`
     - mv build public
   artifacts:
     paths:
-      - public
+      - public # https://pedro_m_santos.gitlab.io/glenn/index.html
