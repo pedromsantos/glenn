@@ -2,10 +2,6 @@ stages:
   - build
   - deploy
 
-variables:
-    # Replace this with your site URL
-    PUBLIC_URL: https://pedromsantos.gitlab.io/glenn/
-
 build:
   image: node:latest    # Run the job in a `node` docker image
   stage: build
@@ -21,6 +17,8 @@ pages:
   stage: deploy
   variables:
     GIT_STRATEGY: none        # Do not clone git repo
+    NODE_ENV: production
+    PUBLIC_URL: https://pedro_m_santos.gitlab.io/glenn/
   script:
     # Rename the CRA `build` folder to `public`
     - mv build public
