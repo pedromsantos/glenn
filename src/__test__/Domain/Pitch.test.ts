@@ -1,4 +1,6 @@
+/* eslint-disable jest/no-conditional-expect */
 /* eslint-disable sonarjs/cognitive-complexity */
+
 import Interval from '../../Domain/Interval';
 import Pitch from '../../Domain/Pitch';
 import * as fc from 'fast-check';
@@ -400,7 +402,7 @@ describe('Pitch', () => {
     test('a sharped note has a higher pitch except B', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
-          if (pitch == Pitch.B) {
+          if (pitch === Pitch.B) {
             expect(pitch.sharp().NumericValue).toBeLessThan(pitch.NumericValue);
           } else {
             expect(pitch.sharp().NumericValue).toBeGreaterThan(pitch.NumericValue);
@@ -413,7 +415,7 @@ describe('Pitch', () => {
     test('a flatted note has a lower pitch except C', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
-          if (pitch == Pitch.C) {
+          if (pitch === Pitch.C) {
             expect(pitch.flat().NumericValue).toBeGreaterThan(pitch.NumericValue);
           } else {
             expect(pitch.flat().NumericValue).toBeLessThan(pitch.NumericValue);
@@ -443,7 +445,7 @@ describe('Pitch', () => {
             transposed = transposed.sharp();
           }
 
-          if (distance == 12) {
+          if (distance === 12) {
             expect(pitch.absoluteDistance(transposed)).toBe(0);
           } else {
             expect(pitch.absoluteDistance(transposed)).toBe(distance);
@@ -462,7 +464,7 @@ describe('Pitch', () => {
             transposed = transposed.flat();
           }
 
-          if (distance == 12 || distance == 0) {
+          if (distance === 12 || distance === 0) {
             expect(pitch.absoluteDistance(transposed)).toBe(0);
           } else {
             expect(pitch.absoluteDistance(transposed)).toBe(12 - distance);
@@ -499,8 +501,8 @@ describe('Pitch', () => {
                 break;
               case Interval.DiminishedSeventh:
                 if (
-                  resultingInterval == Interval.MajorSixth ||
-                  resultingInterval == Interval.DiminishedSeventh
+                  resultingInterval === Interval.MajorSixth ||
+                  resultingInterval === Interval.DiminishedSeventh
                 )
                   expect(resultingInterval).toBe(resultingInterval);
                 break;
@@ -508,8 +510,8 @@ describe('Pitch', () => {
               case Interval.AugmentedNinth:
               case Interval.AugmentedSecond:
                 if (
-                  resultingInterval == Interval.MinorThird ||
-                  resultingInterval == Interval.AugmentedSecond
+                  resultingInterval === Interval.MinorThird ||
+                  resultingInterval === Interval.AugmentedSecond
                 )
                   expect(resultingInterval).toBe(resultingInterval);
                 break;
@@ -517,9 +519,9 @@ describe('Pitch', () => {
               case Interval.MinorSixth:
               case Interval.AugmentedFifth:
                 if (
-                  resultingInterval == Interval.MinorThirteenth ||
-                  resultingInterval == Interval.MinorSixth ||
-                  resultingInterval == Interval.AugmentedFifth
+                  resultingInterval === Interval.MinorThirteenth ||
+                  resultingInterval === Interval.MinorSixth ||
+                  resultingInterval === Interval.AugmentedFifth
                 )
                   expect(resultingInterval).toBe(resultingInterval);
                 break;
@@ -527,8 +529,8 @@ describe('Pitch', () => {
               case Interval.DiminishedFifth:
               case Interval.AugmentedFourth:
                 if (
-                  resultingInterval == Interval.AugmentedFourth ||
-                  resultingInterval == Interval.DiminishedFifth
+                  resultingInterval === Interval.AugmentedFourth ||
+                  resultingInterval === Interval.DiminishedFifth
                 )
                   expect(resultingInterval).toBe(resultingInterval);
                 break;
@@ -536,9 +538,9 @@ describe('Pitch', () => {
               case Interval.MinorSecond:
               case Interval.AugmentedUnison:
                 if (
-                  resultingInterval == Interval.MinorNinth ||
-                  resultingInterval == Interval.MinorSecond ||
-                  resultingInterval == Interval.AugmentedUnison
+                  resultingInterval === Interval.MinorNinth ||
+                  resultingInterval === Interval.MinorSecond ||
+                  resultingInterval === Interval.AugmentedUnison
                 )
                   expect(resultingInterval).toBe(resultingInterval);
                 break;

@@ -77,7 +77,7 @@ export class Duration implements RhythmicDuration {
   }
 
   toFillMeasure(timeSignature: SimpleTimeSignature, measure?: Measure): number {
-    if (measure == undefined) return timeSignature.toFillMeasure(this);
+    if (measure === undefined) return timeSignature.toFillMeasure(this);
 
     const needsBeats = this.toBeats(timeSignature);
     const usedBeats = measure.usedBeats();
@@ -95,7 +95,7 @@ export class Duration implements RhythmicDuration {
   }
 
   static From(value: number): Duration | undefined {
-    return Duration.durations.find((d) => d.value == value);
+    return Duration.durations.find((d) => d.value === value);
   }
 
   private usedBeatsInInstanceDuration(

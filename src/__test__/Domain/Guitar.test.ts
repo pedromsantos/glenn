@@ -110,8 +110,6 @@ describe('Guitar tab should', () => {
   describe('render', () => {
     test('render tunning + start + end', () => {
       const tab = new Tab();
-      const renderedTab = tab.render([]);
-
       const expectedTab = `e|--|
 B|--|
 G|--|
@@ -119,7 +117,7 @@ D|--|
 A|--|
 E|--|`;
 
-      expect(renderedTab).toBe(expectedTab);
+      expect(tab.render([])).toBe(expectedTab);
     });
 
     test('render tunning + start + rest + end', () => {

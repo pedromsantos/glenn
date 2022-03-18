@@ -304,7 +304,7 @@ export class GuitarMelodicLine implements Iterable<Fret> {
 
   get(index: number): Fret {
     if (index >= this.line.length) {
-      throw 'Invalid index';
+      throw new Error('Invalid index');
     }
 
     return this.line[index];

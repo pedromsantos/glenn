@@ -38,7 +38,7 @@ describe('Duration', () => {
       expect(timeSignature.beatValue).toBe(Duration.Eighth.value * 3);
     });
 
-    test(' Beat sub-duration is an eight note', () => {
+    test('Beat sub-duration is an eight note', () => {
       expect(timeSignature.beatDuration).toBe(Duration.Eighth.value);
     });
   });

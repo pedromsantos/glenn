@@ -40,7 +40,7 @@ describe('Scale properties', () => {
     );
   });
 
-  test('any Major Scale Mode should have same note distances as the corresponding C Major Scale Mode ', () => {
+  test('any Major Scale Mode should have same note distances as the corresponding C Major Scale Mode', () => {
     fc.assert(
       fc.property(
         fc.constantFrom(...Pitch.natural),

@@ -68,13 +68,13 @@ export default class Pitch {
   transpose(interval: Interval): Pitch {
     const transposer = this.intervals().transposerFor(interval);
 
-    return transposer == undefined ? this : transposer();
+    return transposer === undefined ? this : transposer();
   }
 
   intervalTo(to: Pitch): Interval {
     const intervalTo = this.intervals().intervalTo(to);
 
-    return intervalTo == undefined ? Interval.Unison : intervalTo;
+    return intervalTo === undefined ? Interval.Unison : intervalTo;
   }
 
   get NumericValue(): number {
@@ -96,7 +96,7 @@ export default class Pitch {
   }
 
   static From(state: PitchState): Pitch | undefined {
-    return Pitch.pitches.find((p) => p.value === state.value && p.name == state.name);
+    return Pitch.pitches.find((p) => p.value === state.value && p.name === state.name);
   }
 
   public static readonly C: Pitch = new Pitch(
