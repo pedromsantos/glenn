@@ -30,6 +30,7 @@ const PatternSelector: React.FC<Props> = ({ onPatternSelected }) => {
       >
         {ChordPattern.patterns.map((p, i) => (
           <ListItemButton
+            data-testid={'ListItemButton' + i}
             key={i}
             selected={selectedIndex === i}
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
