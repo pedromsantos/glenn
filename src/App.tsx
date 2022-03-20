@@ -2,7 +2,7 @@ import PageContent from './components/PageContent';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-function App() {
+const App: React.FC<any> = () => {
   return (
     <>
       <Header />
@@ -12,6 +12,6 @@ function App() {
       <Footer />
     </>
   );
-}
+};
 
 export default App;

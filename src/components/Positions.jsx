@@ -2,6 +2,7 @@ import { Box, Tab, Tabs } from '@mui/material';
 import React from 'react';
 import { Position, Tab as GuitarTab, GuitarChord } from '../Domain/Guitar';
 import { ClosedChord } from '../Domain/Chord';
+import { Typography } from '@mui/material';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -19,6 +20,9 @@ const Positions = ({ pitch, pattern }) => {
 
   return (
     <>
+      <Typography align="center" sx={{ fontSize: 14 }} color="text.secondary">
+        CAGED Positions
+      </Typography>
       <Tabs
         value={activeTabIndex}
         onChange={(event, newValue) => {
