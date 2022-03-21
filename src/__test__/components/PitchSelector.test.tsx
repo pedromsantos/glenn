@@ -43,31 +43,16 @@ describe('Pitch selector should', () => {
     }
   );
 
-  test.each([
-    [0, Pitch.C],
-    [1, Pitch.CSharp],
-    [2, Pitch.DFlat],
-    [3, Pitch.D],
-    [4, Pitch.DSharp],
-    [5, Pitch.EFlat],
-    [6, Pitch.E],
-    [7, Pitch.F],
-    [8, Pitch.FSharp],
-    [9, Pitch.GFlat],
-    [10, Pitch.G],
-    [11, Pitch.GSharp],
-    [12, Pitch.AFlat],
-    [13, Pitch.A],
-    [14, Pitch.ASharp],
-    [15, Pitch.BFlat],
-    [16, Pitch.B],
-  ])('Notify when pitch is selected', (index, pitch) => {
-    const selectedMock = jest.fn();
+  test.each([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])(
+    'Notify when pitch is selected',
+    (index) => {
+      const selectedMock = jest.fn();
 
-    render(<PitchSelector onPicthSelected={selectedMock} />);
+      render(<PitchSelector onPicthSelected={selectedMock} />);
 
-    fireEvent.click(screen.getByTestId('ListItemButton' + index));
+      fireEvent.click(screen.getByTestId('ListItemButton' + index));
 
-    expect(selectedMock).toHaveBeenCalledWith(pitch);
-  });
+      expect(selectedMock).toHaveBeenCalledWith(Pitch.pitches[index]);
+    }
+  );
 });
