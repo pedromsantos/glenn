@@ -3,7 +3,11 @@ import Pitch from './Pitch';
 
 // Stryker disable StringLiteral
 export class Octave {
-  constructor(private octaveName: string, private value: number, private midiBaseValue: number) {}
+  private constructor(
+    private octaveName: string,
+    private value: number,
+    private midiBaseValue: number
+  ) {}
 
   public static readonly SubContra: Octave = new Octave('Sub contra', -16, 0);
   public static readonly Contra: Octave = new Octave('Contra', -8, 12);

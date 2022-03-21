@@ -1,7 +1,7 @@
 import Pitch from './Pitch';
 
 export default class Key {
-  constructor(private root: Pitch, private accidentals: number) {}
+  private constructor(private root: Pitch, private accidentals: number) {}
 
   public static readonly CMajor: Key = new Key(Pitch.C, 0);
   public static readonly DFlatMajor: Key = new Key(Pitch.DFlat, -5);

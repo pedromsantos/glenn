@@ -3,6 +3,46 @@ import { ClosedChord, ChordPattern, ChordFunction } from '../../Domain/Chord';
 import * as fc from 'fast-check';
 
 describe('Major Chords should', () => {
+  test('have a name', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    expect(chord.Name).toBe('CMajor');
+  });
+
+  test('have a root', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    expect(chord.pitchForFunction(ChordFunction.Root)).toBe(Pitch.C);
+  });
+
+  test('have a third', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    expect(chord.pitchForFunction(ChordFunction.Third)).toBe(Pitch.E);
+  });
+
+  test('have a fifth', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    expect(chord.pitchForFunction(ChordFunction.Fifth)).toBe(Pitch.G);
+  });
+
+  test('have a seventh', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    expect(chord.pitchForFunction(ChordFunction.Seventh)).toBe(Pitch.B);
+  });
+
+  test('have a ninth', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major9);
+    expect(chord.pitchForFunction(ChordFunction.Ninth)).toBe(Pitch.D);
+  });
+
+  test('have an eleventh', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major11);
+    expect(chord.pitchForFunction(ChordFunction.Eleventh)).toBe(Pitch.F);
+  });
+
+  test('have a thirteenth', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major13);
+    expect(chord.pitchForFunction(ChordFunction.Thirteenth)).toBe(Pitch.A);
+  });
+
   test('Have expected pitches for C Major chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G];
     const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Major).Pitches;

@@ -138,20 +138,17 @@ class BaseChord implements Chord {
   static From(state: ChordState): Chord | undefined {
     const root = Pitch.From(state.root);
     const pattern = ChordPattern.From(state.pattern);
-    const duration = Duration.From(state.duration);
-
     if (root === undefined || pattern === undefined) {
       return undefined;
     }
-
-    return new ClosedChord(root, pattern, duration !== undefined ? duration : Duration.Whole);
+    return new BaseChord(root, pattern, Duration.From(state.duration));
   }
 }
 
 export class ClosedChord extends BaseChord {}
 
 export class ChordFunction {
-  constructor(private name: string) {}
+  private constructor(private name: string) {}
 
   public static readonly Root: ChordFunction = new ChordFunction('Root');
   public static readonly Third: ChordFunction = new ChordFunction('Third');
@@ -219,7 +216,7 @@ export class ChordFunction {
 
 // Stryker disable StringLiteral
 export class ChordPattern {
-  constructor(
+  private constructor(
     private name: string,
     private abbreviation: string,
     private pattern: Array<Interval>

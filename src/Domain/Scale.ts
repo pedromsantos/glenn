@@ -2,7 +2,7 @@ import Interval from './Interval';
 import Pitch, { MelodicLine, MelodicLineDirection } from './Pitch';
 
 export class ScalePattern {
-  constructor(private pattern: Interval[]) {}
+  private constructor(private pattern: Interval[]) {}
 
   public static readonly Ionian: ScalePattern = new ScalePattern([
     Interval.Unison,
@@ -242,35 +242,19 @@ export class ScalePattern {
   ]);
 
   public createScale(root: Pitch) {
-    return new Scale(
-      this,
-      root,
-      this.pattern.map((interval) => root.transpose(interval))
-    );
+    return new Scale(this, root, this.createScalePitches(root));
   }
 
   public createScalePitches(root: Pitch): Pitch[] {
-    return new Scale(
-      this,
-      root,
-      this.pattern.map((interval) => root.transpose(interval))
-    ).Pitches;
+    return this.pattern.map((interval) => root.transpose(interval));
   }
 
   public createMelodicLineScale(root: Pitch): MelodicLine {
-    return new Scale(
-      this,
-      root,
-      this.pattern.map((interval) => root.transpose(interval))
-    ).MelodicLine;
+    return new MelodicLine(this.createScalePitches(root));
   }
 
   public createDescendingMelodicLineScale(root: Pitch): MelodicLine {
-    return new Scale(
-      this,
-      root,
-      this.pattern.map((interval) => root.transpose(interval))
-    ).DescendingMelodicLine;
+    return this.createScale(root).DescendingMelodicLine;
   }
 
   // Stryker disable all

@@ -50,7 +50,7 @@ export type PitchState = {
 };
 
 export default class Pitch {
-  constructor(
+  private constructor(
     private name: string,
     private value: number,
     public sharp: () => Pitch,
