@@ -40,7 +40,7 @@ describe('Pitch selector should', () => {
     expect(screen.getByTestId('ListItemButton' + index)).toHaveClass(selectedClassIdentifier);
   });
 
-  test.each([...Array(16).keys()])('Notify when pitch is selected', (index) => {
+  test.each(Array.from({ length: 16 }, (_, i) => i))('Notify when pitch is selected', (index) => {
     const selectedMock = jest.fn();
 
     render(<PitchSelector onPicthSelected={selectedMock} />);

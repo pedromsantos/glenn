@@ -31,7 +31,7 @@ describe('Chord Pattern selector should', () => {
     expect(screen.getByTestId('ListItemButton0')).toHaveClass(selectedClassIdentifier);
   });
 
-  test.each([...Array(35).keys()].map((x) => x + 1))(
+  test.each(Array.from({ length: 36 }, (_, i) => i + 1))(
     'Select chord pattern when clicked',
     (index) => {
       render(<PatternSelector onPatternSelected={() => {}} />);
@@ -43,7 +43,7 @@ describe('Chord Pattern selector should', () => {
     }
   );
 
-  test.each([...Array(36).keys()])('Notify when pitch is selected', (index) => {
+  test.each(Array.from({ length: 36 }, (_, i) => i))('Notify when pitch is selected', (index) => {
     const selectedMock = jest.fn();
 
     render(<PatternSelector onPatternSelected={selectedMock} />);
