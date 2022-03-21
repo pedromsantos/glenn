@@ -36,13 +36,13 @@ export class CompoundTimeSignature implements TimeSignature {
     return this.duration.value * 3;
   }
 
-  toBeats(duration: Duration = this.duration): number {
-    return (duration.value * 3) / this.beatDuration / this.beats;
-  }
+  // toBeats(duration: Duration = this.duration): number {
+  //   return (duration.value * 3) / this.beatDuration / this.beats;
+  // }
 
-  toFillMeasure(duration: Duration = this.duration): number {
-    return (this.beatValue / duration.value) * (this.beats / 3);
-  }
+  // toFillMeasure(duration: Duration = this.duration): number {
+  //   return (this.beatValue / duration.value) * (this.beats / 3);
+  // }
 }
 
 export interface RhythmicDuration {
