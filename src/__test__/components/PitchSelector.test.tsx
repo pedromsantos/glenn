@@ -31,28 +31,22 @@ describe('Pitch selector should', () => {
     expect(screen.getByTestId('ListItemButton0')).toHaveClass(selectedClassIdentifier);
   });
 
-  test.each([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])(
-    'Select pitch when clicked',
-    (index) => {
-      render(<PitchSelector onPicthSelected={() => {}} />);
+  test.each(Array.from({ length: 16 }, (_, i) => i + 1))('Select pitch when clicked', (index) => {
+    render(<PitchSelector onPicthSelected={() => {}} />);
 
-      fireEvent.click(screen.getByTestId('ListItemButton' + index));
+    fireEvent.click(screen.getByTestId('ListItemButton' + index));
 
-      expect(screen.getByTestId('ListItemButton0')).not.toHaveClass(selectedClassIdentifier);
-      expect(screen.getByTestId('ListItemButton' + index)).toHaveClass(selectedClassIdentifier);
-    }
-  );
+    expect(screen.getByTestId('ListItemButton0')).not.toHaveClass(selectedClassIdentifier);
+    expect(screen.getByTestId('ListItemButton' + index)).toHaveClass(selectedClassIdentifier);
+  });
 
-  test.each([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])(
-    'Notify when pitch is selected',
-    (index) => {
-      const selectedMock = jest.fn();
+  test.each([...Array(16).keys()])('Notify when pitch is selected', (index) => {
+    const selectedMock = jest.fn();
 
-      render(<PitchSelector onPicthSelected={selectedMock} />);
+    render(<PitchSelector onPicthSelected={selectedMock} />);
 
-      fireEvent.click(screen.getByTestId('ListItemButton' + index));
+    fireEvent.click(screen.getByTestId('ListItemButton' + index));
 
-      expect(selectedMock).toHaveBeenCalledWith(Pitch.pitches[index]);
-    }
-  );
+    expect(selectedMock).toHaveBeenCalledWith(Pitch.pitches[index]);
+  });
 });

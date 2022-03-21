@@ -31,22 +31,19 @@ describe('Chord Pattern selector should', () => {
     expect(screen.getByTestId('ListItemButton0')).toHaveClass(selectedClassIdentifier);
   });
 
-  test.each([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
-    27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
-  ])('Select chord pattern when clicked', (index) => {
-    render(<PatternSelector onPatternSelected={() => {}} />);
+  test.each([...Array(35).keys()].map((x) => x + 1))(
+    'Select chord pattern when clicked',
+    (index) => {
+      render(<PatternSelector onPatternSelected={() => {}} />);
 
-    fireEvent.click(screen.getByTestId('ListItemButton' + index));
+      fireEvent.click(screen.getByTestId('ListItemButton' + index));
 
-    expect(screen.getByTestId('ListItemButton0')).not.toHaveClass(selectedClassIdentifier);
-    expect(screen.getByTestId('ListItemButton' + index)).toHaveClass(selectedClassIdentifier);
-  });
+      expect(screen.getByTestId('ListItemButton0')).not.toHaveClass(selectedClassIdentifier);
+      expect(screen.getByTestId('ListItemButton' + index)).toHaveClass(selectedClassIdentifier);
+    }
+  );
 
-  test.each([
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
-    26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
-  ])('Notify when pitch is selected', (index) => {
+  test.each([...Array(36).keys()])('Notify when pitch is selected', (index) => {
     const selectedMock = jest.fn();
 
     render(<PatternSelector onPatternSelected={selectedMock} />);
