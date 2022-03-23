@@ -3,24 +3,23 @@ stages:
   - deploy
 
 build:
-  image: node:latest    # Run the job in a `node` docker image
+  image: node:latest
   stage: build
   script:
-    - yarn install      # Run `yarn install` and `yarn build`
+    - yarn install
     - yarn lint
     - yarn test
     - yarn build
   artifacts:
     paths:
-      - build/          # Save the build result as an artfact
+      - build/
 
 pages:
   image: alpine:latest
   stage: deploy
   variables:
-    GIT_STRATEGY: none        # Do not clone git repo
+    GIT_STRATEGY: none
   script:
-    # Rename the CRA `build` folder to `public`
     - mv build public
   artifacts:
     paths:
