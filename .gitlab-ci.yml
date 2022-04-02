@@ -1,12 +1,9 @@
-build_web_site:
-  image: node:16-alpine
-
 stages:
-  - build
+  - buildn
   - deploy
 
 build:
-  image: node:latest
+  image: node:16-alpine
   stage: build
   script:
     - yarn install
@@ -18,7 +15,7 @@ build:
       - build/
 
 pages:
-  image: alpine:latest
+  image: node:16-alpine
   stage: deploy
   variables:
     GIT_STRATEGY: none
