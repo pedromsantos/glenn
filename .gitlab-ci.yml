@@ -1,5 +1,5 @@
 stages:
-  - buildn
+  - build
   - deploy
 
 build:
