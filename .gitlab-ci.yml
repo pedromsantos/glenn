@@ -1,3 +1,6 @@
+build_web_site:
+  image: node:16-alpine
+
 stages:
   - build
   - deploy
