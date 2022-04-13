@@ -14,7 +14,7 @@ build:
     paths:
       - build/
 
-pages:
+deploy to gitlab:
   image: node:16-alpine
   stage: deploy
   variables:
@@ -24,3 +24,13 @@ pages:
   artifacts:
     paths:
       - public # https://pedro_m_santos.gitlab.io/glenn/index.html
+
+.deploy to s3:
+  stage: deploy
+  image:
+    name: amazon/aws-cli
+    entrypoint: [""]
+  script:
+    - aws -- version
+    - aws s3 sync build s3://$AWS_S3_BUCKET --delete
+
