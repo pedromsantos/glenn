@@ -1,3 +1,3 @@
 # Preview
 
-[Git Lab pages](https://pedro_m_santos.gitlab.io/glenn/index.html)
+Only the source code for the time being. Documentation will be added as the project progresses.

@@ -8,7 +8,7 @@ build:
   script:
     - yarn install
     - yarn lint
-    - yarn test
+    - yarn test:ci
     - yarn build
   artifacts:
     paths:
