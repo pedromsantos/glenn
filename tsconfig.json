@@ -25,6 +25,6 @@
     "sourceMap": true,
     "baseUrl": "./"
   },
-  "include": ["src/**/*.ts", "__test__ /**/*.ts"],
+  "include": ["src/**/*.ts", "__test__ /**/*.ts", "src/**/*.tsx", "__test__/**/*.tsx"],
   "exclude": ["node_modules/**/*"]
 }
