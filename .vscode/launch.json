@@ -10,14 +10,7 @@
       "runtimeExecutable": "yarn",
       "protocol": "inspector",
       "cwd": "${workspaceFolder}",
-      "args": [
-        "test",
-        "test",
-        "--watchAll=false",
-        "--coverage=true",
-        "--runInBand",
-        "--watchAll=false"
-      ]
+      "args": ["test", "test", "--watchAll=false", "--coverage=true", "--runInBand"]
     }
   ]
 }

@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "alwaysStrict": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strictFunctionTypes": true,
@@ -19,7 +20,11 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "removeComments": true,
+    "sourceMap": true,
+    "baseUrl": "./"
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts", "__test__ /**/*.ts"],
+  "exclude": ["node_modules/**/*"]
 }
