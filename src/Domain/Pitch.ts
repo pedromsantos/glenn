@@ -50,6 +50,8 @@ export type PitchState = {
 };
 
 export default class Pitch {
+  PITCHES = 12;
+
   private constructor(
     private name: string,
     private value: number,
@@ -62,7 +64,7 @@ export default class Pitch {
   absoluteDistance(to: Pitch): number {
     if (this.value <= to.value) return to.value - this.value;
 
-    return 12 + (to.value - this.value);
+    return this.PITCHES + (to.value - this.value);
   }
 
   transpose(interval: Interval): Pitch {

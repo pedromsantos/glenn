@@ -1,6 +1,19 @@
-import Interval from '../Domain/Interval';
-import Pitch, { PitchState } from '../Domain/Pitch';
-import { Duration } from '../Domain/Duration';
+
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Chord.ts</title>
+      <link href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" type="text/css" rel="stylesheet">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/javascript/javascript.min.js" type="text/javascript" charset="utf-8"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.css" type="text/css" rel="stylesheet">
+<script src="../../../assets/source-file.js" type="text/javascript" charset="utf-8"></script>
+<link href="../../../assets/source-file.css" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+    <div style="margin-top:3em" class="ui container"><h1 class="ui header"><a href="../../../index.html">TypeScript coverage report</a></h1><table style="margin-top:2em" class="ui celled table"><thead class=""><tr class=""><th class="">Filename</th><th class="">Percent</th><th class="">Threshold</th><th class="">Total</th><th class="">Covered</th><th class="">Uncovered</th></tr></thead><tbody class=""><tr class="positive"><td class="">src/Domain/Chord.ts</td><td class="">100.00%</td><td class="">99%</td><td class="">884</td><td class="">884</td><td class="">0</td></tr></tbody></table><textarea id="editor" readonly="" style="margin-top:3em">import Interval from &#x27;../Domain/Interval&#x27;;
+import Pitch, { PitchState } from &#x27;../Domain/Pitch&#x27;;
+import { Duration } from &#x27;../Domain/Duration&#x27;;
 
 export type ChordPitchState = {
   pitch: PitchState;
@@ -18,7 +31,7 @@ class ChordPitch {
     return this._func;
   }
 
-  get To(): Readonly<ChordPitchState> {
+  get To(): Readonly&lt;ChordPitchState&gt; {
     return {
       pitch: this._pitch.To,
       function: this._func.To,
@@ -27,14 +40,14 @@ class ChordPitch {
 }
 
 class ChordPitches {
-  private _pitches: Array<ChordPitch> = [];
+  private _pitches: Array&lt;ChordPitch&gt; = [];
 
   constructor(root: Pitch, pattern: ChordPattern) {
     this._pitches = pattern.pitches(root);
   }
 
   get Pitches(): Pitch[] {
-    return this._pitches.map((p) => p.Pitch);
+    return this._pitches.map((p) =&gt; p.Pitch);
   }
 
   get Bass(): Pitch {
@@ -46,18 +59,18 @@ class ChordPitches {
   }
 
   pitchForFunction(func: ChordFunction): Pitch {
-    const chordPitch = this._pitches.find((p) => p.Function === func);
+    const chordPitch = this._pitches.find((p) =&gt; p.Function === func);
     return chordPitch === undefined ? this.first() : chordPitch.Pitch;
   }
 
-  get To(): Readonly<ChordPitchState[]> {
-    return this._pitches.map((p) => p.To);
+  get To(): Readonly&lt;ChordPitchState[]&gt; {
+    return this._pitches.map((p) =&gt; p.To);
   }
 
   private first(): Pitch {
     const pitch = this._pitches[0];
     if (!pitch) {
-      throw Error('pitch should not be null/undefined');
+      throw Error(&#x27;pitch should not be null/undefined&#x27;);
     }
 
     return pitch.Pitch;
@@ -66,14 +79,14 @@ class ChordPitches {
   private last(): Pitch {
     const pitch = this._pitches.slice(-1)[0];
     if (!pitch) {
-      throw Error('pitch should not be null/undefined');
+      throw Error(&#x27;pitch should not be null/undefined&#x27;);
     }
 
     return pitch.Pitch;
   }
 
   // remove(func: ChordFunction) {
-  //   this._pitches = this._pitches.filter((p) => p.Function != func);
+  //   this._pitches = this._pitches.filter((p) =&gt; p.Function != func);
   // }
 
   // rotate(amount = 1) {
@@ -141,11 +154,11 @@ class BaseChord implements Chord {
     return this._pitches.pitchForFunction(func);
   }
 
-  get To(): Readonly<ChordState> {
+  get To(): Readonly&lt;ChordState&gt; {
     return {
       name: this.Name,
       root: this.root.Pitch.To,
-      pitches: this._pitches.To.map((p) => p),
+      pitches: this._pitches.To.map((p) =&gt; p),
       pattern: this.pattern.To,
       bass: this.Bass.To,
       lead: this.Lead.To,
@@ -168,14 +181,14 @@ export class ClosedChord extends BaseChord {}
 export class ChordFunction {
   private constructor(private name: string) {}
 
-  public static readonly Root: ChordFunction = new ChordFunction('Root');
-  public static readonly Third: ChordFunction = new ChordFunction('Third');
-  public static readonly Fifth: ChordFunction = new ChordFunction('Fifth');
-  public static readonly Sixth: ChordFunction = new ChordFunction('Sixth');
-  public static readonly Seventh: ChordFunction = new ChordFunction('Seventh');
-  public static readonly Ninth: ChordFunction = new ChordFunction('Ninth');
-  public static readonly Eleventh: ChordFunction = new ChordFunction('Eleventh');
-  public static readonly Thirteenth: ChordFunction = new ChordFunction('Thirteenth');
+  public static readonly Root: ChordFunction = new ChordFunction(&#x27;Root&#x27;);
+  public static readonly Third: ChordFunction = new ChordFunction(&#x27;Third&#x27;);
+  public static readonly Fifth: ChordFunction = new ChordFunction(&#x27;Fifth&#x27;);
+  public static readonly Sixth: ChordFunction = new ChordFunction(&#x27;Sixth&#x27;);
+  public static readonly Seventh: ChordFunction = new ChordFunction(&#x27;Seventh&#x27;);
+  public static readonly Ninth: ChordFunction = new ChordFunction(&#x27;Ninth&#x27;);
+  public static readonly Eleventh: ChordFunction = new ChordFunction(&#x27;Eleventh&#x27;);
+  public static readonly Thirteenth: ChordFunction = new ChordFunction(&#x27;Thirteenth&#x27;);
 
   public static functionForInterval(interval: Interval): ChordFunction {
     switch (interval) {
@@ -212,12 +225,12 @@ export class ChordFunction {
     }
   }
 
-  get To(): Readonly<string> {
+  get To(): Readonly&lt;string&gt; {
     return this.name;
   }
 
   static From(name: string): ChordFunction | undefined {
-    return ChordFunction.functions.find((f) => f.name === name);
+    return ChordFunction.functions.find((f) =&gt; f.name === name);
   }
 
   static functions = [
@@ -237,47 +250,47 @@ export class ChordPattern {
   private constructor(
     private name: string,
     private abbreviation: string,
-    private pattern: Array<Interval>
+    private pattern: Array&lt;Interval&gt;
   ) {}
 
-  public static readonly Major: ChordPattern = new ChordPattern('Major', 'Maj', [
+  public static readonly Major: ChordPattern = new ChordPattern(&#x27;Major&#x27;, &#x27;Maj&#x27;, [
     Interval.MajorThird,
     Interval.PerfectFifth,
   ]);
 
-  public static readonly Augmented: ChordPattern = new ChordPattern('Augmented', 'Aug', [
+  public static readonly Augmented: ChordPattern = new ChordPattern(&#x27;Augmented&#x27;, &#x27;Aug&#x27;, [
     Interval.MajorThird,
     Interval.AugmentedFifth,
   ]);
-  public static readonly Major6: ChordPattern = new ChordPattern('Major 6', 'Maj 6', [
+  public static readonly Major6: ChordPattern = new ChordPattern(&#x27;Major 6&#x27;, &#x27;Maj 6&#x27;, [
     Interval.MajorThird,
     Interval.PerfectFifth,
     Interval.MajorSixth,
   ]);
   public static readonly Major6Add9: ChordPattern = new ChordPattern(
-    'Major 6 add 9',
-    'Maj 6 add 9',
+    &#x27;Major 6 add 9&#x27;,
+    &#x27;Maj 6 add 9&#x27;,
     [Interval.MajorThird, Interval.PerfectFifth, Interval.MajorSixth, Interval.MajorNinth]
   );
   public static readonly Major6Flat5Add9: ChordPattern = new ChordPattern(
-    'Major 6 flat5 add 9',
-    'Maj 6 b5 add 9',
+    &#x27;Major 6 flat5 add 9&#x27;,
+    &#x27;Maj 6 b5 add 9&#x27;,
     [Interval.MajorThird, Interval.DiminishedFifth, Interval.MajorSixth, Interval.MajorNinth]
   );
-  public static readonly Major7: ChordPattern = new ChordPattern('Major 7', 'Maj 7', [
+  public static readonly Major7: ChordPattern = new ChordPattern(&#x27;Major 7&#x27;, &#x27;Maj 7&#x27;, [
     Interval.MajorThird,
     Interval.PerfectFifth,
     Interval.MajorSeventh,
   ]);
-  public static readonly Major9: ChordPattern = new ChordPattern('Major 9', 'Maj 9', [
+  public static readonly Major9: ChordPattern = new ChordPattern(&#x27;Major 9&#x27;, &#x27;Maj 9&#x27;, [
     Interval.MajorThird,
     Interval.PerfectFifth,
     Interval.MajorSeventh,
     Interval.MajorNinth,
   ]);
   public static readonly Major9Sharp11: ChordPattern = new ChordPattern(
-    'Major 9 sharp 11',
-    'Maj 9 #11',
+    &#x27;Major 9 sharp 11&#x27;,
+    &#x27;Maj 9 #11&#x27;,
     [
       Interval.MajorThird,
       Interval.PerfectFifth,
@@ -286,21 +299,21 @@ export class ChordPattern {
       Interval.AugmentedEleventh,
     ]
   );
-  public static readonly Major11: ChordPattern = new ChordPattern('Major 11', 'Maj 11', [
+  public static readonly Major11: ChordPattern = new ChordPattern(&#x27;Major 11&#x27;, &#x27;Maj 11&#x27;, [
     Interval.MajorThird,
     Interval.PerfectFifth,
     Interval.MajorSeventh,
     Interval.PerfectEleventh,
   ]);
-  public static readonly Major13: ChordPattern = new ChordPattern('Major 13', 'Maj 13', [
+  public static readonly Major13: ChordPattern = new ChordPattern(&#x27;Major 13&#x27;, &#x27;Maj 13&#x27;, [
     Interval.MajorThird,
     Interval.PerfectFifth,
     Interval.MajorSeventh,
     Interval.MajorThirteenth,
   ]);
   public static readonly Major13Sharp11: ChordPattern = new ChordPattern(
-    'Major 13 sharp11',
-    'Maj 13 #11',
+    &#x27;Major 13 sharp11&#x27;,
+    &#x27;Maj 13 #11&#x27;,
     [
       Interval.MajorThird,
       Interval.PerfectFifth,
@@ -309,55 +322,55 @@ export class ChordPattern {
       Interval.MajorThirteenth,
     ]
   );
-  public static readonly Augmented7: ChordPattern = new ChordPattern('Augmented 7', 'Aug 7', [
+  public static readonly Augmented7: ChordPattern = new ChordPattern(&#x27;Augmented 7&#x27;, &#x27;Aug 7&#x27;, [
     Interval.MajorThird,
     Interval.AugmentedFifth,
     Interval.MajorSeventh,
   ]);
-  public static readonly Dominant7: ChordPattern = new ChordPattern('Dominant 7', '7', [
+  public static readonly Dominant7: ChordPattern = new ChordPattern(&#x27;Dominant 7&#x27;, &#x27;7&#x27;, [
     Interval.MajorThird,
     Interval.PerfectFifth,
     Interval.MinorSeventh,
   ]);
   public static readonly Dominant7Flat5: ChordPattern = new ChordPattern(
-    'Dominant 7 flat 5',
-    '7 b5',
+    &#x27;Dominant 7 flat 5&#x27;,
+    &#x27;7 b5&#x27;,
     [Interval.MajorThird, Interval.DiminishedFifth, Interval.MinorSeventh]
   );
   public static readonly Dominant7Flat9: ChordPattern = new ChordPattern(
-    'Dominant 7 flat 9',
-    '7 b9',
+    &#x27;Dominant 7 flat 9&#x27;,
+    &#x27;7 b9&#x27;,
     [Interval.MajorThird, Interval.PerfectFifth, Interval.MinorSeventh, Interval.MinorNinth]
   );
   public static readonly Dominant7Sharp9: ChordPattern = new ChordPattern(
-    'Dominant 7 sharp 9',
-    '7 #9',
+    &#x27;Dominant 7 sharp 9&#x27;,
+    &#x27;7 #9&#x27;,
     [Interval.MajorThird, Interval.PerfectFifth, Interval.MinorSeventh, Interval.AugmentedNinth]
   );
   public static readonly Dominant7Flat5Flat9: ChordPattern = new ChordPattern(
-    'Dominant 7 flat 5 flat9',
-    '7 b5 b9',
+    &#x27;Dominant 7 flat 5 flat9&#x27;,
+    &#x27;7 b5 b9&#x27;,
     [Interval.MajorThird, Interval.DiminishedFifth, Interval.MinorSeventh, Interval.MinorNinth]
   );
   public static readonly Dominant7Flat5Sharp9: ChordPattern = new ChordPattern(
-    'Dominant 7 flat 5 sharp9',
-    '7 b5 #9',
+    &#x27;Dominant 7 flat 5 sharp9&#x27;,
+    &#x27;7 b5 #9&#x27;,
     [Interval.MajorThird, Interval.DiminishedFifth, Interval.MinorSeventh, Interval.AugmentedNinth]
   );
-  public static readonly Dominant9: ChordPattern = new ChordPattern('Dominant 9', '9', [
+  public static readonly Dominant9: ChordPattern = new ChordPattern(&#x27;Dominant 9&#x27;, &#x27;9&#x27;, [
     Interval.MajorThird,
     Interval.PerfectFifth,
     Interval.MinorSeventh,
     Interval.MajorNinth,
   ]);
-  public static readonly Dominant11: ChordPattern = new ChordPattern('Dominant 11', '11', [
+  public static readonly Dominant11: ChordPattern = new ChordPattern(&#x27;Dominant 11&#x27;, &#x27;11&#x27;, [
     Interval.MajorThird,
     Interval.PerfectFifth,
     Interval.MinorSeventh,
     Interval.MajorNinth,
     Interval.PerfectEleventh,
   ]);
-  public static readonly Dominant13: ChordPattern = new ChordPattern('Dominant 13', '13', [
+  public static readonly Dominant13: ChordPattern = new ChordPattern(&#x27;Dominant 13&#x27;, &#x27;13&#x27;, [
     Interval.MajorThird,
     Interval.PerfectFifth,
     Interval.MinorSeventh,
@@ -365,88 +378,88 @@ export class ChordPattern {
     Interval.PerfectEleventh,
     Interval.MajorThirteenth,
   ]);
-  public static readonly Minor: ChordPattern = new ChordPattern('Minor', 'min', [
+  public static readonly Minor: ChordPattern = new ChordPattern(&#x27;Minor&#x27;, &#x27;min&#x27;, [
     Interval.MinorThird,
     Interval.PerfectFifth,
   ]);
-  public static readonly Diminished: ChordPattern = new ChordPattern('Diminished', 'dim', [
+  public static readonly Diminished: ChordPattern = new ChordPattern(&#x27;Diminished&#x27;, &#x27;dim&#x27;, [
     Interval.MinorThird,
     Interval.DiminishedFifth,
   ]);
-  public static readonly Minor7: ChordPattern = new ChordPattern('Minor 7', 'min 7', [
+  public static readonly Minor7: ChordPattern = new ChordPattern(&#x27;Minor 7&#x27;, &#x27;min 7&#x27;, [
     Interval.MinorThird,
     Interval.PerfectFifth,
     Interval.MinorSeventh,
   ]);
-  public static readonly Minor6: ChordPattern = new ChordPattern('Minor 6', 'min 6', [
+  public static readonly Minor6: ChordPattern = new ChordPattern(&#x27;Minor 6&#x27;, &#x27;min 6&#x27;, [
     Interval.MinorThird,
     Interval.PerfectFifth,
     Interval.MajorSixth,
   ]);
   public static readonly Minor6Add9: ChordPattern = new ChordPattern(
-    'Minor 6 add 9',
-    'min 6 add 9',
+    &#x27;Minor 6 add 9&#x27;,
+    &#x27;min 6 add 9&#x27;,
     [Interval.MinorThird, Interval.PerfectFifth, Interval.MajorSixth, Interval.MajorNinth]
   );
-  public static readonly Minor9: ChordPattern = new ChordPattern('Minor 9', 'min 9', [
+  public static readonly Minor9: ChordPattern = new ChordPattern(&#x27;Minor 9&#x27;, &#x27;min 9&#x27;, [
     Interval.MinorThird,
     Interval.PerfectFifth,
     Interval.MinorSeventh,
     Interval.MajorNinth,
   ]);
-  public static readonly Diminished7: ChordPattern = new ChordPattern('Diminished7 ', 'dim 7', [
+  public static readonly Diminished7: ChordPattern = new ChordPattern(&#x27;Diminished7 &#x27;, &#x27;dim 7&#x27;, [
     Interval.MinorThird,
     Interval.DiminishedFifth,
     Interval.DiminishedSeventh,
   ]);
-  public static readonly Minor7b5: ChordPattern = new ChordPattern('Minor 7 b5', 'min 7 b5', [
+  public static readonly Minor7b5: ChordPattern = new ChordPattern(&#x27;Minor 7 b5&#x27;, &#x27;min 7 b5&#x27;, [
     Interval.MinorThird,
     Interval.DiminishedFifth,
     Interval.MinorSeventh,
   ]);
-  public static readonly MinorMaj7: ChordPattern = new ChordPattern('Minor Major 7', 'min Maj 7', [
+  public static readonly MinorMaj7: ChordPattern = new ChordPattern(&#x27;Minor Major 7&#x27;, &#x27;min Maj 7&#x27;, [
     Interval.MinorThird,
     Interval.PerfectFifth,
     Interval.MajorSeventh,
   ]);
-  public static readonly MinorMaj9: ChordPattern = new ChordPattern('Minor Major 9', 'min Maj 9', [
+  public static readonly MinorMaj9: ChordPattern = new ChordPattern(&#x27;Minor Major 9&#x27;, &#x27;min Maj 9&#x27;, [
     Interval.MinorThird,
     Interval.PerfectFifth,
     Interval.MajorSeventh,
     Interval.MajorNinth,
   ]);
-  public static readonly Sus2: ChordPattern = new ChordPattern('Su 2', 'Sus 2', [
+  public static readonly Sus2: ChordPattern = new ChordPattern(&#x27;Su 2&#x27;, &#x27;Sus 2&#x27;, [
     Interval.MajorSecond,
     Interval.PerfectFifth,
   ]);
   public static readonly Sus2Diminished: ChordPattern = new ChordPattern(
-    'Sus 2 diminished',
-    'Sus 2 dim',
+    &#x27;Sus 2 diminished&#x27;,
+    &#x27;Sus 2 dim&#x27;,
     [Interval.MajorSecond, Interval.DiminishedFifth]
   );
   public static readonly Sus2Augmented: ChordPattern = new ChordPattern(
-    'Sus 2 Augmented',
-    'Sus 2 Aug',
+    &#x27;Sus 2 Augmented&#x27;,
+    &#x27;Sus 2 Aug&#x27;,
     [Interval.MajorSecond, Interval.AugmentedFifth]
   );
-  public static readonly Sus4: ChordPattern = new ChordPattern('Sus 4', 'Sus 4', [
+  public static readonly Sus4: ChordPattern = new ChordPattern(&#x27;Sus 4&#x27;, &#x27;Sus 4&#x27;, [
     Interval.PerfectFourth,
     Interval.PerfectFifth,
   ]);
   public static readonly Sus4Diminished: ChordPattern = new ChordPattern(
-    'Sus 4 diminished',
-    'Sus 4 dim',
+    &#x27;Sus 4 diminished&#x27;,
+    &#x27;Sus 4 dim&#x27;,
     [Interval.PerfectFourth, Interval.DiminishedFifth]
   );
   public static readonly Sus4Augmented: ChordPattern = new ChordPattern(
-    'Sus 4 Augmented',
-    'Sus 4 aug',
+    &#x27;Sus 4 Augmented&#x27;,
+    &#x27;Sus 4 aug&#x27;,
     [Interval.PerfectFourth, Interval.AugmentedFifth]
   );
 
-  pitches(root: Pitch): Array<ChordPitch> {
+  pitches(root: Pitch): Array&lt;ChordPitch&gt; {
     return [new ChordPitch(root, ChordFunction.Root)].concat(
-      this.pattern.map((p) => this.createChordNote(p, root))
+      this.pattern.map((p) =&gt; this.createChordNote(p, root))
     );
   }
 
@@ -462,12 +475,12 @@ export class ChordPattern {
     return this.abbreviation;
   }
 
-  get To(): Readonly<string> {
+  get To(): Readonly&lt;string&gt; {
     return this.Name;
   }
 
   static From(name: string): ChordPattern | undefined {
-    return ChordPattern.patterns.find((n) => n.Name === name);
+    return ChordPattern.patterns.find((n) =&gt; n.Name === name);
   }
 
   static readonly patterns = [
@@ -510,5 +523,10 @@ export class ChordPattern {
     ChordPattern.Sus4Augmented,
   ];
 
-  public static readonly patternNames = ChordPattern.patterns.map((p) => p.To);
+  public static readonly patternNames = ChordPattern.patterns.map((p) =&gt; p.To);
 }
+</textarea><pre id="annotations" style="display:none">[]</pre></div>
+    <p class="footer-text">TypeScript Coverage Report generated by <a href="https://github.com/plantain-00/type-coverage">type-coverage</a> and <a href="https://github.com/alexcanessa/typescript-coverage-report">typescript-coverage-report</a> at Tue, 26 Apr 2022 16:36:14 GMT</p>
+    </body>
+  </html>
+  

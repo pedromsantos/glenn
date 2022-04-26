@@ -1,0 +1,289 @@
+
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Guitar.test.ts</title>
+      <link href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" type="text/css" rel="stylesheet">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/javascript/javascript.min.js" type="text/javascript" charset="utf-8"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.css" type="text/css" rel="stylesheet">
+<script src="../../../../assets/source-file.js" type="text/javascript" charset="utf-8"></script>
+<link href="../../../../assets/source-file.css" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+    <div style="margin-top:3em" class="ui container"><h1 class="ui header"><a href="../../../../index.html">TypeScript coverage report</a></h1><table style="margin-top:2em" class="ui celled table"><thead class=""><tr class=""><th class="">Filename</th><th class="">Percent</th><th class="">Threshold</th><th class="">Total</th><th class="">Covered</th><th class="">Uncovered</th></tr></thead><tbody class=""><tr class="positive"><td class="">src/__test__/Domain/Guitar.test.ts</td><td class="">100.00%</td><td class="">99%</td><td class="">433</td><td class="">433</td><td class="">0</td></tr></tbody></table><textarea id="editor" readonly="" style="margin-top:3em">import { ChordPattern, ClosedChord } from &#x27;../../Domain/Chord&#x27;;
+import {
+  Fret,
+  GuitarMelodicLine,
+  Position,
+  GuitarString,
+  Tab,
+  TabColumn,
+  GuitarChord,
+} from &#x27;../../Domain/Guitar&#x27;;
+import Pitch, { MelodicLine, MelodicLineDirection } from &#x27;../../Domain/Pitch&#x27;;
+import { ScalePattern } from &#x27;../../Domain/Scale&#x27;;
+
+describe(&#x27;Sixth string should&#x27;, () =&gt; {
+  test(&#x27;map E to open string&#x27;, () =&gt; {
+    expect(GuitarString.Sixth.fretFor(Pitch.E)).toStrictEqual(new Fret(GuitarString.Sixth, 0));
+  });
+
+  test(&#x27;map F to first fret&#x27;, () =&gt; {
+    expect(GuitarString.Sixth.fretFor(Pitch.F)).toStrictEqual(new Fret(GuitarString.Sixth, 1));
+  });
+
+  test(&#x27;map F# to second fret&#x27;, () =&gt; {
+    expect(GuitarString.Sixth.fretFor(Pitch.FSharp)).toStrictEqual(new Fret(GuitarString.Sixth, 2));
+  });
+
+  test(&#x27;map Gb to second fret&#x27;, () =&gt; {
+    expect(GuitarString.Sixth.fretFor(Pitch.GFlat)).toStrictEqual(new Fret(GuitarString.Sixth, 2));
+  });
+
+  test(&#x27;map G to third fret&#x27;, () =&gt; {
+    expect(GuitarString.Sixth.fretFor(Pitch.G)).toStrictEqual(new Fret(GuitarString.Sixth, 3));
+  });
+});
+
+describe(&#x27;Guitar melodic line should&#x27;, () =&gt; {
+  describe(&#x27;map C major scale to guitar frets on&#x27;, () =&gt; {
+    test(&#x27;C position ascending&#x27;, () =&gt; {
+      const line = ScalePattern.Ionian.createMelodicLineScale(Pitch.C);
+      const guitarLine = new GuitarMelodicLine(line, Position.C);
+
+      const fret = guitarLine.get(0);
+      expect(fret?.isSame(new Fret(GuitarString.Fifth, 3))).toBeTruthy();
+    });
+
+    test(&#x27;C position descending&#x27;, () =&gt; {
+      const line = ScalePattern.Ionian.createDescendingMelodicLineScale(Pitch.C);
+      const guitarLine = new GuitarMelodicLine(line, Position.C);
+
+      const fret = guitarLine.get(0);
+
+      expect(fret).toStrictEqual(new Fret(GuitarString.Second, 1));
+    });
+  });
+
+  describe(&#x27;map E to&#x27;, () =&gt; {
+    test(&#x27;open string on sixth string for open position&#x27;, () =&gt; {
+      const line = new MelodicLine([Pitch.E], MelodicLineDirection.Descending);
+      const guitarLine = new GuitarMelodicLine(line, Position.Open);
+
+      const fret = guitarLine.get(0);
+      const expectedFret = new Fret(GuitarString.Sixth, 0);
+
+      expect(fret).toStrictEqual(expectedFret);
+    });
+
+    test(&#x27;2th fret on fourth string for C Position&#x27;, () =&gt; {
+      const line = new MelodicLine([Pitch.E]);
+      const guitarLine = new GuitarMelodicLine(line, Position.C);
+
+      const fret = guitarLine.get(0);
+      expect(fret).toStrictEqual(new Fret(GuitarString.Fourth, 2));
+    });
+
+    test(&#x27;5th fret on second string for A Position&#x27;, () =&gt; {
+      const line = new MelodicLine([Pitch.E]);
+      const guitarLine = new GuitarMelodicLine(line, Position.A);
+
+      const fret = guitarLine.get(0);
+      expect(fret).toStrictEqual(new Fret(GuitarString.Second, 5));
+    });
+
+    test(&#x27;7th fret on fifth string for G Position&#x27;, () =&gt; {
+      const line = new MelodicLine([Pitch.E]);
+      const guitarLine = new GuitarMelodicLine(line, Position.G);
+
+      const fret = guitarLine.get(0);
+      expect(fret).toStrictEqual(new Fret(GuitarString.Fifth, 7));
+    });
+
+    test(&#x27;9th fret on third string for E Position&#x27;, () =&gt; {
+      const line = new MelodicLine([Pitch.E]);
+      const guitarLine = new GuitarMelodicLine(line, Position.E);
+
+      const fret = guitarLine.get(0);
+      expect(fret).toStrictEqual(new Fret(GuitarString.Third, 9));
+    });
+
+    test(&#x27;12th fret on first string for D Position&#x27;, () =&gt; {
+      const line = new MelodicLine([Pitch.E], MelodicLineDirection.Descending);
+      const guitarLine = new GuitarMelodicLine(line, Position.D);
+
+      const fret = guitarLine.get(0);
+      expect(fret).toStrictEqual(new Fret(GuitarString.First, 12));
+    });
+  });
+});
+
+describe(&#x27;Guitar tab should&#x27;, () =&gt; {
+  describe(&#x27;render&#x27;, () =&gt; {
+    test(&#x27;render tunning + start + end&#x27;, () =&gt; {
+      const tab = new Tab();
+      const expectedTab = `e|--|
+B|--|
+G|--|
+D|--|
+A|--|
+E|--|`;
+
+      expect(tab.render([])).toBe(expectedTab);
+    });
+
+    test(&#x27;render tunning + start + rest + end&#x27;, () =&gt; {
+      const renderedTab = new Tab().render([TabColumn.Rest]);
+
+      const expectedTab = `e|---|
+B|---|
+G|---|
+D|---|
+A|---|
+E|---|`;
+
+      expect(renderedTab).toBe(expectedTab);
+    });
+
+    test(&#x27;render F on sixth string&#x27;, () =&gt; {
+      const fret = new Fret(GuitarString.Sixth, 1).toTab();
+      const renderedTab = new Tab().render([fret]);
+
+      const expectedTab = `e|---|
+B|---|
+G|---|
+D|---|
+A|---|
+E|-1-|`;
+
+      expect(renderedTab).toBe(expectedTab);
+    });
+
+    test(&#x27;render Bb on fifth string&#x27;, () =&gt; {
+      const fret = new Fret(GuitarString.Fifth, 1).toTab();
+      const renderedTab = new Tab().render([fret]);
+
+      const expectedTab = `e|---|
+B|---|
+G|---|
+D|---|
+A|-1-|
+E|---|`;
+
+      expect(renderedTab).toBe(expectedTab);
+    });
+
+    test(&#x27;render D# on forth string&#x27;, () =&gt; {
+      const fret = new Fret(GuitarString.Fourth, 1).toTab();
+      const renderedTab = new Tab().render([fret]);
+
+      const expectedTab = `e|---|
+B|---|
+G|---|
+D|-1-|
+A|---|
+E|---|`;
+
+      expect(renderedTab).toBe(expectedTab);
+    });
+
+    test(&#x27;render D on sixth string&#x27;, () =&gt; {
+      const fret = new Fret(GuitarString.Sixth, 10).toTab();
+      const renderedTab = new Tab().render([fret]);
+
+      const expectedTab = `e|----|
+B|----|
+G|----|
+D|----|
+A|----|
+E|-10-|`;
+
+      expect(renderedTab).toBe(expectedTab);
+    });
+  });
+
+  describe(&#x27;render melodic line&#x27;, () =&gt; {
+    test(&#x27;C E A Descending on C position&#x27;, () =&gt; {
+      const line = new MelodicLine([Pitch.C, Pitch.E, Pitch.A], MelodicLineDirection.Descending);
+      const guitarLine = new GuitarMelodicLine(line, Position.C);
+      const renderedTab = new Tab().render(guitarLine.toTab());
+
+      const expectedTab = `e|-----|
+B|-----|
+G|---2-|
+D|--2--|
+A|-3---|
+E|-----|`;
+
+      expect(renderedTab).toBe(expectedTab);
+    });
+  });
+
+  describe(&#x27;render chord&#x27;, () =&gt; {
+    test(&#x27;C Major triad on open position&#x27;, () =&gt; {
+      const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+      const guitarChord = new GuitarChord(chord, Position.Open);
+      const renderedTab = new Tab().render(guitarChord.toTab());
+
+      const expectedTab = `e|---|
+B|---|
+G|-0-|
+D|-2-|
+A|-3-|
+E|---|`;
+
+      expect(renderedTab).toBe(expectedTab);
+    });
+
+    test(&#x27;C Major triad on C position&#x27;, () =&gt; {
+      const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+      const guitarChord = new GuitarChord(chord, Position.C);
+      const renderedTab = new Tab().render(guitarChord.toTab());
+
+      const expectedTab = `e|---|
+B|---|
+G|---|
+D|-2-|
+A|-3-|
+E|---|`;
+
+      expect(renderedTab).toBe(expectedTab);
+    });
+
+    test(&#x27;G Major triad on C position&#x27;, () =&gt; {
+      const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+      const guitarChord = new GuitarChord(chord, Position.Open);
+      const renderedTab = new Tab().render(guitarChord.toTab());
+
+      const expectedTab = `e|---|
+B|---|
+G|---|
+D|-0-|
+A|-2-|
+E|-3-|`;
+
+      expect(renderedTab).toBe(expectedTab);
+    });
+
+    test(&#x27;C Major triad on E position&#x27;, () =&gt; {
+      const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+      const guitarChord = new GuitarChord(chord, Position.E);
+      const renderedTab = new Tab().render(guitarChord.toTab());
+
+      const expectedTab = `e|---|
+B|-8-|
+G|-9-|
+D|---|
+A|---|
+E|-8-|`;
+
+      expect(renderedTab).toBe(expectedTab);
+    });
+  });
+});
+</textarea><pre id="annotations" style="display:none">[]</pre></div>
+    <p class="footer-text">TypeScript Coverage Report generated by <a href="https://github.com/plantain-00/type-coverage">type-coverage</a> and <a href="https://github.com/alexcanessa/typescript-coverage-report">typescript-coverage-report</a> at Tue, 26 Apr 2022 16:36:14 GMT</p>
+    </body>
+  </html>
+  

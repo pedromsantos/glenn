@@ -1,0 +1,352 @@
+
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Chord.test.ts</title>
+      <link href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" type="text/css" rel="stylesheet">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/javascript/javascript.min.js" type="text/javascript" charset="utf-8"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.css" type="text/css" rel="stylesheet">
+<script src="../../../../assets/source-file.js" type="text/javascript" charset="utf-8"></script>
+<link href="../../../../assets/source-file.css" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+    <div style="margin-top:3em" class="ui container"><h1 class="ui header"><a href="../../../../index.html">TypeScript coverage report</a></h1><table style="margin-top:2em" class="ui celled table"><thead class=""><tr class=""><th class="">Filename</th><th class="">Percent</th><th class="">Threshold</th><th class="">Total</th><th class="">Covered</th><th class="">Uncovered</th></tr></thead><tbody class=""><tr class="positive"><td class="">src/__test__/Domain/Chord.test.ts</td><td class="">100.00%</td><td class="">99%</td><td class="">1018</td><td class="">1018</td><td class="">0</td></tr></tbody></table><textarea id="editor" readonly="" style="margin-top:3em">import Pitch from &#x27;../../Domain/Pitch&#x27;;
+import { ClosedChord, ChordPattern, ChordFunction } from &#x27;../../Domain/Chord&#x27;;
+import * as fc from &#x27;fast-check&#x27;;
+
+describe(&#x27;Major Chords should&#x27;, () =&gt; {
+  test(&#x27;have a name&#x27;, () =&gt; {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    expect(chord.Name).toBe(&#x27;CMajor&#x27;);
+  });
+
+  test(&#x27;have a root&#x27;, () =&gt; {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    expect(chord.pitchForFunction(ChordFunction.Root)).toBe(Pitch.C);
+  });
+
+  test(&#x27;have a third&#x27;, () =&gt; {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    expect(chord.pitchForFunction(ChordFunction.Third)).toBe(Pitch.E);
+  });
+
+  test(&#x27;have a fifth&#x27;, () =&gt; {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    expect(chord.pitchForFunction(ChordFunction.Fifth)).toBe(Pitch.G);
+  });
+
+  test(&#x27;have a seventh&#x27;, () =&gt; {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    expect(chord.pitchForFunction(ChordFunction.Seventh)).toBe(Pitch.B);
+  });
+
+  test(&#x27;have a ninth&#x27;, () =&gt; {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major9);
+    expect(chord.pitchForFunction(ChordFunction.Ninth)).toBe(Pitch.D);
+  });
+
+  test(&#x27;have an eleventh&#x27;, () =&gt; {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major11);
+    expect(chord.pitchForFunction(ChordFunction.Eleventh)).toBe(Pitch.F);
+  });
+
+  test(&#x27;have a thirteenth&#x27;, () =&gt; {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major13);
+    expect(chord.pitchForFunction(ChordFunction.Thirteenth)).toBe(Pitch.A);
+  });
+
+  test(&#x27;Have expected pitches for C Major chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Major).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for C Major 6 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.A];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Major6).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for C Major 6 add 9 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.A, Pitch.D];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Major6Add9).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for C Major 7 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Major7).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for C Major 9 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B, Pitch.D];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Major9).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for C Major 11 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B, Pitch.F];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Major11).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for C Major 13#11 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B, Pitch.FSharp, Pitch.A];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Major13Sharp11).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for C Major 9#11 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B, Pitch.D, Pitch.FSharp];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Major9Sharp11).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for CMaj7#5 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.GSharp, Pitch.B];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Augmented7).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for CAug chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.GSharp];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Augmented).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+});
+
+describe(&#x27;Dominant Chords should&#x27;, () =&gt; {
+  test(&#x27;Have expected pitches for C7 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.BFlat];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Dominant7).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for C9 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.BFlat, Pitch.D];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Dominant9).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for C7b5b9 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.GFlat, Pitch.BFlat, Pitch.DFlat];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Dominant7Flat5Flat9).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for C7b5#9 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.GFlat, Pitch.BFlat, Pitch.DSharp];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Dominant7Flat5Sharp9).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for C11 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.BFlat, Pitch.D, Pitch.F];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Dominant11).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for C13 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.BFlat, Pitch.D, Pitch.F, Pitch.A];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Dominant13).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  test(&#x27;Have expected pitches for C7#9 chord&#x27;, () =&gt; {
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.BFlat, Pitch.DSharp];
+    const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Dominant7Sharp9).Pitches;
+    expect(chordPitches).toStrictEqual(expectedPitches);
+  });
+
+  describe(&#x27;Minor Chords should&#x27;, () =&gt; {
+    test(&#x27;Have expected pitches for C- chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.G];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Minor).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+
+    test(&#x27;Have expected pitches for C-6 chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.G, Pitch.A];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Minor6).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+
+    test(&#x27;Have expected pitches for C-6add9 chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.G, Pitch.A, Pitch.D];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Minor6Add9).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+
+    test(&#x27;Have expected pitches for C-7 chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.G, Pitch.BFlat];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Minor7).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+
+    test(&#x27;Have expected pitches for C-Maj7 chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.G, Pitch.B];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.MinorMaj7).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+
+    test(&#x27;Have expected pitches for C-9 chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.G, Pitch.BFlat, Pitch.D];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Minor9).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+
+    test(&#x27;Have expected pitches for C-Maj9 chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.G, Pitch.B, Pitch.D];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.MinorMaj9).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+
+    test(&#x27;Have expected pitches for C-7b5 chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.GFlat, Pitch.BFlat];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Minor7b5).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+  });
+
+  describe(&#x27;Diminished Chords should&#x27;, () =&gt; {
+    test(&#x27;Have expected pitches for Cdim chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.GFlat];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Diminished).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+
+    test(&#x27;Have expected pitches for Cdim7 chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.GFlat, Pitch.A];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Diminished7).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+  });
+
+  describe(&#x27;Sus Chords should&#x27;, () =&gt; {
+    test(&#x27;Have expected pitches for CSus2 chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.D, Pitch.G];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Sus2).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+
+    test(&#x27;Have expected pitches for CSus2dim chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.D, Pitch.GFlat];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Sus2Diminished).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+
+    test(&#x27;Have expected pitches for CSus2aug chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.D, Pitch.GSharp];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Sus2Augmented).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+
+    test(&#x27;Have expected pitches for CSus4 chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.F, Pitch.G];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Sus4).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+
+    test(&#x27;Have expected pitches for CSus4dim chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.F, Pitch.GFlat];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Sus4Diminished).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+
+    test(&#x27;Have expected pitches for CSus4aug chord&#x27;, () =&gt; {
+      const expectedPitches = [Pitch.C, Pitch.F, Pitch.GSharp];
+      const chordPitches = new ClosedChord(Pitch.C, ChordPattern.Sus4Augmented).Pitches;
+      expect(chordPitches).toStrictEqual(expectedPitches);
+    });
+  });
+});
+
+describe(&#x27;Chords should&#x27;, () =&gt; {
+  test(&#x27;Be named after the root note&#x27;, () =&gt; {
+    const name = new ClosedChord(Pitch.C, ChordPattern.Diminished).Name;
+    expect(name[0]).toBe(&#x27;C&#x27;);
+  });
+
+  test(&#x27;Be named after the root note and the quality&#x27;, () =&gt; {
+    const name = new ClosedChord(Pitch.C, ChordPattern.Minor7b5).Name;
+    expect(name).toBe(&#x27;CMinor 7 b5&#x27;);
+  });
+
+  test(&#x27;Be named after the root note and the abreviated quality&#x27;, () =&gt; {
+    const name = new ClosedChord(Pitch.C, ChordPattern.Diminished7).Abbreviation;
+    expect(name).toBe(&#x27;Cdim 7&#x27;);
+  });
+
+  test(&#x27;Have bass note equal to root when not inverted&#x27;, () =&gt; {
+    const expectedPitch = Pitch.C;
+    const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished).Bass;
+    expect(pitch).toStrictEqual(expectedPitch);
+  });
+
+  test(&#x27;Have lead note equal to fifth for triads when not inverted&#x27;, () =&gt; {
+    const expectedPitch = Pitch.GFlat;
+    const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished).Lead;
+    expect(pitch).toStrictEqual(expectedPitch);
+  });
+
+  test(&#x27;identify Pitch for root&#x27;, () =&gt; {
+    const expectedPitch = Pitch.C;
+    const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished).pitchForFunction(
+      ChordFunction.Root
+    );
+    expect(pitch).toStrictEqual(expectedPitch);
+  });
+
+  test(&#x27;identify Pitch for third&#x27;, () =&gt; {
+    const expectedPitch = Pitch.EFlat;
+    const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished).pitchForFunction(
+      ChordFunction.Third
+    );
+    expect(pitch).toStrictEqual(expectedPitch);
+  });
+
+  test(&#x27;identify Pitch for third on sus2 chords&#x27;, () =&gt; {
+    const expectedPitch = Pitch.D;
+    const pitch = new ClosedChord(Pitch.C, ChordPattern.Sus2).pitchForFunction(ChordFunction.Third);
+    expect(pitch).toStrictEqual(expectedPitch);
+  });
+
+  test(&#x27;identify Pitch for third on sus4 chords&#x27;, () =&gt; {
+    const expectedPitch = Pitch.F;
+    const pitch = new ClosedChord(Pitch.C, ChordPattern.Sus4).pitchForFunction(ChordFunction.Third);
+    expect(pitch).toStrictEqual(expectedPitch);
+  });
+
+  test(&#x27;identify Pitch for fifth&#x27;, () =&gt; {
+    const expectedPitch = Pitch.GFlat;
+    const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished).pitchForFunction(
+      ChordFunction.Fifth
+    );
+    expect(pitch).toStrictEqual(expectedPitch);
+  });
+});
+
+describe(&#x27;Properties&#x27;, () =&gt; {
+  test(&#x27;chord can be converted to and from ChordState&#x27;, () =&gt; {
+    fc.assert(
+      fc.property(
+        fc.constantFrom(...Pitch.pitches),
+        fc.constantFrom(...ChordPattern.patterns),
+        (root, pattern) =&gt; {
+          const chord = new ClosedChord(root, pattern);
+          const from = ClosedChord.From(chord.To);
+
+          expect(chord.Name).toBe(from?.Name);
+        }
+      ),
+      { verbose: true }
+    );
+  });
+});
+</textarea><pre id="annotations" style="display:none">[]</pre></div>
+    <p class="footer-text">TypeScript Coverage Report generated by <a href="https://github.com/plantain-00/type-coverage">type-coverage</a> and <a href="https://github.com/alexcanessa/typescript-coverage-report">typescript-coverage-report</a> at Tue, 26 Apr 2022 16:36:14 GMT</p>
+    </body>
+  </html>
+  

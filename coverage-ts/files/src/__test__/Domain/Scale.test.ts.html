@@ -1,0 +1,396 @@
+
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Scale.test.ts</title>
+      <link href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" type="text/css" rel="stylesheet">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/mode/javascript/javascript.min.js" type="text/javascript" charset="utf-8"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.2/codemirror.min.css" type="text/css" rel="stylesheet">
+<script src="../../../../assets/source-file.js" type="text/javascript" charset="utf-8"></script>
+<link href="../../../../assets/source-file.css" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+    <div style="margin-top:3em" class="ui container"><h1 class="ui header"><a href="../../../../index.html">TypeScript coverage report</a></h1><table style="margin-top:2em" class="ui celled table"><thead class=""><tr class=""><th class="">Filename</th><th class="">Percent</th><th class="">Threshold</th><th class="">Total</th><th class="">Covered</th><th class="">Uncovered</th></tr></thead><tbody class=""><tr class="positive"><td class="">src/__test__/Domain/Scale.test.ts</td><td class="">100.00%</td><td class="">99%</td><td class="">738</td><td class="">738</td><td class="">0</td></tr></tbody></table><textarea id="editor" readonly="" style="margin-top:3em">import Pitch from &#x27;../../Domain/Pitch&#x27;;
+import { ScalePattern } from &#x27;../../Domain/Scale&#x27;;
+import { convertPitchesToDistances } from &#x27;../utils&#x27;;
+import * as fc from &#x27;fast-check&#x27;;
+
+describe(&#x27;Scale properties&#x27;, () =&gt; {
+  test(&#x27;any Dorian should have same notes as C Dorian transposed by the interval from C to pitch&#x27;, () =&gt; {
+    fc.assert(
+      fc.property(fc.constantFrom(...Pitch.natural), (pitch) =&gt; {
+        const scalePitchesC = [
+          Pitch.C,
+          Pitch.D,
+          Pitch.EFlat,
+          Pitch.F,
+          Pitch.G,
+          Pitch.A,
+          Pitch.BFlat,
+        ];
+        const scalePitches = ScalePattern.Dorian.createScalePitches(pitch);
+        const intervalToC = Pitch.C.intervalTo(pitch);
+        const transposedCScale = scalePitchesC.map((pitch) =&gt; pitch.transpose(intervalToC));
+
+        expect(scalePitches).toStrictEqual(transposedCScale);
+      }),
+      { verbose: true }
+    );
+  });
+
+  test(&#x27;any Ionian should have same notes as C Ionian transposed by the interval from C to pitch&#x27;, () =&gt; {
+    fc.assert(
+      fc.property(fc.constantFrom(...Pitch.natural), (pitch) =&gt; {
+        const scalePitchesC = [Pitch.C, Pitch.D, Pitch.E, Pitch.F, Pitch.G, Pitch.A, Pitch.B];
+        const scalePitches = ScalePattern.Ionian.createScale(pitch).Pitches;
+        const intervalToC = Pitch.C.intervalTo(pitch);
+        const transposedCScale = scalePitchesC.map((pitch) =&gt; pitch.transpose(intervalToC));
+
+        expect(scalePitches).toStrictEqual(transposedCScale);
+      }),
+      { verbose: true }
+    );
+  });
+
+  test(&#x27;any Major Scale Mode should have same note distances as the corresponding C Major Scale Mode&#x27;, () =&gt; {
+    fc.assert(
+      fc.property(
+        fc.constantFrom(...Pitch.natural),
+        fc.constantFrom(
+          ...[
+            ScalePattern.Ionian,
+            ScalePattern.Dorian,
+            ScalePattern.Lydian,
+            ScalePattern.Mixolydian,
+          ]
+        ),
+        (pitch, pattern) =&gt; {
+          const distancesScale = convertPitchesToDistances(pattern.createScale(pitch).Pitches);
+          const distancesCScale = convertPitchesToDistances(pattern.createScale(Pitch.C).Pitches);
+
+          expect(distancesScale).toStrictEqual(distancesCScale);
+        }
+      ),
+      { verbose: false }
+    );
+  });
+});
+
+describe(&#x27;C Scales&#x27;, () =&gt; {
+  test(&#x27;Ionian should have notes C, D, E, F, G, A, B&#x27;, () =&gt; {
+    expect(ScalePattern.Ionian.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.E,
+      Pitch.F,
+      Pitch.G,
+      Pitch.A,
+      Pitch.B,
+    ]);
+  });
+
+  test(&#x27;Dorian should have notes C, D, Eb, F, G, A, Bb&#x27;, () =&gt; {
+    expect(ScalePattern.Dorian.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.EFlat,
+      Pitch.F,
+      Pitch.G,
+      Pitch.A,
+      Pitch.BFlat,
+    ]);
+  });
+
+  test(&#x27;Phrygian should have notes C, Db, Eb, F, G, Ab, Bb&#x27;, () =&gt; {
+    expect(ScalePattern.Phrygian.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.DFlat,
+      Pitch.EFlat,
+      Pitch.F,
+      Pitch.G,
+      Pitch.AFlat,
+      Pitch.BFlat,
+    ]);
+  });
+
+  test(&#x27;Lydian should have notes C, D, E, F#, G, A, B&#x27;, () =&gt; {
+    expect(ScalePattern.Lydian.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.E,
+      Pitch.FSharp,
+      Pitch.G,
+      Pitch.A,
+      Pitch.B,
+    ]);
+  });
+  test(&#x27;Mixolydian should have notes C, D, E, F, G, A, Bb&#x27;, () =&gt; {
+    expect(ScalePattern.Mixolydian.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.E,
+      Pitch.F,
+      Pitch.G,
+      Pitch.A,
+      Pitch.BFlat,
+    ]);
+  });
+
+  test(&#x27;Aolian should have notes C, D, Eb, F, G, Ab, Bb&#x27;, () =&gt; {
+    expect(ScalePattern.Aolian.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.EFlat,
+      Pitch.F,
+      Pitch.G,
+      Pitch.AFlat,
+      Pitch.BFlat,
+    ]);
+  });
+
+  test(&#x27;Locrian should have notes C, Db, Eb, F, Gb, Ab, Bb&#x27;, () =&gt; {
+    expect(ScalePattern.Locrian.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.DFlat,
+      Pitch.EFlat,
+      Pitch.F,
+      Pitch.GFlat,
+      Pitch.AFlat,
+      Pitch.BFlat,
+    ]);
+  });
+
+  test(&#x27;Major Pentatonic should have notes C, D, E, G, A&#x27;, () =&gt; {
+    expect(ScalePattern.MajorPentatonic.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.E,
+      Pitch.G,
+      Pitch.A,
+    ]);
+  });
+
+  test(&#x27;Minor Pentatonic should have notes C, Eb, F, G, Bb&#x27;, () =&gt; {
+    expect(ScalePattern.MinorPentatonic.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.EFlat,
+      Pitch.F,
+      Pitch.G,
+      Pitch.BFlat,
+    ]);
+  });
+
+  test(&#x27;Bebop should have notes C, Eb, F, Gb, G, Bb, B&#x27;, () =&gt; {
+    expect(ScalePattern.Bebop.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.E,
+      Pitch.F,
+      Pitch.G,
+      Pitch.A,
+      Pitch.BFlat,
+      Pitch.B,
+    ]);
+  });
+
+  test(&#x27;Bebop should have notes C, Eb, F, Gb, G, Bb&#x27;, () =&gt; {
+    expect(ScalePattern.Blues.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.EFlat,
+      Pitch.F,
+      Pitch.GFlat,
+      Pitch.G,
+      Pitch.BFlat,
+    ]);
+  });
+
+  test(&#x27;Harmonic minor should have notes C; D; Eb; F; G; Ab; B&#x27;, () =&gt; {
+    expect(ScalePattern.HarmonicMinor.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.EFlat,
+      Pitch.F,
+      Pitch.G,
+      Pitch.AFlat,
+      Pitch.B,
+    ]);
+  });
+
+  test(&#x27;Melodic minor should have notes C; D; Eb; F; G; A; B&#x27;, () =&gt; {
+    expect(ScalePattern.MelodicMinor.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.EFlat,
+      Pitch.F,
+      Pitch.G,
+      Pitch.A,
+      Pitch.B,
+    ]);
+  });
+
+  test(&#x27;Dorianb2 should have notes C; Db; Eb; F; G; A; Bb&#x27;, () =&gt; {
+    expect(ScalePattern.Dorianb2.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.DFlat,
+      Pitch.EFlat,
+      Pitch.F,
+      Pitch.G,
+      Pitch.A,
+      Pitch.BFlat,
+    ]);
+  });
+
+  test(&#x27;NeapolitanMinor should have notes C; Db; Eb; F; G; Ab; B&#x27;, () =&gt; {
+    expect(ScalePattern.NeapolitanMinor.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.DFlat,
+      Pitch.EFlat,
+      Pitch.F,
+      Pitch.G,
+      Pitch.AFlat,
+      Pitch.B,
+    ]);
+  });
+
+  test(&#x27;LydianAugmented should have notes C; D; E; F#; G#; A; B&#x27;, () =&gt; {
+    expect(ScalePattern.LydianAugmented.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.E,
+      Pitch.FSharp,
+      Pitch.GSharp,
+      Pitch.A,
+      Pitch.B,
+    ]);
+  });
+
+  test(&#x27;LydianDominant should have notes C; D; E; F#; G; A; Bb&#x27;, () =&gt; {
+    expect(ScalePattern.LydianDominant.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.E,
+      Pitch.FSharp,
+      Pitch.G,
+      Pitch.A,
+      Pitch.BFlat,
+    ]);
+  });
+
+  test(&#x27;Mixolydianb6 should have notes C; D; E; F; G; Ab; Bb&#x27;, () =&gt; {
+    expect(ScalePattern.Mixolydianb6.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.E,
+      Pitch.F,
+      Pitch.G,
+      Pitch.AFlat,
+      Pitch.BFlat,
+    ]);
+  });
+
+  test(&#x27;LocrianSharp2 should have notes C; D; Eb; F; Gb; Ab; Bb&#x27;, () =&gt; {
+    expect(ScalePattern.LocrianSharp2.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.EFlat,
+      Pitch.F,
+      Pitch.GFlat,
+      Pitch.AFlat,
+      Pitch.BFlat,
+    ]);
+  });
+
+  test(&#x27;AlteredDominant should have notes C; Db; D#, Eb; Gb; G#; Bb&#x27;, () =&gt; {
+    expect(ScalePattern.AlteredDominant.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.DFlat,
+      Pitch.DSharp,
+      Pitch.E,
+      Pitch.GFlat,
+      Pitch.GSharp,
+      Pitch.BFlat,
+    ]);
+  });
+
+  test(&#x27;HalfWholeDiminished should have notes C; Db; Eb; E; F#; G; A, Bb&#x27;, () =&gt; {
+    expect(ScalePattern.HalfWholeDiminished.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.DFlat,
+      Pitch.EFlat,
+      Pitch.E,
+      Pitch.FSharp,
+      Pitch.G,
+      Pitch.A,
+      Pitch.BFlat,
+    ]);
+  });
+
+  test(&#x27;WholeTone should have notes C D E Gb G# Bb&#x27;, () =&gt; {
+    expect(ScalePattern.WholeTone.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.E,
+      Pitch.GFlat,
+      Pitch.GSharp,
+      Pitch.BFlat,
+    ]);
+  });
+
+  test(&#x27;MajorSixthDiminishedScale should have notes C D E F G G# A B&#x27;, () =&gt; {
+    expect(ScalePattern.MajorSixthDiminishedScale.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.E,
+      Pitch.F,
+      Pitch.G,
+      Pitch.GSharp,
+      Pitch.A,
+      Pitch.B,
+    ]);
+  });
+
+  test(&#x27;MinorSixthDiminishedScale should have notes C D Eb F G G# A B&#x27;, () =&gt; {
+    expect(ScalePattern.MinorSixthDiminishedScale.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.EFlat,
+      Pitch.F,
+      Pitch.G,
+      Pitch.GSharp,
+      Pitch.A,
+      Pitch.B,
+    ]);
+  });
+
+  test(&#x27;DominantDiminishedScale should have notes C D E F G G# Bb B&#x27;, () =&gt; {
+    expect(ScalePattern.DominantDiminishedScale.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.E,
+      Pitch.F,
+      Pitch.G,
+      Pitch.GSharp,
+      Pitch.BFlat,
+      Pitch.B,
+    ]);
+  });
+
+  test(&#x27;Dominantb5DiminishedScale should have notes C D E F Gb G# Bb B&#x27;, () =&gt; {
+    expect(ScalePattern.Dominantb5DiminishedScale.createScale(Pitch.C).Pitches).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.E,
+      Pitch.F,
+      Pitch.GFlat,
+      Pitch.GSharp,
+      Pitch.BFlat,
+      Pitch.B,
+    ]);
+  });
+});
+</textarea><pre id="annotations" style="display:none">[]</pre></div>
+    <p class="footer-text">TypeScript Coverage Report generated by <a href="https://github.com/plantain-00/type-coverage">type-coverage</a> and <a href="https://github.com/alexcanessa/typescript-coverage-report">typescript-coverage-report</a> at Tue, 26 Apr 2022 16:36:14 GMT</p>
+    </body>
+  </html>
+  
