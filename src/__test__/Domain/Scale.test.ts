@@ -325,7 +325,7 @@ describe('C Scales', () => {
   });
 
   test('MajorSixthDiminishedScale should have notes C D E F G G# A B', () => {
-    expect(ScalePattern.MajorSixthDiminishedScale.createScale(Pitch.C).Pitches).toStrictEqual([
+    expect(ScalePattern.MajorSixthDiminished.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,
@@ -338,7 +338,7 @@ describe('C Scales', () => {
   });
 
   test('MinorSixthDiminishedScale should have notes C D Eb F G G# A B', () => {
-    expect(ScalePattern.MinorSixthDiminishedScale.createScale(Pitch.C).Pitches).toStrictEqual([
+    expect(ScalePattern.MinorSixthDiminished.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.EFlat,
@@ -351,7 +351,7 @@ describe('C Scales', () => {
   });
 
   test('DominantDiminishedScale should have notes C D E F G G# Bb B', () => {
-    expect(ScalePattern.DominantDiminishedScale.createScale(Pitch.C).Pitches).toStrictEqual([
+    expect(ScalePattern.DominantDiminished.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,
@@ -364,7 +364,7 @@ describe('C Scales', () => {
   });
 
   test('Dominantb5DiminishedScale should have notes C D E F Gb G# Bb B', () => {
-    expect(ScalePattern.Dominantb5DiminishedScale.createScale(Pitch.C).Pitches).toStrictEqual([
+    expect(ScalePattern.Dominantb5Diminished.createScale(Pitch.C).Pitches).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,

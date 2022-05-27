@@ -44,9 +44,6 @@ class IntervalsToPitches {
 export type PitchState = {
   name: string;
   value: number;
-  sharp: string;
-  flat: string;
-  natural: string;
 };
 
 export default class Pitch {
@@ -91,9 +88,6 @@ export default class Pitch {
     return {
       name: this.Name,
       value: this.value,
-      sharp: this.sharp().Name,
-      flat: this.flat().Name,
-      natural: this.natural().Name,
     };
   }
 
