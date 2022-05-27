@@ -4,9 +4,9 @@ import Pitch from './Pitch';
 // Stryker disable StringLiteral
 export class Octave {
   private constructor(
-    private octaveName: string,
-    private value: number,
-    private midiBaseValue: number
+    private readonly octaveName: string,
+    private readonly value: number,
+    private readonly midiBaseValue: number
   ) {}
 
   public static readonly SubContra: Octave = new Octave('Sub contra', -16, 0);
@@ -45,7 +45,11 @@ export class Octave {
 }
 
 export class Note {
-  constructor(private pitch: Pitch, private duration: Duration, private octave: Octave) {}
+  constructor(
+    private readonly pitch: Pitch,
+    private readonly duration: Duration,
+    private readonly octave: Octave
+  ) {}
 
   get MidiNumber(): number {
     return this.octave.MidiBaseValue + this.pitch.NumericValue;
@@ -53,5 +57,5 @@ export class Note {
 }
 
 export class MelodicPhrase {
-  private phrase: Note[] = [];
+  private readonly phrase: Note[] = [];
 }

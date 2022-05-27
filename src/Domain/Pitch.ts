@@ -6,7 +6,7 @@ interface IntervalToPitch {
 }
 
 class IntervalsToPitches {
-  constructor(private intervalsToPitches: IntervalToPitch[]) {}
+  constructor(private readonly intervalsToPitches: IntervalToPitch[]) {}
 
   sharp = () => {
     return new IntervalsToPitches(
@@ -53,12 +53,12 @@ export default class Pitch {
   PITCHES = 12;
 
   private constructor(
-    private name: string,
-    private value: number,
-    public sharp: () => Pitch,
-    public flat: () => Pitch,
-    public natural: () => Pitch,
-    private intervals: () => IntervalsToPitches
+    private readonly name: string,
+    private readonly value: number,
+    public readonly sharp: () => Pitch,
+    public readonly flat: () => Pitch,
+    public readonly natural: () => Pitch,
+    private readonly intervals: () => IntervalsToPitches
   ) {}
 
   absoluteDistance(to: Pitch): number {
@@ -87,7 +87,7 @@ export default class Pitch {
     return this.name;
   }
 
-  get To(): Readonly<PitchState> {
+  get To(): PitchState {
     return {
       name: this.Name,
       value: this.value,
@@ -499,15 +499,15 @@ export default class Pitch {
   public static readonly natural = [Pitch.C, Pitch.D, Pitch.E, Pitch.F, Pitch.G, Pitch.A, Pitch.B];
 }
 
-export enum MelodicLineDirection {
+export const enum MelodicLineDirection {
   Ascending,
   Descending,
 }
 
 export class MelodicLine implements Iterable<Pitch> {
   constructor(
-    private line: Pitch[] = [],
-    private direction: MelodicLineDirection = MelodicLineDirection.Ascending
+    private readonly line: Pitch[] = [],
+    private readonly direction: MelodicLineDirection = MelodicLineDirection.Ascending
   ) {}
 
   get Direction(): MelodicLineDirection {

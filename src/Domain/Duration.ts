@@ -6,7 +6,7 @@ export interface TimeSignature {
 }
 
 export class SimpleTimeSignature implements TimeSignature {
-  constructor(private beats: number, private duration: Duration) {}
+  constructor(private readonly beats: number, private readonly duration: Duration) {}
 
   get beatDuration(): number {
     return this.duration.value / this.beats;
@@ -26,7 +26,7 @@ export class SimpleTimeSignature implements TimeSignature {
 }
 
 export class CompoundTimeSignature implements TimeSignature {
-  constructor(private beats: number, private duration: Duration) {}
+  constructor(private readonly beats: number, private readonly duration: Duration) {}
 
   get beatDuration(): number {
     return (this.duration.value * 3) / this.beats;
@@ -55,7 +55,7 @@ export interface RhythmicDuration {
 
 // Stryker disable StringLiteral
 export class Duration implements RhythmicDuration {
-  constructor(private name: string, private duration: number) {}
+  constructor(private readonly name: string, private readonly duration: number) {}
 
   public static readonly Double: Duration = new Duration('Double', 2.0 / 1.0);
   public static readonly Whole: Duration = new Duration('Whole', 1.0);
@@ -142,7 +142,7 @@ export class Duration implements RhythmicDuration {
 // }
 
 export class RhythmicPhrase {
-  private phrase: Duration[] = [];
+  private readonly phrase: Duration[] = [];
 
   beats(timeSignature: SimpleTimeSignature): number {
     return this.phrase.reduce((acc, d) => acc + d.toBeats(timeSignature), 0);
@@ -154,8 +154,8 @@ export class RhythmicPhrase {
 }
 
 export class Measure {
-  private phrase: RhythmicPhrase;
-  private timeSignature: SimpleTimeSignature;
+  private readonly phrase: RhythmicPhrase;
+  private readonly timeSignature: SimpleTimeSignature;
 
   constructor(timeSignature: SimpleTimeSignature) {
     this.phrase = new RhythmicPhrase();

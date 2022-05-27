@@ -8,7 +8,10 @@ export type ChordPitchState = {
 };
 
 class ChordPitch {
-  constructor(private _pitch: Pitch = Pitch.C, private _func: ChordFunction = ChordFunction.Root) {}
+  constructor(
+    private readonly _pitch: Pitch = Pitch.C,
+    private readonly _func: ChordFunction = ChordFunction.Root
+  ) {}
 
   get Pitch() {
     return this._pitch;
@@ -27,7 +30,7 @@ class ChordPitch {
 }
 
 class ChordPitches {
-  private _pitches: Array<ChordPitch> = [];
+  private readonly _pitches: Array<ChordPitch> = [];
 
   constructor(root: Pitch, pattern: ChordPattern) {
     this._pitches = pattern.pitches(root);
@@ -105,10 +108,10 @@ export type ChordState = {
 };
 
 class BaseChord implements Chord {
-  protected pattern: ChordPattern;
-  protected _pitches: ChordPitches;
-  protected root: ChordPitch;
-  protected duration: Duration;
+  protected readonly pattern: ChordPattern;
+  protected readonly _pitches: ChordPitches;
+  protected readonly root: ChordPitch;
+  protected readonly duration: Duration;
 
   constructor(root: Pitch, pattern: ChordPattern, duration: Duration = Duration.Whole) {
     this.pattern = pattern;
@@ -235,9 +238,9 @@ export class ChordFunction {
 // Stryker disable StringLiteral
 export class ChordPattern {
   private constructor(
-    private name: string,
-    private abbreviation: string,
-    private pattern: Array<Interval>
+    private readonly name: string,
+    private readonly abbreviation: string,
+    private readonly pattern: Array<Interval>
   ) {}
 
   public static readonly Major: ChordPattern = new ChordPattern('Major', 'Maj', [

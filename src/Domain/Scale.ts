@@ -2,7 +2,7 @@ import Interval from './Interval';
 import Pitch, { MelodicLine, MelodicLineDirection } from './Pitch';
 
 export class ScalePattern {
-  private constructor(private pattern: Interval[]) {}
+  private constructor(private readonly pattern: Interval[]) {}
 
   public static readonly Ionian: ScalePattern = new ScalePattern([
     Interval.Unison,
@@ -300,7 +300,11 @@ export class ScalePattern {
 }
 
 export default class Scale {
-  constructor(private scalePattern: ScalePattern, private root: Pitch, private notes: Pitch[]) {}
+  constructor(
+    private readonly scalePattern: ScalePattern,
+    private readonly root: Pitch,
+    private readonly notes: Pitch[]
+  ) {}
 
   get Pitches(): Pitch[] {
     return this.notes;

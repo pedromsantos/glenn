@@ -2,7 +2,7 @@ import { ClosedChord } from './Chord';
 import Pitch, { MelodicLine, MelodicLineDirection } from './Pitch';
 
 export class Fret {
-  constructor(private string: GuitarString, private fret: number) {}
+  constructor(private readonly string: GuitarString, private readonly fret: number) {}
 
   get Number(): number {
     return this.fret;
@@ -29,8 +29,7 @@ export class Fret {
   }
 
   raiseOctave(): Fret {
-    this.fret += 12;
-    return this;
+    return new Fret(this.string, this.fret + 12);
   }
 
   toTab(): TabColumn {
@@ -57,10 +56,10 @@ export class Fret {
 
 export class GuitarString {
   constructor(
-    private name: string,
-    private openStringPitch: Pitch,
-    private index: number,
-    private next: () => GuitarString
+    private readonly name: string,
+    private readonly openStringPitch: Pitch,
+    private readonly index: number,
+    private readonly next: () => GuitarString
   ) {}
 
   public static readonly Sixth: GuitarString = new GuitarString(
@@ -184,9 +183,9 @@ export class Position {
 }
 
 export class GuitarChord {
-  private chord: Fret[];
+  private readonly chord: Fret[];
 
-  constructor(chord: ClosedChord, private position: Position) {
+  constructor(chord: ClosedChord, private readonly position: Position) {
     this.chord = this.create(chord);
   }
 
@@ -255,9 +254,9 @@ export class GuitarChord {
 }
 
 export class GuitarMelodicLine implements Iterable<Fret> {
-  private line: Fret[];
+  private readonly line: Fret[];
 
-  constructor(line: MelodicLine, private position: Position) {
+  constructor(line: MelodicLine, private readonly position: Position) {
     this.line = this.create(line);
   }
 
@@ -288,13 +287,14 @@ export class GuitarMelodicLine implements Iterable<Fret> {
 
   private mapPitchToFret(pitch: Pitch, guitarStrings: GuitarString[]): Fret | undefined {
     for (const guitarString of guitarStrings) {
-      const fret = guitarString.fretFor(pitch);
+      let fret = guitarString.fretFor(pitch);
 
       if (this.position.isFretInPosition(fret)) {
         return fret;
       }
 
-      if (this.position.isFretInPosition(fret.raiseOctave())) {
+      fret = fret.raiseOctave();
+      if (this.position.isFretInPosition(fret)) {
         return fret;
       }
     }
@@ -322,7 +322,7 @@ export class GuitarMelodicLine implements Iterable<Fret> {
 }
 
 export class TabColumn {
-  constructor(private values: string[]) {}
+  constructor(private readonly values: string[]) {}
 
   public static readonly Start: TabColumn = new TabColumn(Array(6).fill('|-'));
   public static readonly Bar: TabColumn = new TabColumn(Array(6).fill('-|-'));

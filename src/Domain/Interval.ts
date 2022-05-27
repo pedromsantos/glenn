@@ -1,9 +1,9 @@
 // Stryker disable StringLiteral
 export default class Interval {
   private constructor(
-    private name: string,
-    private abreviature: string,
-    private distance: number,
+    private readonly name: string,
+    private readonly abreviature: string,
+    private readonly distance: number,
     public invert: () => Interval
   ) {}
 
