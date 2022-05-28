@@ -4,7 +4,7 @@
   "description": "Module for working with music theory",
   "main": "index.ts",
   "author": "Pedro Moreira Santos",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "watch": "jest --watch",
     "test": "jest --watchAll=false",
