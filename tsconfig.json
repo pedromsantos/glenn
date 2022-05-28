@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "target": "es2021",
-    "module": "esnext",
-    "jsx": "react-jsx",
+    "target": "es5",
+    "module": "commonjs",
+    "outDir": "lib",
+    "declaration": true,
     "moduleResolution": "node",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "incremental": true,
     "strict": true,
     "noEmit": true,
-    "allowJs": true,
+    "allowJs": false,
     "sourceMap": true,
     "alwaysStrict": true,
     "skipLibCheck": true,
@@ -33,6 +34,6 @@
     "forceConsistentCasingInFileNames": true,
     "noPropertyAccessFromIndexSignature": true
   },
-  "include": ["src/**/*.ts", "__test__ /**/*.ts", "src/**/*.tsx", "__test__/**/*.tsx"],
+  "include": ["src/**/*.ts", "__test__ /**/*.ts"],
   "exclude": ["node_modules/**/*"]
 }

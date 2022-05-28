@@ -1,5 +1,11 @@
-import { Duration } from './Duration';
-import Pitch from './Pitch';
+import { Duration, DurationState } from './Duration';
+import Pitch, { PitchState } from './Pitch';
+
+export type OctaveState = {
+  name: string;
+  value: number;
+  midi: number;
+};
 
 // Stryker disable StringLiteral
 export class Octave {
@@ -29,6 +35,14 @@ export class Octave {
     return this.midiBaseValue;
   }
 
+  get To(): OctaveState {
+    return {
+      name: this.octaveName,
+      value: this.value,
+      midi: this.midiBaseValue,
+    };
+  }
+
   public static readonly octaves = [
     Octave.SubContra,
     Octave.Contra,
@@ -44,6 +58,11 @@ export class Octave {
   ];
 }
 
+export type NoteState = {
+  pitch: PitchState;
+  duration: DurationState;
+};
+
 export class Note {
   constructor(
     private readonly pitch: Pitch,
@@ -54,8 +73,25 @@ export class Note {
   get MidiNumber(): number {
     return this.octave.MidiBaseValue + this.pitch.NumericValue;
   }
+
+  get To(): NoteState {
+    return {
+      pitch: this.pitch.To,
+      duration: this.duration.To,
+    };
+  }
 }
+
+export type MelodicPhraseState = {
+  notes: NoteState[];
+};
 
 export class MelodicPhrase {
   private readonly phrase: Note[] = [];
+
+  get To(): MelodicPhraseState {
+    return {
+      notes: this.phrase.map((note) => note.To),
+    };
+  }
 }

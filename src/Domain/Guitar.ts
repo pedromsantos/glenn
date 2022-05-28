@@ -54,6 +54,12 @@ export class Fret {
   }
 }
 
+export type GuitarStringState = {
+  name: string;
+  openPitch: Pitch;
+  index: number;
+};
+
 export class GuitarString {
   constructor(
     private readonly name: string,
@@ -61,6 +67,14 @@ export class GuitarString {
     private readonly index: number,
     private readonly next: () => GuitarString
   ) {}
+
+  get To(): GuitarStringState {
+    return {
+      name: this.name,
+      openPitch: this.openStringPitch,
+      index: this.index,
+    };
+  }
 
   public static readonly Sixth: GuitarString = new GuitarString(
     'Sixth',
@@ -311,7 +325,7 @@ export class GuitarMelodicLine implements Iterable<Fret> {
       throw new Error('Invalid index');
     }
 
-    return this.line[index]!;
+    return this.line[index] as Fret;
   }
 
   *[Symbol.iterator]() {

@@ -53,6 +53,11 @@ export interface RhythmicDuration {
   get value(): number;
 }
 
+export type DurationState = {
+  name: string;
+  duration: number;
+};
+
 // Stryker disable StringLiteral
 export class Duration implements RhythmicDuration {
   constructor(private readonly name: string, private readonly duration: number) {}
@@ -105,6 +110,13 @@ export class Duration implements RhythmicDuration {
     usedBeats: number
   ): number {
     return usedBeats / this.toBeats(timeSignature);
+  }
+
+  get To(): DurationState {
+    return {
+      name: this.name,
+      duration: this.duration,
+    };
   }
 
   static durations = [

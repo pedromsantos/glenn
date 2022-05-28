@@ -1,3 +1,9 @@
+export type IntervalState = {
+  name: string;
+  abreviature: string;
+  distance: number;
+};
+
 // Stryker disable StringLiteral
 export default class Interval {
   private constructor(
@@ -6,6 +12,14 @@ export default class Interval {
     private readonly distance: number,
     public invert: () => Interval
   ) {}
+
+  get To(): IntervalState {
+    return {
+      name: this.name,
+      abreviature: this.abreviature,
+      distance: this.distance,
+    };
+  }
 
   public static readonly Unison: Interval = new Interval(
     'Unisson',
