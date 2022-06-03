@@ -34,20 +34,21 @@ export class Fret {
 
   toTab(): TabColumn {
     const blank = this.fret < 10 ? '-' : '--';
+    const paddedFret = `${this.fret}`;
 
     switch (this.string) {
       case GuitarString.Sixth:
-        return new TabColumn([blank, blank, blank, blank, blank, `${this.fret}`]);
+        return new TabColumn([blank, blank, blank, blank, blank, paddedFret]);
       case GuitarString.Fifth:
-        return new TabColumn([blank, blank, blank, blank, `${this.fret}`, blank]);
+        return new TabColumn([blank, blank, blank, blank, paddedFret, blank]);
       case GuitarString.Fourth:
-        return new TabColumn([blank, blank, blank, `${this.fret}`, blank, blank]);
+        return new TabColumn([blank, blank, blank, paddedFret, blank, blank]);
       case GuitarString.Third:
-        return new TabColumn([blank, blank, `${this.fret}`, blank, blank, blank]);
+        return new TabColumn([blank, blank, paddedFret, blank, blank, blank]);
       case GuitarString.Second:
-        return new TabColumn([blank, `${this.fret}`, blank, blank, blank, blank]);
+        return new TabColumn([blank, paddedFret, blank, blank, blank, blank]);
       case GuitarString.First:
-        return new TabColumn([`${this.fret}`, blank, blank, blank, blank, blank]);
+        return new TabColumn([paddedFret, blank, blank, blank, blank, blank]);
       default:
         return TabColumn.Rest;
     }
@@ -203,7 +204,7 @@ export class GuitarChord {
     this.chord = this.create(chord);
   }
 
-  toTab(): TabColumn[] {
+  toTab(): TabColumn {
     const tab: string[] = [];
 
     for (const guitarString of GuitarString.guitarStrings) {
@@ -211,7 +212,7 @@ export class GuitarChord {
 
       tab.push(this.fretToTab(fret));
     }
-    return [new TabColumn(tab.reverse())];
+    return new TabColumn(tab.reverse());
   }
 
   private fretToTab(fret: Fret | undefined): string {
@@ -274,8 +275,8 @@ export class GuitarMelodicLine implements Iterable<Fret> {
     this.line = this.create(line);
   }
 
-  toTab(): TabColumn[] {
-    return this.line.map((fret) => fret.toTab());
+  toTab(): TabMatrix {
+    return new TabMatrix(...this.line.map((fret) => fret.toTab()));
   }
 
   private create(line: MelodicLine): Fret[] {
@@ -349,13 +350,37 @@ export class TabColumn {
   }
 }
 
-export class Tab {
-  render(tab: TabColumn[]) {
-    const standardTabStart = [TabColumn.StandardTunning, TabColumn.Start];
-    const standardTabEnd = [TabColumn.End];
-    const tabToRender = standardTabStart.concat(tab).concat(standardTabEnd);
-    const tabElements = tabToRender.map((t) => t.render());
+export class TabMatrix {
+  private tabMatrix: TabColumn[];
 
-    return tabElements.reduce((a, b) => a.map((v, i) => v + b[i])).join('\n');
+  constructor(...columns: TabColumn[]) {
+    this.tabMatrix = columns;
+  }
+
+  sufixWith(...columns: TabColumn[]): TabMatrix {
+    return new TabMatrix(...this.tabMatrix.concat(columns));
+  }
+
+  prefixWith(...columns: TabColumn[]) {
+    return new TabMatrix(...columns.concat(this.tabMatrix));
+  }
+
+  render(): string[][] {
+    return this.tabMatrix.map((column) => column.render());
+  }
+}
+
+export class Tab {
+  render(tab: TabMatrix): string {
+    return tab
+      .prefixWith(TabColumn.StandardTunning, TabColumn.Start)
+      .sufixWith(TabColumn.End)
+      .render()
+      .reduce((acc, col) => acc.map((line, i) => line + col[i]))
+      .join('\n');
+  }
+
+  renderColumn(column: TabColumn): string {
+    return this.render(new TabMatrix(column));
   }
 }
