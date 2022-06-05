@@ -20,8 +20,18 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+            
       - name: Install Dependencies
         run: npm install
 
       - name: Build
         run: yarn build
+        
+      - name: Lint
+        run: yarn lint
+      
+      - name: Types
+        run: yarn types
+        
+      - name: Test
+        run: yarn test:ci
