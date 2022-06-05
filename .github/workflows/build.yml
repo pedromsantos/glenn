@@ -35,3 +35,8 @@ jobs:
         
       - name: Test
         run: yarn test:ci
+        
+      - uses: actions/upload-artifact@v3
+        with:
+          name: glenn
+          path: ./lib
