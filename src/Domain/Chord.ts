@@ -1,9 +1,9 @@
 import Interval from '../Domain/Interval';
-import Pitch, { PitchState } from '../Domain/Pitch';
+import Pitch, { PitchPrimitives } from '../Domain/Pitch';
 import { Duration } from '../Domain/Duration';
 
-export type ChordPitchState = {
-  pitch: PitchState;
+export type ChordPitchPrimitives = {
+  pitch: PitchPrimitives;
   function: string;
 };
 
@@ -21,7 +21,7 @@ class ChordPitch {
     return this._func;
   }
 
-  get To(): Readonly<ChordPitchState> {
+  get To(): Readonly<ChordPitchPrimitives> {
     return {
       pitch: this._pitch.To,
       function: this._func.To,
@@ -53,7 +53,7 @@ class ChordPitches {
     return chordPitch === undefined ? this.first() : chordPitch.Pitch;
   }
 
-  get To(): Readonly<ChordPitchState[]> {
+  get To(): Readonly<ChordPitchPrimitives[]> {
     return this._pitches.map((p) => p.To);
   }
 
@@ -97,13 +97,13 @@ interface Chord {
   //   closed(): Chord;
 }
 
-export type ChordState = {
+export type ChordPrimitives = {
   name: string;
-  root: PitchState;
-  pitches: ChordPitchState[];
+  root: PitchPrimitives;
+  pitches: ChordPitchPrimitives[];
   pattern: string;
-  bass: PitchState;
-  lead: PitchState;
+  bass: PitchPrimitives;
+  lead: PitchPrimitives;
   duration: number;
 };
 
@@ -144,7 +144,7 @@ class BaseChord implements Chord {
     return this._pitches.pitchForFunction(func);
   }
 
-  get To(): Readonly<ChordState> {
+  get To(): Readonly<ChordPrimitives> {
     return {
       name: this.Name,
       root: this.root.Pitch.To,
@@ -156,7 +156,7 @@ class BaseChord implements Chord {
     };
   }
 
-  static From(state: ChordState): Chord | undefined {
+  static From(state: ChordPrimitives): Chord | undefined {
     const root = Pitch.From(state.root);
     const pattern = ChordPattern.From(state.pattern);
     if (root === undefined || pattern === undefined) {
@@ -237,11 +237,15 @@ export class ChordFunction {
 
 // Stryker disable StringLiteral
 export class ChordPattern {
+  private static readonly all: ChordPattern[] = [];
+
   private constructor(
     private readonly name: string,
     private readonly abbreviation: string,
     private readonly pattern: Array<Interval>
-  ) {}
+  ) {
+    ChordPattern.all.push(this);
+  }
 
   public static readonly Major: ChordPattern = new ChordPattern('Major', 'Maj', [
     Interval.MajorThird,
@@ -473,45 +477,11 @@ export class ChordPattern {
     return ChordPattern.patterns.find((n) => n.Name === name);
   }
 
-  static readonly patterns = [
-    ChordPattern.Major,
-    ChordPattern.Augmented,
-    ChordPattern.Major6,
-    ChordPattern.Major6Add9,
-    ChordPattern.Major6Flat5Add9,
-    ChordPattern.Major7,
-    ChordPattern.Major9,
-    ChordPattern.Major9Sharp11,
-    ChordPattern.Major11,
-    ChordPattern.Major13,
-    ChordPattern.Major13Sharp11,
-    ChordPattern.Augmented7,
-    ChordPattern.Dominant7,
-    ChordPattern.Dominant7Flat5,
-    ChordPattern.Dominant7Flat9,
-    ChordPattern.Dominant7Sharp9,
-    ChordPattern.Dominant7Flat5Flat9,
-    ChordPattern.Dominant7Flat5Sharp9,
-    ChordPattern.Dominant9,
-    ChordPattern.Dominant11,
-    ChordPattern.Dominant13,
-    ChordPattern.Minor,
-    ChordPattern.Diminished,
-    ChordPattern.Minor7,
-    ChordPattern.Minor6,
-    ChordPattern.Minor6Add9,
-    ChordPattern.Minor9,
-    ChordPattern.Diminished7,
-    ChordPattern.Minor7b5,
-    ChordPattern.MinorMaj7,
-    ChordPattern.MinorMaj9,
-    ChordPattern.Sus2,
-    ChordPattern.Sus2Diminished,
-    ChordPattern.Sus2Augmented,
-    ChordPattern.Sus4,
-    ChordPattern.Sus4Diminished,
-    ChordPattern.Sus4Augmented,
-  ];
+  static get patterns() {
+    return ChordPattern.all;
+  }
 
-  public static readonly patternNames = ChordPattern.patterns.map((p) => p.To);
+  static get patternNames() {
+    return ChordPattern.patterns.map((p) => p.To);
+  }
 }

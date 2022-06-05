@@ -1,4 +1,4 @@
-export type IntervalState = {
+export type IntervalPrimitives = {
   name: string;
   abreviature: string;
   distance: number;
@@ -6,14 +6,18 @@ export type IntervalState = {
 
 // Stryker disable StringLiteral
 export default class Interval {
+  private static readonly all: Interval[] = [];
+
   private constructor(
     private readonly name: string,
     private readonly abreviature: string,
     private readonly distance: number,
     public invert: () => Interval
-  ) {}
+  ) {
+    Interval.all.push(this);
+  }
 
-  get To(): IntervalState {
+  get To(): IntervalPrimitives {
     return {
       name: this.name,
       abreviature: this.abreviature,
@@ -179,32 +183,7 @@ export default class Interval {
     () => Interval.MinorThird
   );
 
-  public static readonly intervals = [
-    Interval.Unison,
-    Interval.AugmentedUnison,
-    Interval.MinorSecond,
-    Interval.MajorSecond,
-    Interval.AugmentedSecond,
-    Interval.MinorThird,
-    Interval.MajorThird,
-    Interval.PerfectFourth,
-    Interval.AugmentedFourth,
-    Interval.DiminishedFifth,
-    Interval.Tritone,
-    Interval.PerfectFifth,
-    Interval.AugmentedFifth,
-    Interval.MinorSixth,
-    Interval.MajorSixth,
-    Interval.DiminishedSeventh,
-    Interval.MinorSeventh,
-    Interval.MajorSeventh,
-    Interval.PerfectOctave,
-    Interval.MinorNinth,
-    Interval.MajorNinth,
-    Interval.AugmentedNinth,
-    Interval.PerfectEleventh,
-    Interval.AugmentedEleventh,
-    Interval.MinorThirteenth,
-    Interval.MajorThirteenth,
-  ];
+  public static get intervals() {
+    return Interval.all;
+  }
 }

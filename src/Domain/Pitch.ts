@@ -41,7 +41,7 @@ class IntervalsToPitches {
   }
 }
 
-export type PitchState = {
+export type PitchPrimitives = {
   name: string;
   value: number;
 };
@@ -84,14 +84,14 @@ export default class Pitch {
     return this.name;
   }
 
-  get To(): PitchState {
+  get To(): PitchPrimitives {
     return {
       name: this.Name,
       value: this.value,
     };
   }
 
-  static From(state: PitchState): Pitch | undefined {
+  static From(state: PitchPrimitives): Pitch | undefined {
     return Pitch.pitches.find((p) => p.value === state.value && p.name === state.name);
   }
 

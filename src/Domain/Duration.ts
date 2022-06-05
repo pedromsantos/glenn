@@ -53,14 +53,18 @@ export interface RhythmicDuration {
   get value(): number;
 }
 
-export type DurationState = {
+export type DurationPrimitives = {
   name: string;
   duration: number;
 };
 
 // Stryker disable StringLiteral
 export class Duration implements RhythmicDuration {
-  constructor(private readonly name: string, private readonly duration: number) {}
+  private static readonly all: Duration[] = [];
+
+  constructor(private readonly name: string, private readonly duration: number) {
+    Duration.all.push(this);
+  }
 
   public static readonly Double: Duration = new Duration('Double', 2.0 / 1.0);
   public static readonly Whole: Duration = new Duration('Whole', 1.0);
@@ -112,25 +116,16 @@ export class Duration implements RhythmicDuration {
     return usedBeats / this.toBeats(timeSignature);
   }
 
-  get To(): DurationState {
+  get To(): DurationPrimitives {
     return {
       name: this.name,
       duration: this.duration,
     };
   }
 
-  static durations = [
-    Duration.Double,
-    Duration.Whole,
-    Duration.Half,
-    Duration.Quarter,
-    Duration.Eighth,
-    Duration.Sixteenth,
-    Duration.ThirtySecond,
-    Duration.SixtyFourth,
-    Duration.HundredTwentyEighth,
-    Duration.TwoHundredFiftySixth,
-  ];
+  static get durations() {
+    return Duration.all;
+  }
 }
 
 // export class DottedDuration implements RhythmicDuration {

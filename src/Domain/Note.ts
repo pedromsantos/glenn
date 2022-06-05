@@ -1,7 +1,7 @@
-import { Duration, DurationState } from './Duration';
-import Pitch, { PitchState } from './Pitch';
+import { Duration, DurationPrimitives } from './Duration';
+import Pitch, { PitchPrimitives } from './Pitch';
 
-export type OctaveState = {
+export type OctavePrimitives = {
   name: string;
   value: number;
   midi: number;
@@ -9,11 +9,15 @@ export type OctaveState = {
 
 // Stryker disable StringLiteral
 export class Octave {
+  private static readonly all: Octave[] = [];
+
   private constructor(
     private readonly octaveName: string,
     private readonly value: number,
     private readonly midiBaseValue: number
-  ) {}
+  ) {
+    Octave.all.push(this);
+  }
 
   public static readonly SubContra: Octave = new Octave('Sub contra', -16, 0);
   public static readonly Contra: Octave = new Octave('Contra', -8, 12);
@@ -35,7 +39,7 @@ export class Octave {
     return this.midiBaseValue;
   }
 
-  get To(): OctaveState {
+  get To(): OctavePrimitives {
     return {
       name: this.octaveName,
       value: this.value,
@@ -43,24 +47,14 @@ export class Octave {
     };
   }
 
-  public static readonly octaves = [
-    Octave.SubContra,
-    Octave.Contra,
-    Octave.Great,
-    Octave.Small,
-    Octave.OneLine,
-    Octave.TwoLine,
-    Octave.Threeline,
-    Octave.FourLine,
-    Octave.FiveLine,
-    Octave.SixLine,
-    Octave.SevenLine,
-  ];
+  public static get octaves(): Octave[] {
+    return Octave.all;
+  }
 }
 
-export type NoteState = {
-  pitch: PitchState;
-  duration: DurationState;
+export type NotePrimitives = {
+  pitch: PitchPrimitives;
+  duration: DurationPrimitives;
 };
 
 export class Note {
@@ -74,7 +68,7 @@ export class Note {
     return this.octave.MidiBaseValue + this.pitch.NumericValue;
   }
 
-  get To(): NoteState {
+  get To(): NotePrimitives {
     return {
       pitch: this.pitch.To,
       duration: this.duration.To,
@@ -82,14 +76,14 @@ export class Note {
   }
 }
 
-export type MelodicPhraseState = {
-  notes: NoteState[];
+export type MelodicPhrasePrimitives = {
+  notes: NotePrimitives[];
 };
 
 export class MelodicPhrase {
   private readonly phrase: Note[] = [];
 
-  get To(): MelodicPhraseState {
+  get To(): MelodicPhrasePrimitives {
     return {
       notes: this.phrase.map((note) => note.To),
     };

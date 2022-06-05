@@ -1,8 +1,12 @@
 import Interval from './Interval';
-import Pitch, { MelodicLine, MelodicLineDirection, PitchState } from './Pitch';
+import Pitch, { MelodicLine, MelodicLineDirection, PitchPrimitives } from './Pitch';
 
 export class ScalePattern {
-  private constructor(private readonly name: string, private readonly pattern: Interval[]) {}
+  private static readonly all: ScalePattern[] = [];
+
+  private constructor(private readonly name: string, private readonly pattern: Interval[]) {
+    ScalePattern.all.push(this);
+  }
 
   public static readonly Ionian: ScalePattern = new ScalePattern('Ionian', [
     Interval.Unison,
@@ -277,34 +281,9 @@ export class ScalePattern {
   }
 
   // Stryker disable all
-  public static readonly ScalePatterns = [
-    ScalePattern.AlteredDominant,
-    ScalePattern.Aolian,
-    ScalePattern.Bebop,
-    ScalePattern.Blues,
-    ScalePattern.DominantDiminished,
-    ScalePattern.Dominantb5Diminished,
-    ScalePattern.Dorian,
-    ScalePattern.Dorianb2,
-    ScalePattern.HalfWholeDiminished,
-    ScalePattern.HarmonicMinor,
-    ScalePattern.Ionian,
-    ScalePattern.Locrian,
-    ScalePattern.LocrianSharp2,
-    ScalePattern.Lydian,
-    ScalePattern.LydianAugmented,
-    ScalePattern.LydianDominant,
-    ScalePattern.MajorPentatonic,
-    ScalePattern.MajorSixthDiminished,
-    ScalePattern.MelodicMinor,
-    ScalePattern.MinorPentatonic,
-    ScalePattern.MinorSixthDiminished,
-    ScalePattern.Mixolydian,
-    ScalePattern.Mixolydianb6,
-    ScalePattern.NeapolitanMinor,
-    ScalePattern.Phrygian,
-    ScalePattern.WholeTone,
-  ];
+  public static get ScalePatterns(): ScalePattern[] {
+    return ScalePattern.all;
+  }
 
   // Stryker disable all
   public static readonly MajorModePatterns = [
@@ -318,10 +297,10 @@ export class ScalePattern {
   ];
 }
 
-export type ScaleState = {
+export type ScalePrimitives = {
   pattern: string;
-  root: PitchState;
-  pitches: PitchState[];
+  root: PitchPrimitives;
+  pitches: PitchPrimitives[];
 };
 
 export default class Scale {
@@ -343,7 +322,7 @@ export default class Scale {
     return new MelodicLine(this.pitches, MelodicLineDirection.Descending);
   }
 
-  get To(): Readonly<ScaleState> {
+  get To(): Readonly<ScalePrimitives> {
     return {
       pattern: this.scalePattern.Name,
       root: this.root.To,

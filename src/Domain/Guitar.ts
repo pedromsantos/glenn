@@ -55,21 +55,25 @@ export class Fret {
   }
 }
 
-export type GuitarStringState = {
+export type GuitarStringPrimitives = {
   name: string;
   openPitch: Pitch;
   index: number;
 };
 
 export class GuitarString {
+  private static readonly all: GuitarString[] = [];
+
   constructor(
     private readonly name: string,
     private readonly openStringPitch: Pitch,
     private readonly index: number,
     private readonly next: () => GuitarString
-  ) {}
+  ) {
+    GuitarString.all.push(this);
+  }
 
-  get To(): GuitarStringState {
+  get To(): GuitarStringPrimitives {
     return {
       name: this.name,
       openPitch: this.openStringPitch,
@@ -114,14 +118,9 @@ export class GuitarString {
     () => GuitarString.First
   );
 
-  public static readonly guitarStrings = [
-    GuitarString.Sixth,
-    GuitarString.Fifth,
-    GuitarString.Fourth,
-    GuitarString.Third,
-    GuitarString.Second,
-    GuitarString.First,
-  ];
+  static get guitarStrings(): GuitarString[] {
+    return GuitarString.all;
+  }
 
   fretFor(pitch: Pitch): Fret {
     return new Fret(this, this.openStringPitch.absoluteDistance(pitch));
@@ -137,7 +136,11 @@ export class GuitarString {
 }
 
 export class Position {
-  constructor(private name: string, private lowFret: Fret, private highFret: Fret) {}
+  private static readonly all: Position[] = [];
+
+  constructor(private name: string, private lowFret: Fret, private highFret: Fret) {
+    Position.all.push(this);
+  }
 
   get Name() {
     return this.name;
@@ -187,14 +190,9 @@ export class Position {
     return fretRangeFilter(fret);
   }
 
-  public static readonly guitarPositions = [
-    Position.Open,
-    Position.C,
-    Position.A,
-    Position.G,
-    Position.E,
-    Position.D,
-  ];
+  public static get guitarPositions() {
+    return Position.all;
+  }
 }
 
 export class GuitarChord {
@@ -337,7 +335,11 @@ export class GuitarMelodicLine implements Iterable<Fret> {
 }
 
 export class TabColumn {
-  constructor(private readonly values: string[]) {}
+  private static readonly all: TabColumn[] = [];
+
+  constructor(private readonly values: string[]) {
+    TabColumn.all.push(this);
+  }
 
   public static readonly Start: TabColumn = new TabColumn(Array(6).fill('|-'));
   public static readonly Bar: TabColumn = new TabColumn(Array(6).fill('-|-'));
@@ -347,6 +349,10 @@ export class TabColumn {
 
   render(): string[] {
     return this.values;
+  }
+
+  static get tabColumns(): TabColumn[] {
+    return TabColumn.all;
   }
 }
 

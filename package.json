@@ -15,7 +15,10 @@
     "lint:fix": "eslint --fix --ext .js,.json,.ts, src",
     "types": "type-coverage -at-least 99",
     "types-report": "typescript-coverage-report --threshold 99",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prettier:base": "prettier --parser typescript --single-quote",
+    "prettier:check": "npm run prettier:base -- --list-different \"src/**/*.{ts}\"",
+    "prettier:write": "npm run prettier:base -- --write \"src/**/*.{ts}\""
   },
   "dependencies": {},
   "devDependencies": {
@@ -77,7 +80,8 @@
     "plugins": [
       "prettier",
       "sonarjs",
-      "jest"
+      "jest",
+      "@typescript-eslint"
     ],
     "parser": "@typescript-eslint/parser",
     "extends": [
