@@ -377,7 +377,7 @@ describe('Pitch', () => {
       );
     });
 
-    test('The natural pitch of a pitch starts with the same ptch name', () => {
+    test('The natural pitch of a pitch starts with the same pitch name', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
           const newPitch = pitch.natural();
@@ -425,7 +425,7 @@ describe('Pitch', () => {
       );
     });
 
-    test('pitch can be converted to and from PitchState', () => {
+    test('pitch can be converted to and from PitchPrimitives', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
           const from = Pitch.From(pitch.To);

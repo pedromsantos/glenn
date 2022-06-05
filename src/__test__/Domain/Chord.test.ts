@@ -316,7 +316,7 @@ describe('Chords should', () => {
 });
 
 describe('Properties', () => {
-  test('chord can be converted to and from ChordState', () => {
+  test('chord can be converted to and from ChordPrimitives', () => {
     fc.assert(
       fc.property(
         fc.constantFrom(...Pitch.pitches),
