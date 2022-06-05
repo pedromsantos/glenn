@@ -51,7 +51,7 @@
     },
     "collectCoverageFrom": [
       "!src/__test__/utils.ts",
-      "!src/index.ts"
+      "src/**/*.ts"
     ],
     "coverageReporters": [
       [
@@ -60,8 +60,8 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 79,
-        "functions": 95,
+        "branches": 70,
+        "functions": 90,
         "lines": 95,
         "statements": 95
       }
