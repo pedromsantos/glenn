@@ -1,7 +1,8 @@
-import Pitch from '../../Domain/Pitch';
-import { Note, Octave } from '../../Domain/Note';
 import * as fc from 'fast-check';
+
 import { Duration } from '../../Domain/Duration';
+import { Note, Octave } from '../../Domain/Note';
+import Pitch from '../../Domain/Pitch';
 
 describe('Note', () => {
   test('midi values for notes start at 0 and go to 128', () => {

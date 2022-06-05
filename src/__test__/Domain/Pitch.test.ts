@@ -1,9 +1,10 @@
 /* eslint-disable jest/no-conditional-expect */
 /* eslint-disable sonarjs/cognitive-complexity */
 
+import * as fc from 'fast-check';
+
 import Interval from '../../Domain/Interval';
 import Pitch from '../../Domain/Pitch';
-import * as fc from 'fast-check';
 
 describe('Pitch', () => {
   describe('sharp should raise it by half a tone', () => {

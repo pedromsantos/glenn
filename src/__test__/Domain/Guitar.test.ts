@@ -1,12 +1,12 @@
 import { ChordPattern, ClosedChord } from '../../Domain/Chord';
 import {
   Fret,
+  GuitarChord,
   GuitarMelodicLine,
-  Position,
   GuitarString,
+  Position,
   Tab,
   TabColumn,
-  GuitarChord,
   TabMatrix,
 } from '../../Domain/Guitar';
 import Pitch, { MelodicLine, MelodicLineDirection } from '../../Domain/Pitch';

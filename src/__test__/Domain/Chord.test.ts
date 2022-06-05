@@ -1,6 +1,7 @@
-import Pitch from '../../Domain/Pitch';
-import { ClosedChord, ChordPattern, ChordFunction } from '../../Domain/Chord';
 import * as fc from 'fast-check';
+
+import { ChordFunction, ChordPattern, ClosedChord } from '../../Domain/Chord';
+import Pitch from '../../Domain/Pitch';
 
 describe('Major Chords should', () => {
   test('have a name', () => {

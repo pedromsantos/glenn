@@ -1,7 +1,8 @@
-import Pitch from '../../Domain/Pitch';
-import Key from '../../Domain/Key';
-import { convertPitchesToDistances } from '../utils';
 import * as fc from 'fast-check';
+
+import Key from '../../Domain/Key';
+import Pitch from '../../Domain/Pitch';
+import { convertPitchesToDistances } from '../utils';
 
 describe('Major keys', () => {
   test('C should have notes C, D, E, F, G, A, B', () => {

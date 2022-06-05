@@ -4,5 +4,5 @@
   "testRunner": "jest",
   "reporters": ["progress", "html"],
   "coverageAnalysis": "off",
-  "mutate": ["src/Domain/**/*.ts?(x)", "src/components/**/*.ts?(x)"]
+  "mutate": ["src/Domain/**/*.ts?(x)"]
 }

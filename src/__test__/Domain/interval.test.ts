@@ -1,7 +1,8 @@
 /* eslint-disable jest/no-conditional-expect */
 
-import Interval from '../../Domain/Interval';
 import * as fc from 'fast-check';
+
+import Interval from '../../Domain/Interval';
 
 describe('Interval', () => {
   describe('properties', () => {

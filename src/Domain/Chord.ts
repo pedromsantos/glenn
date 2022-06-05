@@ -1,6 +1,6 @@
+import { Duration } from '../Domain/Duration';
 import Interval from '../Domain/Interval';
 import Pitch, { PitchPrimitives } from '../Domain/Pitch';
-import { Duration } from '../Domain/Duration';
 
 export type ChordPitchPrimitives = {
   pitch: PitchPrimitives;

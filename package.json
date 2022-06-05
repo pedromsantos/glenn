@@ -7,44 +7,43 @@
   "license": "MIT",
   "scripts": {
     "watch": "jest --watch",
-    "test": "jest --watchAll=false",
-    "precommit": "npm-run-all -p lint types test",
+    "test": "jest --watchAll=false --verbose",
+    "precommit": "npm-run-all -p build lint types test",
     "test:ci": "jest test --watchAll=false --coverage=true",
     "mutants": "stryker run",
-    "lint": "eslint --color --ext .js,.json,.ts, src",
-    "lint:fix": "eslint --fix --ext .js,.json,.ts, src",
+    "build": "tsc",
+    "lint": "eslint . --color --ext .ts --ignore-pattern 'node_modules/'",
+    "lint:fix": "eslint . --ext .ts --ignore-pattern 'node_modules/' --fix",
     "types": "type-coverage -at-least 99",
     "types-report": "typescript-coverage-report --threshold 99",
-    "prepare": "husky install",
-    "prettier:base": "prettier --parser typescript --single-quote",
-    "prettier:check": "npm run prettier:base -- --list-different \"src/**/*.{ts}\"",
-    "prettier:write": "npm run prettier:base -- --write \"src/**/*.{ts}\""
+    "prepare": "husky install"
   },
   "dependencies": {},
   "devDependencies": {
-    "typescript": "^4.7.2",
+    "@fluffy-spoon/substitute": "^1.208.0",
+    "@stryker-mutator/core": "^6.0.2",
+    "@stryker-mutator/jest-runner": "^6.0.2",
+    "@types/jest": "^27.5.1",
+    "@types/node": "^17.0.36",
+    "eslint": "^8.16.0",
+    "@typescript-eslint/parser": "^5.26.0",
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-sonarjs": "^0.13.0",
+    "fast-check": "^3.0.0",
     "husky": "^8.0.1",
     "jest": "^28.1.0",
-    "eslint": "^8.16.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
     "ts-coverage": "^0.1.5",
     "ts-jest": "^28.0.3",
-    "fast-check": "^3.0.0",
-    "ts-node-dev": "^2.0.0",
     "type-coverage": "^2.21.1",
-    "@types/jest": "^27.5.1",
-    "@types/node": "^17.0.36",
-    "typescript-coverage-report": "^0.6.4",
-    "@fluffy-spoon/substitute": "^1.208.0",
-    "@stryker-mutator/core": "^6.0.2",
-    "@stryker-mutator/jest-runner": "^6.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.26.0",
-    "@typescript-eslint/parser": "^5.26.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-jest": "^26.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-sonarjs": "^0.13.0"
+    "typescript": "^4.7.2",
+    "typescript-coverage-report": "^0.6.4"
   },
   "jest": {
     "transform": {
@@ -69,7 +68,9 @@
     }
   },
   "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
     "env": {
+      "node": true,
       "es2021": true
     },
     "parserOptions": {
@@ -81,15 +82,26 @@
       "prettier",
       "sonarjs",
       "jest",
-      "@typescript-eslint"
+      "@typescript-eslint",
+      "simple-import-sort",
+      "import"
     ],
-    "parser": "@typescript-eslint/parser",
     "extends": [
       "plugin:@typescript-eslint/eslint-recommended",
       "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended",
       "plugin:sonarjs/recommended",
       "plugin:jest/recommended",
       "plugin:jest/style"
-    ]
+    ],
+    "rules": {
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
+      "import/first": "error",
+      "import/newline-after-import": "error",
+      "import/no-duplicates": "error",
+      "no-console": 1,
+      "no-unused-vars": 0
+    }
   }
 }

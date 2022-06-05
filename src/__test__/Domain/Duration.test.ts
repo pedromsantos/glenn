@@ -1,8 +1,8 @@
 import {
+  CompoundTimeSignature,
   Duration,
   Measure,
   SimpleTimeSignature,
-  CompoundTimeSignature,
 } from '../../Domain/Duration';
 
 describe('Duration', () => {

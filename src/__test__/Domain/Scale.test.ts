@@ -1,7 +1,8 @@
+import * as fc from 'fast-check';
+
 import Pitch from '../../Domain/Pitch';
 import { ScalePattern } from '../../Domain/Scale';
 import { convertPitchesToDistances } from '../utils';
-import * as fc from 'fast-check';
 
 describe('Scale properties', () => {
   test('any Dorian should have same notes as C Dorian transposed by the interval from C to pitch', () => {
