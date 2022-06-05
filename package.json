@@ -50,6 +50,7 @@
       "^.+\\.(ts|js)$": "ts-jest"
     },
     "collectCoverageFrom": [
+      "!lib/**/*.*",
       "!src/__test__/utils.ts",
       "src/**/*.ts"
     ],
