@@ -314,9 +314,70 @@ describe('Chords should', () => {
     );
     expect(pitch).toStrictEqual(expectedPitch);
   });
+
+  test('remove Pitch for fifth', () => {
+    const baseChord = new ClosedChord(Pitch.C, ChordPattern.Diminished7);
+
+    const chord = baseChord.remove(ChordFunction.Fifth);
+
+    const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.A];
+    expect(chord.Pitches).toStrictEqual(expectedPitches);
+  });
+
+  test('remove Pitch for seventh', () => {
+    const baseChord = new ClosedChord(Pitch.C, ChordPattern.Diminished7);
+
+    const chord = baseChord.remove(ChordFunction.Seventh);
+
+    const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.GFlat];
+    expect(chord.Pitches).toStrictEqual(expectedPitches);
+  });
+
+  test('invert', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+
+    const expectedPitches = [Pitch.E, Pitch.G, Pitch.C];
+    expect(chord.invert().Pitches).toStrictEqual(expectedPitches);
+  });
+
+  test('invert twice', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+
+    const expectedPitches = [Pitch.G, Pitch.C, Pitch.E];
+    expect(chord.invert().invert().Pitches).toStrictEqual(expectedPitches);
+  });
+
+  test('invert three times', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+
+    const expectedPitches = [Pitch.B, Pitch.C, Pitch.E, Pitch.G];
+    expect(chord.invert().invert().invert().Pitches).toStrictEqual(expectedPitches);
+  });
 });
 
 describe('Properties', () => {
+  test('chords inverted by the number of pitches become base root chords', () => {
+    fc.assert(
+      fc.property(
+        fc.constantFrom(...Pitch.pitches),
+        fc.constantFrom(...ChordPattern.patterns),
+        (root, pattern) => {
+          const chord = new ClosedChord(root, pattern);
+
+          const inversions = chord.Pitches.length;
+          let invertedChord = chord.invert();
+
+          [...Array(inversions - 1)].forEach(() => {
+            invertedChord = invertedChord.invert();
+          });
+
+          expect(invertedChord.Pitches).toStrictEqual(chord.Pitches);
+        }
+      ),
+      { verbose: true }
+    );
+  });
+
   test('chord can be converted to and from ChordPrimitives', () => {
     fc.assert(
       fc.property(
