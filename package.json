@@ -8,7 +8,7 @@
   "scripts": {
     "watch": "jest --watch",
     "test": "jest --watchAll=false --verbose",
-    "precommit": "npm-run-all -p build lint types test",
+    "precommit": "npm-run-all -p lint types test build",
     "test:ci": "jest test --watchAll=false --coverage=true",
     "mutants": "stryker run",
     "build": "tsc",
