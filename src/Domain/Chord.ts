@@ -200,10 +200,17 @@ class BaseChord implements Chord {
   }
 
   drop2(): Chord {
+    if (this.Pitches.length !== 4) {
+      return this;
+    }
     return new Drop2Chord(this.root.Pitch, this.pattern, this.duration, this._pitches.drop2());
   }
 
   drop3(): Chord {
+    if (this.Pitches.length !== 4) {
+      return this;
+    }
+
     return new Drop3Chord(this.root.Pitch, this.pattern, this.duration, this._pitches.drop3());
   }
 

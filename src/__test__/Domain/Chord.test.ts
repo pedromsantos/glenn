@@ -502,6 +502,54 @@ describe('Chord properties', () => {
     );
   });
 
+  test('drop 2 chords inverted by the number of pitches become base root chords', () => {
+    fc.assert(
+      fc.property(
+        fc.constantFrom(...Pitch.pitches),
+        fc.constantFrom(...ChordPattern.patterns),
+        (root, pattern) => {
+          const chord = new ClosedChord(root, pattern).drop2();
+
+          const inversions = chord.Pitches.length;
+          let invertedChord = chord.invert();
+
+          [...Array(inversions - 1)].forEach(() => {
+            invertedChord = invertedChord.invert();
+          });
+
+          expect(invertedChord.Pitches.map((p) => p.Name)).toStrictEqual(
+            chord.Pitches.map((p) => p.Name)
+          );
+        }
+      ),
+      { verbose: true }
+    );
+  });
+
+  test('drop 3 chords inverted by the number of pitches become base root chords', () => {
+    fc.assert(
+      fc.property(
+        fc.constantFrom(...Pitch.pitches),
+        fc.constantFrom(...ChordPattern.patterns),
+        (root, pattern) => {
+          const chord = new ClosedChord(root, pattern).drop3();
+
+          const inversions = chord.Pitches.length;
+          let invertedChord = chord.invert();
+
+          [...Array(inversions - 1)].forEach(() => {
+            invertedChord = invertedChord.invert();
+          });
+
+          expect(invertedChord.Pitches.map((p) => p.Name)).toStrictEqual(
+            chord.Pitches.map((p) => p.Name)
+          );
+        }
+      ),
+      { verbose: true }
+    );
+  });
+
   test('chord can be converted to and from ChordPrimitives', () => {
     fc.assert(
       fc.property(
