@@ -24,8 +24,17 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Lint
+        run: yarn lint
+
+      - name: Types
+        run: yarn types
+
+      - name: Test
+        run: yarn test:ci
+
       - name: Build
-        run: npm-run-all -p lint types test build
+        run: yarn build
 
       - uses: actions/upload-artifact@v3
         with:
