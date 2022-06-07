@@ -252,22 +252,22 @@ describe('Dominant Chords should', () => {
 });
 
 describe('Chords should', () => {
-  test('Be named after the root note', () => {
+  test('be named after the root note', () => {
     const name = new ClosedChord(Pitch.C, ChordPattern.Diminished).Name;
     expect(name[0]).toBe('C');
   });
 
-  test('Be named after the root note and the quality', () => {
+  test('be named after the root note and the quality', () => {
     const name = new ClosedChord(Pitch.C, ChordPattern.Minor7b5).Name;
     expect(name).toBe('CMinor 7 b5');
   });
 
-  test('Be named after the root note and the abreviated quality', () => {
+  test('be named after the root note and the abreviated quality', () => {
     const name = new ClosedChord(Pitch.C, ChordPattern.Diminished7).Abbreviation;
     expect(name).toBe('Cdim 7');
   });
 
-  test('Have bass note equal to root when not inverted', () => {
+  test('have bass note equal to root when not inverted', () => {
     const expectedPitch = Pitch.C;
     const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished).Bass;
     expect(pitch).toStrictEqual(expectedPitch);
@@ -279,7 +279,7 @@ describe('Chords should', () => {
     expect(pitch).toStrictEqual(expectedPitch);
   });
 
-  test('identify Pitch for root', () => {
+  test('be able to identify Pitch for root', () => {
     const expectedPitch = Pitch.C;
     const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished).pitchForFunction(
       ChordFunction.Root
@@ -287,7 +287,7 @@ describe('Chords should', () => {
     expect(pitch).toStrictEqual(expectedPitch);
   });
 
-  test('identify Pitch for third', () => {
+  test('be able to identify Pitch for third', () => {
     const expectedPitch = Pitch.EFlat;
     const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished).pitchForFunction(
       ChordFunction.Third
@@ -295,19 +295,19 @@ describe('Chords should', () => {
     expect(pitch).toStrictEqual(expectedPitch);
   });
 
-  test('identify Pitch for third on sus2 chords', () => {
+  test('be able to identify Pitch for third on sus2 chords', () => {
     const expectedPitch = Pitch.D;
     const pitch = new ClosedChord(Pitch.C, ChordPattern.Sus2).pitchForFunction(ChordFunction.Third);
     expect(pitch).toStrictEqual(expectedPitch);
   });
 
-  test('identify Pitch for third on sus4 chords', () => {
+  test('be able to identify Pitch for third on sus4 chords', () => {
     const expectedPitch = Pitch.F;
     const pitch = new ClosedChord(Pitch.C, ChordPattern.Sus4).pitchForFunction(ChordFunction.Third);
     expect(pitch).toStrictEqual(expectedPitch);
   });
 
-  test('identify Pitch for fifth', () => {
+  test('be able to identify Pitch for fifth', () => {
     const expectedPitch = Pitch.GFlat;
     const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished).pitchForFunction(
       ChordFunction.Fifth
@@ -315,7 +315,7 @@ describe('Chords should', () => {
     expect(pitch).toStrictEqual(expectedPitch);
   });
 
-  test('remove Pitch for fifth', () => {
+  test('be able to remove Pitch for fifth', () => {
     const baseChord = new ClosedChord(Pitch.C, ChordPattern.Diminished7);
 
     const chord = baseChord.remove(ChordFunction.Fifth);
@@ -324,7 +324,25 @@ describe('Chords should', () => {
     expect(chord.Pitches).toStrictEqual(expectedPitches);
   });
 
-  test('remove Pitch for seventh', () => {
+  test('be able to remove Pitch for fifth on drop 2 chord', () => {
+    const baseChord = new ClosedChord(Pitch.C, ChordPattern.Major7).drop2();
+
+    const chord = baseChord.remove(ChordFunction.Fifth);
+
+    const expectedPitches = [Pitch.C, Pitch.B, Pitch.E];
+    expect(chord.Pitches).toStrictEqual(expectedPitches);
+  });
+
+  test('be able to remove Pitch for fifth on drop 3 chord', () => {
+    const baseChord = new ClosedChord(Pitch.C, ChordPattern.Major7).drop3();
+
+    const chord = baseChord.remove(ChordFunction.Fifth);
+
+    const expectedPitches = [Pitch.C, Pitch.B, Pitch.E];
+    expect(chord.Pitches).toStrictEqual(expectedPitches);
+  });
+
+  test('be able to remove Pitch for seventh', () => {
     const baseChord = new ClosedChord(Pitch.C, ChordPattern.Diminished7);
 
     const chord = baseChord.remove(ChordFunction.Seventh);
@@ -333,29 +351,121 @@ describe('Chords should', () => {
     expect(chord.Pitches).toStrictEqual(expectedPitches);
   });
 
-  test('invert', () => {
+  test('be able to be inverted to first inversion', () => {
     const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
 
     const expectedPitches = [Pitch.E, Pitch.G, Pitch.C];
     expect(chord.invert().Pitches).toStrictEqual(expectedPitches);
   });
 
-  test('invert twice', () => {
+  test('be able to be inverted to second inversion', () => {
     const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
 
     const expectedPitches = [Pitch.G, Pitch.C, Pitch.E];
     expect(chord.invert().invert().Pitches).toStrictEqual(expectedPitches);
   });
 
-  test('invert three times', () => {
+  test('be able to be inverted to third inversion', () => {
     const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
 
     const expectedPitches = [Pitch.B, Pitch.C, Pitch.E, Pitch.G];
     expect(chord.invert().invert().invert().Pitches).toStrictEqual(expectedPitches);
   });
+
+  test('be able to be transformed into drop 2 chords', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+
+    const expectedPitches = [Pitch.C, Pitch.G, Pitch.B, Pitch.E];
+    expect(chord.drop2().Pitches).toStrictEqual(expectedPitches);
+  });
+
+  test('be able to be transformed into drop 3 chords', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+
+    const expectedPitches = [Pitch.C, Pitch.B, Pitch.E, Pitch.G];
+    expect(chord.drop3().Pitches).toStrictEqual(expectedPitches);
+  });
+
+  test('be able to be inverted to first inversion when in drop2 format', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+
+    const expectedPitches = [Pitch.E, Pitch.B, Pitch.C, Pitch.G];
+    expect(
+      chord
+        .drop2()
+        .invert()
+        .Pitches.map((p) => p.Name)
+    ).toStrictEqual(expectedPitches.map((p) => p.Name));
+  });
+
+  test('be able to be inverted to second inversion when in drop2 format', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+
+    const expectedPitches = [Pitch.G, Pitch.C, Pitch.E, Pitch.B];
+    expect(
+      chord
+        .drop2()
+        .invert()
+        .invert()
+        .Pitches.map((p) => p.Name)
+    ).toStrictEqual(expectedPitches.map((p) => p.Name));
+  });
+
+  test('be able to be inverted to third inversion when in drop2 format', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+
+    const expectedPitches = [Pitch.B, Pitch.E, Pitch.G, Pitch.C];
+    expect(
+      chord
+        .drop2()
+        .invert()
+        .invert()
+        .invert()
+        .Pitches.map((p) => p.Name)
+    ).toStrictEqual(expectedPitches.map((p) => p.Name));
+  });
+
+  test('be able to be inverted to first inversion when in drop3 format', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+
+    const expectedPitches = [Pitch.E, Pitch.C, Pitch.G, Pitch.B];
+    expect(
+      chord
+        .drop3()
+        .invert()
+        .Pitches.map((p) => p.Name)
+    ).toStrictEqual(expectedPitches.map((p) => p.Name));
+  });
+
+  test('be able to be inverted to second inversion when in drop3 format', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+
+    const expectedPitches = [Pitch.G, Pitch.E, Pitch.B, Pitch.C];
+    expect(
+      chord
+        .drop3()
+        .invert()
+        .invert()
+        .Pitches.map((p) => p.Name)
+    ).toStrictEqual(expectedPitches.map((p) => p.Name));
+  });
+
+  test('be able to be inverted to third inversion when in drop3 format', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+
+    const expectedPitches = [Pitch.B, Pitch.G, Pitch.C, Pitch.E];
+    expect(
+      chord
+        .drop3()
+        .invert()
+        .invert()
+        .invert()
+        .Pitches.map((p) => p.Name)
+    ).toStrictEqual(expectedPitches.map((p) => p.Name));
+  });
 });
 
-describe('Properties', () => {
+describe('Chord properties', () => {
   test('chords inverted by the number of pitches become base root chords', () => {
     fc.assert(
       fc.property(

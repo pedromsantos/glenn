@@ -52,13 +52,37 @@ class ChordPitches {
     return this.last();
   }
 
+  get To(): Readonly<ChordPitchPrimitives[]> {
+    return this.pitches.map((p) => p.To);
+  }
+
   pitchForFunction(func: ChordFunction): Pitch {
     const chordPitch = this.pitches.find((p) => p.Function === func);
     return chordPitch === undefined ? this.first() : chordPitch.Pitch;
   }
 
-  get To(): Readonly<ChordPitchPrimitives[]> {
-    return this.pitches.map((p) => p.To);
+  remove(func: ChordFunction): ChordPitches {
+    return ChordPitches.createFromPitches(this.pitches.filter((p) => p.Function !== func));
+  }
+
+  drop2(): ChordPitches {
+    return new ChordPitches(this.pitchMove(1, 2).pitchMove(2, 3).pitches);
+  }
+
+  drop3(): ChordPitches {
+    return new ChordPitches(this.drop2().drop2().pitches);
+  }
+
+  rotate(amount = 1): ChordPitches {
+    amount = amount % this.pitches.length;
+    return new ChordPitches(this.pitches.slice(amount).concat(this.pitches.slice(0, amount)));
+  }
+
+  rotateLastSkipFirst(skip = 1): ChordPitches {
+    const tail = this.pitches.slice(skip);
+    const rotatedTail = tail.slice(1).concat(tail.slice(0, 1));
+    const invertedPitches = this.pitches.slice(0, skip).concat(rotatedTail);
+    return new ChordPitches(invertedPitches);
   }
 
   private first(): Pitch {
@@ -79,15 +103,14 @@ class ChordPitches {
     return pitch.Pitch;
   }
 
-  remove(func: ChordFunction): ChordPitches {
-    return ChordPitches.createFromPitches(this.pitches.filter((p) => p.Function !== func));
-  }
+  private pitchMove(fromIndex: number, toIndex: number): ChordPitches {
+    const element: ChordPitch | undefined = this.pitches[fromIndex];
+    if (element) {
+      this.pitches.splice(fromIndex, 1);
+      this.pitches.splice(toIndex, 0, element);
+    }
 
-  rotate(amount = 1) {
-    amount = amount % this.pitches.length;
-    return ChordPitches.createFromPitches(
-      this.pitches.slice(amount).concat(this.pitches.slice(0, amount))
-    );
+    return this;
   }
 }
 
@@ -99,8 +122,8 @@ interface Chord {
   pitchForFunction(func: ChordFunction): Pitch;
   remove(func: ChordFunction): Chord;
   invert(): Chord;
-  //   drop2(): Chord;
-  //   drop3(): Chord;
+  drop2(): Chord;
+  drop3(): Chord;
   //   closed(): Chord;
 }
 
@@ -176,6 +199,14 @@ class BaseChord implements Chord {
     return new BaseChord(this.root.Pitch, this.pattern, this.duration, this._pitches.rotate(1));
   }
 
+  drop2(): Chord {
+    return new Drop2Chord(this.root.Pitch, this.pattern, this.duration, this._pitches.drop2());
+  }
+
+  drop3(): Chord {
+    return new Drop3Chord(this.root.Pitch, this.pattern, this.duration, this._pitches.drop3());
+  }
+
   static From(state: ChordPrimitives): Chord | undefined {
     const root = Pitch.From(state.root);
     const pattern = ChordPattern.From(state.pattern);
@@ -188,9 +219,57 @@ class BaseChord implements Chord {
 
 export class ClosedChord extends BaseChord {}
 
-export class Drop2Chord extends BaseChord {}
+export class Drop2Chord extends BaseChord {
+  constructor(
+    root: Pitch,
+    pattern: ChordPattern,
+    duration: Duration = Duration.Whole,
+    overridePitches?: ChordPitches
+  ) {
+    super(root, pattern, duration, overridePitches);
+  }
 
-export class Drop3Chord extends BaseChord {}
+  override invert(): Chord {
+    return new Drop2Chord(
+      this.root.Pitch,
+      this.pattern,
+      this.duration,
+      this._pitches.rotate(3).rotateLastSkipFirst().rotateLastSkipFirst()
+    );
+  }
+
+  override remove(func: ChordFunction): Chord {
+    return new Drop2Chord(this.root.Pitch, this.pattern, this.duration, this._pitches.remove(func));
+  }
+
+  override drop2(): Chord {
+    return this;
+  }
+}
+
+export class Drop3Chord extends BaseChord {
+  constructor(
+    root: Pitch,
+    pattern: ChordPattern,
+    duration: Duration = Duration.Whole,
+    overridePitches?: ChordPitches
+  ) {
+    super(root, pattern, duration, overridePitches);
+  }
+
+  override invert(): Chord {
+    return new Drop3Chord(
+      this.root.Pitch,
+      this.pattern,
+      this.duration,
+      this._pitches.rotate(2).rotateLastSkipFirst(2).rotateLastSkipFirst(1).rotateLastSkipFirst(1)
+    );
+  }
+
+  override remove(func: ChordFunction): Chord {
+    return new Drop3Chord(this.root.Pitch, this.pattern, this.duration, this._pitches.remove(func));
+  }
+}
 
 export class ChordFunction {
   private static readonly all: ChordFunction[] = [];
