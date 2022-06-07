@@ -124,7 +124,7 @@ interface Chord {
   invert(): Chord;
   drop2(): Chord;
   drop3(): Chord;
-  //   closed(): Chord;
+  closed(): Chord;
 }
 
 export type ChordPrimitives = {
@@ -207,6 +207,10 @@ class BaseChord implements Chord {
     return new Drop3Chord(this.root.Pitch, this.pattern, this.duration, this._pitches.drop3());
   }
 
+  closed(): Chord {
+    return new ClosedChord(this.root.Pitch, this.pattern, this.duration);
+  }
+
   static From(state: ChordPrimitives): Chord | undefined {
     const root = Pitch.From(state.root);
     const pattern = ChordPattern.From(state.pattern);
@@ -217,7 +221,11 @@ class BaseChord implements Chord {
   }
 }
 
-export class ClosedChord extends BaseChord {}
+export class ClosedChord extends BaseChord {
+  override closed(): Chord {
+    return this;
+  }
+}
 
 export class Drop2Chord extends BaseChord {
   constructor(

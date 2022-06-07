@@ -379,11 +379,25 @@ describe('Chords should', () => {
     expect(chord.drop2().Pitches).toStrictEqual(expectedPitches);
   });
 
+  test('be able to be transformed drop 2 chords to closed chords', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7).drop2();
+
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B];
+    expect(chord.closed().Pitches).toStrictEqual(expectedPitches);
+  });
+
   test('be able to be transformed into drop 3 chords', () => {
     const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
 
     const expectedPitches = [Pitch.C, Pitch.B, Pitch.E, Pitch.G];
     expect(chord.drop3().Pitches).toStrictEqual(expectedPitches);
+  });
+
+  test('be able to be transformed drop 3 chords to closed chords', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7).drop3();
+
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B];
+    expect(chord.closed().Pitches).toStrictEqual(expectedPitches);
   });
 
   test('be able to be inverted to first inversion when in drop2 format', () => {
