@@ -143,7 +143,7 @@ class BaseChord implements Chord {
   protected readonly root: ChordPitch;
   protected readonly duration: Duration;
 
-  constructor(
+  protected constructor(
     root: Pitch,
     pattern: ChordPattern,
     duration: Duration = Duration.Whole,
@@ -229,6 +229,10 @@ class BaseChord implements Chord {
 }
 
 export class ClosedChord extends BaseChord {
+  constructor(root: Pitch, pattern: ChordPattern, duration: Duration = Duration.Whole) {
+    super(root, pattern, duration);
+  }
+
   override closed(): Chord {
     return this;
   }
