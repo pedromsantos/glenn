@@ -175,10 +175,6 @@ class BaseChord implements Chord {
     return this.root.Pitch.Name + this.pattern.Abbreviation;
   }
 
-  pitchForFunction(func: ChordFunction): Pitch {
-    return this._pitches.pitchForFunction(func);
-  }
-
   get To(): Readonly<ChordPrimitives> {
     return {
       name: this.Name,
@@ -189,6 +185,10 @@ class BaseChord implements Chord {
       lead: this.Lead.To,
       duration: this.duration.value,
     };
+  }
+
+  pitchForFunction(func: ChordFunction): Pitch {
+    return this._pitches.pitchForFunction(func);
   }
 
   remove(func: ChordFunction): Chord {
