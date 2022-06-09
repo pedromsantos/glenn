@@ -393,18 +393,18 @@ export class ChordPattern {
     return this.Name;
   }
 
+  pitches(root: Pitch): Array<ChordPitch> {
+    return [new ChordPitch(root, ChordFunction.Root)].concat(
+      this.pattern.map((p) => this.createChordNote(p, root))
+    );
+  }
+
   static get patterns() {
     return ChordPattern.all;
   }
 
   static get patternNames() {
     return ChordPattern.patterns.map((p) => p.To);
-  }
-
-  pitches(root: Pitch): Array<ChordPitch> {
-    return [new ChordPitch(root, ChordFunction.Root)].concat(
-      this.pattern.map((p) => this.createChordNote(p, root))
-    );
   }
 
   static patternFor(intervals: Interval[]): ChordPattern | undefined {
