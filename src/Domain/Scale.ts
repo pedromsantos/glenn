@@ -1,5 +1,17 @@
+import { Chord, ChordFunction, ChordPattern, ChordPitch, ChordPitches, ClosedChord } from './Chord';
+import { Duration } from './Duration';
 import Interval from './Interval';
 import Pitch, { MelodicLine, MelodicLineDirection, PitchPrimitives } from './Pitch';
+
+export enum ScaleDegree {
+  I,
+  II,
+  III,
+  IV,
+  V,
+  VI,
+  VII,
+}
 
 export class ScalePattern {
   private static readonly all: ScalePattern[] = [];
@@ -328,5 +340,61 @@ export default class Scale {
       root: this.root.To,
       pitches: this.pitches.map((p) => p.To),
     };
+  }
+
+  thirdsFrom(degree: ScaleDegree): Array<Pitch> {
+    return this.pitches
+      .slice(degree)
+      .concat(this.pitches)
+      .concat(this.pitches)
+      .filter((_, i) => i % 2 === 0)
+      .slice(0, 7);
+  }
+}
+
+export interface ScaleHarmonizer {
+  chordFor(degree: ScaleDegree): Chord;
+}
+
+export class TriadHarmonizer implements ScaleHarmonizer {
+  constructor(private scale: Scale) {}
+
+  chordFor(degree: ScaleDegree): Chord {
+    const thirds = this.scale.thirdsFrom(degree);
+
+    const chordPitches = new ChordPitches([
+      new ChordPitch(thirds[0], ChordFunction.Root),
+      new ChordPitch(thirds[1], ChordFunction.Third),
+      new ChordPitch(thirds[2], ChordFunction.Fifth),
+    ]);
+
+    return new ClosedChord(
+      chordPitches.Pitches[0] || Pitch.C,
+      ChordPattern.patternFor(chordPitches.toIntervals()) || ChordPattern.Major,
+      Duration.Whole,
+      chordPitches
+    );
+  }
+}
+
+export class SeventhHarmonizer implements ScaleHarmonizer {
+  constructor(private scale: Scale) {}
+
+  chordFor(degree: ScaleDegree): Chord {
+    const thirds = this.scale.thirdsFrom(degree);
+
+    const chordPitches = new ChordPitches([
+      new ChordPitch(thirds[0], ChordFunction.Root),
+      new ChordPitch(thirds[1], ChordFunction.Third),
+      new ChordPitch(thirds[2], ChordFunction.Fifth),
+      new ChordPitch(thirds[3], ChordFunction.Seventh),
+    ]);
+
+    return new ClosedChord(
+      chordPitches.Pitches[0] || Pitch.C,
+      ChordPattern.patternFor(chordPitches.toIntervals()) || ChordPattern.Major7,
+      Duration.Whole,
+      chordPitches
+    );
   }
 }

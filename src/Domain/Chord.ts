@@ -7,7 +7,7 @@ export type ChordPitchPrimitives = {
   function: string;
 };
 
-class ChordPitch {
+export class ChordPitch {
   constructor(
     private readonly _pitch: Pitch = Pitch.C,
     private readonly _func: ChordFunction = ChordFunction.Root
@@ -29,7 +29,7 @@ class ChordPitch {
   }
 }
 
-class ChordPitches {
+export class ChordPitches {
   constructor(private readonly pitches: ChordPitch[]) {}
 
   static createFromPitches(pitches: ChordPitch[]) {
@@ -54,6 +54,11 @@ class ChordPitches {
 
   get To(): Readonly<ChordPitchPrimitives[]> {
     return this.pitches.map((p) => p.To);
+  }
+
+  toIntervals(): Interval[] {
+    const root = this.pitchForFunction(ChordFunction.Root);
+    return this.Pitches.map((p) => root.intervalTo(p)).slice(1);
   }
 
   pitchForFunction(func: ChordFunction): Pitch {
@@ -114,11 +119,12 @@ class ChordPitches {
   }
 }
 
-interface Chord {
+export interface Chord {
   get Pitches(): Pitch[];
   get Bass(): Pitch;
   get Lead(): Pitch;
   get Name(): string;
+  get Pattern(): ChordPattern;
   pitchForFunction(func: ChordFunction): Pitch;
   remove(func: ChordFunction): Chord;
   invert(): Chord;
@@ -175,6 +181,10 @@ class BaseChord implements Chord {
     return this.root.Pitch.Name + this.pattern.Abbreviation;
   }
 
+  get Pattern(): ChordPattern {
+    return this.pattern;
+  }
+
   get To(): Readonly<ChordPrimitives> {
     return {
       name: this.Name,
@@ -229,8 +239,13 @@ class BaseChord implements Chord {
 }
 
 export class ClosedChord extends BaseChord {
-  constructor(root: Pitch, pattern: ChordPattern, duration: Duration = Duration.Whole) {
-    super(root, pattern, duration);
+  constructor(
+    root: Pitch,
+    pattern: ChordPattern,
+    duration: Duration = Duration.Whole,
+    overridePitches?: ChordPitches
+  ) {
+    super(root, pattern, duration, overridePitches);
   }
 
   override closed(): Chord {
@@ -364,6 +379,46 @@ export class ChordPattern {
     private readonly pattern: Array<Interval>
   ) {
     ChordPattern.all.push(this);
+  }
+
+  get Name() {
+    return this.name;
+  }
+
+  get Abbreviation() {
+    return this.abbreviation;
+  }
+
+  get To(): Readonly<string> {
+    return this.Name;
+  }
+
+  static get patterns() {
+    return ChordPattern.all;
+  }
+
+  static get patternNames() {
+    return ChordPattern.patterns.map((p) => p.To);
+  }
+
+  pitches(root: Pitch): Array<ChordPitch> {
+    return [new ChordPitch(root, ChordFunction.Root)].concat(
+      this.pattern.map((p) => this.createChordNote(p, root))
+    );
+  }
+
+  static patternFor(intervals: Interval[]): ChordPattern | undefined {
+    return (
+      ChordPattern.patterns.find(
+        (p) =>
+          intervals.length === p.pattern.length &&
+          p.pattern.every((interval, index) => interval === intervals[index])
+      ) || undefined
+    );
+  }
+
+  static From(name: string): ChordPattern | undefined {
+    return ChordPattern.patterns.find((n) => n.Name === name);
   }
 
   public static readonly Major: ChordPattern = new ChordPattern('Major', 'Maj', [
@@ -599,37 +654,7 @@ export class ChordPattern {
     [Interval.PerfectFourth, Interval.AugmentedFifth]
   );
 
-  pitches(root: Pitch): Array<ChordPitch> {
-    return [new ChordPitch(root, ChordFunction.Root)].concat(
-      this.pattern.map((p) => this.createChordNote(p, root))
-    );
-  }
-
   private createChordNote(interval: Interval, root: Pitch) {
     return new ChordPitch(root.transpose(interval), ChordFunction.functionForInterval(interval));
-  }
-
-  get Name() {
-    return this.name;
-  }
-
-  get Abbreviation() {
-    return this.abbreviation;
-  }
-
-  get To(): Readonly<string> {
-    return this.Name;
-  }
-
-  static From(name: string): ChordPattern | undefined {
-    return ChordPattern.patterns.find((n) => n.Name === name);
-  }
-
-  static get patterns() {
-    return ChordPattern.all;
-  }
-
-  static get patternNames() {
-    return ChordPattern.patterns.map((p) => p.To);
   }
 }
