@@ -282,17 +282,13 @@ E|-8-|`;
   });
 
   test('Major triads on open and C positions', () => {
-    const guitarChord1 = new GuitarChord(
-      new ClosedChord(Pitch.G, ChordPattern.Major),
-      Position.Open
-    );
-    const guitarChord2 = new GuitarChord(
-      new ClosedChord(Pitch.C, ChordPattern.Major),
-      Position.Open
-    );
-    const guitarChord3 = new GuitarChord(new ClosedChord(Pitch.C, ChordPattern.Major), Position.C);
+    const chords = [
+      new GuitarChord(new ClosedChord(Pitch.G, ChordPattern.Major), Position.Open),
+      new GuitarChord(new ClosedChord(Pitch.C, ChordPattern.Major), Position.Open),
+      new GuitarChord(new ClosedChord(Pitch.C, ChordPattern.Major), Position.C),
+    ];
 
-    const matrix = new TabMatrix(guitarChord1.toTab(), guitarChord2.toTab(), guitarChord3.toTab());
+    const matrix = new TabMatrix(...chords.map((c) => c.toTab()));
     expect(matrix.render()).toStrictEqual([
       ['-', '-', '-', '0', '2', '3'],
       ['-', '-', '0', '2', '3', '-'],
