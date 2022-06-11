@@ -116,23 +116,6 @@ describe('Guitar matrix should', () => {
       expect(matrix.render()).toStrictEqual([['-', '-', '-', '-', '-', '1']]);
     });
   });
-
-  test('Major triads on open and C positions', () => {
-    const chord1 = new ClosedChord(Pitch.G, ChordPattern.Major);
-    const guitarChord1 = new GuitarChord(chord1, Position.Open);
-    const chord2 = new ClosedChord(Pitch.C, ChordPattern.Major);
-    const guitarChord2 = new GuitarChord(chord2, Position.Open);
-    const chord3 = new ClosedChord(Pitch.C, ChordPattern.Major);
-    const guitarChord3 = new GuitarChord(chord3, Position.C);
-
-    const matrix = new TabMatrix(guitarChord1.toTab(), guitarChord2.toTab(), guitarChord3.toTab());
-
-    expect(matrix.render()).toStrictEqual([
-      ['3', '2', '0', '-', '-', '-'],
-      ['-', '3', '2', '0', '-', '-'],
-      ['-', '3', '2', '-', '-', '-'],
-    ]);
-  });
 });
 
 describe('Guitar tab should', () => {
