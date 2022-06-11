@@ -345,6 +345,7 @@ export class TabColumn {
   public static readonly Bar: TabColumn = new TabColumn(Array(6).fill('-|-'));
   public static readonly End: TabColumn = new TabColumn(Array(6).fill('-|'));
   public static readonly Rest: TabColumn = new TabColumn(Array(6).fill(`-`));
+  public static readonly Separator: TabColumn = new TabColumn(Array(6).fill(`-`));
   public static readonly StandardTunning: TabColumn = new TabColumn(['e', 'B', 'G', 'D', 'A', 'E']);
 
   render(): string[] {
@@ -357,28 +358,42 @@ export class TabColumn {
 }
 
 export class TabMatrix {
-  private tabMatrix: TabColumn[];
+  private tabMatrix: string[][];
 
   constructor(...columns: TabColumn[]) {
-    this.tabMatrix = columns;
+    this.tabMatrix = this.mapColumns(columns);
   }
 
-  sufixWith(...columns: TabColumn[]): TabMatrix {
-    return new TabMatrix(...this.tabMatrix.concat(columns));
+  sufixWith(...columns: TabColumn[]) {
+    this.tabMatrix = this.tabMatrix.concat(this.mapColumns(columns));
+    return this;
   }
 
   prefixWith(...columns: TabColumn[]) {
-    return new TabMatrix(...columns.concat(this.tabMatrix));
+    this.tabMatrix = this.mapColumns(columns).concat(this.tabMatrix);
+    return this;
+  }
+
+  separateWith(separator: string): TabMatrix {
+    this.tabMatrix = this.tabMatrix.map((column, i) =>
+      i == this.tabMatrix.length - 1 ? column : column.map((value) => `${value}${separator}`)
+    );
+    return this;
   }
 
   render(): string[][] {
-    return this.tabMatrix.map((column) => column.render());
+    return this.tabMatrix;
+  }
+
+  private mapColumns(columns: TabColumn[]): string[][] {
+    return columns.map((column) => column.render());
   }
 }
 
 export class Tab {
   render(tab: TabMatrix): string {
     return tab
+      .separateWith('-')
       .prefixWith(TabColumn.StandardTunning, TabColumn.Start)
       .sufixWith(TabColumn.End)
       .render()
