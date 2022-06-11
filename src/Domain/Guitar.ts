@@ -394,7 +394,8 @@ export class Tab {
   render(tab: TabMatrix): string {
     return tab
       .separateWith('-')
-      .prefixWith(TabColumn.StandardTunning, TabColumn.Start)
+      .prefixWith(TabColumn.Start)
+      .prefixWith(TabColumn.StandardTunning)
       .sufixWith(TabColumn.End)
       .render()
       .reduce((acc, col) => acc.map((line, i) => line + col[i]))
