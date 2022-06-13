@@ -6,6 +6,15 @@ import Interval from '../../Domain/Interval';
 
 describe('Interval', () => {
   describe('properties', () => {
+    test('Inverting a unique interval twice results in starting interval', () => {
+      fc.assert(
+        fc.property(fc.constantFrom(...Interval.unique), (interval) => {
+          expect(interval.invert().invert()).toBe(interval);
+        }),
+        { verbose: true }
+      );
+    });
+
     test('Inverting an interval twice results in starting interval', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Interval.intervals), (interval) => {

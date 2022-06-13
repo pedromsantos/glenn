@@ -149,37 +149,37 @@ export class Position {
   public static readonly Open: Position = new Position(
     'Open',
     new Fret(GuitarString.Sixth, 0),
-    new Fret(GuitarString.First, 3)
+    new Fret(GuitarString.First, 4)
   );
 
   public static readonly C: Position = new Position(
     'C',
-    new Fret(GuitarString.Sixth, 1),
-    new Fret(GuitarString.First, 3)
+    new Fret(GuitarString.Sixth, 2),
+    new Fret(GuitarString.First, 5)
   );
 
   public static readonly A: Position = new Position(
     'A',
-    new Fret(GuitarString.Sixth, 3),
-    new Fret(GuitarString.First, 5)
+    new Fret(GuitarString.Sixth, 4),
+    new Fret(GuitarString.First, 8)
   );
 
   public static readonly G: Position = new Position(
     'G',
-    new Fret(GuitarString.Sixth, 5),
-    new Fret(GuitarString.First, 8)
+    new Fret(GuitarString.Sixth, 6),
+    new Fret(GuitarString.First, 10)
   );
 
   public static readonly E: Position = new Position(
     'E',
-    new Fret(GuitarString.Sixth, 8),
-    new Fret(GuitarString.First, 10)
+    new Fret(GuitarString.Sixth, 9),
+    new Fret(GuitarString.First, 12)
   );
 
   public static readonly D: Position = new Position(
     'D',
-    new Fret(GuitarString.Sixth, 10),
-    new Fret(GuitarString.First, 13)
+    new Fret(GuitarString.Sixth, 11),
+    new Fret(GuitarString.First, 15)
   );
 
   isFretInPosition(fret: Fret, lowerMargin = 0, higherMargin = 0): boolean {

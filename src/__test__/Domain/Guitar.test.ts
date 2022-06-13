@@ -50,7 +50,7 @@ describe('Guitar melodic line should', () => {
 
       const fret = guitarLine.get(0);
 
-      expect(fret).toStrictEqual(new Fret(GuitarString.Second, 1));
+      expect(fret).toStrictEqual(new Fret(GuitarString.Third, 5));
     });
   });
 
@@ -73,12 +73,12 @@ describe('Guitar melodic line should', () => {
       expect(fret).toStrictEqual(new Fret(GuitarString.Fourth, 2));
     });
 
-    test('5th fret on second string for A Position', () => {
+    test('5th fret on sixth string for A Position', () => {
       const line = new MelodicLine([Pitch.E]);
       const guitarLine = new GuitarMelodicLine(line, Position.A);
 
       const fret = guitarLine.get(0);
-      expect(fret).toStrictEqual(new Fret(GuitarString.Second, 5));
+      expect(fret).toStrictEqual(new Fret(GuitarString.Fifth, 7));
     });
 
     test('7th fret on fifth string for G Position', () => {
@@ -89,12 +89,12 @@ describe('Guitar melodic line should', () => {
       expect(fret).toStrictEqual(new Fret(GuitarString.Fifth, 7));
     });
 
-    test('9th fret on third string for E Position', () => {
+    test('12th fret on sixth string for E Position', () => {
       const line = new MelodicLine([Pitch.E]);
       const guitarLine = new GuitarMelodicLine(line, Position.E);
 
       const fret = guitarLine.get(0);
-      expect(fret).toStrictEqual(new Fret(GuitarString.Third, 9));
+      expect(fret).toStrictEqual(new Fret(GuitarString.Sixth, 12));
     });
 
     test('12th fret on first string for D Position', () => {
@@ -209,11 +209,11 @@ E|-10-|`;
       const renderedTab = new Tab().render(guitarLine.toTab());
 
       const expectedTab = `e|-------|
-B|-------|
-G|-----2-|
-D|---2---|
+B|---5---|
+G|-------|
+D|-------|
 A|-3-----|
-E|-------|`;
+E|-----5-|`;
 
       expect(renderedTab).toBe(expectedTab);
     });
@@ -270,12 +270,12 @@ E|-3-|`;
       const guitarChord = new GuitarChord(chord, Position.E);
       const renderedTab = new Tab().renderColumn(guitarChord.toTab());
 
-      const expectedTab = `e|---|
-B|-8-|
-G|-9-|
-D|---|
-A|---|
-E|-8-|`;
+      const expectedTab = `e|----|
+B|----|
+G|--9-|
+D|-10-|
+A|----|
+E|----|`;
 
       expect(renderedTab).toBe(expectedTab);
     });

@@ -2,7 +2,26 @@ export type IntervalPrimitives = {
   name: string;
   abreviature: string;
   distance: number;
+  quality: string;
 };
+
+export class IntervalQuality {
+  private static readonly all: IntervalQuality[] = [];
+
+  private constructor(private readonly name: string) {
+    IntervalQuality.all.push(this);
+  }
+
+  get Name(): string {
+    return this.name;
+  }
+
+  public static readonly Minor: IntervalQuality = new IntervalQuality('Minor');
+  public static readonly Major: IntervalQuality = new IntervalQuality('Major');
+  public static readonly Augmented: IntervalQuality = new IntervalQuality('Augmented');
+  public static readonly Diminished: IntervalQuality = new IntervalQuality('Diminished');
+  public static readonly Perfect: IntervalQuality = new IntervalQuality('Perfect');
+}
 
 // Stryker disable StringLiteral
 export default class Interval {
@@ -12,6 +31,7 @@ export default class Interval {
     private readonly name: string,
     private readonly abreviature: string,
     private readonly distance: number,
+    private readonly quality: IntervalQuality,
     public invert: () => Interval
   ) {
     Interval.all.push(this);
@@ -22,6 +42,7 @@ export default class Interval {
       name: this.name,
       abreviature: this.abreviature,
       distance: this.distance,
+      quality: this.quality.Name,
     };
   }
 
@@ -29,6 +50,7 @@ export default class Interval {
     'Unisson',
     'U',
     0,
+    IntervalQuality.Perfect,
     () => Interval.PerfectOctave
   );
 
@@ -36,6 +58,7 @@ export default class Interval {
     'Augmented Unison',
     'A1',
     1,
+    IntervalQuality.Augmented,
     () => Interval.AugmentedUnison
   );
 
@@ -43,6 +66,7 @@ export default class Interval {
     'Minor Second',
     'm2',
     1,
+    IntervalQuality.Minor,
     () => Interval.MajorSeventh
   );
 
@@ -50,6 +74,7 @@ export default class Interval {
     'Major Second',
     'M2',
     2,
+    IntervalQuality.Major,
     () => Interval.MinorSeventh
   );
 
@@ -57,6 +82,7 @@ export default class Interval {
     'Augmented Second',
     'A2',
     3,
+    IntervalQuality.Augmented,
     () => Interval.DiminishedSeventh
   );
 
@@ -64,6 +90,7 @@ export default class Interval {
     'Minor Third',
     'm3',
     3,
+    IntervalQuality.Minor,
     () => Interval.MajorSixth
   );
 
@@ -71,6 +98,7 @@ export default class Interval {
     'Major Third',
     'M3',
     4,
+    IntervalQuality.Major,
     () => Interval.MinorSixth
   );
 
@@ -78,6 +106,7 @@ export default class Interval {
     'Perfect Fourth',
     'P4',
     5,
+    IntervalQuality.Perfect,
     () => Interval.PerfectFifth
   );
 
@@ -85,6 +114,7 @@ export default class Interval {
     'Augmented Fourth',
     'A4',
     6,
+    IntervalQuality.Augmented,
     () => Interval.DiminishedFifth
   );
 
@@ -92,6 +122,7 @@ export default class Interval {
     'Diminished Fifth',
     'd5',
     6,
+    IntervalQuality.Diminished,
     () => Interval.AugmentedFourth
   );
 
@@ -99,6 +130,7 @@ export default class Interval {
     'Diminished Fifth',
     'd5',
     6,
+    IntervalQuality.Diminished,
     () => Interval.AugmentedFourth
   );
 
@@ -106,6 +138,7 @@ export default class Interval {
     'Perfect Fifth',
     'P5',
     7,
+    IntervalQuality.Perfect,
     () => Interval.PerfectFourth
   );
 
@@ -113,6 +146,7 @@ export default class Interval {
     'Augmented Fifth',
     'A5',
     8,
+    IntervalQuality.Augmented,
     () => Interval.AugmentedFourth
   );
 
@@ -120,6 +154,7 @@ export default class Interval {
     'Minor Sixth',
     'm6',
     8,
+    IntervalQuality.Minor,
     () => Interval.MajorThird
   );
 
@@ -127,6 +162,7 @@ export default class Interval {
     'Major Sixth',
     'M6',
     9,
+    IntervalQuality.Major,
     () => Interval.MinorThird
   );
 
@@ -134,6 +170,7 @@ export default class Interval {
     'Diminished Seventh',
     'd7',
     9,
+    IntervalQuality.Diminished,
     () => Interval.AugmentedSecond
   );
 
@@ -141,6 +178,7 @@ export default class Interval {
     'Minor Seventh',
     'm7',
     10,
+    IntervalQuality.Minor,
     () => Interval.MajorSecond
   );
 
@@ -148,6 +186,7 @@ export default class Interval {
     'Major Seventh',
     'M7',
     11,
+    IntervalQuality.Major,
     () => Interval.MinorSecond
   );
 
@@ -155,6 +194,7 @@ export default class Interval {
     'Perfect Octave',
     'PO',
     12,
+    IntervalQuality.Perfect,
     () => Interval.Unison
   );
 
@@ -162,6 +202,7 @@ export default class Interval {
     'Minor Ninth',
     'm9',
     13,
+    IntervalQuality.Minor,
     () => Interval.MajorSeventh
   );
 
@@ -169,6 +210,7 @@ export default class Interval {
     'Major Ninth',
     'M9',
     14,
+    IntervalQuality.Major,
     () => Interval.MinorSeventh
   );
 
@@ -176,6 +218,7 @@ export default class Interval {
     'Augmented Ninth',
     'A9',
     15,
+    IntervalQuality.Augmented,
     () => Interval.DiminishedSeventh
   );
 
@@ -183,6 +226,7 @@ export default class Interval {
     'Perfect Eleventh',
     'P11',
     17,
+    IntervalQuality.Perfect,
     () => Interval.PerfectFifth
   );
 
@@ -190,6 +234,7 @@ export default class Interval {
     'Augmented Eleventh',
     'A11',
     18,
+    IntervalQuality.Augmented,
     () => Interval.DiminishedFifth
   );
 
@@ -197,6 +242,7 @@ export default class Interval {
     'Minor Thirteenth',
     'm13',
     20,
+    IntervalQuality.Minor,
     () => Interval.MajorThird
   );
 
@@ -204,11 +250,30 @@ export default class Interval {
     'Major Thirteenth',
     'M13',
     21,
+    IntervalQuality.Major,
     () => Interval.MinorThird
   );
 
-  public static get intervals() {
+  public static get intervals(): Interval[] {
     return Interval.all;
+  }
+
+  public static get unique(): Interval[] {
+    return [
+      Interval.Unison,
+      Interval.MinorSecond,
+      Interval.MajorSecond,
+      Interval.MinorThird,
+      Interval.MajorThird,
+      Interval.PerfectFourth,
+      Interval.DiminishedFifth,
+      Interval.PerfectFifth,
+      Interval.MinorSixth,
+      Interval.MajorSixth,
+      Interval.MinorSeventh,
+      Interval.MajorSeventh,
+      Interval.PerfectOctave,
+    ];
   }
 }
 
