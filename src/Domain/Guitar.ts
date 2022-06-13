@@ -8,6 +8,10 @@ export class Fret {
     return this.fret;
   }
 
+  get String(): GuitarString {
+    return this.string;
+  }
+
   isHigher(other: Fret, margin = 0) {
     return this.fret + margin > other.fret;
   }
@@ -20,7 +24,7 @@ export class Fret {
     return this.fret === other.fret && this.string.isSame(other.string);
   }
 
-  isSameFret(other: Fret) {
+  isSameFretNumber(other: Fret) {
     return this.fret === other.fret;
   }
 
@@ -30,28 +34,6 @@ export class Fret {
 
   raiseOctave(): Fret {
     return new Fret(this.string, this.fret + 12);
-  }
-
-  toTab(): TabColumn {
-    const blank = this.fret < 10 ? '-' : '--';
-    const paddedFret = `${this.fret}`;
-
-    switch (this.string) {
-      case GuitarString.Sixth:
-        return new TabColumn([blank, blank, blank, blank, blank, paddedFret]);
-      case GuitarString.Fifth:
-        return new TabColumn([blank, blank, blank, blank, paddedFret, blank]);
-      case GuitarString.Fourth:
-        return new TabColumn([blank, blank, blank, paddedFret, blank, blank]);
-      case GuitarString.Third:
-        return new TabColumn([blank, blank, paddedFret, blank, blank, blank]);
-      case GuitarString.Second:
-        return new TabColumn([blank, paddedFret, blank, blank, blank, blank]);
-      case GuitarString.First:
-        return new TabColumn([paddedFret, blank, blank, blank, blank, blank]);
-      default:
-        return TabColumn.Rest;
-    }
   }
 }
 
@@ -184,8 +166,8 @@ export class Position {
 
   isFretInPosition(fret: Fret, lowerMargin = 0, higherMargin = 0): boolean {
     const fretRangeFilter: (f: Fret) => boolean = (f) =>
-      (f.isHigher(this.lowFret, lowerMargin) || f.isSameFret(this.lowFret)) &&
-      (f.isLower(this.highFret, higherMargin) || f.isSameFret(this.highFret));
+      (f.isHigher(this.lowFret, lowerMargin) || f.isSameFretNumber(this.lowFret)) &&
+      (f.isLower(this.highFret, higherMargin) || f.isSameFretNumber(this.highFret));
 
     return fretRangeFilter(fret);
   }
@@ -202,37 +184,16 @@ export class GuitarChord {
     this.chord = this.create(chord);
   }
 
-  toTab(): TabColumn {
-    const tab: string[] = [];
+  fretFor(guitarString: GuitarString): string {
+    return this.fretToTab(this.chord.find((f) => f.isOnString(guitarString)));
+  }
 
-    for (const guitarString of GuitarString.guitarStrings) {
-      const fret = this.chord.find((f) => f.isOnString(guitarString));
-
-      tab.push(this.fretToTab(fret));
-    }
-    return new TabColumn(tab.reverse());
+  hasFretsHigherThan(fret: number): boolean {
+    return this.chord.some((f) => f.Number > fret);
   }
 
   private fretToTab(fret: Fret | undefined): string {
-    const pad = this.pad();
-
-    if (fret?.Number === undefined) {
-      return pad + '-';
-    }
-
-    if (fret?.Number < 10) {
-      return pad + fret.Number.toString();
-    }
-
-    return fret?.Number.toString();
-  }
-
-  private pad() {
-    if (this.chord.some((f) => f.Number > 9)) {
-      return '-';
-    }
-
-    return '';
+    return fret ? fret.Number.toString() : '-';
   }
 
   private create(chord: ClosedChord): Fret[] {
@@ -274,7 +235,7 @@ export class GuitarMelodicLine implements Iterable<Fret> {
   }
 
   toTab(): TabMatrix {
-    return new TabMatrix(...this.line.map((fret) => fret.toTab()));
+    return new TabMatrix(...this.line.map((fret) => TabColumn.fromFret(fret)));
   }
 
   private create(line: MelodicLine): Fret[] {
@@ -337,7 +298,7 @@ export class GuitarMelodicLine implements Iterable<Fret> {
 export class TabColumn {
   private static readonly all: TabColumn[] = [];
 
-  constructor(private readonly values: string[]) {
+  private constructor(private readonly values: string[]) {
     TabColumn.all.push(this);
   }
 
@@ -354,6 +315,42 @@ export class TabColumn {
 
   static get tabColumns(): TabColumn[] {
     return TabColumn.all;
+  }
+
+  static fromFret(fret: Fret): TabColumn {
+    const blank = fret.Number < 10 ? '-' : '--';
+    const paddedFret = `${fret.Number}`;
+
+    switch (fret.String) {
+      case GuitarString.Sixth:
+        return new TabColumn([blank, blank, blank, blank, blank, paddedFret]);
+      case GuitarString.Fifth:
+        return new TabColumn([blank, blank, blank, blank, paddedFret, blank]);
+      case GuitarString.Fourth:
+        return new TabColumn([blank, blank, blank, paddedFret, blank, blank]);
+      case GuitarString.Third:
+        return new TabColumn([blank, blank, paddedFret, blank, blank, blank]);
+      case GuitarString.Second:
+        return new TabColumn([blank, paddedFret, blank, blank, blank, blank]);
+      case GuitarString.First:
+        return new TabColumn([paddedFret, blank, blank, blank, blank, blank]);
+      default:
+        return TabColumn.Rest;
+    }
+  }
+
+  static fromChord(chord: GuitarChord): TabColumn {
+    const tab: string[] = [];
+    const pad = chord.hasFretsHigherThan(9) ? '-' : '';
+
+    for (const guitarString of GuitarString.guitarStrings) {
+      const fret = chord.fretFor(guitarString);
+      const paddedFret = Number(fret) < 10 || fret === '-' ? `${pad}${fret}` : fret;
+
+      tab.push(paddedFret);
+    }
+
+    return new TabColumn(tab.reverse());
   }
 }
 
