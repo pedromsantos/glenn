@@ -1,3 +1,5 @@
+import * as fc from 'fast-check';
+
 import { ChordPattern, ClosedChord } from '../../Domain/Chord';
 import {
   Fret,
@@ -32,6 +34,20 @@ describe('Sixth string should', () => {
   test('map G to third fret', () => {
     expect(GuitarString.Sixth.fretFor(Pitch.G)).toStrictEqual(new Fret(GuitarString.Sixth, 3));
   });
+
+  test('convert to primitive', () => {
+    expect(GuitarString.Sixth.To).toStrictEqual({
+      index: 6,
+      name: 'Sixth',
+      openPitch: { name: 'E', value: 4 },
+    });
+  });
+});
+
+describe('Guitar Position should', () => {
+  test('map to primitives', () => {
+    expect(Position.A.To).toStrictEqual({ name: 'A', lowestFret: 4, highestFret: 8 });
+  });
 });
 
 describe('Guitar melodic line should', () => {
@@ -55,6 +71,22 @@ describe('Guitar melodic line should', () => {
   });
 
   describe('map E to', () => {
+    test('all positions', () => {
+      fc.assert(
+        fc.property(fc.constantFrom(...Position.guitarPositions), (position: Position) => {
+          const line = new MelodicLine([Pitch.E], MelodicLineDirection.Descending);
+          const guitarLine = new GuitarMelodicLine(line, position);
+          const positionPrimitives = position.To;
+
+          const fret = guitarLine.get(0);
+
+          expect(fret.Number).toBeGreaterThanOrEqual(positionPrimitives.lowestFret);
+          expect(fret.Number).toBeLessThanOrEqual(positionPrimitives.highestFret);
+        }),
+        { verbose: true }
+      );
+    });
+
     test('open string on sixth string for open position', () => {
       const line = new MelodicLine([Pitch.E], MelodicLineDirection.Descending);
       const guitarLine = new GuitarMelodicLine(line, Position.Open);

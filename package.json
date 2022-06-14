@@ -61,9 +61,10 @@
       "^.+\\.(ts|js)$": "ts-jest"
     },
     "collectCoverageFrom": [
+      "src/**/*.ts",
       "!lib/**/*.*",
       "!src/__test__/utils.ts",
-      "src/**/*.ts"
+      "!src/index.ts"
     ],
     "coverageReporters": [
       [
@@ -72,7 +73,7 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 50,
+        "branches": 75,
         "functions": 85,
         "lines": 85,
         "statements": 85

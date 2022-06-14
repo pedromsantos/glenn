@@ -9,7 +9,16 @@ describe('Interval', () => {
     test('Inverting a unique interval twice results in starting interval', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Interval.unique), (interval: Interval) => {
-          expect(interval.invert().invert()).toBe(interval);
+          expect(interval.invert().invert()).toStrictEqual(interval);
+        }),
+        { verbose: true }
+      );
+    });
+
+    test('Inverting a unique interval twice results in starting interval using primitive interval', () => {
+      fc.assert(
+        fc.property(fc.constantFrom(...Interval.unique), (interval: Interval) => {
+          expect(interval.invert().invert().To).toStrictEqual(interval.To);
         }),
         { verbose: true }
       );

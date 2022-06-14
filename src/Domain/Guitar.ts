@@ -1,5 +1,5 @@
-import { ClosedChord } from './Chord';
-import Pitch, { MelodicLine, MelodicLineDirection } from './Pitch';
+import { Chord } from './Chord';
+import Pitch, { MelodicLine, MelodicLineDirection, PitchPrimitives } from './Pitch';
 
 export class Fret {
   constructor(private readonly string: GuitarString, private readonly fret: number) {}
@@ -39,7 +39,7 @@ export class Fret {
 
 export type GuitarStringPrimitives = {
   name: string;
-  openPitch: Pitch;
+  openPitch: PitchPrimitives;
   index: number;
 };
 
@@ -58,7 +58,7 @@ export class GuitarString {
   get To(): GuitarStringPrimitives {
     return {
       name: this.name,
-      openPitch: this.openStringPitch,
+      openPitch: this.openStringPitch.To,
       index: this.index,
     };
   }
@@ -117,6 +117,12 @@ export class GuitarString {
   }
 }
 
+export type PositionPrimitives = {
+  name: string;
+  lowestFret: number;
+  highestFret: number;
+};
+
 export class Position {
   private static readonly all: Position[] = [];
 
@@ -124,8 +130,12 @@ export class Position {
     Position.all.push(this);
   }
 
-  get Name() {
-    return this.name;
+  get To(): PositionPrimitives {
+    return {
+      name: this.name,
+      lowestFret: this.lowFret.Number,
+      highestFret: this.highFret.Number,
+    };
   }
 
   public static readonly Open: Position = new Position(
@@ -180,7 +190,7 @@ export class Position {
 export class GuitarChord {
   private readonly chord: Fret[];
 
-  constructor(chord: ClosedChord, private readonly position: Position) {
+  constructor(chord: Chord, private readonly position: Position) {
     this.chord = this.create(chord);
   }
 
@@ -196,7 +206,7 @@ export class GuitarChord {
     return fret ? fret.Number.toString() : '-';
   }
 
-  private create(chord: ClosedChord): Fret[] {
+  private create(chord: Chord): Fret[] {
     const frets: Fret[] = [];
 
     let bassString = GuitarString.Sixth;
