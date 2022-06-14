@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "target": "es6",
-    "module": "commonjs",
-    "outDir": "./lib",
-    "declaration": true,
-    "moduleResolution": "node",
-    "incremental": true,
+    "target": "ES2015",
+    "module": "ES2020",
+    "outDir": "./lib/esm",
+    "moduleResolution": "Node",
     "strict": true,
     "noEmit": false,
     "allowJs": false,
     "sourceMap": true,
+    "incremental": true,
+    "declaration": true,
     "alwaysStrict": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
@@ -21,7 +21,6 @@
     "isolatedModules": true,
     "strictNullChecks": true,
     "noImplicitReturns": true,
-    "resolveJsonModule": true,
     "noUnusedParameters": true,
     "downlevelIteration": true,
     "noImplicitOverride": true,
@@ -34,6 +33,6 @@
     "forceConsistentCasingInFileNames": true,
     "noPropertyAccessFromIndexSignature": true
   },
-  "include": ["src/**/*.ts", "__test__ /**/*.ts"],
-  "exclude": ["node_modules/**/*"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/**/*", "src/**/*.test.ts", "src/__test__/utils.ts"]
 }

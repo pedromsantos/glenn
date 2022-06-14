@@ -47,7 +47,7 @@ describe('properties', () => {
     const majorKeyDistances = [2, 2, 1, 2, 2, 2, 1];
 
     fc.assert(
-      fc.property(fc.constantFrom(...Key.majorKeys), (key) => {
+      fc.property(fc.constantFrom(...Key.majorKeys), (key: Key) => {
         const keyNotes = key.notes().concat(key.notes()[0] as Pitch);
         const distances = convertPitchesToDistances(keyNotes);
 
@@ -61,7 +61,7 @@ describe('properties', () => {
     const minorKeyDistances = [2, 1, 2, 2, 1, 2, 2];
 
     fc.assert(
-      fc.property(fc.constantFrom(...Key.minorKeys), (key) => {
+      fc.property(fc.constantFrom(...Key.minorKeys), (key: Key) => {
         const keyNotes = key.notes().concat(key.notes()[0] as Pitch);
         const distances = convertPitchesToDistances(keyNotes);
 

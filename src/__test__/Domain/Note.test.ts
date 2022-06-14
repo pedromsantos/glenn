@@ -10,7 +10,7 @@ describe('Note', () => {
       fc.property(
         fc.constantFrom(...Pitch.pitches),
         fc.constantFrom(...Octave.octaves),
-        (pitch, octave) => {
+        (pitch: Pitch, octave: Octave) => {
           const note = new Note(pitch, Duration.Quarter, octave);
 
           expect(note.MidiNumber).toBe(octave.MidiBaseValue + pitch.NumericValue);

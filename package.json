@@ -2,21 +2,35 @@
   "name": "glenn",
   "version": "1.0.0",
   "description": "Module for working with music theory",
-  "main": "index.ts",
   "author": "Pedro Moreira Santos",
+  "homepage": "https://github.com/pedromsantos/glenn",
+  "keywords": [
+    "Music",
+    "Theory",
+    "Music Theory",
+    "Guitar",
+    "Tab",
+    "Tablature"
+  ],
   "license": "MIT",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "files": [
+    "lib/"
+  ],
   "scripts": {
     "watch": "jest --watch",
     "test": "jest --watchAll=false --verbose",
     "precommit": "npm-run-all -p lint types test build",
     "test:ci": "jest test --watchAll=false --coverage=true",
     "mutants": "stryker run",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "lint": "eslint . --color --ext .ts --ignore-pattern 'node_modules/'",
     "lint:fix": "eslint . --ext .ts --ignore-pattern 'node_modules/' --fix",
     "types": "type-coverage -at-least 99",
     "types-report": "typescript-coverage-report --threshold 99",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prepublish": "npm run tsc"
   },
   "dependencies": {},
   "devDependencies": {

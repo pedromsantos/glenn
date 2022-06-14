@@ -3,7 +3,7 @@
 
 import * as fc from 'fast-check';
 
-import Interval from '../../Domain/Interval';
+import { Interval } from '../../Domain/Interval';
 import Pitch from '../../Domain/Pitch';
 
 describe('Pitch', () => {

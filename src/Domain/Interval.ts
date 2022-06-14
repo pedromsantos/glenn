@@ -24,7 +24,7 @@ export class IntervalQuality {
 }
 
 // Stryker disable StringLiteral
-export default class Interval {
+export class Interval {
   private static readonly all: Interval[] = [];
 
   private constructor(

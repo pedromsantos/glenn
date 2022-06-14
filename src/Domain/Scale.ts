@@ -1,6 +1,6 @@
 import { Chord, ChordFunction, ChordPattern, ChordPitch, ChordPitches, ClosedChord } from './Chord';
 import { Duration } from './Duration';
-import Interval from './Interval';
+import { Interval } from './Interval';
 import Pitch, { MelodicLine, MelodicLineDirection, PitchPrimitives } from './Pitch';
 
 export enum ScaleDegree {

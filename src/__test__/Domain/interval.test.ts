@@ -2,13 +2,13 @@
 
 import * as fc from 'fast-check';
 
-import Interval from '../../Domain/Interval';
+import { Interval } from '../../Domain/Interval';
 
 describe('Interval', () => {
   describe('properties', () => {
     test('Inverting a unique interval twice results in starting interval', () => {
       fc.assert(
-        fc.property(fc.constantFrom(...Interval.unique), (interval) => {
+        fc.property(fc.constantFrom(...Interval.unique), (interval: Interval) => {
           expect(interval.invert().invert()).toBe(interval);
         }),
         { verbose: true }
@@ -17,7 +17,7 @@ describe('Interval', () => {
 
     test('Inverting an interval twice results in starting interval', () => {
       fc.assert(
-        fc.property(fc.constantFrom(...Interval.intervals), (interval) => {
+        fc.property(fc.constantFrom(...Interval.intervals), (interval: Interval) => {
           switch (interval) {
             case Interval.AugmentedFourth:
             case Interval.Tritone:

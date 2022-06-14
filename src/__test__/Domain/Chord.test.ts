@@ -485,7 +485,7 @@ describe('Chord properties', () => {
       fc.property(
         fc.constantFrom(...Pitch.pitches),
         fc.constantFrom(...ChordPattern.patterns),
-        (root, pattern) => {
+        (root: Pitch, pattern: ChordPattern) => {
           const chord = new ClosedChord(root, pattern);
 
           const inversions = chord.Pitches.length;
@@ -507,7 +507,7 @@ describe('Chord properties', () => {
       fc.property(
         fc.constantFrom(...Pitch.pitches),
         fc.constantFrom(...ChordPattern.patterns),
-        (root, pattern) => {
+        (root: Pitch, pattern: ChordPattern) => {
           const chord = new ClosedChord(root, pattern).drop2();
           const inversions = chord.Pitches.length;
 
@@ -533,7 +533,7 @@ describe('Chord properties', () => {
       fc.property(
         fc.constantFrom(...Pitch.pitches),
         fc.constantFrom(...ChordPattern.patterns),
-        (root, pattern) => {
+        (root: Pitch, pattern: ChordPattern) => {
           const chord = new ClosedChord(root, pattern).drop3();
           const inversions = chord.Pitches.length;
 
@@ -559,7 +559,7 @@ describe('Chord properties', () => {
       fc.property(
         fc.constantFrom(...Pitch.pitches),
         fc.constantFrom(...ChordPattern.patterns),
-        (root, pattern) => {
+        (root: Pitch, pattern: ChordPattern) => {
           const chord = new ClosedChord(root, pattern);
           const from = ClosedChord.From(chord.To);
 
