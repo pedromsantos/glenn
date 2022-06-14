@@ -273,7 +273,7 @@ export class ScalePattern {
   );
 
   public createScale(root: Pitch) {
-    return new Scale(this, root, this.createScalePitches(root));
+    return new Scale(this, root);
   }
 
   public createScalePitches(root: Pitch): Pitch[] {
