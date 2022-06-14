@@ -29,8 +29,7 @@
     "lint:fix": "eslint . --ext .ts --ignore-pattern 'node_modules/' --fix",
     "types": "type-coverage -at-least 99",
     "types-report": "typescript-coverage-report --threshold 99",
-    "prepare": "husky install",
-    "prepublish": "npm run tsc"
+    "prepare": "husky install"
   },
   "dependencies": {},
   "devDependencies": {
