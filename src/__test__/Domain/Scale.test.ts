@@ -42,6 +42,21 @@ describe('Scale properties', () => {
     );
   });
 
+  test('scale primitive has same name as pattern', () => {
+    fc.assert(
+      fc.property(
+        fc.constantFrom(...Pitch.natural),
+        fc.constantFrom(...ScalePattern.ScalePatterns),
+        (pitch, pattern) => {
+          const scale = pattern.createScale(pitch);
+
+          expect(scale.To.pattern).toStrictEqual(pattern.Name);
+        }
+      ),
+      { verbose: true }
+    );
+  });
+
   test('any Major Scale Mode should have same note distances as the corresponding C Major Scale Mode', () => {
     fc.assert(
       fc.property(

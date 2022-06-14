@@ -43,6 +43,17 @@ describe('Major keys', () => {
 });
 
 describe('properties', () => {
+  test('Keys are 7 notes', () => {
+    fc.assert(
+      fc.property(fc.constantFrom(...Key.keys), (key: Key) => {
+        const keyNotes = key.notes();
+
+        expect(keyNotes).toHaveLength(7);
+      }),
+      { verbose: true }
+    );
+  });
+
   test('Major keys have formula W, W, H, W, W, W, H', () => {
     const majorKeyDistances = [2, 2, 1, 2, 2, 2, 1];
 

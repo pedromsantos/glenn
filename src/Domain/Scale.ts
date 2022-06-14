@@ -319,7 +319,7 @@ export default class Scale {
   constructor(
     private readonly scalePattern: ScalePattern,
     private readonly root: Pitch,
-    private readonly pitches: Pitch[]
+    private readonly pitches: Pitch[] = scalePattern.createScalePitches(root)
   ) {}
 
   get Pitches(): Pitch[] {
