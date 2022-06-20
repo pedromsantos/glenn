@@ -60,9 +60,7 @@ export default class Key {
   private scaleNotes() {
     const fifths: Pitch[] = [Pitch.F, Pitch.C, Pitch.G, Pitch.D, Pitch.A, Pitch.E, Pitch.B];
 
-    if (this.accidentals >= 0) return this.sharpKey(fifths);
-
-    return this.flatKey(fifths);
+    return this.accidentals >= 0 ? this.sharpKey(fifths) : this.flatKey(fifths);
   }
 
   public notes(): Pitch[] {

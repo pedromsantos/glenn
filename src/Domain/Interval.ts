@@ -259,21 +259,13 @@ export class Interval {
   }
 
   public static get unique(): Interval[] {
-    return [
-      Interval.Unison,
-      Interval.MinorSecond,
-      Interval.MajorSecond,
-      Interval.MinorThird,
-      Interval.MajorThird,
-      Interval.PerfectFourth,
-      Interval.DiminishedFifth,
-      Interval.PerfectFifth,
-      Interval.MinorSixth,
-      Interval.MajorSixth,
-      Interval.MinorSeventh,
-      Interval.MajorSeventh,
-      Interval.PerfectOctave,
-    ];
+    return Interval.all.filter(
+      (i) =>
+        i.distance <= 12 &&
+        (i.quality === IntervalQuality.Perfect ||
+          i.quality === IntervalQuality.Minor ||
+          i.quality === IntervalQuality.Major)
+    );
   }
 }
 

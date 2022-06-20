@@ -15,7 +15,7 @@ describe('Interval', () => {
       );
     });
 
-    test('Inverting a unique interval twice results in starting interval using primitive interval', () => {
+    test('Inverting a unique interval twice results in starting interval using primitive intervals', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Interval.unique), (interval: Interval) => {
           expect(interval.invert().invert().To).toStrictEqual(interval.To);
