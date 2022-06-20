@@ -6,6 +6,12 @@
       "script": "precommit",
       "group": "build",
       "label": "build"
+    },
+    {
+      "type": "npm",
+      "script": "test:ci",
+      "group": "test",
+      "label": "test"
     }
   ]
 }
