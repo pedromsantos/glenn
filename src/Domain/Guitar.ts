@@ -360,7 +360,7 @@ export class TabColumn {
       tab.push(paddedFret);
     }
 
-    return new TabColumn(tab.reverse());
+    return new TabColumn([...tab].reverse());
   }
 }
 
