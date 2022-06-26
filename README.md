@@ -1,6 +1,6 @@
 # Glenn
 
-Typescript module for working with music theory
+## Status and ratings
 
 [![Build Status](https://github.com/pedromsantos/glenn/actions/workflows/build.yml/badge.svg)](https://github.com/pedromsantos/glenn/actions/workflows/build.yml)
 
@@ -11,3 +11,110 @@ Typescript module for working with music theory
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=pedromsantos_glenn&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=pedromsantos_glenn)
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=pedromsantos_glenn&metric=coverage)](https://sonarcloud.io/summary/new_code?id=pedromsantos_glenn)
+
+Typescript module for working with music theory, this is still a work in progress.
+
+## Working with pitches
+
+```TypeScript
+const c = Pitch.C;
+
+c.sharp();
+c.flat();
+
+c.absoluteDistance(Pitch.D);
+
+c.intervalTo(Pitch.F);
+
+c.transpose(Interval.MinorThird);
+```
+
+## Working with intervals
+
+```TypeScript
+const interval = Interval.MinorThird;
+
+interval.simpleName();
+interval.quality();
+interval.number();
+interval.perfect();
+interval.invert();
+
+```
+
+## Working with keys
+
+```TypeScript
+const key = Key.CMajor;
+
+key.notes();
+
+Key.majorKeys();
+key.minorKeys();
+
+```
+
+## Working with scales
+
+```TypeScript
+const scale = ScalePattern.Ionian.createScale(Pitch.C);
+const pitches = ScalePattern.Ionian.createScalePitches(Pitch.C);
+const line = ScalePattern.Ionian.createMelodicLineScale(Pitch.C);
+const descendingLline = ScalePattern.Ionian.createDescendingMelodicLineScale(Pitch.C);
+
+key.Name;
+key.To();
+```
+
+## Working with chords
+
+```TypeScript
+const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+
+chord.Name;
+chord.pitchForFunction(ChordFunction.Root);
+chord.Pitches;
+chord.Bass;
+chord.Lead;
+chord.remove(ChordFunction.Fifth);
+chord.invert();
+chord.drop2();
+chord.drop3();
+
+```
+
+## Working with guitar tab
+
+```TypeScript
+Position.A.To;
+
+GuitarString.Sixth.fretFor(Pitch.GFlat);
+
+const line = ScalePattern.Ionian.createMelodicLineScale(Pitch.C);
+const guitarLine = new GuitarMelodicLine(line, Position.C);
+
+const line1 = new MelodicLine([Pitch.E], MelodicLineDirection.Descending);
+const guitarLine1 = new GuitarMelodicLine(line, Position.Open);
+const fret = guitarLine1.get(0);
+
+const fret = TabColumn.fromFret(new Fret(GuitarString.Sixth, 1));
+const matrix = new TabMatrix(fret);
+matrix.render();
+
+const tab = new Tab();
+tab.render(new TabMatrix());
+
+const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+const guitarChord = new GuitarChord(chord, Position.Open);
+const renderedTab = new Tab().renderColumn(TabColumn.fromChord(guitarChord));
+
+const chords = [
+      new GuitarChord(new ClosedChord(Pitch.G, ChordPattern.Major), Position.Open),
+      new GuitarChord(new ClosedChord(Pitch.C, ChordPattern.Major), Position.Open),
+      new GuitarChord(new ClosedChord(Pitch.C, ChordPattern.Major), Position.C),
+    ];
+
+const matrix1 = new TabMatrix(...chords.map((c) => TabColumn.fromChord(c)));
+matrix1.render();
+
+```
