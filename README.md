@@ -62,8 +62,8 @@ const pitches = ScalePattern.Ionian.createScalePitches(Pitch.C);
 const line = ScalePattern.Ionian.createMelodicLineScale(Pitch.C);
 const descendingLline = ScalePattern.Ionian.createDescendingMelodicLineScale(Pitch.C);
 
-key.Name;
-key.To();
+scale.Name;
+kscale.To();
 ```
 
 ## Working with chords
