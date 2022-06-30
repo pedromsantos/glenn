@@ -1,5 +1,7 @@
 # Glenn
 
+Typescript module for working with music theory, this is still a work in progress.
+
 ## Status and ratings
 
 [![Build Status](https://github.com/pedromsantos/glenn/actions/workflows/build.yml/badge.svg)](https://github.com/pedromsantos/glenn/actions/workflows/build.yml)
@@ -11,8 +13,6 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=pedromsantos_glenn&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=pedromsantos_glenn)
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=pedromsantos_glenn&metric=coverage)](https://sonarcloud.io/summary/new_code?id=pedromsantos_glenn)
-
-Typescript module for working with music theory, this is still a work in progress.
 
 ## Working with pitches
 
