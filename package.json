@@ -20,8 +20,9 @@
   ],
   "scripts": {
     "watch": "jest --watch",
+    "clean": "rm -r ./lib",
     "test": "jest --watchAll=false --verbose",
-    "precommit": "npm-run-all -p lint types test build",
+    "precommit": "npm-run-all -p clean lint types test build",
     "test:ci": "jest test --watchAll=false --coverage=true",
     "mutants": "stryker run",
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
