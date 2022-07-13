@@ -1177,14 +1177,14 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin@^5.30.4":
-  version "5.30.5"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.30.5.tgz#e9a0afd6eb3b1d663db91cf1e7bc7584d394503d"
-  integrity sha512-lftkqRoBvc28VFXEoRgyZuztyVUQ04JvUnATSPtIRFAccbXTWL6DEtXGYMcbg998kXw1NLUJm7rTQ9eUt+q6Ig==
+"@typescript-eslint/eslint-plugin@^5.30.6":
+  version "5.30.6"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.30.6.tgz#9c6017b6c1d04894141b4a87816388967f64c359"
+  integrity sha512-J4zYMIhgrx4MgnZrSDD7sEnQp7FmhKNOaqaOpaoQ/SfdMfRB/0yvK74hTnvH+VQxndZynqs5/Hn4t+2/j9bADg==
   dependencies:
-    "@typescript-eslint/scope-manager" "5.30.5"
-    "@typescript-eslint/type-utils" "5.30.5"
-    "@typescript-eslint/utils" "5.30.5"
+    "@typescript-eslint/scope-manager" "5.30.6"
+    "@typescript-eslint/type-utils" "5.30.6"
+    "@typescript-eslint/utils" "5.30.6"
     debug "^4.3.4"
     functional-red-black-tree "^1.0.1"
     ignore "^5.2.0"
@@ -1217,13 +1217,12 @@
   dependencies:
     "@typescript-eslint/types" "5.30.6"
     "@typescript-eslint/visitor-keys" "5.30.6"
-
-"@typescript-eslint/type-utils@5.30.5":
-  version "5.30.5"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/type-utils/-/type-utils-5.30.5.tgz#7a9656f360b4b1daea635c4621dab053d08bf8a9"
-  integrity sha512-k9+ejlv1GgwN1nN7XjVtyCgE0BTzhzT1YsQF0rv4Vfj2U9xnslBgMYYvcEYAFVdvhuEscELJsB7lDkN7WusErw==
+"@typescript-eslint/type-utils@5.30.6":
+  version "5.30.6"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/type-utils/-/type-utils-5.30.6.tgz#a64aa9acbe609ab77f09f53434a6af2b9685f3af"
+  integrity sha512-GFVVzs2j0QPpM+NTDMXtNmJKlF842lkZKDSanIxf+ArJsGeZUIaeT4jGg+gAgHt7AcQSFwW7htzF/rbAh2jaVA==
   dependencies:
-    "@typescript-eslint/utils" "5.30.5"
+    "@typescript-eslint/utils" "5.30.6"
     debug "^4.3.4"
     tsutils "^3.21.0"
 
@@ -1262,16 +1261,15 @@
     is-glob "^4.0.3"
     semver "^7.3.7"
     tsutils "^3.21.0"
-
 "@typescript-eslint/utils@5.30.5", "@typescript-eslint/utils@^5.10.0":
   version "5.30.5"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-5.30.5.tgz#3999cbd06baad31b9e60d084f20714d1b2776765"
   integrity sha512-o4SSUH9IkuA7AYIfAvatldovurqTAHrfzPApOZvdUq01hHojZojCFXx06D/aFpKCgWbMPRdJBWAC3sWp3itwTA==
-  dependencies:
+dependencies:
     "@types/json-schema" "^7.0.9"
-    "@typescript-eslint/scope-manager" "5.30.5"
-    "@typescript-eslint/types" "5.30.5"
-    "@typescript-eslint/typescript-estree" "5.30.5"
+    "@typescript-eslint/scope-manager" "5.30.6"
+    "@typescript-eslint/types" "5.30.6"
+    "@typescript-eslint/typescript-estree" "5.30.6"
     eslint-scope "^5.1.1"
     eslint-utils "^3.0.0"
 
@@ -4466,10 +4464,10 @@ type-check@^0.4.0, type-check@~0.4.0:
   dependencies:
     prelude-ls "^1.2.1"
 
-type-coverage-core@^2.17.2, type-coverage-core@^2.21.2:
-  version "2.21.2"
-  resolved "https://registry.yarnpkg.com/type-coverage-core/-/type-coverage-core-2.21.2.tgz#863ad669958bdd153bb5f0c36f049ba9a7c754d4"
-  integrity sha512-GM8lwpZAyurbMjg7BXHYrf5oYXQ9de140iNCKjwtWWUv2xC42oRsUsB7hpfJzFYbd9y8sXRIyDd8JAafYJPjcQ==
+type-coverage-core@^2.17.2, type-coverage-core@^2.22.0:
+  version "2.22.0"
+  resolved "https://registry.yarnpkg.com/type-coverage-core/-/type-coverage-core-2.22.0.tgz#552aa5a4fecb45ca90a4c6af37a671132711226c"
+  integrity sha512-j2wjwOTeKc/G6RUrgVsBYuDbum2GnJ/pCQ6/DlMvgs1QBXEqZxI9N6okUSFc14veQBzr01gG0cwmdyagKdf3Sg==
   dependencies:
     fast-glob "3"
     minimatch "3 || 4 || 5"
@@ -4477,13 +4475,13 @@ type-coverage-core@^2.17.2, type-coverage-core@^2.21.2:
     tslib "1 || 2"
     tsutils "3"
 
-type-coverage@^2.21.2:
-  version "2.21.2"
-  resolved "https://registry.yarnpkg.com/type-coverage/-/type-coverage-2.21.2.tgz#c49072ca1074a46b2b7e8212b8befe039fbd126c"
-  integrity sha512-lEoYaLQuonDnJDB3FSRt4iiKPpgsemdUK2d9sYD0Pxv4Za/G9U6RVj2DBDZQoSmPzuIcjdUczUc2RswMQx6IlQ==
+type-coverage@^2.22.0:
+  version "2.22.0"
+  resolved "https://registry.yarnpkg.com/type-coverage/-/type-coverage-2.22.0.tgz#232433dd9319860d89df791fed06998a03158d31"
+  integrity sha512-wgM1yH4J5gAszojftiozxb6HSOvoCqYQLmIS5Ybo4HpBtr9BrVgK5duj4e3tkc28Xg6VA2WPB8GFC+oJw352oQ==
   dependencies:
     minimist "1"
-    type-coverage-core "^2.21.2"
+    type-coverage-core "^2.22.0"
 
 type-detect@4.0.8:
   version "4.0.8"
