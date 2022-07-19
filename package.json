@@ -34,7 +34,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@types/jest": "^28.1.5",
+    "@types/jest": "^28.1.6",
     "@stryker-mutator/core": "^6.1.2",
     "@stryker-mutator/jest-runner": "^6.1.2",
     "eslint": "^8.19.0",
