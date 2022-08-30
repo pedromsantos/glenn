@@ -405,7 +405,7 @@ export class Tab {
       .prefixWith(TabColumn.StandardTunning)
       .sufixWith(TabColumn.End)
       .render()
-      .reduce((acc, col) => acc.map((line, i) => line + col[i]))
+      .reduce((acc, column) => acc.map((row, i) => row + column[i]))
       .join('\n');
   }
 
