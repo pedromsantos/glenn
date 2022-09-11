@@ -247,7 +247,7 @@ export class GuitarChord {
   }
 }
 
-export class GuitarMelodicLine implements Iterable<Fret> {
+export class GuitarMelodicLine {
   private readonly line: Fret[];
 
   constructor(line: MelodicLine, private readonly position: Position) {
@@ -302,12 +302,6 @@ export class GuitarMelodicLine implements Iterable<Fret> {
     }
 
     return this.line[index] as Fret;
-  }
-
-  *[Symbol.iterator]() {
-    for (const fret of this.line) {
-      yield fret;
-    }
   }
 }
 
