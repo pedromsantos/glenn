@@ -142,8 +142,8 @@ describe('Guitar melodic line should', () => {
 describe('Guitar matrix should', () => {
   describe('render', () => {
     test('render note F on sixth string', () => {
-      const fret = TabColumn.fromFret(new Fret(GuitarString.Sixth, 1));
-      const matrix = new TabMatrix(fret);
+      const tabColumn = TabColumn.fromFret(new Fret(GuitarString.Sixth, 1));
+      const matrix = new TabMatrix(tabColumn);
 
       expect(matrix.render()).toStrictEqual([['-', '-', '-', '-', '-', '1']]);
     });
@@ -297,19 +297,10 @@ E|-3-|`;
       expect(renderedTab).toBe(expectedTab);
     });
 
-    test('C Major triad on E position', () => {
+    test('C Major triad on E position cannot be mapped', () => {
       const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
-      const guitarChord = new GuitarChord(chord, Position.E);
-      const renderedTab = new Tab().renderColumn(TabColumn.fromChord(guitarChord));
 
-      const expectedTab = `e|----|
-B|----|
-G|--9-|
-D|-10-|
-A|----|
-E|----|`;
-
-      expect(renderedTab).toBe(expectedTab);
+      expect(() => new GuitarChord(chord, Position.E)).toThrow('Cannot map chord');
     });
   });
 

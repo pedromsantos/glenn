@@ -1,6 +1,8 @@
 import { Chord } from './Chord';
 import Pitch, { MelodicLine, MelodicLineDirection, PitchPrimitives } from './Pitch';
 
+const cannotMapFret = 'Cannot map fret';
+
 export class Fret {
   constructor(private readonly string: GuitarString, private readonly fret: number) {}
 
@@ -191,18 +193,28 @@ export class GuitarChord {
   private readonly chord: Fret[];
 
   constructor(chord: Chord, private readonly position: Position) {
-    this.chord = this.create(chord);
+    try {
+      this.chord = this.create(chord);
+    } catch {
+      throw `Cannot map chord ${chord.Name} in position ${position.To.name}`;
+    }
   }
 
   fretFor(guitarString: GuitarString): string {
-    return this.fretToTab(this.chord.find((f) => f.isOnString(guitarString)));
+    const fret = this.chord.find((f) => f.isOnString(guitarString));
+
+    if (fret === undefined) {
+      throw cannotMapFret;
+    }
+
+    return this.fretToTab(fret);
   }
 
   hasFretsHigherThan(fret: number): boolean {
     return this.chord.some((f) => f.Number > fret);
   }
 
-  private fretToTab(fret: Fret | undefined): string {
+  private fretToTab(fret: Fret): string {
     return fret ? fret.Number.toString() : '-';
   }
 
@@ -212,16 +224,14 @@ export class GuitarChord {
     let bassString = GuitarString.Sixth;
     for (const pitch of chord.Pitches) {
       const fret = this.mapPitchToFret(pitch, bassString);
-      if (fret !== undefined) {
-        frets.push(fret);
-      }
+      frets.push(fret);
       bassString = bassString.Next;
     }
 
     return frets;
   }
 
-  private mapPitchToFret(pitch: Pitch, bassString: GuitarString): Fret | undefined {
+  private mapPitchToFret(pitch: Pitch, bassString: GuitarString): Fret {
     let guitarString = bassString;
     while (guitarString !== GuitarString.First) {
       const fret = guitarString.fretFor(pitch);
@@ -233,7 +243,7 @@ export class GuitarChord {
       guitarString = guitarString.Next;
     }
 
-    return undefined;
+    throw cannotMapFret;
   }
 }
 
@@ -254,22 +264,18 @@ export class GuitarMelodicLine implements Iterable<Fret> {
     for (const pitch of line) {
       if (line.Direction === MelodicLineDirection.Ascending) {
         const fret = this.mapPitchToFret(pitch, GuitarString.guitarStrings);
-        if (fret !== undefined) {
-          frets.push(fret);
-        }
+        frets.push(fret);
       }
       if (line.Direction === MelodicLineDirection.Descending) {
         const fret = this.mapPitchToFret(pitch, GuitarString.guitarStrings.reverse());
-        if (fret !== undefined) {
-          frets.push(fret);
-        }
+        frets.push(fret);
       }
     }
 
     return frets;
   }
 
-  private mapPitchToFret(pitch: Pitch, guitarStrings: GuitarString[]): Fret | undefined {
+  private mapPitchToFret(pitch: Pitch, guitarStrings: GuitarString[]): Fret {
     for (const guitarString of guitarStrings) {
       let fret = guitarString.fretFor(pitch);
 
@@ -283,7 +289,7 @@ export class GuitarMelodicLine implements Iterable<Fret> {
       }
     }
 
-    return undefined;
+    throw cannotMapFret;
   }
 
   get(index: number): Fret {
@@ -327,23 +333,25 @@ export class TabColumn {
     return TabColumn.all;
   }
 
+  static blank = (fret: Fret = new Fret(GuitarString.First, 0)) => (fret.Number < 10 ? '-' : '--');
+
   static fromFret(fret: Fret): TabColumn {
-    const blank = fret.Number < 10 ? '-' : '--';
+    const blankFret = TabColumn.blank(fret);
     const paddedFret = `${fret.Number}`;
 
     switch (fret.String) {
       case GuitarString.Sixth:
-        return new TabColumn([blank, blank, blank, blank, blank, paddedFret]);
+        return new TabColumn([blankFret, blankFret, blankFret, blankFret, blankFret, paddedFret]);
       case GuitarString.Fifth:
-        return new TabColumn([blank, blank, blank, blank, paddedFret, blank]);
+        return new TabColumn([blankFret, blankFret, blankFret, blankFret, paddedFret, blankFret]);
       case GuitarString.Fourth:
-        return new TabColumn([blank, blank, blank, paddedFret, blank, blank]);
+        return new TabColumn([blankFret, blankFret, blankFret, paddedFret, blankFret, blankFret]);
       case GuitarString.Third:
-        return new TabColumn([blank, blank, paddedFret, blank, blank, blank]);
+        return new TabColumn([blankFret, blankFret, paddedFret, blankFret, blankFret, blankFret]);
       case GuitarString.Second:
-        return new TabColumn([blank, paddedFret, blank, blank, blank, blank]);
+        return new TabColumn([blankFret, paddedFret, blankFret, blankFret, blankFret, blankFret]);
       case GuitarString.First:
-        return new TabColumn([paddedFret, blank, blank, blank, blank, blank]);
+        return new TabColumn([paddedFret, blankFret, blankFret, blankFret, blankFret, blankFret]);
       default:
         return TabColumn.Rest;
     }
@@ -354,10 +362,14 @@ export class TabColumn {
     const pad = chord.hasFretsHigherThan(9) ? '-' : '';
 
     for (const guitarString of GuitarString.guitarStrings) {
-      const fret = chord.fretFor(guitarString);
-      const paddedFret = Number(fret) < 10 || fret === '-' ? `${pad}${fret}` : fret;
+      try {
+        const fret = chord.fretFor(guitarString);
+        const paddedFret = Number(fret) < 10 || fret === '-' ? `${pad}${fret}` : fret;
 
-      tab.push(paddedFret);
+        tab.push(paddedFret);
+      } catch {
+        tab.push('-');
+      }
     }
 
     return new TabColumn([...tab].reverse());
