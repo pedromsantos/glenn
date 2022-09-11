@@ -2,7 +2,7 @@
   "collectCoverageFrom": ["src/**/*.ts", "!lib/**/*.*", "!src/__test__/utils.ts", "!src/index.ts"],
   "coverageThreshold": {
     "global": {
-      "branches": 75,
+      "branches": 70,
       "functions": 85,
       "lines": 85,
       "statements": 85
