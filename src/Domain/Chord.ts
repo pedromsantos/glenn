@@ -93,7 +93,7 @@ export class ChordPitches {
   private first(): Pitch {
     const pitch = this.pitches[0];
     if (!pitch) {
-      throw Error('pitch should not be null/undefined');
+      throw Error('first pitch cannot be null/undefined');
     }
 
     return pitch.Pitch;
@@ -102,7 +102,7 @@ export class ChordPitches {
   private last(): Pitch {
     const pitch = this.pitches.slice(-1)[0];
     if (!pitch) {
-      throw Error('pitch should not be null/undefined');
+      throw Error('last pitch cannot be null/undefined');
     }
 
     return pitch.Pitch;
