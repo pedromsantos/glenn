@@ -281,7 +281,7 @@ export class ScalePattern {
   }
 
   public createMelodicLineScale(root: Pitch): MelodicLine {
-    return new MelodicLine(this.createScalePitches(root));
+    return this.createScale(root).MelodicLine;
   }
 
   public createDescendingMelodicLineScale(root: Pitch): MelodicLine {
@@ -369,7 +369,7 @@ export class TriadHarmonizer implements ScaleHarmonizer {
     ]);
 
     return new ClosedChord(
-      chordPitches.Pitches[0] || Pitch.C,
+      chordPitches.pitchForFunction(ChordFunction.Root),
       ChordPattern.patternFor(chordPitches.toIntervals()) || ChordPattern.Major,
       Duration.Whole,
       chordPitches
@@ -391,7 +391,7 @@ export class SeventhHarmonizer implements ScaleHarmonizer {
     ]);
 
     return new ClosedChord(
-      chordPitches.Pitches[0] || Pitch.C,
+      chordPitches.pitchForFunction(ChordFunction.Root),
       ChordPattern.patternFor(chordPitches.toIntervals()) || ChordPattern.Major7,
       Duration.Whole,
       chordPitches
