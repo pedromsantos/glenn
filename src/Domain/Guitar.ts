@@ -176,8 +176,8 @@ export class Position {
     new Fret(GuitarString.First, 15)
   );
 
-  isFretInPosition(fret: Fret, lowerMargin = 0, higherMargin = 0): boolean {
-    const fretRangeFilter: (f: Fret) => boolean = (f) =>
+  isFretWithin(fret: Fret, lowerMargin = 0, higherMargin = 0): boolean {
+    const fretRangeFilter = (f: Fret) =>
       (f.isHigher(this.lowFret, lowerMargin) || f.isSameFretNumber(this.lowFret)) &&
       (f.isLower(this.highFret, higherMargin) || f.isSameFretNumber(this.highFret));
 
@@ -210,8 +210,8 @@ export class GuitarChord {
     return this.fretToTab(fret);
   }
 
-  hasFretsHigherThan(fret: number): boolean {
-    return this.chord.some((f) => f.Number > fret);
+  hasDoubleDigitFrets(): boolean {
+    return this.chord.some((f) => f.Number > 9);
   }
 
   private fretToTab(fret: Fret): string {
@@ -236,7 +236,7 @@ export class GuitarChord {
     while (guitarString !== GuitarString.First) {
       const fret = guitarString.fretFor(pitch);
 
-      if (this.position.isFretInPosition(fret, 1, 1)) {
+      if (this.position.isFretWithin(fret, 1, 1)) {
         return fret;
       }
 
@@ -279,12 +279,12 @@ export class GuitarMelodicLine {
     for (const guitarString of guitarStrings) {
       let fret = guitarString.fretFor(pitch);
 
-      if (this.position.isFretInPosition(fret)) {
+      if (this.position.isFretWithin(fret)) {
         return fret;
       }
 
       fret = fret.raiseOctave();
-      if (this.position.isFretInPosition(fret)) {
+      if (this.position.isFretWithin(fret)) {
         return fret;
       }
     }
@@ -353,7 +353,7 @@ export class TabColumn {
 
   static fromChord(chord: GuitarChord): TabColumn {
     const tab: string[] = [];
-    const pad = chord.hasFretsHigherThan(9) ? '-' : '';
+    const pad = chord.hasDoubleDigitFrets() ? '-' : '';
 
     for (const guitarString of GuitarString.guitarStrings) {
       try {
