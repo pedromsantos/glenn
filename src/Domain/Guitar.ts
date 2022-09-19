@@ -14,20 +14,8 @@ export class Fret {
     return this.string;
   }
 
-  private isHigher(other: Fret, margin = 0) {
-    return this.fret + margin > other.fret;
-  }
-
-  private isLower(other: Fret, margin = 0) {
-    return this.fret - margin < other.fret;
-  }
-
   isSame(other: Fret) {
     return this.fret === other.fret && this.string.isSame(other.string);
-  }
-
-  private isSameFretNumber(other: Fret) {
-    return this.fret === other.fret;
   }
 
   isOnString(guitarString: GuitarString): boolean {
@@ -43,6 +31,18 @@ export class Fret {
       (this.isHigher(lowFret, lowerMargin) || this.isSameFretNumber(lowFret)) &&
       (this.isLower(highFret, higherMargin) || this.isSameFretNumber(highFret))
     );
+  }
+
+  private isHigher(other: Fret, margin = 0) {
+    return this.fret + margin > other.fret;
+  }
+
+  private isLower(other: Fret, margin = 0) {
+    return this.fret - margin < other.fret;
+  }
+
+  private isSameFretNumber(other: Fret) {
+    return this.fret === other.fret;
   }
 }
 
