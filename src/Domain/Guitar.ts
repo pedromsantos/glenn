@@ -265,17 +265,17 @@ export class GuitarMelodicLine {
     const frets: Fret[] = [];
 
     for (const pitch of line) {
-      if (line.Direction === MelodicLineDirection.Ascending) {
-        const fret = this.mapPitchToFret(pitch, GuitarString.guitarStrings);
-        frets.push(fret);
-      }
-      if (line.Direction === MelodicLineDirection.Descending) {
-        const fret = this.mapPitchToFret(pitch, GuitarString.guitarStrings.reverse());
-        frets.push(fret);
-      }
+      const fret = this.mapPitchToFret(pitch, this.guitarStringsFor(line));
+      frets.push(fret);
     }
 
     return frets;
+  }
+
+  private guitarStringsFor(line: MelodicLine) {
+    return line.Direction === MelodicLineDirection.Descending
+      ? GuitarString.guitarStrings.reverse()
+      : GuitarString.guitarStrings;
   }
 
   private mapPitchToFret(pitch: Pitch, guitarStrings: GuitarString[]): Fret {
