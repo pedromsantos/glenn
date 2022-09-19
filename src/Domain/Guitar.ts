@@ -251,35 +251,20 @@ export class GuitarChord {
 }
 
 export class GuitarMelodicLine {
-  private readonly line: Fret[];
+  private readonly line: Fret[] = [];
 
-  constructor(line: MelodicLine, private readonly position: Position) {
-    this.line = this.create(line);
+  constructor(melodicLine: MelodicLine, private readonly position: Position) {
+    for (const pitch of melodicLine) {
+      this.line.push(this.mapPitchToFret(pitch, melodicLine.Direction));
+    }
   }
 
   toTab(): TabMatrix {
     return new TabMatrix(...this.line.map((fret) => TabColumn.fromFret(fret)));
   }
 
-  private create(line: MelodicLine): Fret[] {
-    const frets: Fret[] = [];
-
-    for (const pitch of line) {
-      const fret = this.mapPitchToFret(pitch, this.guitarStringsFor(line));
-      frets.push(fret);
-    }
-
-    return frets;
-  }
-
-  private guitarStringsFor(line: MelodicLine) {
-    return line.Direction === MelodicLineDirection.Descending
-      ? GuitarString.guitarStrings.reverse()
-      : GuitarString.guitarStrings;
-  }
-
-  private mapPitchToFret(pitch: Pitch, guitarStrings: GuitarString[]): Fret {
-    for (const guitarString of guitarStrings) {
+  private mapPitchToFret(pitch: Pitch, lineDirection: MelodicLineDirection): Fret {
+    for (const guitarString of this.guitarStringsFor(lineDirection)) {
       let fret = guitarString.fretFor(pitch);
 
       if (this.position.isWithin(fret)) {
@@ -293,6 +278,12 @@ export class GuitarMelodicLine {
     }
 
     throw cannotMapFret;
+  }
+
+  private guitarStringsFor(lineDirection: MelodicLineDirection) {
+    return lineDirection === MelodicLineDirection.Descending
+      ? GuitarString.guitarStrings.reverse()
+      : GuitarString.guitarStrings;
   }
 
   get(index: number): Fret {
