@@ -193,11 +193,15 @@ export class Position {
 }
 
 export class GuitarChord {
-  private readonly chord: Fret[];
+  private readonly chord: Fret[] = [];
 
   constructor(chord: Chord, private readonly position: Position) {
     try {
-      this.chord = this.create(chord);
+      let bassString = GuitarString.Sixth;
+      for (const pitch of chord.Pitches) {
+        this.chord.push(this.mapPitchToFret(pitch, bassString));
+        bassString = bassString.Next;
+      }
     } catch {
       throw `Cannot map chord ${chord.Name} in position ${position.To.name}`;
     }
@@ -219,19 +223,6 @@ export class GuitarChord {
 
   private fretToTab(fret: Fret): string {
     return fret ? fret.Number.toString() : '-';
-  }
-
-  private create(chord: Chord): Fret[] {
-    const frets: Fret[] = [];
-
-    let bassString = GuitarString.Sixth;
-    for (const pitch of chord.Pitches) {
-      const fret = this.mapPitchToFret(pitch, bassString);
-      frets.push(fret);
-      bassString = bassString.Next;
-    }
-
-    return frets;
   }
 
   private mapPitchToFret(pitch: Pitch, bassString: GuitarString): Fret {
@@ -313,6 +304,9 @@ export class TabColumn {
   public static readonly Separator: TabColumn = new TabColumn(Array(6).fill(`-`));
   public static readonly StandardTunning: TabColumn = new TabColumn(['e', 'B', 'G', 'D', 'A', 'E']);
 
+  private static blank = (fret: Fret = new Fret(GuitarString.First, 0)) =>
+    fret.Number < 10 ? '-' : '--';
+
   render(): string[] {
     return this.values;
   }
@@ -320,8 +314,6 @@ export class TabColumn {
   static get tabColumns(): TabColumn[] {
     return TabColumn.all;
   }
-
-  static blank = (fret: Fret = new Fret(GuitarString.First, 0)) => (fret.Number < 10 ? '-' : '--');
 
   static fromFret(fret: Fret): TabColumn {
     const blankFret = TabColumn.blank(fret);
