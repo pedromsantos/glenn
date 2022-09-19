@@ -304,8 +304,7 @@ export class TabColumn {
   public static readonly Separator: TabColumn = new TabColumn(Array(6).fill(`-`));
   public static readonly StandardTunning: TabColumn = new TabColumn(['e', 'B', 'G', 'D', 'A', 'E']);
 
-  private static blank = (fret: Fret = new Fret(GuitarString.First, 0)) =>
-    fret.Number < 10 ? '-' : '--';
+  private static blank = (fret: Fret) => (fret.Number < 10 ? '-' : '--');
 
   render(): string[] {
     return this.values;
