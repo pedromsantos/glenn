@@ -14,11 +14,11 @@ export class Fret {
     return this.string;
   }
 
-  isHigher(other: Fret, margin = 0) {
+  private isHigher(other: Fret, margin = 0) {
     return this.fret + margin > other.fret;
   }
 
-  isLower(other: Fret, margin = 0) {
+  private isLower(other: Fret, margin = 0) {
     return this.fret - margin < other.fret;
   }
 
@@ -26,7 +26,7 @@ export class Fret {
     return this.fret === other.fret && this.string.isSame(other.string);
   }
 
-  isSameFretNumber(other: Fret) {
+  private isSameFretNumber(other: Fret) {
     return this.fret === other.fret;
   }
 
@@ -36,6 +36,13 @@ export class Fret {
 
   raiseOctave(): Fret {
     return new Fret(this.string, this.fret + 12);
+  }
+
+  isWithin(lowFret: Fret, highFret: Fret, lowerMargin = 0, higherMargin = 0) {
+    return (
+      (this.isHigher(lowFret, lowerMargin) || this.isSameFretNumber(lowFret)) &&
+      (this.isLower(highFret, higherMargin) || this.isSameFretNumber(highFret))
+    );
   }
 }
 
@@ -176,12 +183,8 @@ export class Position {
     new Fret(GuitarString.First, 15)
   );
 
-  isFretWithin(fret: Fret, lowerMargin = 0, higherMargin = 0): boolean {
-    const fretRangeFilter = (f: Fret) =>
-      (f.isHigher(this.lowFret, lowerMargin) || f.isSameFretNumber(this.lowFret)) &&
-      (f.isLower(this.highFret, higherMargin) || f.isSameFretNumber(this.highFret));
-
-    return fretRangeFilter(fret);
+  isWithin(fret: Fret, lowerMargin = 0, higherMargin = 0): boolean {
+    return fret.isWithin(this.lowFret, this.highFret, lowerMargin, higherMargin);
   }
 
   public static get guitarPositions() {
@@ -236,7 +239,7 @@ export class GuitarChord {
     while (guitarString !== GuitarString.First) {
       const fret = guitarString.fretFor(pitch);
 
-      if (this.position.isFretWithin(fret, 1, 1)) {
+      if (this.position.isWithin(fret, 1, 1)) {
         return fret;
       }
 
@@ -279,12 +282,12 @@ export class GuitarMelodicLine {
     for (const guitarString of guitarStrings) {
       let fret = guitarString.fretFor(pitch);
 
-      if (this.position.isFretWithin(fret)) {
+      if (this.position.isWithin(fret)) {
         return fret;
       }
 
       fret = fret.raiseOctave();
-      if (this.position.isFretWithin(fret)) {
+      if (this.position.isWithin(fret)) {
         return fret;
       }
     }
