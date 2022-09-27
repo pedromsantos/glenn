@@ -10,7 +10,7 @@ Typescript module for working with music theory, this is still a work in progres
 
 [![CodeScene general](https://codescene.io/images/analyzed-by-codescene-badge.svg)](https://codescene.io/projects/29675)
 
-[![CodeScene Code Health](https://codescene.io/projects/29675/status-badges/code-health)](https://codescene.io/projects/29675)
+[![CodeScene Code Health](https://codescene.io/projects/29675/status-badges/code-health)](https://codescene.io/projects/29675) [![CodeScene System Mastery](https://codescene.io/projects/29675/status-badges/system-mastery)](https://codescene.io/projects/29675)
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/pedromsantos/glenn) ![GitHub last commit](https://img.shields.io/github/last-commit/pedromsantos/glenn) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/pedromsantos/glenn)
 
