@@ -291,10 +291,10 @@ export class GuitarMelodicLine {
 }
 
 export class TabColumn {
-  private static readonly all: TabColumn[] = [];
+  private readonly rows: TabColumn[] = [];
 
   private constructor(private readonly values: string[]) {
-    TabColumn.all.push(this);
+    this.rows.push(this);
   }
 
   public static readonly Start: TabColumn = new TabColumn(Array(6).fill('|-'));
@@ -310,8 +310,8 @@ export class TabColumn {
     return this.values;
   }
 
-  static get tabColumns(): TabColumn[] {
-    return TabColumn.all;
+  get tabColumns(): TabColumn[] {
+    return this.rows;
   }
 
   static fromFret(fret: Fret): TabColumn {
