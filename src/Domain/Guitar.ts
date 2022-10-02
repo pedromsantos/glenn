@@ -55,6 +55,10 @@ export class Fret {
     }
   }
 
+  toString(pad = '') {
+    return this.Number < 10 ? `${pad}${this.Number}` : this.Number.toString();
+  }
+
   private isHigher(other: Fret, margin = 0) {
     return this.fret + margin > other.fret;
   }
@@ -229,18 +233,9 @@ export class GuitarChord {
     }
   }
 
-  private fretFor(guitarString: GuitarString): string {
-    const fret = this.chord.find((f) => f.isOnString(guitarString));
-
-    if (fret === undefined) {
-      throw cannotMapFret;
-    }
-
-    return this.fretToTab(fret);
-  }
-
-  private hasDoubleDigitFrets(): boolean {
-    return this.chord.some((f) => f.Number > 9);
+  toTabM(): TabMatrix {
+    const pad = this.hasDoubleDigitFrets() ? '-' : '';
+    return new TabMatrix(TabColumn.fromFrets(this.chord, pad));
   }
 
   toTab(): string[] {
@@ -250,9 +245,7 @@ export class GuitarChord {
     for (const guitarString of GuitarString.guitarStrings) {
       try {
         const fret = this.fretFor(guitarString);
-        const paddedFret = Number(fret) < 10 || fret === '-' ? `${pad}${fret}` : fret;
-
-        tab.push(paddedFret);
+        tab.push(fret.toString(pad));
       } catch {
         tab.push('-');
       }
@@ -261,8 +254,18 @@ export class GuitarChord {
     return tab;
   }
 
-  private fretToTab(fret: Fret): string {
-    return fret ? fret.Number.toString() : '-';
+  private fretFor(guitarString: GuitarString): Fret {
+    const fret = this.chord.find((f) => f.isOnString(guitarString));
+
+    if (fret === undefined) {
+      throw cannotMapFret;
+    }
+
+    return fret;
+  }
+
+  private hasDoubleDigitFrets(): boolean {
+    return this.chord.some((f) => f.Number > 9);
   }
 
   private mapPitchToFret(pitch: Pitch, bassString: GuitarString): Fret {
@@ -346,6 +349,10 @@ export class TabColumn {
 
   static fromFret(fret: Fret): TabColumn {
     return new TabColumn([...fret.toTab()]);
+  }
+
+  static fromFrets(frets: Fret[], pad = ''): TabColumn {
+    return new TabColumn(frets.map((f) => pad + f.toString()));
   }
 
   static fromChord(chord: GuitarChord): TabColumn {
