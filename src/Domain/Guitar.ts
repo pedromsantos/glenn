@@ -4,7 +4,7 @@ import Pitch, { MelodicLine, MelodicLineDirection, PitchPrimitives } from './Pit
 const cannotMapFret = 'Cannot map fret';
 
 export class Fret {
-  constructor(private readonly string: GuitarString, private readonly fret: number) {}
+  constructor(protected readonly string: GuitarString, private readonly fret: number) {}
 
   get Number(): number {
     return this.fret;
@@ -33,26 +33,19 @@ export class Fret {
     );
   }
 
-  toTab(): string[] {
-    const blank = () => (this.Number < 10 ? '-' : '--');
-    const paddedFret = `${this.Number}`;
+  toTab(): TabColumn {
+    const pad = this.Number >= 10 ? '-' : '';
 
-    switch (this.String) {
-      case GuitarString.Sixth:
-        return [blank(), blank(), blank(), blank(), blank(), paddedFret];
-      case GuitarString.Fifth:
-        return [blank(), blank(), blank(), blank(), paddedFret, blank()];
-      case GuitarString.Fourth:
-        return [blank(), blank(), blank(), paddedFret, blank(), blank()];
-      case GuitarString.Third:
-        return [blank(), blank(), paddedFret, blank(), blank(), blank()];
-      case GuitarString.Second:
-        return [blank(), paddedFret, blank(), blank(), blank(), blank()];
-      case GuitarString.First:
-        return [paddedFret, blank(), blank(), blank(), blank(), blank()];
-      default:
-        return [blank(), blank(), blank(), blank(), blank(), blank()];
+    const frets: Fret[] = [];
+    for (const guitarString of GuitarString.guitarStrings) {
+      if (this.String.isSame(guitarString)) {
+        frets.push(this);
+      } else {
+        frets.push(new BlankFret(guitarString));
+      }
     }
+
+    return TabColumn.fromFrets(frets, pad);
   }
 
   toString(pad = '') {
@@ -69,6 +62,35 @@ export class Fret {
 
   private isSameFretNumber(other: Fret) {
     return this.fret === other.fret;
+  }
+}
+
+class BlankFret extends Fret {
+  constructor(string: GuitarString, fret = -1) {
+    super(string, fret);
+  }
+
+  override toTab(): TabColumn {
+    return TabColumn.fromFrets([
+      new BlankFret(GuitarString.First),
+      new BlankFret(GuitarString.Second),
+      new BlankFret(GuitarString.Third),
+      new BlankFret(GuitarString.Fourth),
+      new BlankFret(GuitarString.Fifth),
+      new BlankFret(GuitarString.Sixth),
+    ]);
+  }
+
+  override toString(pad: string) {
+    return pad + '-';
+  }
+
+  override raiseOctave(): Fret {
+    return new BlankFret(this.string, -1);
+  }
+
+  override isWithin() {
+    return false;
   }
 }
 
@@ -233,35 +255,25 @@ export class GuitarChord {
     }
   }
 
-  toTabM(): TabMatrix {
+  toTab(): TabColumn {
     const pad = this.hasDoubleDigitFrets() ? '-' : '';
-    return new TabMatrix(TabColumn.fromFrets(this.chord, pad));
+    return TabColumn.fromFrets(this.toFrets(), pad);
   }
 
-  toTab(): string[] {
-    const tab: string[] = [];
-    const pad = this.hasDoubleDigitFrets() ? '-' : '';
+  private toFrets(): Fret[] {
+    const frets: Fret[] = [];
 
     for (const guitarString of GuitarString.guitarStrings) {
-      try {
-        const fret = this.fretFor(guitarString);
-        tab.push(fret.toString(pad));
-      } catch {
-        tab.push('-');
+      const fret = this.chord.find((f) => f.isOnString(guitarString));
+
+      if (fret === undefined) {
+        frets.push(new BlankFret(guitarString));
+      } else {
+        frets.push(fret);
       }
     }
 
-    return tab;
-  }
-
-  private fretFor(guitarString: GuitarString): Fret {
-    const fret = this.chord.find((f) => f.isOnString(guitarString));
-
-    if (fret === undefined) {
-      throw cannotMapFret;
-    }
-
-    return fret;
+    return frets;
   }
 
   private hasDoubleDigitFrets(): boolean {
@@ -294,7 +306,7 @@ export class GuitarMelodicLine {
   }
 
   toTab(): TabMatrix {
-    return new TabMatrix(...this.line.map((fret) => TabColumn.fromFret(fret)));
+    return new TabMatrix(...this.line.map((fret) => fret.toTab()));
   }
 
   private mapPitchToFret(pitch: Pitch, lineDirection: MelodicLineDirection): Fret {
@@ -347,16 +359,8 @@ export class TabColumn {
     return this.rows;
   }
 
-  static fromFret(fret: Fret): TabColumn {
-    return new TabColumn([...fret.toTab()]);
-  }
-
   static fromFrets(frets: Fret[], pad = ''): TabColumn {
-    return new TabColumn(frets.map((f) => pad + f.toString()));
-  }
-
-  static fromChord(chord: GuitarChord): TabColumn {
-    return new TabColumn([...chord.toTab()].reverse());
+    return new TabColumn(frets.map((f) => f.toString(pad)));
   }
 }
 
