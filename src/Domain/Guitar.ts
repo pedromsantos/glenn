@@ -14,8 +14,8 @@ export class Fret {
     return this.string;
   }
 
-  isSame(other: Fret) {
-    return this.fret === other.fret && this.string.isSame(other.string);
+  equals(other: Fret): boolean {
+    return this.fret === other.fret && this.string.equals(other.string);
   }
 
   isOnString(guitarString: GuitarString): boolean {
@@ -34,22 +34,29 @@ export class Fret {
   }
 
   toTab(): TabColumn {
-    const pad = this.Number >= 10 ? '-' : '';
-
     const frets: Fret[] = [];
+
     for (const guitarString of GuitarString.guitarStrings) {
-      if (this.String.isSame(guitarString)) {
+      if (this.String.equals(guitarString)) {
         frets.push(this);
       } else {
         frets.push(new BlankFret(guitarString));
       }
     }
 
-    return TabColumn.fromFrets(frets, pad);
+    return TabColumn.fromFrets(frets, this.pad());
   }
 
   toString(pad = '') {
-    return this.Number < 10 ? `${pad}${this.Number}` : this.Number.toString();
+    return this.isDoubleDigit() ? this.Number.toString() : `${pad}${this.Number}`;
+  }
+
+  private pad() {
+    return this.isDoubleDigit() ? '-' : '';
+  }
+
+  private isDoubleDigit() {
+    return this.Number > 9;
   }
 
   private isHigher(other: Fret, margin = 0) {
@@ -165,7 +172,7 @@ export class GuitarString {
     return new Fret(this, this.openStringPitch.absoluteDistance(pitch));
   }
 
-  isSame(other: GuitarString): boolean {
+  equals(other: GuitarString): boolean {
     return this.index === other.index;
   }
 
@@ -231,7 +238,7 @@ export class Position {
     new Fret(GuitarString.First, 15)
   );
 
-  isWithin(fret: Fret, lowerMargin = 0, higherMargin = 0): boolean {
+  contains(fret: Fret, lowerMargin = 0, higherMargin = 0): boolean {
     return fret.isWithin(this.lowFret, this.highFret, lowerMargin, higherMargin);
   }
 
@@ -285,7 +292,7 @@ export class GuitarChord {
     while (guitarString !== GuitarString.First) {
       const fret = guitarString.fretFor(pitch);
 
-      if (this.position.isWithin(fret, 1, 1)) {
+      if (this.position.contains(fret, 1, 1)) {
         return fret;
       }
 
@@ -313,12 +320,12 @@ export class GuitarMelodicLine {
     for (const guitarString of this.guitarStringsFor(lineDirection)) {
       let fret = guitarString.fretFor(pitch);
 
-      if (this.position.isWithin(fret)) {
+      if (this.position.contains(fret)) {
         return fret;
       }
 
       fret = fret.raiseOctave();
-      if (this.position.isWithin(fret)) {
+      if (this.position.contains(fret)) {
         return fret;
       }
     }

@@ -57,7 +57,7 @@ describe('Guitar melodic line should', () => {
       const guitarLine = new GuitarMelodicLine(line, Position.C);
 
       const fret = guitarLine.get(0);
-      expect(fret?.isSame(new Fret(GuitarString.Fifth, 3))).toBeTruthy();
+      expect(fret?.equals(new Fret(GuitarString.Fifth, 3))).toBeTruthy();
     });
 
     test('C position descending', () => {
