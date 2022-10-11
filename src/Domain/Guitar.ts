@@ -176,6 +176,10 @@ export class GuitarString {
     return this.index === other.index;
   }
 
+  isLowerThan(other: GuitarString): boolean {
+    return this.index > other.index;
+  }
+
   get Next(): GuitarString {
     return this.next();
   }
@@ -305,38 +309,60 @@ export class GuitarChord {
 
 export class GuitarMelodicLine {
   private readonly line: Fret[] = [];
+  private readonly position: Position = Position.Open;
 
-  constructor(melodicLine: MelodicLine, private readonly position: Position) {
-    for (const pitch of melodicLine) {
-      this.line.push(this.mapPitchToFret(pitch, melodicLine.Direction));
-    }
+  constructor(melodicLine: MelodicLine, position: Position) {
+    this.position = position;
+    this.line = this.mapMelodicLine(melodicLine);
   }
 
   toTab(): TabMatrix {
     return new TabMatrix(...this.line.map((fret) => fret.toTab()));
   }
 
-  private mapPitchToFret(pitch: Pitch, lineDirection: MelodicLineDirection): Fret {
-    for (const guitarString of this.guitarStringsFor(lineDirection)) {
-      let fret = guitarString.fretFor(pitch);
+  private mapMelodicLine(melodicLine: MelodicLine): Fret[] {
+    const line: Fret[] = [];
+    const guitarStrings = this.guitarStringsFor(melodicLine.Direction);
 
-      if (this.position.contains(fret)) {
-        return fret;
-      }
+    for (const pitch of melodicLine) {
+      for (const guitarString of guitarStrings) {
+        if (this.skipMappedString(line, guitarString)) {
+          continue;
+        }
 
-      fret = fret.raiseOctave();
-      if (this.position.contains(fret)) {
-        return fret;
+        let fret = guitarString.fretFor(pitch);
+
+        if (this.position.contains(fret)) {
+          line.push(fret);
+          break;
+        }
+
+        fret = fret.raiseOctave();
+        if (this.position.contains(fret)) {
+          line.push(fret);
+          break;
+        }
       }
     }
 
-    throw cannotMapFret;
+    return line;
   }
 
   private guitarStringsFor(lineDirection: MelodicLineDirection) {
     return lineDirection === MelodicLineDirection.Descending
       ? GuitarString.guitarStrings.reverse()
       : GuitarString.guitarStrings;
+  }
+
+  private skipMappedString(line: Fret[], guitarString: GuitarString) {
+    if (line.length > 0) {
+      const lastFret = line[line.length - 1];
+      if (lastFret !== undefined && guitarString.isLowerThan(lastFret?.String)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   get(index: number): Fret {

@@ -234,22 +234,47 @@ E|-10-|`;
     });
   });
 
-  //   describe('render melodic line', () => {
-  //     test('C E G descending on C position', () => {
-  //       const line = new MelodicLine([Pitch.C, Pitch.E, Pitch.A], MelodicLineDirection.Descending);
-  //       const guitarLine = new GuitarMelodicLine(line, Position.C);
-  //       const renderedTab = new Tab().render(guitarLine.toTab());
+  describe('render melodic line', () => {
+    test('C E G ascending on C position', () => {
+      const line = new MelodicLine([Pitch.C, Pitch.E, Pitch.G], MelodicLineDirection.Ascending);
+      const guitarLine = new GuitarMelodicLine(line, Position.C);
 
-  //       const expectedTab = `e|-------|
-  // B|-------|
-  // G|---5---|
-  // D|-2-----|
-  // A|-------|
-  // E|-----5-|`;
+      expect(guitarLine.get(0)).toStrictEqual(new Fret(GuitarString.Third, 5));
+      expect(guitarLine.get(1)).toStrictEqual(new Fret(GuitarString.Second, 5));
+      expect(guitarLine.get(2)).toStrictEqual(new Fret(GuitarString.First, 3));
 
-  //       expect(renderedTab).toBe(expectedTab);
-  //     });
-  //   });
+      const renderedTab = new Tab().render(guitarLine.toTab());
+
+      const expectedTab = `e|-----3-|
+B|---5---|
+G|-5-----|
+D|-------|
+A|-------|
+E|-------|`;
+
+      expect(renderedTab).toBe(expectedTab);
+    });
+
+    //     test('C E G descending on C position', () => {
+    //       const line = new MelodicLine([Pitch.C, Pitch.E, Pitch.G], MelodicLineDirection.Descending);
+    //       const guitarLine = new GuitarMelodicLine(line, Position.C);
+
+    //       expect(guitarLine.get(0)).toStrictEqual(new Fret(GuitarString.Fifth, 3));
+    //       expect(guitarLine.get(1)).toStrictEqual(new Fret(GuitarString.Fourth, 2));
+    //       expect(guitarLine.get(2)).toStrictEqual(new Fret(GuitarString.Fourth, 5));
+
+    //       const renderedTab = new Tab().render(guitarLine.toTab());
+
+    //       const expectedTab = `e|-------|
+    // B|-------|
+    // G|-------|
+    // D|---2-5-|
+    // A|-3-----|
+    // E|-------|`;
+
+    //       expect(renderedTab).toBe(expectedTab);
+    //     });
+  });
 
   describe('render chord', () => {
     test('C Major triad on open position', () => {
