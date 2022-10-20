@@ -44,7 +44,7 @@ export class Fret {
       }
     }
 
-    return TabColumn.fromFrets(frets, this.pad());
+    return TabColumn.fromFrets(frets.reverse(), this.pad());
   }
 
   toString(pad = '') {
@@ -317,7 +317,8 @@ export class GuitarMelodicLine {
   }
 
   toTab(): TabMatrix {
-    return new TabMatrix(...this.line.map((fret) => fret.toTab()));
+    const column = this.line.map((fret) => fret.toTab());
+    return new TabMatrix(...column);
   }
 
   private mapMelodicLine(melodicLine: MelodicLine): Fret[] {
