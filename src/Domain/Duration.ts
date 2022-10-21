@@ -41,8 +41,7 @@ export class CompoundTimeSignature implements TimeSignature {
   }
 
   toFillMeasure(duration: Duration = this.duration): number {
-    return duration.value * 0;
-    //return (this.beatValue / duration.value) * (this.beats / 3);
+    return (this.beatValue / duration.value) * (this.beats / 3) - this.beatValue;
   }
 }
 
