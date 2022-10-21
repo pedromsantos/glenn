@@ -72,8 +72,8 @@ export class Fret {
   }
 }
 
-class BlankFret extends Fret {
-  constructor(string: GuitarString, fret = -1) {
+export class BlankFret extends Fret {
+  constructor(string: GuitarString = GuitarString.Sixth, fret = -1) {
     super(string, fret);
   }
 

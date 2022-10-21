@@ -1,5 +1,6 @@
 import { ChordPattern, ClosedChord } from '../../Domain/Chord';
 import {
+  BlankFret,
   Fret,
   GuitarChord,
   GuitarMelodicLine,
@@ -10,6 +11,22 @@ import {
   TabMatrix,
 } from '../../Domain/Guitar';
 import Pitch, { MelodicLine, MelodicLineDirection } from '../../Domain/Pitch';
+
+describe('Blank fret should', () => {
+  test('render empty column', () => {
+    const blankFret = new BlankFret();
+    const tab = blankFret.toTab();
+
+    expect(tab.render()).toStrictEqual(['-', '-', '-', '-', '-', '-']);
+  });
+
+  test('render empty column after raising octave', () => {
+    const blankFret = new BlankFret();
+    const tab = blankFret.raiseOctave().toTab();
+
+    expect(tab.render()).toStrictEqual(['-', '-', '-', '-', '-', '-']);
+  });
+});
 
 describe('Guitar matrix should', () => {
   describe('render', () => {
