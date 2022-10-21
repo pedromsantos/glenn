@@ -5,7 +5,7 @@ import { MelodicPhrase, Note, Octave } from '../../Domain/Note';
 import Pitch from '../../Domain/Pitch';
 
 describe('Note', () => {
-  test('convert to primitive', () => {
+  test('convert to primitive note', () => {
     const note = new Note(Pitch.C, Duration.Quarter, Octave.Contra);
 
     const notePrimitive = note.To;
@@ -32,8 +32,18 @@ describe('Note', () => {
   });
 });
 
+describe('Octave', () => {
+  test('convert to primitive octave', () => {
+    expect(Octave.Contra.To).toStrictEqual({
+      midi: 12,
+      name: 'Contra',
+      value: -8,
+    });
+  });
+});
+
 describe('Melodic phrase', () => {
-  test('convert to primitive', () => {
+  test('convert to primitive phrase', () => {
     const phrase = new MelodicPhrase([new Note(Pitch.C, Duration.Quarter, Octave.Contra)]);
     const phrasePrimitive = phrase.To;
 
