@@ -83,6 +83,10 @@ export type MelodicPhrasePrimitives = {
 export class MelodicPhrase {
   private readonly phrase: Note[] = [];
 
+  constructor(notes: Note[]) {
+    this.phrase = notes;
+  }
+
   get To(): MelodicPhrasePrimitives {
     return {
       notes: this.phrase.map((note) => note.To),
