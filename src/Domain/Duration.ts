@@ -37,8 +37,7 @@ export class CompoundTimeSignature implements TimeSignature {
   }
 
   toBeats(duration: Duration = this.duration): number {
-    return duration.value * 0;
-    //return (duration.value * 3) / this.beatDuration / this.beats;
+    return (duration.value * 3) / this.beatDuration / this.beats;
   }
 
   toFillMeasure(duration: Duration = this.duration): number {
@@ -83,11 +82,11 @@ export class Duration implements RhythmicDuration {
     1.0 / 256.0
   );
 
-  toBeats(timeSignature: SimpleTimeSignature): number {
+  toBeats(timeSignature: TimeSignature): number {
     return timeSignature.toBeats(this);
   }
 
-  toFillMeasure(timeSignature: SimpleTimeSignature, measure?: Measure): number {
+  toFillMeasure(timeSignature: TimeSignature, measure?: Measure): number {
     if (measure === undefined) return timeSignature.toFillMeasure(this);
 
     const needsBeats = this.toBeats(timeSignature);
@@ -109,10 +108,7 @@ export class Duration implements RhythmicDuration {
     return Duration.durations.find((d) => d.value === value);
   }
 
-  private usedBeatsInInstanceDuration(
-    timeSignature: SimpleTimeSignature,
-    usedBeats: number
-  ): number {
+  private usedBeatsInInstanceDuration(timeSignature: TimeSignature, usedBeats: number): number {
     return usedBeats / this.toBeats(timeSignature);
   }
 

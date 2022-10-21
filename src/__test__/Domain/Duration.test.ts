@@ -45,6 +45,10 @@ describe('Duration', () => {
     test('One Whole note', () => {
       expect(timeSignature.toFillMeasure(Duration.Whole)).toBe(0);
     });
+
+    test('convert to beats', () => {
+      expect(Duration.Eighth.toBeats(timeSignature)).toBe(1.0);
+    });
   });
 
   describe('Number of notes to fill measure in 4/4', () => {
