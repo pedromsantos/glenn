@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "emitDecoratorMetadata": false,
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,

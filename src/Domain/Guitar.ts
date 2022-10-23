@@ -382,11 +382,11 @@ export class GuitarMelodicLine {
 export class TabColumn {
   private constructor(private readonly rows: string[]) {}
 
-  public static readonly Start: TabColumn = new TabColumn(Array(6).fill('|-'));
-  public static readonly Bar: TabColumn = new TabColumn(Array(6).fill('-|-'));
-  public static readonly End: TabColumn = new TabColumn(Array(6).fill('-|'));
-  public static readonly Rest: TabColumn = new TabColumn(Array(6).fill(`-`));
-  public static readonly Separator: TabColumn = new TabColumn(Array(6).fill(`-`));
+  public static readonly Start: TabColumn = new TabColumn(Array<string>(6).fill('|-'));
+  public static readonly Bar: TabColumn = new TabColumn(Array<string>(6).fill('-|-'));
+  public static readonly End: TabColumn = new TabColumn(Array<string>(6).fill('-|'));
+  public static readonly Rest: TabColumn = new TabColumn(Array<string>(6).fill(`-`));
+  public static readonly Separator: TabColumn = new TabColumn(Array<string>(6).fill(`-`));
   public static readonly StandardTunning: TabColumn = new TabColumn(['e', 'B', 'G', 'D', 'A', 'E']);
 
   render(): string[] {
@@ -439,7 +439,7 @@ export class Tab {
       .prefixWith(TabColumn.StandardTunning)
       .sufixWith(TabColumn.End)
       .render()
-      .reduce((acc, column) => acc.map((row, i) => row + column[i]))
+      .reduce((acc, column) => acc.map((row, i) => row.concat(column[i] ?? '')))
       .join('\n');
   }
 

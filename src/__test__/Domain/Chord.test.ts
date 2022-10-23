@@ -491,7 +491,7 @@ describe('Chord properties', () => {
           const inversions = chord.Pitches.length;
           let invertedChord = chord.invert();
 
-          [...Array(inversions - 1)].forEach(() => {
+          [...Array<ClosedChord>(inversions - 1)].forEach(() => {
             invertedChord = invertedChord.invert();
           });
 
@@ -515,7 +515,7 @@ describe('Chord properties', () => {
 
           let invertedChord = chord.invert();
 
-          [...Array(inversions - 1)].forEach(() => {
+          [...Array<ClosedChord>(inversions - 1)].forEach(() => {
             invertedChord = invertedChord.invert();
           });
 
@@ -541,7 +541,7 @@ describe('Chord properties', () => {
 
           let invertedChord = chord.invert();
 
-          [...Array(inversions - 1)].forEach(() => {
+          [...Array<ClosedChord>(inversions - 1)].forEach(() => {
             invertedChord = invertedChord.invert();
           });
 
