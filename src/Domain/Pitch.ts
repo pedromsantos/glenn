@@ -67,13 +67,13 @@ export default class Pitch {
   transpose(interval: Interval): Pitch {
     const transposer = this.intervals().transposerFor(interval);
 
-    return transposer === undefined ? this : transposer();
+    return transposer?.() ?? this;
   }
 
   intervalTo(to: Pitch): Interval {
     const intervalTo = this.intervals().intervalTo(to);
 
-    return intervalTo === undefined ? Interval.Unison : intervalTo;
+    return intervalTo ?? Interval.Unison;
   }
 
   get NumericValue(): number {
