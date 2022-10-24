@@ -96,6 +96,7 @@ export class BlankFret extends Fret {
     return new BlankFret(this.string, -1);
   }
 
+  /* istanbul ignore next */
   override isWithin() {
     return false;
   }
@@ -367,10 +368,12 @@ export class GuitarMelodicLine {
   }
 
   get(index: number): Fret {
+    /* istanbul ignore next */
     if (index >= this.line.length) {
       throw new Error('Invalid index');
     }
 
+    /* istanbul ignore next */
     if (!this.line[index]) {
       throw new Error('Invalid index');
     }
