@@ -92,6 +92,8 @@ export class ChordPitches {
 
   private first(): Pitch {
     const pitch = this.pitches[0];
+
+    /* istanbul ignore next */
     if (!pitch) {
       throw Error('first pitch cannot be null/undefined');
     }
@@ -101,6 +103,8 @@ export class ChordPitches {
 
   private last(): Pitch {
     const pitch = this.pitches.slice(-1)[0];
+
+    /* istanbul ignore next */
     if (!pitch) {
       throw Error('last pitch cannot be null/undefined');
     }
