@@ -363,14 +363,6 @@ export class ChordFunction {
   get To(): Readonly<string> {
     return this.name;
   }
-
-  static From(name: string): ChordFunction | undefined {
-    return ChordFunction.functions.find((f) => f.name === name);
-  }
-
-  static get functions() {
-    return ChordFunction.all;
-  }
 }
 
 // Stryker disable StringLiteral
@@ -405,10 +397,6 @@ export class ChordPattern {
 
   static get patterns() {
     return ChordPattern.all;
-  }
-
-  static get patternNames() {
-    return ChordPattern.patterns.map((p) => p.To);
   }
 
   static patternFor(intervals: Interval[]): ChordPattern | undefined {
