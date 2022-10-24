@@ -303,6 +303,10 @@ export class Drop3Chord extends BaseChord {
   override remove(func: ChordFunction): Chord {
     return new Drop3Chord(this.root.Pitch, this.pattern, this.duration, this._pitches.remove(func));
   }
+
+  override drop3(): Chord {
+    return this;
+  }
 }
 
 export class ChordFunction {

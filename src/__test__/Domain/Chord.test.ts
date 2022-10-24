@@ -477,6 +477,50 @@ describe('Chords should', () => {
         .Pitches.map((p) => p.Name)
     ).toStrictEqual(expectedPitches.map((p) => p.Name));
   });
+
+  test('be able to create chord from primitive types', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Augmented);
+    const from = ClosedChord.From(chord.To);
+
+    expect(chord.Name).toBe(from?.Name);
+  });
+
+  test('Converting a drop 2 chord to drop 2 returns same chord', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const drop = chord.drop2();
+    const other = drop.drop2();
+
+    expect(drop).toBe(other);
+  });
+
+  test('Converting a drop 3 chord to drop 3 returns same chord', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const drop = chord.drop3();
+    const other = drop.drop3();
+
+    expect(drop).toBe(other);
+  });
+
+  test('Converting a closed chord to closed returns same chord', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const other = chord.closed();
+
+    expect(chord).toBe(other);
+  });
+
+  test('not be able to create chord from invalid primitive types', () => {
+    const chordPrimitives = {
+      name: 'C Major',
+      root: { name: 'V', value: 0 },
+      pitches: [],
+      pattern: 'Major',
+      bass: { name: 'H', value: 0 },
+      lead: { name: 'Z', value: 0 },
+      duration: 1,
+    };
+
+    expect(() => ClosedChord.From(chordPrimitives)).toThrow();
+  });
 });
 
 describe('Chord properties', () => {
@@ -561,9 +605,13 @@ describe('Chord properties', () => {
         fc.constantFrom(...ChordPattern.patterns),
         (root: Pitch, pattern: ChordPattern) => {
           const chord = new ClosedChord(root, pattern);
-          const from = ClosedChord.From(chord.To);
+          const primitivesChord = chord.To;
+          const from = ClosedChord.From(primitivesChord);
 
           expect(chord.Name).toBe(from?.Name);
+          expect(chord.Pitches.map((p) => p.To)).toStrictEqual(
+            primitivesChord.pitches.map((p) => p.pitch)
+          );
         }
       ),
       { verbose: true }
