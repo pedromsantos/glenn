@@ -54,19 +54,11 @@ export class Fret {
       }
     }
 
-    return TabColumn.fromFrets(frets.reverse(), this.pad());
+    return TabColumn.fromFrets(frets.reverse());
   }
 
-  toString(pad = '') {
-    return this.isDoubleDigit() ? this.Number.toString() : `${pad}${this.Number}`;
-  }
-
-  private pad() {
-    return this.isDoubleDigit() ? '-' : '';
-  }
-
-  private isDoubleDigit() {
-    return this.Number > 9;
+  toString() {
+    return this.Number.toString();
   }
 
   private isHigher(other: Fret, margin = 0) {
@@ -98,8 +90,8 @@ export class BlankFret extends Fret {
     ]);
   }
 
-  override toString(pad: string) {
-    return pad + '-';
+  override toString() {
+    return '-';
   }
 
   override raiseOctave(): Fret {
@@ -276,8 +268,7 @@ export class GuitarChord {
   }
 
   toTab(): TabColumn {
-    const pad = this.hasDoubleDigitFrets() ? '-' : '';
-    return TabColumn.fromFrets(this.toFrets(), pad);
+    return TabColumn.fromFrets(this.toFrets());
   }
 
   private toFrets(): Fret[] {
@@ -294,10 +285,6 @@ export class GuitarChord {
     }
 
     return frets;
-  }
-
-  private hasDoubleDigitFrets(): boolean {
-    return this.chord.some((f) => f.Number > 9);
   }
 
   private mapPitchToFret(pitch: Pitch, bassString: GuitarString): Fret {
@@ -391,7 +378,11 @@ export class GuitarMelodicLine {
 }
 
 export class TabColumn {
-  private constructor(private readonly rows: string[]) {}
+  private readonly maxRowLength: number = 0;
+
+  private constructor(private readonly rows: string[]) {
+    this.maxRowLength = Math.max(...rows.map((el) => el.length));
+  }
 
   public static readonly Start: TabColumn = new TabColumn(Array<string>(6).fill('|-'));
   public static readonly Bar: TabColumn = new TabColumn(Array<string>(6).fill('-|-'));
@@ -401,11 +392,11 @@ export class TabColumn {
   public static readonly StandardTunning: TabColumn = new TabColumn(['e', 'B', 'G', 'D', 'A', 'E']);
 
   render(): string[] {
-    return this.rows;
+    return this.rows.map((r) => (r.length == this.maxRowLength ? r : `-${r}`));
   }
 
-  static fromFrets(frets: Fret[], pad = ''): TabColumn {
-    return new TabColumn(frets.map((f) => f.toString(pad)));
+  static fromFrets(frets: Fret[]): TabColumn {
+    return new TabColumn(frets.map((f) => f.toString()));
   }
 }
 
