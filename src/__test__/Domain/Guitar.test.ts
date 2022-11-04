@@ -4,6 +4,18 @@ import { Fret, GuitarMelodicLine, GuitarString, Position } from '../../Domain/Gu
 import Pitch, { MelodicLine, MelodicLineDirection } from '../../Domain/Pitch';
 import { ScalePattern } from '../../Domain/Scale';
 
+describe('Fret sould', () => {
+  test('convert to primitive', () => {
+    expect(new Fret(GuitarString.First, 1).To).toStrictEqual({
+      string: {
+        index: 1,
+        name: 'First',
+      },
+      fret: 1,
+    });
+  });
+});
+
 describe('Sixth string should', () => {
   test('map E to open string', () => {
     expect(GuitarString.Sixth.fretFor(Pitch.E)).toStrictEqual(new Fret(GuitarString.Sixth, 0));
@@ -29,14 +41,23 @@ describe('Sixth string should', () => {
     expect(GuitarString.Sixth.To).toStrictEqual({
       index: 6,
       name: 'Sixth',
-      openPitch: { name: 'E', value: 4 },
     });
   });
 });
 
 describe('Guitar Position should', () => {
   test('map to primitives', () => {
-    expect(Position.A.To).toStrictEqual({ name: 'A', lowestFret: 4, highestFret: 8 });
+    expect(Position.A.To).toStrictEqual({
+      name: 'A',
+      lowestFret: {
+        string: { index: 6, name: 'Sixth' },
+        fret: 4,
+      },
+      highestFret: {
+        string: { index: 1, name: 'First' },
+        fret: 8,
+      },
+    });
   });
 });
 
@@ -70,8 +91,8 @@ describe('Guitar melodic line should', () => {
 
           const fret = guitarLine.get(0);
 
-          expect(fret.Number).toBeGreaterThanOrEqual(positionPrimitives.lowestFret);
-          expect(fret.Number).toBeLessThanOrEqual(positionPrimitives.highestFret);
+          expect(fret.Number).toBeGreaterThanOrEqual(positionPrimitives.lowestFret.fret);
+          expect(fret.Number).toBeLessThanOrEqual(positionPrimitives.highestFret.fret);
         }),
         { verbose: true }
       );

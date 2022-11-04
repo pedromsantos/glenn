@@ -1,7 +1,10 @@
 import { Chord } from './Chord';
-import Pitch, { MelodicLine, MelodicLineDirection, PitchPrimitives } from './Pitch';
+import Pitch, { MelodicLine, MelodicLineDirection } from './Pitch';
 
-const cannotMapFret = 'Cannot map fret';
+export type FretPrimitives = {
+  string: GuitarStringPrimitives;
+  fret: number;
+};
 
 export class Fret {
   constructor(protected readonly string: GuitarString, private readonly fret: number) {}
@@ -12,6 +15,13 @@ export class Fret {
 
   get String(): GuitarString {
     return this.string;
+  }
+
+  get To(): FretPrimitives {
+    return {
+      string: this.String.To,
+      fret: this.Number,
+    };
   }
 
   equals(other: Fret): boolean {
@@ -104,7 +114,6 @@ export class BlankFret extends Fret {
 
 export type GuitarStringPrimitives = {
   name: string;
-  openPitch: PitchPrimitives;
   index: number;
 };
 
@@ -123,7 +132,6 @@ export class GuitarString {
   get To(): GuitarStringPrimitives {
     return {
       name: this.name,
-      openPitch: this.openStringPitch.To,
       index: this.index,
     };
   }
@@ -188,8 +196,8 @@ export class GuitarString {
 
 export type PositionPrimitives = {
   name: string;
-  lowestFret: number;
-  highestFret: number;
+  lowestFret: FretPrimitives;
+  highestFret: FretPrimitives;
 };
 
 export class Position {
@@ -202,8 +210,8 @@ export class Position {
   get To(): PositionPrimitives {
     return {
       name: this.name,
-      lowestFret: this.lowFret.Number,
-      highestFret: this.highFret.Number,
+      lowestFret: this.lowFret.To,
+      highestFret: this.highFret.To,
     };
   }
 
@@ -304,7 +312,7 @@ export class GuitarChord {
       guitarString = guitarString.Next;
     }
 
-    throw cannotMapFret;
+    throw 'Cannot map fret';
   }
 }
 
