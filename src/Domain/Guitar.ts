@@ -381,7 +381,7 @@ export class TabColumn {
   private readonly maxRowLength: number = 0;
 
   private constructor(private readonly rows: string[]) {
-    this.maxRowLength = Math.max(...rows.map((el) => el.length));
+    this.maxRowLength = Math.max(...rows.map((r) => r.length));
   }
 
   public static readonly Start: TabColumn = new TabColumn(Array<string>(6).fill('|-'));
@@ -392,7 +392,7 @@ export class TabColumn {
   public static readonly StandardTunning: TabColumn = new TabColumn(['e', 'B', 'G', 'D', 'A', 'E']);
 
   render(): string[] {
-    return this.rows.map((r) => (r.length == this.maxRowLength ? r : `-${r}`));
+    return this.rows.map((r) => (r.length < this.maxRowLength ? `-${r}` : r));
   }
 
   static fromFrets(frets: Fret[]): TabColumn {
