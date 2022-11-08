@@ -1,6 +1,8 @@
-name: build
+name: "Mutation-Test"
 
-on: push
+on:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   build:
@@ -26,24 +28,5 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Lint
-        run: yarn lint
-
-      - name: Types
-        run: yarn types
-
-      - name: Test
-        run: yarn test:ci
-
-      - name: Build
-        run: yarn build
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: glenn
-          path: ./lib
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+      - name: Mutation
+        run: yarn mutants
