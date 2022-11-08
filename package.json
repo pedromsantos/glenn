@@ -22,7 +22,7 @@
     "watch": "jest --watch",
     "clean": "rm -r ./lib",
     "test": "jest --watchAll=false",
-    "precommit": "npm-run-all -p clean lint types test build",
+    "precommit": "npm-run-all -p clean lint types test:ci build",
     "test:ci": "jest test --watchAll=false --coverage=true",
     "mutants": "stryker run",
     "build": "tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
