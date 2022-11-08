@@ -116,7 +116,8 @@ export class GuitarString {
     private readonly name: string,
     private readonly openStringPitch: Pitch,
     private readonly index: number,
-    private readonly next: () => GuitarString
+    private readonly nextAscending: () => GuitarString,
+    private readonly nextDescending: () => GuitarString
   ) {
     GuitarString.all.push(this);
   }
@@ -132,37 +133,43 @@ export class GuitarString {
     'Sixth',
     Pitch.E,
     6,
-    () => GuitarString.Fifth
+    () => GuitarString.Fifth,
+    () => GuitarString.Sixth
   );
   public static readonly Fifth: GuitarString = new GuitarString(
     'Fifth',
     Pitch.A,
     5,
-    () => GuitarString.Fourth
+    () => GuitarString.Fourth,
+    () => GuitarString.Sixth
   );
   public static readonly Fourth: GuitarString = new GuitarString(
     'Fourth',
     Pitch.D,
     4,
-    () => GuitarString.Third
+    () => GuitarString.Third,
+    () => GuitarString.Fifth
   );
   public static readonly Third: GuitarString = new GuitarString(
     'Third',
     Pitch.G,
     3,
-    () => GuitarString.Second
+    () => GuitarString.Second,
+    () => GuitarString.Fourth
   );
   public static readonly Second: GuitarString = new GuitarString(
     'Second',
     Pitch.B,
     2,
-    () => GuitarString.First
+    () => GuitarString.First,
+    () => GuitarString.Third
   );
   public static readonly First: GuitarString = new GuitarString(
     'First',
     Pitch.E,
     1,
-    () => GuitarString.First
+    () => GuitarString.First,
+    () => GuitarString.Second
   );
 
   static get guitarStrings(): GuitarString[] {
@@ -181,8 +188,12 @@ export class GuitarString {
     return this.index > other.index;
   }
 
-  get Next(): GuitarString {
-    return this.next();
+  get NextAscending(): GuitarString {
+    return this.nextAscending();
+  }
+
+  get NextDescending(): GuitarString {
+    return this.nextDescending();
   }
 }
 
@@ -284,7 +295,7 @@ export class GuitarChord {
       let bassString = GuitarString.Sixth;
       for (const pitch of chord.Pitches) {
         this.chord.push(this.mapPitchToFret(pitch, bassString));
-        bassString = bassString.Next;
+        bassString = bassString.NextAscending;
       }
     } catch {
       throw `Cannot map chord ${chord.Name} in position ${position.To.name}`;
@@ -320,7 +331,7 @@ export class GuitarChord {
         return fret;
       }
 
-      guitarString = guitarString.Next;
+      guitarString = guitarString.NextAscending;
     }
 
     throw 'Cannot map fret';
