@@ -6,11 +6,11 @@ Typescript module for working with music theory, this is still a work in progres
 
 [![Build Status](https://github.com/pedromsantos/glenn/actions/workflows/build.yml/badge.svg)](https://github.com/pedromsantos/glenn/actions/workflows/build.yml) [![CodeQL](https://github.com/pedromsantos/glenn/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/pedromsantos/glenn/actions/workflows/codeql-analysis.yml)
 
-[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/summary/new_code?id=pedromsantos_glenn)
+### Sonar
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=pedromsantos_glenn&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=pedromsantos_glenn) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=pedromsantos_glenn&metric=coverage)](https://sonarcloud.io/summary/new_code?id=pedromsantos_glenn)[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=pedromsantos_glenn&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=pedromsantos_glenn) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=pedromsantos_glenn&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=pedromsantos_glenn) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=pedromsantos_glenn&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=pedromsantos_glenn) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=pedromsantos_glenn&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=pedromsantos_glenn)
 
-[![CodeScene general](https://codescene.io/images/analyzed-by-codescene-badge.svg)](https://codescene.io/projects/29675)
+### CodeScene
 
 [![CodeScene Code Health](https://codescene.io/projects/29675/status-badges/code-health)](https://codescene.io/projects/29675) [![CodeScene System Mastery](https://codescene.io/projects/29675/status-badges/system-mastery)](https://codescene.io/projects/29675)
 
