@@ -327,16 +327,7 @@ export class GuitarMelodicLine {
           continue;
         }
 
-        let fret = guitarString.fretFor(pitch);
-
-        if (this.position.contains(fret)) {
-          line.push(fret);
-          break;
-        }
-
-        fret = fret.raiseOctave();
-        if (this.position.contains(fret)) {
-          line.push(fret);
+        if (this.mapPitch(pitch, guitarString, line)) {
           break;
         }
       }
@@ -357,6 +348,23 @@ export class GuitarMelodicLine {
       if (lastFret !== undefined && guitarString.isLowerThan(lastFret?.String)) {
         return true;
       }
+    }
+
+    return false;
+  }
+
+  private mapPitch(pitch: Pitch, guitarString: GuitarString, line: Fret[]): boolean {
+    let fret = guitarString.fretFor(pitch);
+
+    if (this.position.contains(fret)) {
+      line.push(fret);
+      return true;
+    }
+
+    fret = fret.raiseOctave();
+    if (this.position.contains(fret)) {
+      line.push(fret);
+      return true;
     }
 
     return false;
