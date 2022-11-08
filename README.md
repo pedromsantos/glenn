@@ -25,7 +25,9 @@ Typescript module for working with music theory, this is still a work in progres
 
 ---
 
-## Working with pitches
+## Documentation
+
+### Working with pitches
 
 ```TypeScript
 const c = Pitch.C;
@@ -40,7 +42,7 @@ c.intervalTo(Pitch.F);
 c.transpose(Interval.MinorThird);
 ```
 
-## Working with intervals
+### Working with intervals
 
 ```TypeScript
 const interval = Interval.MinorThird;
@@ -53,7 +55,7 @@ interval.invert();
 
 ```
 
-## Working with keys
+### Working with keys
 
 ```TypeScript
 const key = Key.CMajor;
@@ -65,7 +67,7 @@ key.minorKeys();
 
 ```
 
-## Working with scales
+### Working with scales
 
 ```TypeScript
 const scale = ScalePattern.Ionian.createScale(Pitch.C);
@@ -77,7 +79,7 @@ scale.Name;
 scale.To();
 ```
 
-## Working with chords
+### Working with chords
 
 ```TypeScript
 const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
@@ -94,7 +96,7 @@ chord.drop3();
 
 ```
 
-## Working with guitar tab
+### Working with guitar tab
 
 ```TypeScript
 Position.A.To;
@@ -127,5 +129,4 @@ const chords = [
 
 const matrix1 = new TabMatrix(...chords.map((c) => TabColumn.fromChord(c)));
 matrix1.render();
-
 ```
