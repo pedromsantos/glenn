@@ -243,6 +243,30 @@ export class Position {
     new Fret(GuitarString.First, 15)
   );
 
+  public static readonly C8: Position = new Position(
+    'C8',
+    new Fret(GuitarString.Sixth, 14),
+    new Fret(GuitarString.First, 17)
+  );
+
+  public static readonly A8: Position = new Position(
+    'A8',
+    new Fret(GuitarString.Sixth, 16),
+    new Fret(GuitarString.First, 20)
+  );
+
+  public static readonly G8: Position = new Position(
+    'G8',
+    new Fret(GuitarString.Sixth, 18),
+    new Fret(GuitarString.First, 22)
+  );
+
+  public static readonly E8: Position = new Position(
+    'E8',
+    new Fret(GuitarString.Sixth, 21),
+    new Fret(GuitarString.First, 24)
+  );
+
   contains(fret: Fret, lowerMargin = 0, higherMargin = 0): boolean {
     return fret.isWithin(this.lowFret, this.highFret, lowerMargin, higherMargin);
   }
