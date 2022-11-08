@@ -4,6 +4,10 @@ Typescript module for working with music theory, this is still a work in progres
 
 ## Status and ratings
 
+### GitHub
+
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/pedromsantos/glenn) ![GitHub last commit](https://img.shields.io/github/last-commit/pedromsantos/glenn) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/pedromsantos/glenn)
+![GitHub top language](https://img.shields.io/github/languages/top/pedromsantos/glenn) ![GitHub](https://img.shields.io/github/license/pedromsantos/glenn)
 [![Build Status](https://github.com/pedromsantos/glenn/actions/workflows/build.yml/badge.svg)](https://github.com/pedromsantos/glenn/actions/workflows/build.yml) [![CodeQL](https://github.com/pedromsantos/glenn/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/pedromsantos/glenn/actions/workflows/codeql-analysis.yml)
 
 ### Sonar
@@ -13,11 +17,6 @@ Typescript module for working with music theory, this is still a work in progres
 ### CodeScene
 
 [![CodeScene Code Health](https://codescene.io/projects/29675/status-badges/code-health)](https://codescene.io/projects/29675) [![CodeScene System Mastery](https://codescene.io/projects/29675/status-badges/system-mastery)](https://codescene.io/projects/29675)
-
-### GitHub
-
-![GitHub commit activity](https://img.shields.io/github/commit-activity/w/pedromsantos/glenn) ![GitHub last commit](https://img.shields.io/github/last-commit/pedromsantos/glenn) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/pedromsantos/glenn)
-![GitHub top language](https://img.shields.io/github/languages/top/pedromsantos/glenn) ![GitHub](https://img.shields.io/github/license/pedromsantos/glenn)
 
 ### Mutation testing
 
