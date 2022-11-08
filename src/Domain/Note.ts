@@ -31,10 +31,6 @@ export class Octave {
   public static readonly SixLine: Octave = new Octave('Six line', 32, 108);
   public static readonly SevenLine: Octave = new Octave('Seven line', 64, 120);
 
-  get NumericValue(): number {
-    return this.value;
-  }
-
   get MidiBaseValue(): number {
     return this.midiBaseValue;
   }
