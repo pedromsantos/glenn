@@ -181,3 +181,24 @@ describe('Guitar melodic line should', () => {
     });
   });
 });
+
+describe('Guitar String', () => {
+  test('move ascending across strings', () => {
+    for (let i = 0; i < 5; i++) {
+      expect(GuitarString.guitarStrings?.[i]?.NextAscending).toBe(
+        GuitarString.guitarStrings[i + 1]
+      );
+    }
+
+    expect(GuitarString.guitarStrings?.[5]?.NextAscending).toBe(GuitarString.First);
+  });
+
+  test('move descending across strings', () => {
+    const strings = GuitarString.guitarStrings.reverse();
+    for (let i = 0; i < 5; i++) {
+      expect(strings?.[i]?.NextDescending).toBe(strings[i + 1]);
+    }
+
+    expect(GuitarString.guitarStrings?.[5]?.NextDescending).toBe(GuitarString.Sixth);
+  });
+});
