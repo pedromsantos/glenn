@@ -4,8 +4,8 @@
     "global": {
       "branches": 80,
       "functions": 95,
-      "lines": 98,
-      "statements": 98
+      "lines": 95,
+      "statements": 95
     }
   },
   "transform": {
