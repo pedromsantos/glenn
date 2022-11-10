@@ -226,7 +226,7 @@ export class Position {
 
   public static readonly C: Position = new Position(
     'C',
-    new Fret(GuitarString.Sixth, 2),
+    new Fret(GuitarString.Sixth, 1),
     new Fret(GuitarString.First, 5)
   );
 
@@ -288,53 +288,70 @@ export class Position {
 }
 
 export class GuitarChord {
-  private readonly chord: Fret[] = [];
+  private readonly chordFrets: Fret[] = [];
 
   constructor(chord: Chord, private readonly position: Position) {
-    try {
-      let bassString = GuitarString.Sixth;
-      for (const pitch of chord.Pitches) {
-        this.chord.push(this.mapPitchToFret(pitch, bassString));
-        bassString = bassString.NextAscending;
-      }
-    } catch {
-      throw `Cannot map chord ${chord.Name} in position ${position.To.name}`;
+    if (position === Position.Open) {
+      this.chordFrets = this.mapOpenPositionChord(chord).reverse();
+      return;
     }
+
+    this.chordFrets = this.mapNonOpenePositionChord(chord).reverse();
+  }
+
+  private mapOpenPositionChord(chord: Chord): Fret[] {
+    const mappedeFrets: Fret[] = [];
+
+    for (const guitarString of GuitarString.guitarStrings) {
+      for (const pitch of chord.Pitches) {
+        const fret = guitarString.fretFor(pitch);
+
+        if (this.position.contains(fret, 1, 1)) {
+          mappedeFrets.push(fret);
+          break;
+        }
+      }
+
+      if (!mappedeFrets.find((f) => f.String === guitarString)) {
+        mappedeFrets.push(new BlankFret());
+      }
+    }
+
+    return mappedeFrets;
+  }
+
+  private mapNonOpenePositionChord(chord: Chord): Fret[] {
+    const mappedPitches: Pitch[] = [];
+    const mappedeFrets: Fret[] = [];
+
+    for (const guitarString of GuitarString.guitarStrings) {
+      for (const pitch of chord.Pitches) {
+        if (mappedPitches.find((p) => p === pitch)) {
+          continue;
+        }
+
+        const fret = guitarString.fretFor(pitch);
+
+        if (this.position.contains(fret, 1, 1)) {
+          mappedeFrets.push(fret);
+          mappedPitches.push(pitch);
+        }
+      }
+
+      if (!mappedeFrets.find((f) => f.String === guitarString)) {
+        mappedeFrets.push(new BlankFret());
+      }
+    }
+
+    return mappedeFrets;
   }
 
   toTab(): TabColumn {
-    return TabColumn.fromFrets(this.toFrets());
+    return TabColumn.fromFrets(this.chordFrets.reverse());
   }
 
-  private toFrets(): Fret[] {
-    const frets: Fret[] = [];
-
-    for (const guitarString of GuitarString.guitarStrings) {
-      const fret = this.chord.find((f) => f.isOnString(guitarString));
-
-      if (fret === undefined) {
-        frets.push(new BlankFret(guitarString));
-      } else {
-        frets.push(fret);
-      }
-    }
-
-    return frets;
-  }
-
-  private mapPitchToFret(pitch: Pitch, bassString: GuitarString): Fret {
-    let guitarString = bassString;
-    while (guitarString !== GuitarString.First) {
-      const fret = guitarString.fretFor(pitch);
-
-      if (this.position.contains(fret, 1, 1)) {
-        return fret;
-      }
-
-      guitarString = guitarString.NextAscending;
-    }
-
-    throw 'Cannot map fret';
+  toString(): string {
+    return this.chordFrets.map((f) => f.toString()).join('\n');
   }
 }
 

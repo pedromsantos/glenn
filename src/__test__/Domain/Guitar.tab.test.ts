@@ -170,27 +170,12 @@ E|-------|`;
         const guitarChord = new GuitarChord(chord, Position.Open);
         const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
 
-        const expectedTab = `e|---|
-B|---|
+        const expectedTab = `e|-0-|
+B|-1-|
 G|-0-|
 D|-2-|
 A|-3-|
-E|---|`;
-
-        expect(renderedTab).toBe(expectedTab);
-      });
-
-      test('C Major triad on C position', () => {
-        const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
-        const guitarChord = new GuitarChord(chord, Position.C);
-        const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
-
-        const expectedTab = `e|---|
-B|---|
-G|---|
-D|-2-|
-A|-3-|
-E|---|`;
+E|-0-|`;
 
         expect(renderedTab).toBe(expectedTab);
       });
@@ -200,20 +185,14 @@ E|---|`;
         const guitarChord = new GuitarChord(chord, Position.Open);
         const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
 
-        const expectedTab = `e|---|
-B|---|
-G|---|
+        const expectedTab = `e|-3-|
+B|-0-|
+G|-0-|
 D|-0-|
 A|-2-|
 E|-3-|`;
 
         expect(renderedTab).toBe(expectedTab);
-      });
-
-      test('C Major triad on E position cannot be mapped', () => {
-        const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
-
-        expect(() => new GuitarChord(chord, Position.E)).toThrow('Cannot map chord');
       });
     });
 
@@ -221,24 +200,22 @@ E|-3-|`;
       const chords = [
         new GuitarChord(new ClosedChord(Pitch.G, ChordPattern.Major), Position.Open),
         new GuitarChord(new ClosedChord(Pitch.C, ChordPattern.Major), Position.Open),
-        new GuitarChord(new ClosedChord(Pitch.C, ChordPattern.Major), Position.C),
       ];
 
       const matrix = new TabMatrix(...chords.map((c) => c.toTab()));
       expect(matrix.render()).toStrictEqual([
-        ['-', '-', '-', '0', '2', '3'],
-        ['-', '-', '0', '2', '3', '-'],
-        ['-', '-', '-', '2', '3', '-'],
+        ['3', '0', '0', '0', '2', '3'],
+        ['0', '1', '0', '2', '3', '0'],
       ]);
 
       const renderedTab = new Tab().render(matrix);
 
-      const expectedTab = `e|-------|
-B|-------|
-G|---0---|
-D|-0-2-2-|
-A|-2-3-3-|
-E|-3-----|`;
+      const expectedTab = `e|-3-0-|
+B|-0-1-|
+G|-0-0-|
+D|-0-2-|
+A|-2-3-|
+E|-3-0-|`;
 
       expect(renderedTab).toBe(expectedTab);
     });
