@@ -167,7 +167,7 @@ E|-------|`;
     describe('chord', () => {
       test('C Major triad on open position', () => {
         const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
-        const guitarChord = new GuitarChord(chord, Position.Open);
+        const guitarChord = GuitarChord.inPosition(chord, Position.Open);
         const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
 
         const expectedTab = `e|-0-|
@@ -182,7 +182,7 @@ E|-0-|`;
 
       test('G Major triad on C position', () => {
         const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
-        const guitarChord = new GuitarChord(chord, Position.Open);
+        const guitarChord = GuitarChord.inPosition(chord, Position.Open);
         const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
 
         const expectedTab = `e|-3-|
@@ -198,8 +198,8 @@ E|-3-|`;
 
     test('Major triads on open and C positions', () => {
       const chords = [
-        new GuitarChord(new ClosedChord(Pitch.G, ChordPattern.Major), Position.Open),
-        new GuitarChord(new ClosedChord(Pitch.C, ChordPattern.Major), Position.Open),
+        GuitarChord.inPosition(new ClosedChord(Pitch.G, ChordPattern.Major), Position.Open),
+        GuitarChord.inPosition(new ClosedChord(Pitch.C, ChordPattern.Major), Position.Open),
       ];
 
       const matrix = new TabMatrix(...chords.map((c) => c.toTab()));

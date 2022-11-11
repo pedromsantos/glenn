@@ -288,16 +288,29 @@ export class Position {
 }
 
 export class GuitarChord {
-  private readonly chordFrets: Fret[] = [];
+  private chordFrets: Fret[] = [];
+  private position: Position = Position.Open;
+  //private bassString: GuitarString = GuitarString.Sixth;
 
-  constructor(chord: Chord, private readonly position: Position) {
+  public static inPosition(chord: Chord, position: Position): GuitarChord {
+    const guitarChord = new GuitarChord();
+    guitarChord.position = position;
+
     if (position === Position.Open) {
-      this.chordFrets = this.mapOpenPositionChord(chord).reverse();
-      return;
+      guitarChord.chordFrets = guitarChord.mapOpenPositionChord(chord).reverse();
+      return guitarChord;
     }
 
-    this.chordFrets = this.mapNonOpenePositionChord(chord).reverse();
+    guitarChord.chordFrets = guitarChord.mapNonOpenePositionChord(chord).reverse();
+    return guitarChord;
   }
+
+  // public static fromOnBassString(chord: Chord, bass: GuitarString): GuitarChord {
+  //   const guitarChord = new GuitarChord();
+  //   guitarChord.bassString = bass;
+
+  //   return guitarChord;
+  // }
 
   private mapOpenPositionChord(chord: Chord): Fret[] {
     const mappedeFrets: Fret[] = [];
