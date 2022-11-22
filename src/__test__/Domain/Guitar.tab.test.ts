@@ -256,7 +256,7 @@ E|----|`;
       });
     });
 
-    test('Major triads on open and C positions', () => {
+    test('Major triads on open position', () => {
       const chords = [
         GuitarChord.inPosition(new ClosedChord(Pitch.G, ChordPattern.Major), Position.Open),
         GuitarChord.inPosition(new ClosedChord(Pitch.C, ChordPattern.Major), Position.Open),
