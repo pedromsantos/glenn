@@ -1,6 +1,8 @@
 # Glenn
 
-Typescript module for working with music theory, this is still a work in progress.
+Typescript module for working with music theory.
+
+Still a work in progress.
 
 ## Status and ratings
 
