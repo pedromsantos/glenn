@@ -188,6 +188,18 @@ export class GuitarString {
     return this.index > other.index;
   }
 
+  static get frets(): Map<GuitarString, Fret> {
+    return new Map<GuitarString, Fret>([
+      [GuitarString.First, new BlankFret()],
+      [GuitarString.Second, new BlankFret()],
+      [GuitarString.Third, new BlankFret()],
+      [GuitarString.Fourth, new BlankFret()],
+      [GuitarString.Fourth, new BlankFret()],
+      [GuitarString.Fifth, new BlankFret()],
+      [GuitarString.Sixth, new BlankFret()],
+    ]);
+  }
+
   get Index() {
     return this.index;
   }
@@ -310,28 +322,21 @@ export class GuitarChord {
 
   public static fromBassString(chord: Chord, bass: GuitarString): GuitarChord {
     const guitarChord = new GuitarChord();
-    const mappedeFrets: Fret[] = [
-      new BlankFret(),
-      new BlankFret(),
-      new BlankFret(),
-      new BlankFret(),
-      new BlankFret(),
-      new BlankFret(),
-    ];
+    const mappedeFrets: Map<GuitarString, Fret> = GuitarString.frets;
     let guitarString = bass;
     let pitchIndex = 0;
     let pitch = chord.Pitches[pitchIndex];
 
     while (pitchIndex < chord.Pitches.length) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      mappedeFrets[guitarString.Index - 1] = guitarString.fretFor(pitch!);
+      mappedeFrets.set(guitarString, guitarString.fretFor(pitch!));
 
       pitchIndex++;
       pitch = chord.Pitches[pitchIndex];
       guitarString = guitarString.NextAscending;
     }
 
-    guitarChord.chordFrets = GuitarChord.adjustOctaves(mappedeFrets).reverse();
+    guitarChord.chordFrets = GuitarChord.adjustOctaves(Array.from(mappedeFrets.values())).reverse();
 
     return guitarChord;
   }
