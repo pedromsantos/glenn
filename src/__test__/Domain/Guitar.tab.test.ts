@@ -194,6 +194,66 @@ E|-3-|`;
 
         expect(renderedTab).toBe(expectedTab);
       });
+
+      test('G Major triad from sixth string', () => {
+        const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+        const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Sixth);
+        const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
+
+        const expectedTab = `e|---|
+B|---|
+G|---|
+D|-0-|
+A|-2-|
+E|-3-|`;
+
+        expect(renderedTab).toBe(expectedTab);
+      });
+
+      test('G Major triad from fifth string', () => {
+        const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+        const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Fifth);
+        const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
+
+        const expectedTab = `e|----|
+B|----|
+G|--7-|
+D|--9-|
+A|-10-|
+E|----|`;
+
+        expect(renderedTab).toBe(expectedTab);
+      });
+
+      test('G Major triad from fourth string', () => {
+        const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+        const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Fourth);
+        const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
+
+        const expectedTab = `e|---|
+B|-3-|
+G|-4-|
+D|-5-|
+A|---|
+E|---|`;
+
+        expect(renderedTab).toBe(expectedTab);
+      });
+
+      test('G Major triad from thord string', () => {
+        const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+        const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Third);
+        const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
+
+        const expectedTab = `e|-10-|
+B|-12-|
+G|-12-|
+D|----|
+A|----|
+E|----|`;
+
+        expect(renderedTab).toBe(expectedTab);
+      });
     });
 
     test('Major triads on open and C positions', () => {

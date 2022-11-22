@@ -1,11 +1,6 @@
 import { Chord } from './Chord';
 import Pitch, { MelodicLine, MelodicLineDirection } from './Pitch';
 
-export type FretPrimitives = {
-  string: GuitarStringPrimitives;
-  fret: number;
-};
-
 export class Fret {
   constructor(protected readonly string: GuitarString, private readonly fret: number) {}
 
@@ -109,6 +104,11 @@ export type GuitarStringPrimitives = {
   index: number;
 };
 
+export type FretPrimitives = {
+  string: GuitarStringPrimitives;
+  fret: number;
+};
+
 export class GuitarString {
   private static readonly all: GuitarString[] = [];
 
@@ -186,6 +186,10 @@ export class GuitarString {
 
   isLowerThan(other: GuitarString): boolean {
     return this.index > other.index;
+  }
+
+  get Index() {
+    return this.index;
   }
 
   get NextAscending(): GuitarString {
@@ -290,7 +294,6 @@ export class Position {
 export class GuitarChord {
   private chordFrets: Fret[] = [];
   private position: Position = Position.Open;
-  //private bassString: GuitarString = GuitarString.Sixth;
 
   public static inPosition(chord: Chord, position: Position): GuitarChord {
     const guitarChord = new GuitarChord();
@@ -305,12 +308,33 @@ export class GuitarChord {
     return guitarChord;
   }
 
-  // public static fromOnBassString(chord: Chord, bass: GuitarString): GuitarChord {
-  //   const guitarChord = new GuitarChord();
-  //   guitarChord.bassString = bass;
+  public static fromBassString(chord: Chord, bass: GuitarString): GuitarChord {
+    const guitarChord = new GuitarChord();
+    const mappedeFrets: Fret[] = [
+      new BlankFret(),
+      new BlankFret(),
+      new BlankFret(),
+      new BlankFret(),
+      new BlankFret(),
+      new BlankFret(),
+    ];
+    let guitarString = bass;
+    let pitchIndex = 0;
+    let pitch = chord.Pitches[pitchIndex];
 
-  //   return guitarChord;
-  // }
+    while (pitchIndex < chord.Pitches.length) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      mappedeFrets[guitarString.Index - 1] = guitarString.fretFor(pitch!);
+
+      pitchIndex++;
+      pitch = chord.Pitches[pitchIndex];
+      guitarString = guitarString.NextAscending;
+    }
+
+    guitarChord.chordFrets = GuitarChord.adjustOctaves(mappedeFrets).reverse();
+
+    return guitarChord;
+  }
 
   private mapOpenPositionChord(chord: Chord): Fret[] {
     const mappedeFrets: Fret[] = [];
@@ -354,6 +378,14 @@ export class GuitarChord {
       if (!mappedeFrets.find((f) => f.String === guitarString)) {
         mappedeFrets.push(new BlankFret());
       }
+    }
+
+    return mappedeFrets;
+  }
+
+  private static adjustOctaves(mappedeFrets: Fret[]): Fret[] {
+    if (mappedeFrets.some((f) => f.Number > 8) && mappedeFrets.some((f) => f.Number == 0)) {
+      return mappedeFrets.map((f) => (f.Number === 0 ? f.raiseOctave() : f));
     }
 
     return mappedeFrets;
