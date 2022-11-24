@@ -401,7 +401,7 @@ describe('Triad harmonizer should', () => {
     const chord = harmonizer.chordFor(ScaleDegree.I);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Major);
-    expect(chord.Pitches).toStrictEqual([Pitch.C, Pitch.E, Pitch.G]);
+    expect(Array.from(chord)).toStrictEqual([Pitch.C, Pitch.E, Pitch.G]);
   });
 
   test('Harmonize II degree of Ionian mode as a triad', () => {
@@ -410,7 +410,7 @@ describe('Triad harmonizer should', () => {
     const chord = harmonizer.chordFor(ScaleDegree.II);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Minor);
-    expect(chord.Pitches.map((p) => p.Name)).toStrictEqual(
+    expect(Array.from(chord).map((p) => p.Name)).toStrictEqual(
       [Pitch.D, Pitch.F, Pitch.A].map((p) => p.Name)
     );
   });
@@ -421,7 +421,7 @@ describe('Triad harmonizer should', () => {
     const chord = harmonizer.chordFor(ScaleDegree.III);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Minor);
-    expect(chord.Pitches.map((p) => p.Name)).toStrictEqual(
+    expect(Array.from(chord).map((p) => p.Name)).toStrictEqual(
       [Pitch.E, Pitch.G, Pitch.B].map((p) => p.Name)
     );
   });
@@ -432,7 +432,7 @@ describe('Triad harmonizer should', () => {
     const chord = harmonizer.chordFor(ScaleDegree.IV);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Major);
-    expect(chord.Pitches.map((p) => p.Name)).toStrictEqual(
+    expect(Array.from(chord).map((p) => p.Name)).toStrictEqual(
       [Pitch.F, Pitch.A, Pitch.C].map((p) => p.Name)
     );
   });
@@ -443,7 +443,7 @@ describe('Triad harmonizer should', () => {
     const chord = harmonizer.chordFor(ScaleDegree.V);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Major);
-    expect(chord.Pitches.map((p) => p.Name)).toStrictEqual(
+    expect(Array.from(chord).map((p) => p.Name)).toStrictEqual(
       [Pitch.G, Pitch.B, Pitch.D].map((p) => p.Name)
     );
   });
@@ -454,7 +454,7 @@ describe('Triad harmonizer should', () => {
     const chord = harmonizer.chordFor(ScaleDegree.VI);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Minor);
-    expect(chord.Pitches.map((p) => p.Name)).toStrictEqual(
+    expect(Array.from(chord).map((p) => p.Name)).toStrictEqual(
       [Pitch.A, Pitch.C, Pitch.E].map((p) => p.Name)
     );
   });
@@ -465,7 +465,7 @@ describe('Triad harmonizer should', () => {
     const chord = harmonizer.chordFor(ScaleDegree.VII);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Diminished);
-    expect(chord.Pitches.map((p) => p.Name)).toStrictEqual(
+    expect(Array.from(chord).map((p) => p.Name)).toStrictEqual(
       [Pitch.B, Pitch.D, Pitch.F].map((p) => p.Name)
     );
   });
@@ -478,7 +478,7 @@ describe('Sevenths harmonizer should', () => {
     const chord = harmonizer.chordFor(ScaleDegree.I);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Major7);
-    expect(chord.Pitches).toStrictEqual([Pitch.C, Pitch.E, Pitch.G, Pitch.B]);
+    expect(Array.from(chord)).toStrictEqual([Pitch.C, Pitch.E, Pitch.G, Pitch.B]);
   });
 
   test('Harmonize II degree of Ionian mode as a seventh chord', () => {
@@ -487,7 +487,7 @@ describe('Sevenths harmonizer should', () => {
     const chord = harmonizer.chordFor(ScaleDegree.II);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Minor7);
-    expect(chord.Pitches.map((p) => p.Name)).toStrictEqual(
+    expect(Array.from(chord).map((p) => p.Name)).toStrictEqual(
       [Pitch.D, Pitch.F, Pitch.A, Pitch.C].map((p) => p.Name)
     );
   });
@@ -498,7 +498,7 @@ describe('Sevenths harmonizer should', () => {
     const chord = harmonizer.chordFor(ScaleDegree.III);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Minor7);
-    expect(chord.Pitches.map((p) => p.Name)).toStrictEqual(
+    expect(Array.from(chord).map((p) => p.Name)).toStrictEqual(
       [Pitch.E, Pitch.G, Pitch.B, Pitch.D].map((p) => p.Name)
     );
   });
@@ -509,7 +509,7 @@ describe('Sevenths harmonizer should', () => {
     const chord = harmonizer.chordFor(ScaleDegree.IV);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Major7);
-    expect(chord.Pitches.map((p) => p.Name)).toStrictEqual(
+    expect(Array.from(chord).map((p) => p.Name)).toStrictEqual(
       [Pitch.F, Pitch.A, Pitch.C, Pitch.E].map((p) => p.Name)
     );
   });
@@ -520,7 +520,7 @@ describe('Sevenths harmonizer should', () => {
     const chord = harmonizer.chordFor(ScaleDegree.V);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Dominant7);
-    expect(chord.Pitches.map((p) => p.Name)).toStrictEqual(
+    expect(Array.from(chord).map((p) => p.Name)).toStrictEqual(
       [Pitch.G, Pitch.B, Pitch.D, Pitch.F].map((p) => p.Name)
     );
   });
@@ -531,7 +531,7 @@ describe('Sevenths harmonizer should', () => {
     const chord = harmonizer.chordFor(ScaleDegree.VI);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Minor7);
-    expect(chord.Pitches.map((p) => p.Name)).toStrictEqual(
+    expect(Array.from(chord).map((p) => p.Name)).toStrictEqual(
       [Pitch.A, Pitch.C, Pitch.E, Pitch.G].map((p) => p.Name)
     );
   });
@@ -542,7 +542,7 @@ describe('Sevenths harmonizer should', () => {
     const chord = harmonizer.chordFor(ScaleDegree.VII);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Minor7b5);
-    expect(chord.Pitches.map((p) => p.Name)).toStrictEqual(
+    expect(Array.from(chord).map((p) => p.Name)).toStrictEqual(
       [Pitch.B, Pitch.D, Pitch.F, Pitch.A].map((p) => p.Name)
     );
   });

@@ -29,7 +29,7 @@ export class ChordPitch {
   }
 }
 
-export class ChordPitches {
+export class ChordPitches implements Iterable<Pitch> {
   constructor(private readonly pitches: ChordPitch[]) {}
 
   static createFromPitches(pitches: ChordPitch[]) {
@@ -38,10 +38,6 @@ export class ChordPitches {
 
   static createFromRootAndPattern(root: Pitch, pattern: ChordPattern) {
     return new ChordPitches(pattern.pitches(root));
-  }
-
-  get Pitches(): Pitch[] {
-    return this.pitches.map((p) => p.Pitch);
   }
 
   get Bass(): Pitch {
@@ -58,7 +54,7 @@ export class ChordPitches {
 
   toIntervals(): Interval[] {
     const root = this.pitchForFunction(ChordFunction.Root);
-    return this.Pitches.map((p) => root.intervalTo(p)).slice(1);
+    return this.pitches.map((p) => root.intervalTo(p.Pitch)).slice(1);
   }
 
   pitchForFunction(func: ChordFunction): Pitch {
@@ -88,6 +84,12 @@ export class ChordPitches {
     const rotatedTail = tail.slice(1).concat(tail.slice(0, 1));
     const invertedPitches = this.pitches.slice(0, skip).concat(rotatedTail);
     return new ChordPitches(invertedPitches);
+  }
+
+  *[Symbol.iterator]() {
+    for (const pitch of this.pitches) {
+      yield pitch.Pitch;
+    }
   }
 
   private first(): Pitch {
@@ -123,8 +125,7 @@ export class ChordPitches {
   }
 }
 
-export interface Chord {
-  get Pitches(): Pitch[];
+export interface Chord extends Iterable<Pitch> {
   get Bass(): Pitch;
   get Lead(): Pitch;
   get Name(): string;
@@ -147,7 +148,7 @@ export type ChordPrimitives = {
   duration: number;
 };
 
-class BaseChord implements Chord {
+class BaseChord implements Chord, Iterable<Pitch> {
   protected readonly pattern: ChordPattern;
   protected readonly _pitches: ChordPitches;
   protected readonly root: ChordPitch;
@@ -163,10 +164,6 @@ class BaseChord implements Chord {
     this.root = new ChordPitch(root, ChordFunction.Root);
     this.duration = duration;
     this._pitches = overridePitches || ChordPitches.createFromRootAndPattern(root, pattern);
-  }
-
-  get Pitches(): Pitch[] {
-    return this._pitches.Pitches;
   }
 
   get Bass(): Pitch {
@@ -214,14 +211,14 @@ class BaseChord implements Chord {
   }
 
   drop2(): Chord {
-    if (this.Pitches.length < 4) {
+    if (Array.from(this._pitches).length < 4) {
       return this;
     }
     return new Drop2Chord(this.root.Pitch, this.pattern, this.duration, this._pitches.drop2());
   }
 
   drop3(): Chord {
-    if (this.Pitches.length < 4) {
+    if (Array.from(this._pitches).length < 4) {
       return this;
     }
 
@@ -230,6 +227,12 @@ class BaseChord implements Chord {
 
   closed(): Chord {
     return new ClosedChord(this.root.Pitch, this.pattern, this.duration);
+  }
+
+  *[Symbol.iterator]() {
+    for (const pitch of this._pitches) {
+      yield pitch;
+    }
   }
 
   static From(state: ChordPrimitives): Chord {
@@ -242,7 +245,7 @@ class BaseChord implements Chord {
   }
 }
 
-export class ClosedChord extends BaseChord {
+export class ClosedChord extends BaseChord implements Iterable<Pitch> {
   constructor(
     root: Pitch,
     pattern: ChordPattern,
@@ -257,7 +260,7 @@ export class ClosedChord extends BaseChord {
   }
 }
 
-export class Drop2Chord extends BaseChord {
+export class Drop2Chord extends BaseChord implements Iterable<Pitch> {
   constructor(
     root: Pitch,
     pattern: ChordPattern,
@@ -285,7 +288,7 @@ export class Drop2Chord extends BaseChord {
   }
 }
 
-export class Drop3Chord extends BaseChord {
+export class Drop3Chord extends BaseChord implements Iterable<Pitch> {
   constructor(
     root: Pitch,
     pattern: ChordPattern,

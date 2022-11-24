@@ -324,15 +324,12 @@ export class GuitarChord {
     const guitarChord = new GuitarChord();
     const mappedeFrets: Map<GuitarString, Fret> = GuitarString.frets;
     let guitarString = bass;
-    let pitchIndex = 0;
-    let pitch = chord.Pitches[pitchIndex];
 
-    while (pitchIndex < chord.Pitches.length) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      mappedeFrets.set(guitarString, guitarString.fretFor(pitch!));
+    for (const pitch of chord) {
+      if (pitch) {
+        mappedeFrets.set(guitarString, guitarString.fretFor(pitch));
+      }
 
-      pitchIndex++;
-      pitch = chord.Pitches[pitchIndex];
       guitarString = guitarString.NextAscending;
     }
 
@@ -345,7 +342,7 @@ export class GuitarChord {
     const mappedeFrets: Fret[] = [];
 
     for (const guitarString of GuitarString.guitarStrings) {
-      for (const pitch of chord.Pitches) {
+      for (const pitch of chord) {
         const fret = guitarString.fretFor(pitch);
 
         if (this.position.contains(fret, 1, 1)) {
@@ -367,7 +364,7 @@ export class GuitarChord {
     const mappedeFrets: Fret[] = [];
 
     for (const guitarString of GuitarString.guitarStrings) {
-      for (const pitch of chord.Pitches) {
+      for (const pitch of chord) {
         if (mappedPitches.find((p) => p === pitch)) {
           continue;
         }
