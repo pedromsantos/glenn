@@ -6,7 +6,7 @@ import { convertPitchesToDistances } from '../utils';
 
 describe('Major keys', () => {
   test('C should have notes C, D, E, F, G, A, B', () => {
-    expect(Key.CMajor.notes()).toStrictEqual([
+    expect(Array.from(Key.CMajor)).toStrictEqual([
       Pitch.C,
       Pitch.D,
       Pitch.E,
@@ -18,7 +18,7 @@ describe('Major keys', () => {
   });
 
   test('F should have notes  F, G, A, Bb, C, D, E', () => {
-    expect(Key.FMajor.notes()).toStrictEqual([
+    expect(Array.from(Key.FMajor)).toStrictEqual([
       Pitch.F,
       Pitch.G,
       Pitch.A,
@@ -30,7 +30,7 @@ describe('Major keys', () => {
   });
 
   test('G should have notes  G, A, B, C, D, E, F#', () => {
-    expect(Key.GMajor.notes()).toStrictEqual([
+    expect(Array.from(Key.GMajor)).toStrictEqual([
       Pitch.G,
       Pitch.A,
       Pitch.B,
@@ -46,7 +46,7 @@ describe('properties', () => {
   test('Keys are 7 notes', () => {
     fc.assert(
       fc.property(fc.constantFrom(...Key.keys), (key: Key) => {
-        const keyNotes = key.notes();
+        const keyNotes = Array.from(key);
 
         expect(keyNotes).toHaveLength(7);
       }),
@@ -59,7 +59,7 @@ describe('properties', () => {
 
     fc.assert(
       fc.property(fc.constantFrom(...Key.majorKeys), (key: Key) => {
-        const keyNotes = key.notes().concat(key.notes()[0] as Pitch);
+        const keyNotes = Array.from(key).concat(Array.from(key)[0] as Pitch);
         const distances = convertPitchesToDistances(keyNotes);
 
         expect(distances).toStrictEqual(majorKeyDistances);
@@ -73,7 +73,7 @@ describe('properties', () => {
 
     fc.assert(
       fc.property(fc.constantFrom(...Key.minorKeys), (key: Key) => {
-        const keyNotes = key.notes().concat(key.notes()[0] as Pitch);
+        const keyNotes = Array.from(key).concat(Array.from(key)[0] as Pitch);
         const distances = convertPitchesToDistances(keyNotes);
 
         expect(distances).toStrictEqual(minorKeyDistances);

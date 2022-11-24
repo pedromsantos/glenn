@@ -5,7 +5,7 @@ enum KeyType {
   Minor,
 }
 
-export default class Key {
+export default class Key implements Iterable<Pitch> {
   private static readonly all: Key[] = [];
 
   private constructor(
@@ -63,14 +63,6 @@ export default class Key {
     return this.accidentals >= 0 ? this.sharpKey(fifths) : this.flatKey(fifths);
   }
 
-  public notes(): Pitch[] {
-    const sortedScaleNotes = this.scaleNotes().sort((p1, p2) =>
-      p1.NumericValue <= p2.NumericValue ? -1 : 1
-    );
-    const rootIndex = sortedScaleNotes.indexOf(this.root);
-    return sortedScaleNotes.slice(rootIndex).concat(sortedScaleNotes.slice(0, rootIndex));
-  }
-
   public static get majorKeys() {
     return Key.all.filter((k) => k.type === KeyType.Major);
   }
@@ -81,5 +73,17 @@ export default class Key {
 
   public static get keys(): Key[] {
     return Key.all;
+  }
+
+  *[Symbol.iterator](): Iterator<Pitch> {
+    const sortedScaleNotes = this.scaleNotes().sort((p1, p2) =>
+      p1.NumericValue <= p2.NumericValue ? -1 : 1
+    );
+    const rootIndex = sortedScaleNotes.indexOf(this.root);
+    const notes = sortedScaleNotes.slice(rootIndex).concat(sortedScaleNotes.slice(0, rootIndex));
+
+    for (const pitch of notes) {
+      yield pitch;
+    }
   }
 }
