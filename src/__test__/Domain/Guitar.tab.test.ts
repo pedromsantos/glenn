@@ -127,9 +127,9 @@ E|-10-|`;
         const line = new MelodicLine([Pitch.C, Pitch.E, Pitch.G], MelodicLineDirection.Ascending);
         const guitarLine = new GuitarMelodicLine(line, Position.C);
 
-        expect(guitarLine.get(0)).toStrictEqual(new Fret(GuitarString.Fifth, 3));
-        expect(guitarLine.get(1)).toStrictEqual(new Fret(GuitarString.Fourth, 2));
-        expect(guitarLine.get(2)).toStrictEqual(new Fret(GuitarString.Fourth, 5));
+        expect(Array.from(guitarLine)[0]).toStrictEqual(new Fret(GuitarString.Fifth, 3));
+        expect(Array.from(guitarLine)[1]).toStrictEqual(new Fret(GuitarString.Fourth, 2));
+        expect(Array.from(guitarLine)[2]).toStrictEqual(new Fret(GuitarString.Fourth, 5));
 
         const renderedTab = new Tab().render(guitarLine.toTab());
 

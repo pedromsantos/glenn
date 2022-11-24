@@ -51,7 +51,7 @@ describe('Guitar melodic line should', () => {
       const line = ScalePattern.Ionian.createMelodicLineScale(Pitch.C);
       const guitarLine = new GuitarMelodicLine(line, Position.C);
 
-      const fret = guitarLine.get(0);
+      const fret = Array.from(guitarLine)[0];
       expect(fret?.equals(new Fret(GuitarString.Fifth, 3))).toBeTruthy();
     });
 
@@ -59,7 +59,7 @@ describe('Guitar melodic line should', () => {
       const line = ScalePattern.Ionian.createDescendingMelodicLineScale(Pitch.C);
       const guitarLine = new GuitarMelodicLine(line, Position.C);
 
-      const fret = guitarLine.get(0);
+      const fret = Array.from(guitarLine)[0];
 
       expect(fret).toStrictEqual(new Fret(GuitarString.Second, 1));
     });
@@ -88,10 +88,10 @@ describe('Guitar melodic line should', () => {
             const guitarLine = new GuitarMelodicLine(line, position);
             const positionPrimitives = position.To;
 
-            const fret = guitarLine.get(0);
+            const fret = Array.from(guitarLine)[0];
 
-            expect(fret.Number).toBeGreaterThanOrEqual(positionPrimitives.lowestFret.fret);
-            expect(fret.Number).toBeLessThanOrEqual(positionPrimitives.highestFret.fret);
+            expect(fret?.Number).toBeGreaterThanOrEqual(positionPrimitives.lowestFret.fret);
+            expect(fret?.Number).toBeLessThanOrEqual(positionPrimitives.highestFret.fret);
           }),
           { verbose: true }
         );
@@ -101,7 +101,7 @@ describe('Guitar melodic line should', () => {
         const line = new MelodicLine([Pitch.E], MelodicLineDirection.Descending);
         const guitarLine = new GuitarMelodicLine(line, Position.Open);
 
-        const fret = guitarLine.get(0);
+        const fret = Array.from(guitarLine)[0];
         const expectedFret = new Fret(GuitarString.Sixth, 0);
 
         expect(fret).toStrictEqual(expectedFret);
@@ -111,7 +111,7 @@ describe('Guitar melodic line should', () => {
         const line = new MelodicLine([Pitch.E]);
         const guitarLine = new GuitarMelodicLine(line, Position.C);
 
-        const fret = guitarLine.get(0);
+        const fret = Array.from(guitarLine)[0];
         expect(fret).toStrictEqual(new Fret(GuitarString.Fourth, 2));
       });
 
@@ -119,7 +119,7 @@ describe('Guitar melodic line should', () => {
         const line = new MelodicLine([Pitch.E]);
         const guitarLine = new GuitarMelodicLine(line, Position.A);
 
-        const fret = guitarLine.get(0);
+        const fret = Array.from(guitarLine)[0];
         expect(fret).toStrictEqual(new Fret(GuitarString.Fifth, 7));
       });
 
@@ -127,7 +127,7 @@ describe('Guitar melodic line should', () => {
         const line = new MelodicLine([Pitch.E]);
         const guitarLine = new GuitarMelodicLine(line, Position.G);
 
-        const fret = guitarLine.get(0);
+        const fret = Array.from(guitarLine)[0];
         expect(fret).toStrictEqual(new Fret(GuitarString.Fifth, 7));
       });
 
@@ -135,7 +135,7 @@ describe('Guitar melodic line should', () => {
         const line = new MelodicLine([Pitch.E]);
         const guitarLine = new GuitarMelodicLine(line, Position.E);
 
-        const fret = guitarLine.get(0);
+        const fret = Array.from(guitarLine)[0];
         expect(fret).toStrictEqual(new Fret(GuitarString.Sixth, 12));
       });
 
@@ -143,7 +143,7 @@ describe('Guitar melodic line should', () => {
         const line = new MelodicLine([Pitch.E], MelodicLineDirection.Descending);
         const guitarLine = new GuitarMelodicLine(line, Position.D);
 
-        const fret = guitarLine.get(0);
+        const fret = Array.from(guitarLine)[0];
         expect(fret).toStrictEqual(new Fret(GuitarString.First, 12));
       });
 
@@ -151,7 +151,7 @@ describe('Guitar melodic line should', () => {
         const line = new MelodicLine([Pitch.E], MelodicLineDirection.Descending);
         const guitarLine = new GuitarMelodicLine(line, Position.C8);
 
-        const fret = guitarLine.get(0);
+        const fret = Array.from(guitarLine)[0];
         expect(fret).toStrictEqual(new Fret(GuitarString.Fourth, 14));
       });
 
@@ -159,7 +159,7 @@ describe('Guitar melodic line should', () => {
         const line = new MelodicLine([Pitch.E]);
         const guitarLine = new GuitarMelodicLine(line, Position.A8);
 
-        const fret = guitarLine.get(0);
+        const fret = Array.from(guitarLine)[0];
         expect(fret).toStrictEqual(new Fret(GuitarString.Fifth, 19));
       });
 
@@ -167,7 +167,7 @@ describe('Guitar melodic line should', () => {
         const line = new MelodicLine([Pitch.E]);
         const guitarLine = new GuitarMelodicLine(line, Position.G8);
 
-        const fret = guitarLine.get(0);
+        const fret = Array.from(guitarLine)[0];
         expect(fret).toStrictEqual(new Fret(GuitarString.Fifth, 19));
       });
 
@@ -175,7 +175,7 @@ describe('Guitar melodic line should', () => {
         const line = new MelodicLine([Pitch.E]);
         const guitarLine = new GuitarMelodicLine(line, Position.E8);
 
-        const fret = guitarLine.get(0);
+        const fret = Array.from(guitarLine)[0];
         expect(fret).toStrictEqual(new Fret(GuitarString.Third, 21));
       });
     });

@@ -402,7 +402,7 @@ export class GuitarChord {
   }
 }
 
-export class GuitarMelodicLine {
+export class GuitarMelodicLine implements Iterable<Fret> {
   private readonly line: Fret[] = [];
   private readonly position: Position = Position.Open;
 
@@ -469,18 +469,10 @@ export class GuitarMelodicLine {
     return false;
   }
 
-  get(index: number): Fret {
-    /* istanbul ignore next */
-    if (index >= this.line.length) {
-      throw new Error('Invalid index');
+  *[Symbol.iterator](): Iterator<Fret> {
+    for (const pitch of this.line) {
+      yield pitch;
     }
-
-    /* istanbul ignore next */
-    if (!this.line[index]) {
-      throw new Error('Invalid index');
-    }
-
-    return this.line[index] as Fret;
   }
 }
 
