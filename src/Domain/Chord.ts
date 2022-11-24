@@ -86,7 +86,7 @@ export class ChordPitches implements Iterable<Pitch> {
     return new ChordPitches(invertedPitches);
   }
 
-  *[Symbol.iterator]() {
+  *[Symbol.iterator](): Iterator<Pitch> {
     for (const pitch of this.pitches) {
       yield pitch.Pitch;
     }
@@ -229,7 +229,7 @@ class BaseChord implements Chord, Iterable<Pitch> {
     return new ClosedChord(this.root.Pitch, this.pattern, this.duration);
   }
 
-  *[Symbol.iterator]() {
+  *[Symbol.iterator](): Iterator<Pitch> {
     for (const pitch of this._pitches) {
       yield pitch;
     }

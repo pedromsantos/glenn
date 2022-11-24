@@ -315,16 +315,12 @@ export type ScalePrimitives = {
   pitches: PitchPrimitives[];
 };
 
-export default class Scale {
+export default class Scale implements Iterable<Pitch> {
   constructor(
     private readonly scalePattern: ScalePattern,
     private readonly root: Pitch,
     private readonly pitches: Pitch[] = scalePattern.createScalePitches(root)
   ) {}
-
-  get Pitches(): Pitch[] {
-    return this.pitches;
-  }
 
   get MelodicLine(): MelodicLine {
     return new MelodicLine(this.pitches, MelodicLineDirection.Ascending);
@@ -349,6 +345,12 @@ export default class Scale {
       .concat(this.pitches)
       .filter((_, i) => i % 2 === 0)
       .slice(0, 7);
+  }
+
+  *[Symbol.iterator](): Iterator<Pitch> {
+    for (const pitch of this.pitches) {
+      yield pitch;
+    }
   }
 }
 
