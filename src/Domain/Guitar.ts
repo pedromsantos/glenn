@@ -303,7 +303,7 @@ export class Position {
   }
 }
 
-export class GuitarChord {
+export class GuitarChord implements Iterable<Fret> {
   private chordFrets: Fret[] = [];
   private position: Position = Position.Open;
 
@@ -399,6 +399,12 @@ export class GuitarChord {
 
   toString(): string {
     return this.chordFrets.map((f) => f.toString()).join('\n');
+  }
+
+  *[Symbol.iterator](): Iterator<Fret> {
+    for (const pitch of this.chordFrets) {
+      yield pitch;
+    }
   }
 }
 

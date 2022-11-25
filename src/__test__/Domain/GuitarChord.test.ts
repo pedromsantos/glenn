@@ -7,11 +7,11 @@ describe('Guitar chord', function () {
     test('C Major triad on open position', () => {
       const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
       const guitarChord = GuitarChord.inPosition(chord, Position.Open);
-      const stringifiedChord = guitarChord.toString();
+      const frets = Array.from(guitarChord);
 
-      const expected = '0\n1\n0\n2\n3\n0';
+      const expected = [0, 1, 0, 2, 3, 0];
 
-      expect(stringifiedChord).toStrictEqual(expected);
+      expect(frets.map((f) => f.Number)).toStrictEqual(expected);
     });
 
     test('G Major triad on open position', () => {
