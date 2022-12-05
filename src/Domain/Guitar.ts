@@ -112,7 +112,7 @@ export type FretPrimitives = {
 export class GuitarString {
   private static readonly all: GuitarString[] = [];
 
-  constructor(
+  private constructor(
     private readonly name: string,
     private readonly openStringPitch: Pitch,
     private readonly index: number,
@@ -188,7 +188,7 @@ export class GuitarString {
     return this.index > other.index;
   }
 
-  static get frets(): Map<GuitarString, Fret> {
+  static get blankFrets(): Map<GuitarString, Fret> {
     return new Map<GuitarString, Fret>([
       [GuitarString.First, new BlankFret()],
       [GuitarString.Second, new BlankFret()],
@@ -321,8 +321,7 @@ export class GuitarChord implements Iterable<Fret> {
   }
 
   public static fromBassString(chord: Chord, bass: GuitarString): GuitarChord {
-    const guitarChord = new GuitarChord();
-    const mappedeFrets: Map<GuitarString, Fret> = GuitarString.frets;
+    const mappedeFrets: Map<GuitarString, Fret> = GuitarString.blankFrets;
     let guitarString = bass;
 
     for (const pitch of chord) {
@@ -333,6 +332,7 @@ export class GuitarChord implements Iterable<Fret> {
       guitarString = guitarString.NextAscending;
     }
 
+    const guitarChord = new GuitarChord();
     guitarChord.chordFrets = GuitarChord.adjustOctaves(Array.from(mappedeFrets.values())).reverse();
 
     return guitarChord;
@@ -385,12 +385,12 @@ export class GuitarChord implements Iterable<Fret> {
     return mappedeFrets;
   }
 
-  private static adjustOctaves(mappedeFrets: Fret[]): Fret[] {
-    if (mappedeFrets.some((f) => f.Number > 8) && mappedeFrets.some((f) => f.Number == 0)) {
-      return mappedeFrets.map((f) => (f.Number === 0 ? f.raiseOctave() : f));
+  private static adjustOctaves(frets: Fret[]): Fret[] {
+    if (frets.some((f) => f.Number > 8) && frets.some((f) => f.Number == 0)) {
+      return frets.map((f) => (f.Number === 0 ? f.raiseOctave() : f));
     }
 
-    return mappedeFrets;
+    return frets;
   }
 
   toTab(): TabColumn {
