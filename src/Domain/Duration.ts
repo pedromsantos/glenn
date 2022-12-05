@@ -60,7 +60,7 @@ export type DurationPrimitives = {
 export class Duration implements RhythmicDuration {
   private static readonly all: Duration[] = [];
 
-  constructor(private readonly name: string, private readonly duration: number) {
+  private constructor(private readonly name: string, private readonly duration: number) {
     Duration.all.push(this);
   }
 

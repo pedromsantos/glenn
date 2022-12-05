@@ -222,7 +222,7 @@ export type PositionPrimitives = {
 export class Position {
   private static readonly all: Position[] = [];
 
-  constructor(private name: string, private lowFret: Fret, private highFret: Fret) {
+  private constructor(private name: string, private lowFret: Fret, private highFret: Fret) {
     Position.all.push(this);
   }
 
