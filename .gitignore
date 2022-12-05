@@ -26,6 +26,8 @@ yarn-error.log*
 
 # stryker temp files
 .stryker-tmp
+
+# reports
 reports
 coverage-ts/index.html
 coverage-ts/typescript-coverage.json
