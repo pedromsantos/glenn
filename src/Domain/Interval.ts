@@ -268,28 +268,3 @@ export class Interval {
     );
   }
 }
-
-// TODO expand on this with import export magic :)
-// interface Interval {
-//   name: string;
-//   abreviature: string;
-//   distance: number;
-//   invert: () => Interval;
-// }
-
-// type Intervals = { [name: string]: Interval };
-
-// export const intervals: Intervals = {
-//   Unison: {
-//     name: 'Unisson',
-//     abreviature: 'U',
-//     distance: 0,
-//     invert: () => intervals.PerfectOctave,
-//   },
-//   PerfectOctave: {
-//     name: 'PerfectOctave',
-//     abreviature: 'U',
-//     distance: 0,
-//     invert: () => intervals.Unison,
-//   },
-// };

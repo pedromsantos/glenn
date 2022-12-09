@@ -49,7 +49,8 @@ export class Fret {
       }
     }
 
-    return TabColumn.fromFrets(frets.reverse());
+    const reversedFrets = frets.reverse();
+    return TabColumn.fromFrets(reversedFrets);
   }
 
   toString() {
@@ -394,7 +395,8 @@ export class GuitarChord implements Iterable<Fret> {
   }
 
   toTab(): TabColumn {
-    return TabColumn.fromFrets(this.chordFrets.reverse());
+    const reversedFrets = this.chordFrets.reverse();
+    return TabColumn.fromFrets(reversedFrets);
   }
 
   toString(): string {

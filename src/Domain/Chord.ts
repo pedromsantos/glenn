@@ -243,7 +243,7 @@ class BaseChord implements Chord, Iterable<Pitch> {
     const root = Pitch.From(state.root);
     const pattern = ChordPattern.From(state.pattern);
     if (root === undefined || pattern === undefined) {
-      throw 'Cannot create instance from state';
+      throw new TypeError('Cannot create instance from state');
     }
     return new BaseChord(root, pattern, Duration.From(state.duration));
   }
