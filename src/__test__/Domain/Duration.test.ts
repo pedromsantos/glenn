@@ -25,10 +25,12 @@ describe('Duration', () => {
     const timeSignature = new SimpleTimeSignature(3, Duration.Quarter);
     test('Quarter note is a beat', () => {
       expect(Duration.Quarter.toBeats(timeSignature)).toBe(1.0);
+      expect(timeSignature.toBeats()).toBe(1.0);
     });
 
     test('Eighth note is half a beat', () => {
       expect(Duration.Eighth.toBeats(timeSignature)).toBe(1.0 / 2.0);
+      expect(timeSignature.toBeats()).toBe(1.0);
     });
   });
 
@@ -36,6 +38,7 @@ describe('Duration', () => {
     const timeSignature = new CompoundTimeSignature(3, Duration.Eighth);
     test('Doted Quarter note is a beat', () => {
       expect(timeSignature.beatValue).toBe(Duration.Eighth.value * 3);
+      expect(timeSignature.toBeats()).toBe(1.0);
     });
 
     test('Beat sub-duration is an eight note', () => {
@@ -44,6 +47,7 @@ describe('Duration', () => {
 
     test('One Whole note', () => {
       expect(timeSignature.toFillMeasure(Duration.Whole)).toBe(0);
+      expect(timeSignature.toFillMeasure()).toBe(2.625);
     });
 
     test('convert to beats', () => {

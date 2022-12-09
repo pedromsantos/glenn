@@ -1,6 +1,7 @@
 import { Duration } from '../Domain/Duration';
 import { Interval } from '../Domain/Interval';
 import Pitch, { PitchPrimitives } from '../Domain/Pitch';
+import ensure from './Ensure';
 
 export type ChordPitchPrimitives = {
   pitch: PitchPrimitives;
@@ -58,8 +59,11 @@ export class ChordPitches implements Iterable<Pitch> {
   }
 
   pitchForFunction(func: ChordFunction): Pitch {
-    const chordPitch = this.pitches.find((p) => p.Function === func);
-    return chordPitch?.Pitch ?? this.first();
+    const chordPitch = ensure<ChordPitch>(
+      this.pitches.find((p): p is ChordPitch => p.Function === func)
+    );
+
+    return chordPitch.Pitch;
   }
 
   remove(func: ChordFunction): ChordPitches {
@@ -334,8 +338,6 @@ export class ChordFunction {
 
   public static functionForInterval(interval: Interval): ChordFunction {
     switch (interval) {
-      case Interval.Unison:
-        return ChordFunction.Root;
       case Interval.MajorThird:
       case Interval.MinorThird:
       case Interval.MajorSecond:
@@ -406,13 +408,13 @@ export class ChordPattern {
     return ChordPattern.all;
   }
 
-  static patternFor(intervals: Interval[]): ChordPattern | undefined {
-    return (
+  static patternFor(intervals: Interval[]): ChordPattern {
+    return ensure(
       ChordPattern.patterns.find(
         (p) =>
           intervals.length === p.pattern.length &&
           p.pattern.every((interval, index) => interval === intervals[index])
-      ) || undefined
+      )
     );
   }
 
