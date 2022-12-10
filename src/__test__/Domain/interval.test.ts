@@ -5,6 +5,23 @@ import * as fc from 'fast-check';
 import { Interval } from '../../Domain/Interval';
 
 describe('Interval', () => {
+  test('should filter unique intervals', () => {
+    expect(Interval.unique).toStrictEqual([
+      Interval.Unison,
+      Interval.MinorSecond,
+      Interval.MajorSecond,
+      Interval.MinorThird,
+      Interval.MajorThird,
+      Interval.PerfectFourth,
+      Interval.PerfectFifth,
+      Interval.MinorSixth,
+      Interval.MajorSixth,
+      Interval.MinorSeventh,
+      Interval.MajorSeventh,
+      Interval.PerfectOctave,
+    ]);
+  });
+
   describe('properties', () => {
     test('Inverting a unique interval twice results in starting interval', () => {
       fc.assert(
