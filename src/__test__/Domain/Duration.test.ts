@@ -6,6 +6,66 @@ import {
   SimpleTimeSignature,
 } from '../../Domain/Duration';
 
+describe('SimpleTimeSignature', () => {
+  test('Beat duration in miliseconds', () => {
+    const timeSignature44 = new SimpleTimeSignature(4, Duration.Quarter, 60);
+    const timeSignature34 = new SimpleTimeSignature(3, Duration.Quarter, 60);
+    const timeSignature24 = new SimpleTimeSignature(2, Duration.Quarter, 60);
+
+    expect(timeSignature44.beatDurationMiliseconds).toBe(1000);
+    expect(timeSignature34.beatDurationMiliseconds).toBe(1000);
+    expect(timeSignature24.beatDurationMiliseconds).toBe(1000);
+  });
+
+  test('Note durations in miliseconds', () => {
+    const timeSignature = new SimpleTimeSignature(4, Duration.Quarter, 60);
+
+    const wholeNoteExpectedDuration = 4000;
+
+    expect(timeSignature.milisecondsFor(Duration.Whole)).toBe(wholeNoteExpectedDuration);
+    expect(timeSignature.milisecondsFor(Duration.Half)).toBe(wholeNoteExpectedDuration / 2);
+    expect(timeSignature.milisecondsFor(Duration.Quarter)).toBe(wholeNoteExpectedDuration / 4);
+    expect(timeSignature.milisecondsFor(Duration.Eighth)).toBe(wholeNoteExpectedDuration / 8);
+    expect(timeSignature.milisecondsFor(Duration.Sixteenth)).toBe(wholeNoteExpectedDuration / 16);
+    expect(timeSignature.milisecondsFor(Duration.ThirtySecond)).toBe(
+      wholeNoteExpectedDuration / 32
+    );
+    expect(timeSignature.milisecondsFor(Duration.SixtyFourth)).toBe(wholeNoteExpectedDuration / 64);
+    expect(timeSignature.milisecondsFor(Duration.HundredTwentyEighth)).toBe(
+      wholeNoteExpectedDuration / 128
+    );
+  });
+});
+
+describe('CompoundTimeSignature', () => {
+  test('Beat duration in miliseconds', () => {
+    const timeSignature = new CompoundTimeSignature(8, Duration.Eighth, 60);
+
+    expect(timeSignature.beatDurationMiliseconds).toBe(1000);
+    expect(timeSignature.beatDurationMiliseconds).toBe(1000);
+    expect(timeSignature.beatDurationMiliseconds).toBe(1000);
+  });
+
+  test('Note durations in miliseconds', () => {
+    const timeSignature = new CompoundTimeSignature(8, Duration.Eighth, 60);
+
+    const wholeNoteExpectedDuration = 8000;
+
+    expect(timeSignature.milisecondsFor(Duration.Whole)).toBe(wholeNoteExpectedDuration);
+    expect(timeSignature.milisecondsFor(Duration.Half)).toBe(wholeNoteExpectedDuration / 2);
+    expect(timeSignature.milisecondsFor(Duration.Quarter)).toBe(wholeNoteExpectedDuration / 4);
+    expect(timeSignature.milisecondsFor(Duration.Eighth)).toBe(wholeNoteExpectedDuration / 8);
+    expect(timeSignature.milisecondsFor(Duration.Sixteenth)).toBe(wholeNoteExpectedDuration / 16);
+    expect(timeSignature.milisecondsFor(Duration.ThirtySecond)).toBe(
+      wholeNoteExpectedDuration / 32
+    );
+    expect(timeSignature.milisecondsFor(Duration.SixtyFourth)).toBe(wholeNoteExpectedDuration / 64);
+    expect(timeSignature.milisecondsFor(Duration.HundredTwentyEighth)).toBe(
+      wholeNoteExpectedDuration / 128
+    );
+  });
+});
+
 describe('Duration', () => {
   describe('converted to beats in 4/4', () => {
     const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);

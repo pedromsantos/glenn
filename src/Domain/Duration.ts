@@ -1,12 +1,22 @@
 export interface TimeSignature {
   get beatDuration(): number;
   get beatValue(): number;
+  get beatDurationMiliseconds(): number;
   toBeats(duration: Duration): number;
   toFillMeasure(duration: Duration): number;
+  milisecondsFor(duration: Duration): number;
 }
 
 export class SimpleTimeSignature implements TimeSignature {
-  constructor(private readonly beats: number, private readonly duration: Duration) {}
+  private bpm: BeatsPerMinute = new BeatsPerMinute(60, Duration.Quarter);
+
+  constructor(private readonly beats: number, private readonly duration: Duration, bpm = 60) {
+    this.bpm = new BeatsPerMinute(bpm, duration);
+  }
+
+  get beatDurationMiliseconds(): number {
+    return this.bpm.miliSeconds();
+  }
 
   get beatDuration(): number {
     return this.duration.value / this.beats;
@@ -23,13 +33,19 @@ export class SimpleTimeSignature implements TimeSignature {
   toFillMeasure(duration: Duration = this.duration): number {
     return (this.beatValue / duration.value) * this.beats;
   }
+
+  milisecondsFor(duration: Duration = this.duration): number {
+    return this.bpm.miliSecondsFor(duration);
+  }
 }
 
 export class CompoundTimeSignature implements TimeSignature {
   private beats = 0;
+  private bpm: BeatsPerMinute = new BeatsPerMinute(60, Duration.Quarter);
 
-  constructor(pulses: number, private readonly duration: Duration) {
+  constructor(pulses: number, private readonly duration: Duration, bpm = 60) {
     this.beats = pulses / 3;
+    this.bpm = new BeatsPerMinute(bpm, this.duration);
   }
 
   get beatDuration(): number {
@@ -40,12 +56,20 @@ export class CompoundTimeSignature implements TimeSignature {
     return this.duration.value * 3;
   }
 
+  get beatDurationMiliseconds(): number {
+    return this.bpm.miliSeconds();
+  }
+
   toBeats(duration: Duration = this.duration): number {
     return duration.value / this.beatDuration / this.beats;
   }
 
   toFillMeasure(duration: Duration = this.duration): number {
     return (this.beatValue / duration.value) * this.beats - this.beatValue;
+  }
+
+  milisecondsFor(duration: Duration = this.duration): number {
+    return this.bpm.miliSecondsFor(duration);
   }
 }
 
