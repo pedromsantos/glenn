@@ -40,6 +40,10 @@ export class SimpleTimeSignature implements TimeSignature {
     return (this.bpm.beatsPerMinute * Duration.tickPerQuarterNote) / 60;
   }
 
+  get ticksPerMeasure(): number {
+    return this.beatDurationTicks * this.beats;
+  }
+
   toFillMeasure(duration: Duration = this.duration): number {
     return (this.beatDurationTicks / duration.tick) * this.beats;
   }
@@ -78,12 +82,16 @@ export class CompoundTimeSignature implements TimeSignature {
     return this.beatDurationMiliseconds * this.beats;
   }
 
+  get ticksPerMeasure(): number {
+    return this.beatDurationTicks * this.beats;
+  }
+
   get ticksPerSecond(): number {
     return (this.bpm.beatsPerMinute * Duration.tickPerQuarterNote) / 60;
   }
 
   toFillMeasure(duration: Duration = this.duration): number {
-    return (this.beatDurationTicks / duration.tick) * this.beats;
+    return (this.beatDurationTicks / duration.tick) * this.beats * 3;
   }
 
   milisecondsFor(duration: Duration = this.duration): number {
