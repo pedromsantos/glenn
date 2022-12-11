@@ -1,4 +1,5 @@
 import {
+  BeatsPerMinute,
   CompoundTimeSignature,
   Duration,
   Measure,
@@ -125,6 +126,97 @@ describe('Duration', () => {
       measure.add(Duration.Quarter);
 
       expect(Duration.Quarter.toFillMeasure(timeSignature, measure)).toBe(3);
+    });
+  });
+});
+
+describe('BeatsPerMinute', () => {
+  describe('120BPM 1/4 note', () => {
+    const bpm = new BeatsPerMinute(120);
+
+    test('time in seconds for a beat', () => {
+      expect(bpm.seconds()).toBe(0.5);
+    });
+
+    test('time in miliseconds for a beat', () => {
+      expect(bpm.miliSeconds()).toBe(500);
+    });
+
+    test('time in miliseconds for a measure of 4 beats', () => {
+      expect(bpm.miliSeconds(4)).toBe(2000);
+    });
+
+    test('time for 1/1 note', () => {
+      expect(bpm.secondsFor(Duration.Whole)).toBe(2);
+      expect(bpm.miliSecondsFor(Duration.Whole)).toBe(2000);
+    });
+
+    // eslint-disable-next-line sonarjs/no-duplicate-string
+    test('time for 1/2 note', () => {
+      expect(bpm.secondsFor(Duration.Half)).toBe(1);
+      expect(bpm.miliSecondsFor(Duration.Half)).toBe(1000);
+    });
+
+    // eslint-disable-next-line sonarjs/no-duplicate-string
+    test('time in miliseconds for 1/4 note', () => {
+      expect(bpm.miliSecondsFor(Duration.Quarter)).toBe(500);
+    });
+
+    // eslint-disable-next-line sonarjs/no-duplicate-string
+    test('time in miliseconds for 1/8 note', () => {
+      expect(bpm.miliSecondsFor(Duration.Eighth)).toBe(250);
+    });
+  });
+
+  describe('60BPM 1/4 note', () => {
+    const bpm = new BeatsPerMinute(60);
+
+    test('time for a 1/1 note', () => {
+      expect(bpm.secondsFor(Duration.Whole)).toBe(4);
+      expect(bpm.miliSecondsFor(Duration.Whole)).toBe(4000);
+    });
+
+    test('time for 1/2 note', () => {
+      expect(bpm.secondsFor(Duration.Half)).toBe(2);
+      expect(bpm.miliSecondsFor(Duration.Half)).toBe(2000);
+    });
+
+    test('time in miliseconds for 1/4 note', () => {
+      expect(bpm.miliSecondsFor(Duration.Quarter)).toBe(1000);
+    });
+
+    test('time in miliseconds for 1/8 note', () => {
+      expect(bpm.miliSecondsFor(Duration.Eighth)).toBe(500);
+    });
+
+    test('time in miliseconds for 1/16 note', () => {
+      expect(bpm.miliSecondsFor(Duration.Sixteenth)).toBe(250);
+    });
+  });
+
+  describe('60BPM 1/8 note', () => {
+    const bpm = new BeatsPerMinute(60, Duration.Eighth);
+
+    test('time for 1/1 note', () => {
+      expect(bpm.secondsFor(Duration.Whole)).toBe(8);
+      expect(bpm.miliSecondsFor(Duration.Whole)).toBe(8000);
+    });
+
+    test('time for 1/2 note', () => {
+      expect(bpm.secondsFor(Duration.Half)).toBe(4);
+      expect(bpm.miliSecondsFor(Duration.Half)).toBe(4000);
+    });
+
+    test('time in miliseconds for 1/4 note', () => {
+      expect(bpm.miliSecondsFor(Duration.Quarter)).toBe(2000);
+    });
+
+    test('time in miliseconds for 1/8 note', () => {
+      expect(bpm.miliSecondsFor(Duration.Eighth)).toBe(1000);
+    });
+
+    test('time in miliseconds for 1/16 note', () => {
+      expect(bpm.miliSecondsFor(Duration.Sixteenth)).toBe(500);
     });
   });
 });
