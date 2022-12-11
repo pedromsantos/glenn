@@ -17,6 +17,20 @@ describe('SimpleTimeSignature', () => {
     expect(timeSignature24.beatDurationMiliseconds).toBe(1000);
   });
 
+  test('Beat duration in ticks', () => {
+    const timeSignature44 = new SimpleTimeSignature(4, Duration.Quarter, 60);
+    const timeSignature34 = new SimpleTimeSignature(3, Duration.Quarter, 60);
+    const timeSignature24 = new SimpleTimeSignature(2, Duration.Quarter, 60);
+
+    expect(timeSignature44.ticksPerSecond).toBe(480);
+    expect(timeSignature34.ticksPerSecond).toBe(480);
+    expect(timeSignature24.ticksPerSecond).toBe(480);
+
+    expect(timeSignature44.beatDurationTicks).toBe(Duration.Quarter.tick);
+    expect(timeSignature34.beatDurationTicks).toBe(Duration.Quarter.tick);
+    expect(timeSignature24.beatDurationTicks).toBe(Duration.Quarter.tick);
+  });
+
   test('Note durations in miliseconds', () => {
     const timeSignature = new SimpleTimeSignature(4, Duration.Quarter, 60);
 
@@ -31,23 +45,38 @@ describe('SimpleTimeSignature', () => {
       wholeNoteExpectedDuration / 32
     );
     expect(timeSignature.milisecondsFor(Duration.SixtyFourth)).toBe(wholeNoteExpectedDuration / 64);
-    expect(timeSignature.milisecondsFor(Duration.HundredTwentyEighth)).toBe(
-      wholeNoteExpectedDuration / 128
-    );
+  });
+
+  test('Measure durations in miliseconds', () => {
+    const timeSignature = new SimpleTimeSignature(4, Duration.Quarter, 60);
+
+    const expectedDuration = 4000;
+
+    expect(timeSignature.milisecondsPerMeasure).toBe(expectedDuration);
   });
 });
 
 describe('CompoundTimeSignature', () => {
   test('Beat duration in miliseconds', () => {
-    const timeSignature = new CompoundTimeSignature(8, Duration.Eighth, 60);
+    const timeSignature = new CompoundTimeSignature(6, Duration.Eighth, 60);
 
     expect(timeSignature.beatDurationMiliseconds).toBe(1000);
     expect(timeSignature.beatDurationMiliseconds).toBe(1000);
     expect(timeSignature.beatDurationMiliseconds).toBe(1000);
   });
 
+  test('Beat duration in ticks', () => {
+    const timeSignature = new CompoundTimeSignature(6, Duration.Eighth, 60);
+
+    expect(timeSignature.ticksPerSecond).toBe(480);
+
+    expect(timeSignature.beatDurationTicks).toBe(Duration.Eighth.tick);
+    expect(timeSignature.beatDurationTicks).toBe(Duration.Eighth.tick);
+    expect(timeSignature.beatDurationTicks).toBe(Duration.Eighth.tick);
+  });
+
   test('Note durations in miliseconds', () => {
-    const timeSignature = new CompoundTimeSignature(8, Duration.Eighth, 60);
+    const timeSignature = new CompoundTimeSignature(6, Duration.Eighth, 60);
 
     const wholeNoteExpectedDuration = 8000;
 
@@ -60,79 +89,63 @@ describe('CompoundTimeSignature', () => {
       wholeNoteExpectedDuration / 32
     );
     expect(timeSignature.milisecondsFor(Duration.SixtyFourth)).toBe(wholeNoteExpectedDuration / 64);
-    expect(timeSignature.milisecondsFor(Duration.HundredTwentyEighth)).toBe(
-      wholeNoteExpectedDuration / 128
-    );
+  });
+
+  test('Measure durations in miliseconds', () => {
+    const timeSignature = new SimpleTimeSignature(6, Duration.Eighth, 60);
+
+    const expectedDuration = 6000;
+
+    expect(timeSignature.milisecondsPerMeasure).toBe(expectedDuration);
   });
 });
 
 describe('Duration', () => {
-  describe('converted to beats in 4/4', () => {
-    const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
-    test('Whole note is four beats', () => {
-      expect(Duration.Whole.toBeats(timeSignature)).toBe(4.0);
-    });
-
-    test('Quarter note is a beat', () => {
-      expect(Duration.Quarter.toBeats(timeSignature)).toBe(1.0);
-    });
-
-    test('Eighth note in is a half a beat', () => {
-      expect(Duration.Eighth.toBeats(timeSignature)).toBe(1.0 / 2.0);
-    });
-  });
-
-  describe('converted to beats in 3/4', () => {
-    const timeSignature = new SimpleTimeSignature(3, Duration.Quarter);
-    test('Quarter note is a beat', () => {
-      expect(Duration.Quarter.toBeats(timeSignature)).toBe(1.0);
-      expect(timeSignature.toBeats()).toBe(1.0);
-    });
-
-    test('Eighth note is half a beat', () => {
-      expect(Duration.Eighth.toBeats(timeSignature)).toBe(1.0 / 2.0);
-      expect(timeSignature.toBeats()).toBe(1.0);
+  describe('ticks', () => {
+    const cases: Array<[Duration, number]> = [
+      [Duration.Whole, 1920],
+      [Duration.DoubleDottedHalf, 1680],
+      [Duration.DottedHalf, 1440],
+      [Duration.TripletWhole, 1280],
+      [Duration.Half, 960],
+      [Duration.DoubleDottedQuarter, 840],
+      [Duration.DottedQuarter, 720],
+      [Duration.TripletHalf, 640],
+      [Duration.Quarter, 480],
+      [Duration.DoubleDottedEighth, 420],
+      [Duration.DottedEighth, 360],
+      [Duration.TripletQuarterNote, 320],
+      [Duration.Eighth, 240],
+      [Duration.DoubleDottedSixteenth, 210],
+      [Duration.DottedSixteenth, 180],
+      [Duration.TripletEighth, 160],
+      [Duration.Sixteenth, 120],
+      [Duration.DoubleDottedThirtySecond, 105],
+      [Duration.DottedThirtySecond, 90],
+      [Duration.TripletSixteenth, 80],
+      [Duration.ThirtySecond, 60],
+      [Duration.DottedSixtyFourth, 45],
+      [Duration.TripletThirtySecond, 40],
+      [Duration.SixtyFourth, 30],
+    ];
+    test.each(cases)('Measure', (duration: Duration, ticks: number) => {
+      expect(duration.tick).toBe(ticks);
     });
   });
 
   describe('converted to beats in 6/8', () => {
-    const timeSignature = new CompoundTimeSignature(3, Duration.Eighth);
+    const timeSignature = new CompoundTimeSignature(6, Duration.Eighth);
     test('Doted Quarter note is a beat', () => {
       expect(timeSignature.beatValue).toBe(Duration.Eighth.value * 3);
-      expect(timeSignature.toBeats()).toBe(1.0);
     });
 
     test('Beat sub-duration is an eight note', () => {
-      expect(timeSignature.beatDuration).toBe(Duration.Eighth.value);
+      expect(timeSignature.beatDuration).toBe(Duration.Eighth.value * 3);
     });
 
     test('One Whole note', () => {
-      expect(timeSignature.toFillMeasure(Duration.Whole)).toBe(0);
-      expect(timeSignature.toFillMeasure()).toBe(2.625);
-    });
-
-    test('convert to beats', () => {
-      expect(Duration.Eighth.toBeats(timeSignature)).toBe(1.0);
-    });
-  });
-
-  describe('Number of notes to fill measure in 4/4', () => {
-    const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
-
-    test('One Whole note', () => {
-      expect(Duration.Whole.toFillMeasure(timeSignature)).toBe(1);
-    });
-
-    test('Two Half notes', () => {
-      expect(Duration.Half.toFillMeasure(timeSignature)).toBe(2);
-    });
-
-    test('Four Quarter notes', () => {
-      expect(Duration.Quarter.toFillMeasure(timeSignature)).toBe(4);
-    });
-
-    test('Eighth Eighth notes', () => {
-      expect(Duration.Eighth.toFillMeasure(timeSignature)).toBe(8);
+      expect(timeSignature.toFillMeasure(Duration.Whole)).toBe(0.25);
+      expect(timeSignature.toFillMeasure()).toBe(2);
     });
   });
 
@@ -142,50 +155,6 @@ describe('Duration', () => {
     describe('when measure contains a whole note its full', () => {
       const measure = new Measure(timeSignature);
       measure.add(Duration.Whole);
-
-      test('cannot fit a whole note', () => {
-        expect(Duration.Whole.toFillMeasure(timeSignature, measure)).toBe(0);
-      });
-
-      test('cannot fit a half note', () => {
-        expect(Duration.Whole.toFillMeasure(timeSignature, measure)).toBe(0);
-      });
-
-      test('cannot fit a quarter note', () => {
-        expect(Duration.Quarter.toFillMeasure(timeSignature, measure)).toBe(0);
-      });
-
-      test('cannot fit a eighth note', () => {
-        expect(Duration.Eighth.toFillMeasure(timeSignature, measure)).toBe(0);
-      });
-    });
-
-    test('when measure contains quarter note a whole note does not fit', () => {
-      const measure = new Measure(timeSignature);
-      measure.add(Duration.Quarter);
-
-      expect(Duration.Whole.toFillMeasure(timeSignature, measure)).toBe(0);
-    });
-
-    test('when measure contains a half note it has space for two quarter notes', () => {
-      const measure = new Measure(timeSignature);
-      measure.add(Duration.Half);
-
-      expect(Duration.Quarter.toFillMeasure(timeSignature, measure)).toBe(2);
-    });
-
-    test('when measure contains a half note it has space for four eighth notes', () => {
-      const measure = new Measure(timeSignature);
-      measure.add(Duration.Half);
-
-      expect(Duration.Eighth.toFillMeasure(timeSignature, measure)).toBe(4);
-    });
-
-    test('when measure contains a quarter note it has space for three quarter notes', () => {
-      const measure = new Measure(timeSignature);
-      measure.add(Duration.Quarter);
-
-      expect(Duration.Quarter.toFillMeasure(timeSignature, measure)).toBe(3);
     });
   });
 });
