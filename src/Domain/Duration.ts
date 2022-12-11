@@ -1,74 +1,19 @@
-export interface TimeSignature {
-  get beatDuration(): number;
-  get beatValue(): number;
-  get beatDurationMiliseconds(): number;
-  get beatDurationTicks(): number;
-  get milisecondsPerMeasure(): number;
-  get ticksPerSecond(): number;
-  toFillMeasure(duration: Duration): number;
-  milisecondsFor(duration: Duration): number;
-}
+abstract class TimeSignature {
+  protected bpm: BeatsPerMinute = new BeatsPerMinute(60, Duration.Quarter);
 
-export class SimpleTimeSignature implements TimeSignature {
-  private bpm: BeatsPerMinute = new BeatsPerMinute(60, Duration.Quarter);
-
-  constructor(private readonly beats: number, private readonly duration: Duration, bpm = 60) {
+  protected constructor(
+    protected readonly beats: number,
+    protected readonly duration: Duration,
+    bpm = 60
+  ) {
     this.bpm = new BeatsPerMinute(bpm, duration);
-  }
-
-  get beatDurationMiliseconds(): number {
-    return this.bpm.miliSeconds();
-  }
-
-  get beatDurationTicks(): number {
-    return this.duration.tick;
-  }
-
-  get beatDuration(): number {
-    return this.duration.value / this.beats;
-  }
-
-  get beatValue(): number {
-    return this.duration.value;
-  }
-
-  get milisecondsPerMeasure(): number {
-    return this.beatDurationMiliseconds * this.beats;
-  }
-
-  get ticksPerSecond(): number {
-    return (this.bpm.beatsPerMinute * Duration.tickPerQuarterNote) / 60;
-  }
-
-  get ticksPerMeasure(): number {
-    return this.beatDurationTicks * this.beats;
-  }
-
-  toFillMeasure(duration: Duration = this.duration): number {
-    return (this.beatDurationTicks / duration.tick) * this.beats;
-  }
-
-  milisecondsFor(duration: Duration = this.duration): number {
-    return this.bpm.miliSecondsFor(duration);
-  }
-}
-
-export class CompoundTimeSignature implements TimeSignature {
-  private beats = 0;
-  private bpm: BeatsPerMinute = new BeatsPerMinute(60, Duration.Quarter);
-
-  constructor(pulses: number, private readonly duration: Duration, bpm = 60) {
-    this.beats = pulses / 3;
-    this.bpm = new BeatsPerMinute(bpm, this.duration);
   }
 
   get beatDuration(): number {
     return this.beatValue;
   }
 
-  get beatValue(): number {
-    return this.duration.value * 3;
-  }
+  abstract get beatValue(): number;
 
   get beatDurationMiliseconds(): number {
     return this.bpm.miliSeconds();
@@ -90,12 +35,38 @@ export class CompoundTimeSignature implements TimeSignature {
     return (this.bpm.beatsPerMinute * Duration.tickPerQuarterNote) / 60;
   }
 
-  toFillMeasure(duration: Duration = this.duration): number {
-    return (this.beatDurationTicks / duration.tick) * this.beats * 3;
-  }
+  abstract toFillMeasure(duration: Duration): number;
 
   milisecondsFor(duration: Duration = this.duration): number {
     return this.bpm.miliSecondsFor(duration);
+  }
+}
+
+export class SimpleTimeSignature extends TimeSignature {
+  constructor(beats: number, duration: Duration, bpm = 60) {
+    super(beats, duration, bpm);
+  }
+
+  override get beatValue(): number {
+    return this.duration.value;
+  }
+
+  override toFillMeasure(duration: Duration = this.duration): number {
+    return (this.beatDurationTicks / duration.tick) * this.beats;
+  }
+}
+
+export class CompoundTimeSignature extends TimeSignature {
+  constructor(pulses: number, duration: Duration, bpm = 60) {
+    super(pulses / 3, duration, bpm);
+  }
+
+  override get beatValue(): number {
+    return this.duration.value * 3;
+  }
+
+  toFillMeasure(duration: Duration = this.duration): number {
+    return (this.beatDurationTicks / duration.tick) * this.beats * 3;
   }
 }
 

@@ -250,25 +250,25 @@ describe('BeatsPerMinute', () => {
   describe('60BPM 1/4 note', () => {
     const bpm = new BeatsPerMinute(60);
 
-    test('time for a 1/1 note', () => {
+    test('time for a whole note', () => {
       expect(bpm.secondsFor(Duration.Whole)).toBe(4);
       expect(bpm.miliSecondsFor(Duration.Whole)).toBe(4000);
     });
 
-    test('time for 1/2 note', () => {
+    test('time for half note', () => {
       expect(bpm.secondsFor(Duration.Half)).toBe(2);
       expect(bpm.miliSecondsFor(Duration.Half)).toBe(2000);
     });
 
-    test('time in miliseconds for 1/4 note', () => {
+    test('time in miliseconds for quarter note', () => {
       expect(bpm.miliSecondsFor(Duration.Quarter)).toBe(1000);
     });
 
-    test('time in miliseconds for 1/8 note', () => {
+    test('time in miliseconds for eighth note', () => {
       expect(bpm.miliSecondsFor(Duration.Eighth)).toBe(500);
     });
 
-    test('time in miliseconds for 1/16 note', () => {
+    test('time in miliseconds for sixteenth note', () => {
       expect(bpm.miliSecondsFor(Duration.Sixteenth)).toBe(250);
     });
   });
