@@ -97,7 +97,7 @@ export class Duration {
   public static readonly Double: Duration = new Duration(
     'Double',
     2.0 / 1.0,
-    this.ticksPerQuarterNote * 4
+    this.ticksPerQuarterNote * 8
   );
   public static readonly Whole: Duration = new Duration('Whole', 1.0, this.ticksPerQuarterNote * 4);
   public static readonly Half: Duration = new Duration(
@@ -133,17 +133,17 @@ export class Duration {
   public static readonly DoubleDottedHalf: Duration = new Duration(
     'Double Dotted Half',
     Duration.Half.duration * this.dotMultiplier,
-    this.ticksPerQuarterNote * 2 * this.doubleDotMultiplier
+    Duration.Half.tick * this.doubleDotMultiplier
   );
   public static readonly DottedHalf: Duration = new Duration(
     'Dotted Half',
     Duration.Half.duration * this.dotMultiplier,
-    this.ticksPerQuarterNote * 2 * this.dotMultiplier
+    Duration.Half.tick * this.dotMultiplier
   );
   public static readonly TripletWhole: Duration = new Duration(
     'Triplet Whole',
     Duration.Double.duration / 3,
-    (this.ticksPerQuarterNote * 8) / 3
+    Duration.Double.tick / 3
   );
   public static readonly DoubleDottedQuarter: Duration = new Duration(
     'Double Dotted Quarter',
@@ -158,32 +158,32 @@ export class Duration {
   public static readonly TripletHalf: Duration = new Duration(
     'Triplet Half',
     Duration.Whole.duration * 3,
-    (this.ticksPerQuarterNote * 4) / 3
+    Duration.Whole.tick / 3
   );
   public static readonly DoubleDottedEighth: Duration = new Duration(
     'Double Dotted Quarter',
     Duration.Eighth.duration * this.dotMultiplier,
-    (this.ticksPerQuarterNote / 2) * this.doubleDotMultiplier
+    Duration.Eighth.tick * this.doubleDotMultiplier
   );
   public static readonly DottedEighth: Duration = new Duration(
     'Dotted Quarter',
     Duration.Eighth.duration * this.dotMultiplier,
-    (this.ticksPerQuarterNote / 2) * this.dotMultiplier
+    Duration.Eighth.tick * this.dotMultiplier
   );
   public static readonly TripletQuarterNote: Duration = new Duration(
     'Triplet Quarter',
     Duration.Half.duration / 3,
-    (this.ticksPerQuarterNote * 2) / 3
+    Duration.Half.tick / 3
   );
   public static readonly DoubleDottedSixteenth: Duration = new Duration(
     'Double Dotted Sixteenth',
     Duration.Sixteenth.duration * this.dotMultiplier,
-    (this.ticksPerQuarterNote / 4) * this.doubleDotMultiplier
+    Duration.Sixteenth.tick * this.doubleDotMultiplier
   );
   public static readonly DottedSixteenth: Duration = new Duration(
     'Dotted Sixteenth',
     Duration.Sixteenth.duration * this.dotMultiplier,
-    (this.ticksPerQuarterNote / 4) * this.dotMultiplier
+    Duration.Sixteenth.tick * this.dotMultiplier
   );
   public static readonly TripletEighth: Duration = new Duration(
     'Triplet Eighth',
@@ -193,27 +193,27 @@ export class Duration {
   public static readonly DoubleDottedThirtySecond: Duration = new Duration(
     'Double Dotted ThirtySecond',
     Duration.ThirtySecond.duration * this.dotMultiplier,
-    (this.ticksPerQuarterNote / 8) * this.doubleDotMultiplier
+    Duration.ThirtySecond.tick * this.doubleDotMultiplier
   );
   public static readonly DottedThirtySecond: Duration = new Duration(
     'Dotted ThirtySecond',
     Duration.ThirtySecond.duration * this.dotMultiplier,
-    (this.ticksPerQuarterNote / 8) * this.dotMultiplier
+    Duration.ThirtySecond.tick * this.dotMultiplier
   );
   public static readonly TripletSixteenth: Duration = new Duration(
     'Triplet Sixteenth',
     Duration.Eighth.duration / 3,
-    this.ticksPerQuarterNote / 2 / 3
+    this.Eighth.tick / 3
   );
   public static readonly DottedSixtyFourth: Duration = new Duration(
     'Dotted SixtyFourth',
     Duration.SixtyFourth.duration * this.dotMultiplier,
-    (this.ticksPerQuarterNote / 16) * this.dotMultiplier
+    Duration.SixtyFourth.tick * this.dotMultiplier
   );
   public static readonly TripletThirtySecond: Duration = new Duration(
     'Triplet ThirtySecond',
     Duration.Sixteenth.duration / 3,
-    this.ticksPerQuarterNote / 4 / 3
+    Duration.Sixteenth.tick / 3
   );
 
   get value() {
