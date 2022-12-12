@@ -74,12 +74,6 @@ export class CompoundTimeSignature extends TimeSignature {
   }
 }
 
-export interface RhythmicDuration {
-  toBeats(timeSignature: SimpleTimeSignature): number;
-  toFillMeasure(timeSignature: SimpleTimeSignature, measure?: Measure): number;
-  get value(): number;
-}
-
 export type DurationPrimitives = {
   name: string;
   duration: number;
