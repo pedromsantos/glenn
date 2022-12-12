@@ -69,7 +69,7 @@ export class CompoundTimeSignature extends TimeSignature {
     return this.duration.value * 3;
   }
 
-  toFillMeasure(duration: Duration = this.duration): number {
+  override toFillMeasure(duration: Duration = this.duration): number {
     return (this.beatDurationTicks / duration.tick) * this.beats * 3;
   }
 }
