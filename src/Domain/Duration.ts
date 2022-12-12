@@ -1,5 +1,5 @@
 abstract class TimeSignature {
-  protected bpm: BeatsPerMinute = new BeatsPerMinute(60, Duration.Quarter);
+  private bpm: BeatsPerMinute = new BeatsPerMinute(60, Duration.Quarter);
 
   protected constructor(
     protected readonly beats: number,

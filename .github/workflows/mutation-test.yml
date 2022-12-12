@@ -1,4 +1,6 @@
 name: "Mutation-Test"
+env:
+  STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
 
 on:
   schedule:
@@ -30,5 +32,4 @@ jobs:
 
       - name: Mutation
         run: yarn mutants
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+
