@@ -2,7 +2,7 @@
   "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
   "coverageAnalysis": "perTest",
   "mutate": ["src/Domain/**/*.ts?(x)"],
-  "reporters": ["dashboard", "html"],
+  "reporters": ["progress", "dots", "dashboard", "html"],
   "testRunner": "jest",
   "checkers": ["typescript"],
   "tsconfigFile": "tsconfig.json",
@@ -23,5 +23,9 @@
     "allowEmojis": false,
     "logTests": true,
     "maxTestsToLog": 3
+  },
+  "mutator": {
+    "plugins": null,
+    "excludedMutations": ["StringLiteral"]
   }
 }

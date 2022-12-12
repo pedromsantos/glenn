@@ -79,7 +79,6 @@ export type DurationPrimitives = {
   duration: number;
 };
 
-// Stryker disable StringLiteral
 export class Duration {
   private static readonly all: Duration[] = [];
   private static readonly ticksPerQuarterNote = 480;

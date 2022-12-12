@@ -7,7 +7,6 @@ export type OctavePrimitives = {
   midi: number;
 };
 
-// Stryker disable StringLiteral
 export class Octave {
   private static readonly all: Octave[] = [];
 

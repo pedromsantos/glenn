@@ -292,12 +292,10 @@ export class ScalePattern {
     return this.name;
   }
 
-  // Stryker disable all
   public static get ScalePatterns(): ScalePattern[] {
     return ScalePattern.all;
   }
 
-  // Stryker disable all
   public static readonly MajorModePatterns = [
     ScalePattern.Aolian,
     ScalePattern.Dorian,

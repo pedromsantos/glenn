@@ -374,7 +374,6 @@ export class ChordFunction {
   }
 }
 
-// Stryker disable StringLiteral
 export class ChordPattern {
   private static readonly all: ChordPattern[] = [];
 

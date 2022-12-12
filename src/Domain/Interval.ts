@@ -23,7 +23,6 @@ export class IntervalQuality {
   public static readonly Perfect: IntervalQuality = new IntervalQuality('Perfect');
 }
 
-// Stryker disable StringLiteral
 export class Interval {
   private static readonly all: Interval[] = [];
 
