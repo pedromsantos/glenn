@@ -4,7 +4,7 @@ describe('Ensure should', () => {
   test('error when value is undefined', () => {
     const data = [2];
 
-    expect(() => ensure(data.find((value) => value == 1))).toThrowError(
+    expect(() => ensure(data.find((value) => value == 1))).toThrow(
       'This value was promised to be there'
     );
   });
