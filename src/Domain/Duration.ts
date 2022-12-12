@@ -132,7 +132,7 @@ export class Duration {
   );
   public static readonly DoubleDottedHalf: Duration = new Duration(
     'Double Dotted Half',
-    Duration.Half.duration * 1.75,
+    Duration.Half.duration * this.dotMultiplier,
     this.ticksPerQuarterNote * 2 * this.doubleDotMultiplier
   );
   public static readonly DottedHalf: Duration = new Duration(
@@ -147,7 +147,7 @@ export class Duration {
   );
   public static readonly DoubleDottedQuarter: Duration = new Duration(
     'Double Dotted Quarter',
-    Duration.Quarter.duration * 1.75,
+    Duration.Quarter.duration * this.dotMultiplier,
     this.ticksPerQuarterNote * this.doubleDotMultiplier
   );
   public static readonly DottedQuarter: Duration = new Duration(
@@ -162,7 +162,7 @@ export class Duration {
   );
   public static readonly DoubleDottedEighth: Duration = new Duration(
     'Double Dotted Quarter',
-    Duration.Eighth.duration * 1.75,
+    Duration.Eighth.duration * this.dotMultiplier,
     (this.ticksPerQuarterNote / 2) * this.doubleDotMultiplier
   );
   public static readonly DottedEighth: Duration = new Duration(
@@ -177,7 +177,7 @@ export class Duration {
   );
   public static readonly DoubleDottedSixteenth: Duration = new Duration(
     'Double Dotted Sixteenth',
-    Duration.Sixteenth.duration * 1.75,
+    Duration.Sixteenth.duration * this.dotMultiplier,
     (this.ticksPerQuarterNote / 4) * this.doubleDotMultiplier
   );
   public static readonly DottedSixteenth: Duration = new Duration(
@@ -192,7 +192,7 @@ export class Duration {
   );
   public static readonly DoubleDottedThirtySecond: Duration = new Duration(
     'Double Dotted ThirtySecond',
-    Duration.ThirtySecond.duration * 1.75,
+    Duration.ThirtySecond.duration * this.dotMultiplier,
     (this.ticksPerQuarterNote / 8) * this.doubleDotMultiplier
   );
   public static readonly DottedThirtySecond: Duration = new Duration(
