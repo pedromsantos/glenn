@@ -87,6 +87,10 @@ describe('SimpleTimeSignature', () => {
 });
 
 describe('CompoundTimeSignature', () => {
+  test('Pulses must be divisible by 3', () => {
+    expect(() => new CompoundTimeSignature(7, Duration.Eighth, 60)).toThrow();
+  });
+
   test('Beat duration in miliseconds', () => {
     const timeSignature = new CompoundTimeSignature(6, Duration.Eighth, 60);
 
