@@ -20,7 +20,7 @@
   },
   "clearTextReporter": {
     "allowColor": true,
-    "allowEmojis": false,
+    "allowEmojis": true,
     "logTests": true,
     "maxTestsToLog": 3
   },
