@@ -2,6 +2,7 @@ import {
   BeatsPerMinute,
   CompoundTimeSignature,
   Duration,
+  FullMeasure,
   Measure,
   SimpleTimeSignature,
 } from '../../Domain/Duration';
@@ -68,6 +69,10 @@ describe('SimpleTimeSignature', () => {
       expect(timeSignature.toFillMeasure(Duration.Whole)).toBe(1);
     });
 
+    test('Half notes', () => {
+      expect(timeSignature.toFillMeasure(Duration.Half)).toBe(2);
+    });
+
     test('Quarter notes', () => {
       expect(timeSignature.toFillMeasure(Duration.Quarter)).toBe(4);
     });
@@ -82,6 +87,10 @@ describe('SimpleTimeSignature', () => {
 
     test('ThirtySecond notes', () => {
       expect(timeSignature.toFillMeasure(Duration.ThirtySecond)).toBe(32);
+    });
+
+    test('SixtyFourth notes', () => {
+      expect(timeSignature.toFillMeasure(Duration.SixtyFourth)).toBe(64);
     });
   });
 });
@@ -175,6 +184,10 @@ describe('CompoundTimeSignature', () => {
 
     test('ThirtySecond notes', () => {
       expect(timeSignature.toFillMeasure(Duration.ThirtySecond)).toBe(24);
+    });
+
+    test('SixtyFourth notes', () => {
+      expect(timeSignature.toFillMeasure(Duration.SixtyFourth)).toBe(48);
     });
   });
 });
@@ -304,11 +317,66 @@ describe('BeatsPerMinute', () => {
   });
 });
 
-describe('Number of notes remaining to fill a measure in 4/4', () => {
+describe('Measure in 4/4', () => {
   const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
 
-  describe('when measure contains a whole note its full', () => {
+  test('cannot fit double', () => {
     const measure = new Measure(timeSignature);
-    measure.add(Duration.Whole);
+
+    expect(() => measure.add(Duration.Double)).toThrow(
+      `cannot fit -${Duration.Double.Name} note in measure`
+    );
+  });
+
+  test('whole note fills it', () => {
+    const measure = new Measure(timeSignature);
+
+    expect(measure.add(Duration.Whole)).toBeInstanceOf(FullMeasure);
+  });
+
+  test('2 half notes notes fill it', () => {
+    const measure = new Measure(timeSignature);
+
+    expect(measure.add(Duration.Half).add(Duration.Half).add(Duration.SixtyFourth)).toBeInstanceOf(
+      FullMeasure
+    );
+  });
+
+  test('4 quarter notes fill it', () => {
+    const measure = new Measure(timeSignature);
+
+    expect(
+      measure
+        .add(Duration.Quarter)
+        .add(Duration.Quarter)
+        .add(Duration.Quarter)
+        .add(Duration.Quarter)
+        .add(Duration.SixtyFourth)
+    ).toBeInstanceOf(FullMeasure);
+  });
+
+  test('8 eighth notes fill it', () => {
+    const measure = new Measure(timeSignature);
+
+    expect(
+      measure
+        .add(Duration.Eighth)
+        .add(Duration.Eighth)
+        .add(Duration.Eighth)
+        .add(Duration.Eighth)
+        .add(Duration.Eighth)
+        .add(Duration.Eighth)
+        .add(Duration.Eighth)
+        .add(Duration.Eighth)
+        .add(Duration.SixtyFourth)
+    ).toBeInstanceOf(FullMeasure);
+  });
+
+  test('cannot add half note to 3 quarter notes', () => {
+    const measure = new Measure(timeSignature);
+
+    expect(() =>
+      measure.add(Duration.Quarter).add(Duration.Quarter).add(Duration.Quarter).add(Duration.Half)
+    ).toThrow(`cannot fit -${Duration.Half.Name} note in measure`);
   });
 });
