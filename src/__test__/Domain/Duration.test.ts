@@ -293,6 +293,11 @@ describe('BeatsPerMinute', () => {
   describe('60BPM 1/8 note', () => {
     const bpm = new BeatsPerMinute(60, Duration.Eighth);
 
+    test('bpm beat to be', () => {
+      expect(bpm.minutes()).toBe(1 / 60);
+      expect(bpm.seconds()).toBe(1);
+    });
+
     test('time for 1/1 note', () => {
       expect(bpm.secondsFor(Duration.Whole)).toBe(8);
       expect(bpm.miliSecondsFor(Duration.Whole)).toBe(8000);
