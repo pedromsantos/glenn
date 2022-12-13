@@ -361,7 +361,6 @@ describe('Measure in 4/4', () => {
         .add(Duration.Quarter)
         .add(Duration.Quarter)
         .add(Duration.Quarter)
-        .add(Duration.SixtyFourth)
     ).toBeInstanceOf(FullMeasure);
   });
 
