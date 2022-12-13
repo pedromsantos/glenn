@@ -267,6 +267,11 @@ describe('BeatsPerMinute', () => {
   describe('60BPM 1/4 note', () => {
     const bpm = new BeatsPerMinute(60);
 
+    test('bpm beat to be', () => {
+      expect(bpm.minutes()).toBe(1 / 60);
+      expect(bpm.seconds()).toBe(1);
+    });
+
     test('time for a whole note', () => {
       expect(bpm.secondsFor(Duration.Whole)).toBe(4);
       expect(bpm.miliSecondsFor(Duration.Whole)).toBe(4000);
