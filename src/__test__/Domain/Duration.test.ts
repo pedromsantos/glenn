@@ -365,6 +365,18 @@ describe('Measure in 4/4', () => {
     ).toBeInstanceOf(FullMeasure);
   });
 
+  test('2 dottet quarter notes and a quarter note fill it', () => {
+    const measure = new Measure(timeSignature);
+
+    expect(
+      measure
+        .add(Duration.DottedQuarter)
+        .add(Duration.DottedQuarter)
+        .add(Duration.Quarter)
+        .add(Duration.SixtyFourth)
+    ).toBeInstanceOf(FullMeasure);
+  });
+
   test('8 eighth notes fill it', () => {
     const measure = new Measure(timeSignature);
 
