@@ -23,10 +23,6 @@ export class Fret {
     return this.fret === other.fret && this.string.equals(other.string);
   }
 
-  isOnString(guitarString: GuitarString): boolean {
-    return this.string === guitarString;
-  }
-
   raiseOctave(): Fret {
     return new Fret(this.string, this.fret + 12);
   }

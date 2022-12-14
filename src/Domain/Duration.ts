@@ -9,11 +9,13 @@ abstract class TimeSignature {
     this.bpm = new BeatsPerMinute(bpm, duration);
   }
 
+  protected get beatValue(): number {
+    return this.duration.value;
+  }
+
   get beatDuration(): number {
     return this.beatValue;
   }
-
-  abstract get beatValue(): number;
 
   get beatDurationMiliseconds(): number {
     return this.bpm.miliSeconds();
@@ -47,10 +49,6 @@ export class SimpleTimeSignature extends TimeSignature {
     super(beats, duration, bpm);
   }
 
-  override get beatValue(): number {
-    return this.duration.value;
-  }
-
   override toFillMeasure(duration: Duration = this.duration): number {
     return (this.beatDurationTicks / duration.tick) * this.beats;
   }
@@ -65,7 +63,7 @@ export class CompoundTimeSignature extends TimeSignature {
     super(pulses / 3, duration, bpm);
   }
 
-  override get beatValue(): number {
+  protected override get beatValue(): number {
     return this.duration.value * 3;
   }
 
