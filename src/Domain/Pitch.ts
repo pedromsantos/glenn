@@ -1,46 +1,5 @@
 import { Interval } from './Interval';
 
-interface IntervalToPitch {
-  with: Interval;
-  to: () => Pitch;
-}
-
-class IntervalsToPitches {
-  constructor(private readonly intervalsToPitches: IntervalToPitch[]) {}
-
-  sharp = () => {
-    return new IntervalsToPitches(
-      this.intervalsToPitches.map(
-        (it) =>
-          ({
-            with: it.with,
-            to: it.to().sharp,
-          } as IntervalToPitch)
-      )
-    );
-  };
-
-  flat = () => {
-    return new IntervalsToPitches(
-      this.intervalsToPitches.map(
-        (it) =>
-          ({
-            with: it.with,
-            to: it.to().flat,
-          } as IntervalToPitch)
-      )
-    );
-  };
-
-  transposerFor(interval: Interval): (() => Pitch) | undefined {
-    return this.intervalsToPitches.find((it) => it.with === interval)?.to;
-  }
-
-  intervalTo(to: Pitch): Interval | undefined {
-    return this.intervalsToPitches.find((it) => it.to() === to)?.with;
-  }
-}
-
 export type PitchPrimitives = {
   name: string;
   value: number;
@@ -491,6 +450,47 @@ export default class Pitch {
   ];
 
   public static readonly natural = [Pitch.C, Pitch.D, Pitch.E, Pitch.F, Pitch.G, Pitch.A, Pitch.B];
+}
+
+interface IntervalToPitch {
+  with: Interval;
+  to: () => Pitch;
+}
+
+class IntervalsToPitches {
+  constructor(private readonly intervalsToPitches: IntervalToPitch[]) {}
+
+  sharp = () => {
+    return new IntervalsToPitches(
+      this.intervalsToPitches.map(
+        (it) =>
+          ({
+            with: it.with,
+            to: it.to().sharp,
+          } as IntervalToPitch)
+      )
+    );
+  };
+
+  flat = () => {
+    return new IntervalsToPitches(
+      this.intervalsToPitches.map(
+        (it) =>
+          ({
+            with: it.with,
+            to: it.to().flat,
+          } as IntervalToPitch)
+      )
+    );
+  };
+
+  transposerFor(interval: Interval): (() => Pitch) | undefined {
+    return this.intervalsToPitches.find((it) => it.with === interval)?.to;
+  }
+
+  intervalTo(to: Pitch): Interval | undefined {
+    return this.intervalsToPitches.find((it) => it.to() === to)?.with;
+  }
 }
 
 export const enum MelodicLineDirection {
