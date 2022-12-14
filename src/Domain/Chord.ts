@@ -10,7 +10,9 @@ export type ChordPitchPrimitives = {
 
 export class ChordPitch {
   constructor(
+    /* istanbul ignore next */
     private readonly _pitch: Pitch = Pitch.C,
+    /* istanbul ignore next */
     private readonly _func: ChordFunction = ChordFunction.Root
   ) {}
 

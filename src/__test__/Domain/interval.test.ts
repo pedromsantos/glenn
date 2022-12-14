@@ -22,6 +22,22 @@ describe('Interval', () => {
     ]);
   });
 
+  test('inversion of augmented fourth is diminished fifth', () => {
+    expect(Interval.AugmentedFourth.invert()).toStrictEqual(Interval.DiminishedFifth);
+  });
+
+  test('inversion of diminished fifth is augmented fourth', () => {
+    expect(Interval.DiminishedFifth.invert()).toStrictEqual(Interval.AugmentedFourth);
+  });
+
+  test('inversion of augmented fifth is augmented fourth', () => {
+    expect(Interval.AugmentedFifth.invert()).toStrictEqual(Interval.AugmentedFourth);
+  });
+
+  test('inversion of major ninth is major seventh', () => {
+    expect(Interval.MinorNinth.invert()).toStrictEqual(Interval.MajorSeventh);
+  });
+
   describe('properties', () => {
     test('Inverting a unique interval twice results in starting interval', () => {
       fc.assert(
