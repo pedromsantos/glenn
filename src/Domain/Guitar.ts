@@ -34,7 +34,7 @@ export class Fret {
     );
   }
 
-  toTab(): TabColumn {
+  toTab(ascending = true): TabColumn {
     const frets: Fret[] = [];
 
     for (const guitarString of GuitarString.guitarStrings) {
@@ -45,7 +45,7 @@ export class Fret {
       }
     }
 
-    return TabColumn.fromFrets([...frets].reverse());
+    return ascending ? TabColumn.fromFrets([...frets].reverse()) : TabColumn.fromFrets([...frets]);
   }
 
   toString() {
@@ -407,15 +407,19 @@ export class GuitarChord implements Iterable<Fret> {
 
 export class GuitarMelodicLine implements Iterable<Fret> {
   private readonly line: Fret[] = [];
+  private readonly melodicLineDirection: MelodicLineDirection = MelodicLineDirection.Ascending;
   private readonly position: Position = Position.Open;
 
   constructor(melodicLine: MelodicLine, position: Position) {
     this.position = position;
+    this.melodicLineDirection = melodicLine.Direction;
     this.line = this.mapMelodicLine(melodicLine);
   }
 
   toTab(): TabMatrix {
-    const column = this.line.map((fret) => fret.toTab());
+    const column = this.line.map((fret) =>
+      fret.toTab(this.melodicLineDirection == MelodicLineDirection.Ascending)
+    );
     return new TabMatrix(...column);
   }
 
@@ -435,7 +439,7 @@ export class GuitarMelodicLine implements Iterable<Fret> {
       }
     }
 
-    return line;
+    return melodicLine.Direction == MelodicLineDirection.Ascending ? line : line.reverse();
   }
 
   private guitarStringsFor(lineDirection: MelodicLineDirection) {

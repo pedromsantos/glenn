@@ -61,7 +61,7 @@ describe('Guitar melodic line should', () => {
 
       const fret = Array.from(guitarLine)[0];
 
-      expect(fret).toStrictEqual(new Fret(GuitarString.Second, 1));
+      expect(fret).toStrictEqual(new Fret(GuitarString.First, 5));
     });
   });
 

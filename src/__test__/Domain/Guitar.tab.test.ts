@@ -148,19 +148,19 @@ E|-------|`;
         expect(line).toBeTruthy();
 
         const guitarLine = new GuitarMelodicLine(line, Position.C);
-        expect(guitarLine).toBeTruthy();
 
-        // expect(guitarLine.get(0)).toStrictEqual(new Fret(GuitarString.Fifth, 3));
-        // expect(guitarLine.get(1)).toStrictEqual(new Fret(GuitarString.Fourth, 2));
-        // expect(guitarLine.get(2)).toStrictEqual(new Fret(GuitarString.Fourth, 5));
-        //const renderedTab = new Tab().render(guitarLine.toTab());
-        //     const expectedTab = `e|-------|
-        // B|-------|
-        // G|-------|
-        // D|---2-5-|
-        // A|-3-----|
-        // E|-------|`;
-        //     expect(renderedTab).toBe(expectedTab);
+        expect(Array.from(guitarLine)[0]).toStrictEqual(new Fret(GuitarString.First, 3));
+        expect(Array.from(guitarLine)[1]).toStrictEqual(new Fret(GuitarString.Second, 5));
+        expect(Array.from(guitarLine)[2]).toStrictEqual(new Fret(GuitarString.Second, 1));
+
+        const renderedTab = new Tab().render(guitarLine.toTab());
+        const expectedTab = `e|-3-----|
+B|---5-1-|
+G|-------|
+D|-------|
+A|-------|
+E|-------|`;
+        expect(renderedTab).toBe(expectedTab);
       });
     });
 
