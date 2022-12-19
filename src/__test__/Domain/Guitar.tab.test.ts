@@ -14,17 +14,18 @@ import Pitch, { MelodicLine, MelodicLineDirection } from '../../Domain/Pitch';
 
 describe('Blank fret should', () => {
   test('render empty column', () => {
-    const blankFret = new BlankFret();
-    const tab = blankFret.toTab();
-
-    expect(tab.render()).toStrictEqual(['-', '-', '-', '-', '-', '-']);
+    expect(new BlankFret().toTab().render()).toStrictEqual(['-', '-', '-', '-', '-', '-']);
   });
 
   test('render empty column after raising octave', () => {
-    const blankFret = new BlankFret();
-    const tab = blankFret.raiseOctave().toTab();
-
-    expect(tab.render()).toStrictEqual(['-', '-', '-', '-', '-', '-']);
+    expect(new BlankFret().raiseOctave().toTab().render()).toStrictEqual([
+      '-',
+      '-',
+      '-',
+      '-',
+      '-',
+      '-',
+    ]);
   });
 });
 
@@ -32,9 +33,8 @@ describe('Guitar matrix should', () => {
   describe('render', () => {
     test('note F on sixth string', () => {
       const tabColumn = new Fret(GuitarString.Sixth, 1).toTab();
-      const matrix = new TabMatrix(tabColumn);
 
-      expect(matrix.render()).toStrictEqual([['-', '-', '-', '-', '-', '1']]);
+      expect(new TabMatrix(tabColumn).render()).toStrictEqual([['-', '-', '-', '-', '-', '1']]);
     });
   });
 });
@@ -124,7 +124,7 @@ E|-10-|`;
 
     describe('melodic line', () => {
       test('C E G ascending on C position', () => {
-        const line = new MelodicLine([Pitch.C, Pitch.E, Pitch.G], MelodicLineDirection.Ascending);
+        const line = new MelodicLine([Pitch.C, Pitch.E, Pitch.G]);
         const guitarLine = new GuitarMelodicLine(line, Position.C);
 
         expect(Array.from(guitarLine)[0]).toStrictEqual(new Fret(GuitarString.Fifth, 3));
@@ -180,79 +180,81 @@ E|-0-|`;
         expect(renderedTab).toBe(expectedTab);
       });
 
-      test('G Major triad on C position', () => {
-        const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
-        const guitarChord = GuitarChord.inPosition(chord, Position.Open);
-        const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
+      describe('G Major triad', () => {
+        test('on C position', () => {
+          const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+          const guitarChord = GuitarChord.inPosition(chord, Position.Open);
+          const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
 
-        const expectedTab = `e|-3-|
+          const expectedTab = `e|-3-|
 B|-0-|
 G|-0-|
 D|-0-|
 A|-2-|
 E|-3-|`;
 
-        expect(renderedTab).toBe(expectedTab);
-      });
+          expect(renderedTab).toBe(expectedTab);
+        });
 
-      test('G Major triad from sixth string', () => {
-        const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
-        const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Sixth);
-        const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
+        test('from sixth string', () => {
+          const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+          const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Sixth);
+          const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
 
-        const expectedTab = `e|---|
+          const expectedTab = `e|---|
 B|---|
 G|---|
 D|-0-|
 A|-2-|
 E|-3-|`;
 
-        expect(renderedTab).toBe(expectedTab);
-      });
+          expect(renderedTab).toBe(expectedTab);
+        });
 
-      test('G Major triad from fifth string', () => {
-        const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
-        const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Fifth);
-        const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
+        test('triad from fifth string', () => {
+          const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+          const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Fifth);
+          const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
 
-        const expectedTab = `e|----|
+          const expectedTab = `e|----|
 B|----|
 G|--7-|
 D|--9-|
 A|-10-|
 E|----|`;
 
-        expect(renderedTab).toBe(expectedTab);
-      });
+          expect(renderedTab).toBe(expectedTab);
+        });
 
-      test('G Major triad from fourth string', () => {
-        const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
-        const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Fourth);
-        const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
+        test('triad from fourth string', () => {
+          const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+          const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Fourth);
+          const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
 
-        const expectedTab = `e|---|
+          const expectedTab = `e|---|
 B|-3-|
 G|-4-|
 D|-5-|
 A|---|
 E|---|`;
 
-        expect(renderedTab).toBe(expectedTab);
-      });
+          expect(renderedTab).toBe(expectedTab);
+        });
 
-      test('G Major triad from thord string', () => {
-        const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
-        const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Third);
-        const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
+        test('from thord string', () => {
+          const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+          const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Third);
+          const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
 
-        const expectedTab = `e|-10-|
+          const expectedTab = `e|-10-|
 B|-12-|
 G|-12-|
 D|----|
 A|----|
 E|----|`;
 
-        expect(renderedTab).toBe(expectedTab);
+          expect(renderedTab).toBe(expectedTab);
+        });
       });
     });
 
