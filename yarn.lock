@@ -1399,13 +1399,13 @@
     semver "~7.3.7"
     tslib "~2.4.0"
 
-"@stryker-mutator/typescript-checker@^6.3.0":
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/@stryker-mutator/typescript-checker/-/typescript-checker-6.3.0.tgz#4d5ab82a978685e9c3d173c706e2dba1e4ec1443"
-  integrity sha512-AWd0E9FDce/yQ+xyZq1SwdKzC6uPM0nlocRtkxUXenR+PE7xlLF78M5CvrxhVUrr3IdR6oh/gy7fUJwWvE9WRA==
+"@stryker-mutator/typescript-checker@^6.3.1":
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/@stryker-mutator/typescript-checker/-/typescript-checker-6.3.1.tgz#848faa9007542c94bd89684f6e2e28060aea5d0e"
+  integrity sha512-XB0Ja5SrPQ8f/GYJmgKcROiM6hPuRZum/nTMFsnY/1+wWCq7dZr5MT6d3Z91l5RbJwObZRqth/B5QPxzo0O8+w==
   dependencies:
-    "@stryker-mutator/api" "6.3.0"
-    "@stryker-mutator/util" "6.3.0"
+    "@stryker-mutator/api" "6.3.1"
+    "@stryker-mutator/util" "6.3.1"
     semver "~7.3.2"
 
 "@stryker-mutator/util@6.3.0":
