@@ -282,4 +282,72 @@ E|-3-0-|`;
       expect(renderedTab).toBe(expectedTab);
     });
   });
+
+  describe('Drop 2 chord', () => {
+    describe('C Major 7', () => {
+      test('On sixth string', () => {
+        const chord = new ClosedChord(Pitch.C, ChordPattern.Major7).drop2();
+        const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Sixth);
+        const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
+
+        const expectedTab = `e|----|
+B|----|
+G|--9-|
+D|--9-|
+A|-10-|
+E|--8-|`;
+
+        expect(renderedTab).toBe(expectedTab);
+      });
+
+      test('On fifth string', () => {
+        const chord = new ClosedChord(Pitch.C, ChordPattern.Major7).drop2();
+        const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Fifth);
+        const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
+
+        const expectedTab = `e|---|
+B|-5-|
+G|-4-|
+D|-5-|
+A|-3-|
+E|---|`;
+
+        expect(renderedTab).toBe(expectedTab);
+      });
+
+      test('On fourth string', () => {
+        const chord = new ClosedChord(Pitch.C, ChordPattern.Major7).drop2();
+        const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Fourth);
+        const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
+
+        const expectedTab = `e|-12-|
+B|-12-|
+G|-12-|
+D|-10-|
+A|----|
+E|----|`;
+
+        expect(renderedTab).toBe(expectedTab);
+      });
+    });
+  });
+
+  describe('Drop 3 chord', () => {
+    describe('C Major 7', () => {
+      test('On sixth string', () => {
+        const chord = new ClosedChord(Pitch.C, ChordPattern.Major7).drop3();
+        const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Sixth);
+        const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
+
+        const expectedTab = `e|---|
+B|-8-|
+G|-9-|
+D|-9-|
+A|---|
+E|-8-|`;
+
+        expect(renderedTab).toBe(expectedTab);
+      });
+    });
+  });
 });

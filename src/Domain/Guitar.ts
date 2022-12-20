@@ -318,20 +318,37 @@ export class GuitarChord implements Iterable<Fret> {
 
   public static fromBassString(chord: Chord, bass: GuitarString): GuitarChord {
     const mappedeFrets: Map<GuitarString, Fret> = GuitarString.blankFrets;
+    const guitarChord = new GuitarChord();
     let guitarString = bass;
 
     for (const pitch of chord) {
+      let fret = guitarString.fretFor(pitch);
+
+      if (pitch != chord.Bass && guitarChord.isTooFar(mappedeFrets, fret)) {
+        fret = fret.raiseOctave();
+      }
+
+      if (pitch != chord.Bass && guitarChord.isTooFar(mappedeFrets, fret)) {
+        guitarString = guitarString.NextAscending;
+        fret = guitarString.fretFor(pitch);
+      }
+
       if (pitch) {
-        mappedeFrets.set(guitarString, guitarString.fretFor(pitch));
+        mappedeFrets.set(guitarString, fret);
       }
 
       guitarString = guitarString.NextAscending;
     }
 
-    const guitarChord = new GuitarChord();
     guitarChord.chordFrets = GuitarChord.adjustOctaves(Array.from(mappedeFrets.values())).reverse();
 
     return guitarChord;
+  }
+
+  private isTooFar(mappedeFrets: Map<GuitarString, Fret>, fret: Fret): boolean {
+    return Array.from(mappedeFrets)
+      .filter((f) => f[1].Number !== -1)
+      .some((f) => Math.abs(f[1].Number - fret.Number) > 4);
   }
 
   private mapOpenPositionChord(chord: Chord): Fret[] {
