@@ -184,18 +184,6 @@ export class GuitarString {
     return this.index > other.index;
   }
 
-  static get blankFrets(): Map<GuitarString, Fret> {
-    return new Map<GuitarString, Fret>([
-      [GuitarString.First, new BlankFret()],
-      [GuitarString.Second, new BlankFret()],
-      [GuitarString.Third, new BlankFret()],
-      [GuitarString.Fourth, new BlankFret()],
-      [GuitarString.Fourth, new BlankFret()],
-      [GuitarString.Fifth, new BlankFret()],
-      [GuitarString.Sixth, new BlankFret()],
-    ]);
-  }
-
   get Index() {
     return this.index;
   }
