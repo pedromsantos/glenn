@@ -333,15 +333,11 @@ export class GuitarChord implements Iterable<Fret> {
         fret = guitarString.fretFor(pitch);
       }
 
-      if (pitch) {
-        mappedeFrets.set(guitarString, fret);
-      }
-
+      mappedeFrets.set(guitarString, fret);
       guitarString = guitarString.NextAscending;
     }
 
     guitarChord.chordFrets = GuitarChord.adjustOctaves(Array.from(mappedeFrets.values())).reverse();
-
     return guitarChord;
   }
 
