@@ -3,7 +3,7 @@ import { Duration } from './Duration';
 import { Interval } from './Interval';
 import Pitch, { MelodicLine, MelodicLineDirection, PitchPrimitives } from './Pitch';
 
-export enum ScaleDegree {
+export const enum ScaleDegree {
   I,
   II,
   III,

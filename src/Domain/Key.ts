@@ -1,6 +1,6 @@
 import Pitch from './Pitch';
 
-enum KeyType {
+const enum KeyType {
   Major,
   Minor,
 }
