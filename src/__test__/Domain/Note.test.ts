@@ -1,4 +1,5 @@
 import * as fc from 'fast-check';
+import { ChordPattern, ClosedChord } from '../../Domain/Chord';
 
 import { Duration } from '../../Domain/Duration';
 import { Interval, IntervalDirection } from '../../Domain/Interval';
@@ -238,6 +239,37 @@ describe('Note', () => {
       ),
       { verbose: true }
     );
+  });
+  describe('C is chord tone of', () => {
+    const note = new Note(Pitch.C, Duration.Quarter, Octave.Contra);
+
+    test('C Major', () => {
+      const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+
+      expect(note.isChordToneOf(chord)).toBeTruthy();
+    });
+
+    test('A minor 6', () => {
+      const chord = new ClosedChord(Pitch.A, ChordPattern.Minor6);
+
+      expect(note.isChordToneOf(chord)).toBeTruthy();
+    });
+
+    test('D minor 7', () => {
+      const chord = new ClosedChord(Pitch.D, ChordPattern.Minor7);
+
+      expect(note.isChordToneOf(chord)).toBeTruthy();
+    });
+  });
+
+  describe('C is not chord tone of', () => {
+    const note = new Note(Pitch.C, Duration.Quarter, Octave.Contra);
+
+    test('D minor', () => {
+      const chord = new ClosedChord(Pitch.D, ChordPattern.Minor);
+
+      expect(note.isChordToneOf(chord)).toBeFalsy();
+    });
   });
 });
 

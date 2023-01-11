@@ -1,3 +1,4 @@
+import { Chord } from './Chord';
 import { Duration, DurationPrimitives } from './Duration';
 import { Interval, IntervalDirection } from './Interval';
 import Pitch, { PitchPrimitives } from './Pitch';
@@ -80,6 +81,16 @@ export class Note {
     return IntervalDirection.Level;
   }
 
+  isChordToneOf(chord: Chord) {
+    for (const chordTone of chord) {
+      if (this.pitch === chordTone) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   get Pitch(): Pitch {
     return this.pitch;
   }
@@ -100,11 +111,17 @@ export type MelodicPhrasePrimitives = {
   notes: NotePrimitives[];
 };
 
-export class MelodicPhrase {
+export class MelodicPhrase implements Iterable<Note> {
   private readonly phrase: Note[] = [];
 
   constructor(notes: Note[]) {
     this.phrase = notes;
+  }
+
+  *[Symbol.iterator](): Iterator<Note> {
+    for (const note of this.phrase) {
+      yield note;
+    }
   }
 
   get To(): MelodicPhrasePrimitives {
