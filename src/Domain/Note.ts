@@ -1,4 +1,5 @@
 import { Duration, DurationPrimitives } from './Duration';
+import { Interval, IntervalDirection } from './Interval';
 import Pitch, { PitchPrimitives } from './Pitch';
 
 export type OctavePrimitives = {
@@ -58,6 +59,30 @@ export class Note {
     private readonly duration: Duration,
     private readonly octave: Octave
   ) {}
+
+  transpose(interval: Interval): Note {
+    return new Note(this.pitch.transpose(interval), this.duration, this.octave);
+  }
+
+  intervalTo(to: Note): Interval {
+    return this.pitch.intervalTo(to.pitch);
+  }
+
+  intervalDirection(other: Note): IntervalDirection {
+    if (this.MidiNumber < other.MidiNumber) {
+      return IntervalDirection.Ascending;
+    }
+
+    if (this.MidiNumber > other.MidiNumber) {
+      return IntervalDirection.Descending;
+    }
+
+    return IntervalDirection.Level;
+  }
+
+  get Pitch(): Pitch {
+    return this.pitch;
+  }
 
   get MidiNumber(): number {
     return this.octave.MidiBaseValue + this.pitch.NumericValue;

@@ -267,3 +267,9 @@ export class Interval {
     );
   }
 }
+
+export const enum IntervalDirection {
+  Ascending,
+  Descending,
+  Level,
+}
