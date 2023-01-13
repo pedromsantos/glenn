@@ -1,6 +1,6 @@
 import * as fc from 'fast-check';
-import { ChordPattern, ClosedChord } from '../../Domain/Chord';
 
+import { ChordPattern, ClosedChord } from '../../Domain/Chord';
 import { Duration } from '../../Domain/Duration';
 import { Interval, IntervalDirection } from '../../Domain/Interval';
 import { MelodicPhrase, Note, Octave } from '../../Domain/Note';
@@ -8,7 +8,7 @@ import Pitch from '../../Domain/Pitch';
 
 describe('Note', () => {
   describe('transpose using a', () => {
-    const note = new Note(Pitch.C, Duration.Quarter, Octave.Contra);
+    const note = new Note(Pitch.C, Duration.Quarter, Octave.C1);
 
     test('Unison from C to C', () => {
       expect(note.transpose(Interval.Unison).Pitch).toBe(Pitch.C);
@@ -76,147 +76,147 @@ describe('Note', () => {
   });
 
   describe('measure intervals between', () => {
-    const note = new Note(Pitch.C, Duration.Quarter, Octave.Contra);
+    const note = new Note(Pitch.C, Duration.Quarter, Octave.C1);
 
     test('C and Db to minor second', () => {
-      expect(note.intervalTo(new Note(Pitch.DFlat, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalTo(new Note(Pitch.DFlat, Duration.Quarter, Octave.C1))).toBe(
         Interval.MinorSecond
       );
     });
 
     test('C and D as MajorSecond', () => {
-      expect(note.intervalTo(new Note(Pitch.D, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalTo(new Note(Pitch.D, Duration.Quarter, Octave.C1))).toBe(
         Interval.MajorSecond
       );
     });
 
     test('C and E flat as MinorThird', () => {
-      expect(note.intervalTo(new Note(Pitch.EFlat, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalTo(new Note(Pitch.EFlat, Duration.Quarter, Octave.C1))).toBe(
         Interval.MinorThird
       );
     });
 
     test('C and E as MajorThird', () => {
-      expect(note.intervalTo(new Note(Pitch.E, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalTo(new Note(Pitch.E, Duration.Quarter, Octave.C1))).toBe(
         Interval.MajorThird
       );
     });
 
     test('C and F as PerfectFourth', () => {
-      expect(note.intervalTo(new Note(Pitch.F, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalTo(new Note(Pitch.F, Duration.Quarter, Octave.C1))).toBe(
         Interval.PerfectFourth
       );
     });
 
     test('C and F sharp as AugmentedFourth', () => {
-      expect(note.intervalTo(new Note(Pitch.FSharp, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalTo(new Note(Pitch.FSharp, Duration.Quarter, Octave.C1))).toBe(
         Interval.AugmentedFourth
       );
     });
 
     test('C and G flat as DiminishedFifth', () => {
-      expect(note.intervalTo(new Note(Pitch.GFlat, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalTo(new Note(Pitch.GFlat, Duration.Quarter, Octave.C1))).toBe(
         Interval.DiminishedFifth
       );
     });
 
     test('C and G as PerfectFifth', () => {
-      expect(note.intervalTo(new Note(Pitch.G, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalTo(new Note(Pitch.G, Duration.Quarter, Octave.C1))).toBe(
         Interval.PerfectFifth
       );
     });
 
     test('C and G sharp as AugmentedFifth', () => {
-      expect(note.intervalTo(new Note(Pitch.GSharp, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalTo(new Note(Pitch.GSharp, Duration.Quarter, Octave.C1))).toBe(
         Interval.AugmentedFifth
       );
     });
 
     test('C and A flat as MinorSixth', () => {
-      expect(note.intervalTo(new Note(Pitch.AFlat, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalTo(new Note(Pitch.AFlat, Duration.Quarter, Octave.C1))).toBe(
         Interval.MinorSixth
       );
     });
 
     test('C and A as MajorSixth', () => {
-      expect(note.intervalTo(new Note(Pitch.A, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalTo(new Note(Pitch.A, Duration.Quarter, Octave.C1))).toBe(
         Interval.MajorSixth
       );
     });
 
     test('C and B flat as MinorSeventh', () => {
-      expect(note.intervalTo(new Note(Pitch.BFlat, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalTo(new Note(Pitch.BFlat, Duration.Quarter, Octave.C1))).toBe(
         Interval.MinorSeventh
       );
     });
 
     test('C and B as MajorSeventh', () => {
-      expect(note.intervalTo(new Note(Pitch.B, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalTo(new Note(Pitch.B, Duration.Quarter, Octave.C1))).toBe(
         Interval.MajorSeventh
       );
     });
   });
 
   describe('interval direction between G and', () => {
-    const note = new Note(Pitch.G, Duration.Quarter, Octave.Contra);
+    const note = new Note(Pitch.G, Duration.Quarter, Octave.C1);
 
     test('C to be descending', () => {
-      expect(note.intervalDirection(new Note(Pitch.C, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalDirection(new Note(Pitch.C, Duration.Quarter, Octave.C1))).toBe(
         IntervalDirection.Descending
       );
     });
 
     test('D to be descending', () => {
-      expect(note.intervalDirection(new Note(Pitch.D, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalDirection(new Note(Pitch.D, Duration.Quarter, Octave.C1))).toBe(
         IntervalDirection.Descending
       );
     });
 
     test('E to be descending', () => {
-      expect(note.intervalDirection(new Note(Pitch.E, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalDirection(new Note(Pitch.E, Duration.Quarter, Octave.C1))).toBe(
         IntervalDirection.Descending
       );
     });
 
     test('F to be descending', () => {
-      expect(note.intervalDirection(new Note(Pitch.F, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalDirection(new Note(Pitch.F, Duration.Quarter, Octave.C1))).toBe(
         IntervalDirection.Descending
       );
     });
 
     test('Gb to be descending', () => {
-      expect(note.intervalDirection(new Note(Pitch.GFlat, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalDirection(new Note(Pitch.GFlat, Duration.Quarter, Octave.C1))).toBe(
         IntervalDirection.Descending
       );
     });
 
     test('G to be level', () => {
-      expect(note.intervalDirection(new Note(Pitch.G, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalDirection(new Note(Pitch.G, Duration.Quarter, Octave.C1))).toBe(
         IntervalDirection.Level
       );
     });
 
     test('G# to be ascending', () => {
-      expect(note.intervalDirection(new Note(Pitch.GSharp, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalDirection(new Note(Pitch.GSharp, Duration.Quarter, Octave.C1))).toBe(
         IntervalDirection.Ascending
       );
     });
 
     test('A to be ascending', () => {
-      expect(note.intervalDirection(new Note(Pitch.A, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalDirection(new Note(Pitch.A, Duration.Quarter, Octave.C1))).toBe(
         IntervalDirection.Ascending
       );
     });
 
     test('B to be ascending', () => {
-      expect(note.intervalDirection(new Note(Pitch.A, Duration.Quarter, Octave.Contra))).toBe(
+      expect(note.intervalDirection(new Note(Pitch.A, Duration.Quarter, Octave.C1))).toBe(
         IntervalDirection.Ascending
       );
     });
   });
 
   test('convert to primitive note', () => {
-    const note = new Note(Pitch.C, Duration.Quarter, Octave.Contra);
+    const note = new Note(Pitch.C, Duration.Quarter, Octave.C1);
 
     const notePrimitive = note.To;
 
@@ -241,7 +241,7 @@ describe('Note', () => {
     );
   });
   describe('C is chord tone of', () => {
-    const note = new Note(Pitch.C, Duration.Quarter, Octave.Contra);
+    const note = new Note(Pitch.C, Duration.Quarter, Octave.C1);
 
     test('C Major', () => {
       const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
@@ -263,7 +263,7 @@ describe('Note', () => {
   });
 
   describe('C is not chord tone of', () => {
-    const note = new Note(Pitch.C, Duration.Quarter, Octave.Contra);
+    const note = new Note(Pitch.C, Duration.Quarter, Octave.C1);
 
     test('D minor', () => {
       const chord = new ClosedChord(Pitch.D, ChordPattern.Minor);
@@ -275,7 +275,7 @@ describe('Note', () => {
 
 describe('Octave', () => {
   test('convert to primitive octave', () => {
-    expect(Octave.Contra.To).toStrictEqual({
+    expect(Octave.C1.To).toStrictEqual({
       midi: 12,
       name: 'Contra',
       value: -8,
@@ -285,7 +285,7 @@ describe('Octave', () => {
 
 describe('Melodic phrase', () => {
   test('convert to primitive phrase', () => {
-    const phrase = new MelodicPhrase([new Note(Pitch.C, Duration.Quarter, Octave.Contra)]);
+    const phrase = new MelodicPhrase([new Note(Pitch.C, Duration.Quarter, Octave.C1)]);
     const phrasePrimitive = phrase.To;
 
     expect(phrasePrimitive).toStrictEqual({
