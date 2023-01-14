@@ -3,12 +3,6 @@ import { MelodicPhrase, Note, Octave } from './Note';
 import Pitch from './Pitch';
 import Scale, { ScaleDegree, ScaleHarmonizer, ScalePattern, TriadHarmonizer } from './Scale';
 
-interface CounterPointRuleStatus {
-  isValid: boolean;
-  message?: string;
-  index?: number;
-}
-
 export class Voice {
   private static readonly all: Voice[] = [];
 
@@ -55,13 +49,11 @@ export class Voice {
   );
 }
 
-export interface CounterPointVoice {
-  phrase: MelodicPhrase;
-  range: Voice;
-}
-
 export interface CounterPointParts {
-  counterPoint: MelodicPhrase;
+  counterPoint: {
+    phrase: MelodicPhrase;
+    voice: Voice;
+  };
   cantusFirmus: MelodicPhrase;
   cantusFirmusHarmony: CounterPointHarmony;
 }
@@ -88,11 +80,17 @@ export class FirstSpecies {
   }
 }
 
+interface CounterPointRuleStatus {
+  isValid: boolean;
+  message?: string;
+  index?: number;
+}
+
 class CounterPoinRules {
   private rules: CounterPointRule[] = [];
 
   constructor(scale: Scale) {
-    this.rules = [new OnlyChordTones(scale), new OnlyWholeToneNotes()];
+    this.rules = [new OnlyChordTones(scale), new OnlyWholeToneNotes(), new OnlyNotesInRange()];
   }
 
   apply(parts: CounterPointParts): CounterPointRuleStatus {
@@ -124,7 +122,7 @@ class OnlyChordTones implements CounterPointRule {
     const harmony = [...parts.cantusFirmusHarmony].map((sd) => this.harmonizer.chordFor(sd));
     let index = 0;
 
-    for (const note of parts.counterPoint) {
+    for (const note of parts.counterPoint.phrase) {
       const chord = harmony[index];
       const isChordTone = chord ? note.isChordToneOf(chord) : false;
 
@@ -143,9 +141,28 @@ class OnlyWholeToneNotes implements CounterPointRule {
   validate(parts: CounterPointParts): CounterPointRuleStatus {
     let index = 0;
 
-    for (const note of parts.counterPoint) {
+    for (const note of parts.counterPoint.phrase) {
       if (note.Duration !== Duration.Whole) {
         return { isValid: false, message: 'not a whole note', index: index };
+      }
+
+      index++;
+    }
+
+    return { isValid: true };
+  }
+}
+
+class OnlyNotesInRange implements CounterPointRule {
+  validate(parts: CounterPointParts): CounterPointRuleStatus {
+    let index = 0;
+
+    for (const note of parts.counterPoint.phrase) {
+      if (
+        note.MidiNumber > parts.counterPoint.voice.Max.MidiNumber ||
+        note.MidiNumber < parts.counterPoint.voice.Min.MidiNumber
+      ) {
+        return { isValid: false, message: 'not in range', index: index };
       }
 
       index++;
