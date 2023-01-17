@@ -1,53 +1,8 @@
 import { Duration } from './Duration';
-import { MelodicPhrase, Note, Octave } from './Note';
+import { Voice } from './Instrument';
+import { MelodicPhrase, Note } from './Note';
 import Pitch from './Pitch';
 import Scale, { ScaleDegree, ScaleHarmonizer, ScalePattern, TriadHarmonizer } from './Scale';
-
-export class Voice {
-  private static readonly all: Voice[] = [];
-
-  private constructor(private readonly minRange: Note, private readonly maxRange: Note) {
-    Voice.all.push(this);
-  }
-
-  get Min() {
-    return this.minRange;
-  }
-
-  get Max() {
-    return this.maxRange;
-  }
-
-  public static readonly Bass: Voice = new Voice(
-    new Note(Pitch.E, Duration.Quarter, Octave.C2),
-    new Note(Pitch.E, Duration.Quarter, Octave.C4)
-  );
-
-  public static readonly Baritone: Voice = new Voice(
-    new Note(Pitch.G, Duration.Quarter, Octave.C2),
-    new Note(Pitch.G, Duration.Quarter, Octave.C4)
-  );
-
-  public static readonly Tenor: Voice = new Voice(
-    new Note(Pitch.C, Duration.Quarter, Octave.C3),
-    new Note(Pitch.C, Duration.Quarter, Octave.C5)
-  );
-
-  public static readonly Alto: Voice = new Voice(
-    new Note(Pitch.F, Duration.Quarter, Octave.C3),
-    new Note(Pitch.F, Duration.Quarter, Octave.C5)
-  );
-
-  public static readonly MezzoSoprano: Voice = new Voice(
-    new Note(Pitch.A, Duration.Quarter, Octave.C3),
-    new Note(Pitch.A, Duration.Quarter, Octave.C5)
-  );
-
-  public static readonly Soprano: Voice = new Voice(
-    new Note(Pitch.C, Duration.Quarter, Octave.C4),
-    new Note(Pitch.C, Duration.Quarter, Octave.C5)
-  );
-}
 
 export interface CounterPointParts {
   counterPoint: {
@@ -90,7 +45,12 @@ class CounterPoinRules {
   private rules: CounterPointRule[] = [];
 
   constructor(scale: Scale) {
-    this.rules = [new OnlyChordTones(scale), new OnlyWholeToneNotes(), new OnlyNotesInRange()];
+    this.rules = [
+      new OnlyChordTones(scale),
+      new OnlyWholeToneNotes(),
+      new OnlyNotesInRange(),
+      new NonRepeatedNotes(),
+    ];
   }
 
   apply(parts: CounterPointParts): CounterPointRuleStatus {
@@ -165,6 +125,23 @@ class OnlyNotesInRange implements CounterPointRule {
         return { isValid: false, message: 'not in range', index: index };
       }
 
+      index++;
+    }
+
+    return { isValid: true };
+  }
+}
+
+class NonRepeatedNotes implements CounterPointRule {
+  validate(parts: CounterPointParts): CounterPointRuleStatus {
+    let index = 0;
+    let previous: Note | undefined = undefined;
+
+    for (const note of parts.counterPoint.phrase) {
+      if (previous && note.isSamePitch(previous)) {
+        return { isValid: false, message: 'repeated note', index: index };
+      }
+      previous = note;
       index++;
     }
 

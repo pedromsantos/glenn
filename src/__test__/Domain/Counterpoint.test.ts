@@ -1,10 +1,6 @@
-import {
-  CounterPointHarmony,
-  CounterPointParts,
-  FirstSpecies,
-  Voice,
-} from '../../Domain/Counterpoint';
+import { CounterPointHarmony, CounterPointParts, FirstSpecies } from '../../Domain/Counterpoint';
 import { Duration } from '../../Domain/Duration';
+import { Voice } from '../../Domain/Instrument';
 import { MelodicPhrase, Note, Octave } from '../../Domain/Note';
 import Pitch from '../../Domain/Pitch';
 import Scale, { ScaleDegree, ScalePattern } from '../../Domain/Scale';
@@ -78,6 +74,31 @@ describe('First species counterpoint', () => {
       isValid: false,
       index: 0,
       message: 'not in range',
+    });
+  });
+
+  test('invalid note (repeated)', () => {
+    const parts: CounterPointParts = {
+      counterPoint: {
+        phrase: new MelodicPhrase([
+          new Note(Pitch.C, Duration.Whole, Octave.C4),
+          new Note(Pitch.C, Duration.Whole, Octave.C4),
+        ]),
+        voice: Voice.Bass,
+      },
+      cantusFirmus: new MelodicPhrase([
+        new Note(Pitch.C, Duration.Whole, Octave.C4),
+        new Note(Pitch.A, Duration.Whole, Octave.C4),
+      ]),
+      cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I, ScaleDegree.VI]),
+    };
+
+    const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
+
+    expect(species.validate()).toStrictEqual({
+      isValid: false,
+      index: 1,
+      message: 'repeated note',
     });
   });
 });

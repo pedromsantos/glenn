@@ -89,6 +89,10 @@ export class Note {
     return false;
   }
 
+  isSamePitch(other: Note): boolean {
+    return this.MidiNumber === other.MidiNumber;
+  }
+
   get Pitch(): Pitch {
     return this.pitch;
   }
