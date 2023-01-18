@@ -1,8 +1,15 @@
 import { Duration } from './Duration';
 import { Voice } from './Instrument';
+import { Interval } from './Interval';
 import { MelodicPhrase, Note } from './Note';
 import Pitch from './Pitch';
-import Scale, { ScaleDegree, ScaleHarmonizer, ScalePattern, TriadHarmonizer } from './Scale';
+import Scale, {
+  ScaleDegree,
+  ScaleHarmonizer,
+  ScalePattern,
+  SeventhHarmonizer,
+  TriadHarmonizer,
+} from './Scale';
 
 export interface CounterPointParts {
   counterPoint: {
@@ -46,10 +53,11 @@ class CounterPoinRules {
 
   constructor(scale: Scale) {
     this.rules = [
-      new OnlyChordTones(scale),
+      new OnlyChordTones(new SeventhHarmonizer(scale)),
       new OnlyWholeToneNotes(),
       new OnlyNotesInRange(),
       new NonRepeatedNotes(),
+      new NonBigLeaps(),
     ];
   }
 
@@ -74,8 +82,8 @@ class OnlyChordTones implements CounterPointRule {
     new Scale(ScalePattern.Ionian, Pitch.C)
   );
 
-  constructor(scale: Scale = new Scale(ScalePattern.Ionian, Pitch.C)) {
-    this.harmonizer = new TriadHarmonizer(scale);
+  constructor(harmonizer: ScaleHarmonizer) {
+    this.harmonizer = harmonizer;
   }
 
   validate(parts: CounterPointParts): CounterPointRuleStatus {
@@ -140,6 +148,23 @@ class NonRepeatedNotes implements CounterPointRule {
     for (const note of parts.counterPoint.phrase) {
       if (previous && note.isSamePitch(previous)) {
         return { isValid: false, message: 'repeated note', index: index };
+      }
+      previous = note;
+      index++;
+    }
+
+    return { isValid: true };
+  }
+}
+
+class NonBigLeaps implements CounterPointRule {
+  validate(parts: CounterPointParts): CounterPointRuleStatus {
+    let index = 0;
+    let previous: Note | undefined = undefined;
+
+    for (const note of parts.counterPoint.phrase) {
+      if (previous && note.intervalTo(previous).isLargarThan(Interval.MajorSixth)) {
+        return { isValid: false, message: 'invalid leap', index: index };
       }
       previous = note;
       index++;

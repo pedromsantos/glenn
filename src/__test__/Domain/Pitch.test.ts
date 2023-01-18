@@ -545,6 +545,10 @@ describe('Pitch', () => {
                 )
                   expect(resultingInterval).toBe(resultingInterval);
                 break;
+              case Interval.DiminishedUnison:
+              case Interval.DiminishedNinth:
+                expect(resultingInterval).toBe(resultingInterval);
+                break;
               default:
                 expect(resultingInterval).toBe(interval);
             }

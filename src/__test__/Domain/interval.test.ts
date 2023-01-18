@@ -61,6 +61,8 @@ describe('Interval', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Interval.intervals), (interval: Interval) => {
           switch (interval) {
+            case Interval.AugmentedUnison:
+            case Interval.DiminishedUnison:
             case Interval.AugmentedFourth:
             case Interval.Tritone:
             case Interval.DiminishedFifth:
@@ -72,8 +74,11 @@ describe('Interval', () => {
             case Interval.MajorNinth:
               expect(interval.invert().invert()).toBe(Interval.MajorSecond);
               break;
+            case Interval.DiminishedNinth:
+              expect(interval.invert().invert()).toBe(Interval.DiminishedUnison);
+              break;
             case Interval.AugmentedNinth:
-              expect(interval.invert().invert()).toBe(Interval.AugmentedSecond);
+              expect(interval.invert().invert()).toBe(Interval.AugmentedUnison);
               break;
             case Interval.PerfectEleventh:
               expect(interval.invert().invert()).toBe(Interval.PerfectFourth);
@@ -89,6 +94,40 @@ describe('Interval', () => {
               break;
             default:
               expect(interval.invert().invert()).toBe(interval);
+          }
+        }),
+        { verbose: true }
+      );
+    });
+
+    test('Raising an interval by an octave', () => {
+      fc.assert(
+        fc.property(fc.constantFrom(...Interval.intervals), (interval: Interval) => {
+          switch (interval) {
+            case Interval.DiminishedUnison:
+            case Interval.AugmentedUnison:
+            case Interval.MinorThird:
+            case Interval.MajorThird:
+            case Interval.PerfectFifth:
+            case Interval.Tritone:
+            case Interval.DiminishedFifth:
+            case Interval.AugmentedFifth:
+            case Interval.DiminishedSeventh:
+            case Interval.MinorSeventh:
+            case Interval.MajorSeventh:
+            case Interval.PerfectOctave:
+            case Interval.MinorNinth:
+            case Interval.MajorNinth:
+            case Interval.DiminishedNinth:
+            case Interval.AugmentedNinth:
+            case Interval.PerfectEleventh:
+            case Interval.AugmentedEleventh:
+            case Interval.MinorThirteenth:
+            case Interval.MajorThirteenth:
+              expect(interval.raiseOctave()).toBe(interval);
+              break;
+            default:
+              expect(interval.raiseOctave()).not.toBe(interval);
           }
         }),
         { verbose: true }

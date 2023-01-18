@@ -31,7 +31,8 @@ export class Interval {
     private readonly abreviature: string,
     private readonly distance: number,
     private readonly quality: IntervalQuality,
-    public invert: () => Interval
+    public invert: () => Interval,
+    public raiseOctave: () => Interval
   ) {
     Interval.all.push(this);
   }
@@ -50,7 +51,17 @@ export class Interval {
     'U',
     0,
     IntervalQuality.Perfect,
+    () => Interval.PerfectOctave,
     () => Interval.PerfectOctave
+  );
+
+  public static readonly DiminishedUnison: Interval = new Interval(
+    'Diminished Unison',
+    'd1',
+    -1,
+    IntervalQuality.Diminished,
+    () => Interval.AugmentedUnison,
+    () => Interval.DiminishedUnison
   );
 
   public static readonly AugmentedUnison: Interval = new Interval(
@@ -58,6 +69,7 @@ export class Interval {
     'A1',
     1,
     IntervalQuality.Augmented,
+    () => Interval.DiminishedUnison,
     () => Interval.AugmentedUnison
   );
 
@@ -66,7 +78,8 @@ export class Interval {
     'm2',
     1,
     IntervalQuality.Minor,
-    () => Interval.MajorSeventh
+    () => Interval.MajorSeventh,
+    () => Interval.MinorNinth
   );
 
   public static readonly MajorSecond: Interval = new Interval(
@@ -74,7 +87,8 @@ export class Interval {
     'M2',
     2,
     IntervalQuality.Major,
-    () => Interval.MinorSeventh
+    () => Interval.MinorSeventh,
+    () => Interval.MajorNinth
   );
 
   public static readonly AugmentedSecond: Interval = new Interval(
@@ -82,7 +96,8 @@ export class Interval {
     'A2',
     3,
     IntervalQuality.Augmented,
-    () => Interval.DiminishedSeventh
+    () => Interval.DiminishedSeventh,
+    () => Interval.AugmentedNinth
   );
 
   public static readonly MinorThird: Interval = new Interval(
@@ -90,7 +105,8 @@ export class Interval {
     'm3',
     3,
     IntervalQuality.Minor,
-    () => Interval.MajorSixth
+    () => Interval.MajorSixth,
+    () => Interval.MinorThird
   );
 
   public static readonly MajorThird: Interval = new Interval(
@@ -98,7 +114,8 @@ export class Interval {
     'M3',
     4,
     IntervalQuality.Major,
-    () => Interval.MinorSixth
+    () => Interval.MinorSixth,
+    () => Interval.MajorThird
   );
 
   public static readonly PerfectFourth: Interval = new Interval(
@@ -106,7 +123,8 @@ export class Interval {
     'P4',
     5,
     IntervalQuality.Perfect,
-    () => Interval.PerfectFifth
+    () => Interval.PerfectFifth,
+    () => Interval.PerfectEleventh
   );
 
   public static readonly AugmentedFourth: Interval = new Interval(
@@ -114,7 +132,8 @@ export class Interval {
     'A4',
     6,
     IntervalQuality.Augmented,
-    () => Interval.DiminishedFifth
+    () => Interval.DiminishedFifth,
+    () => Interval.AugmentedEleventh
   );
 
   public static readonly DiminishedFifth: Interval = new Interval(
@@ -122,7 +141,8 @@ export class Interval {
     'd5',
     6,
     IntervalQuality.Diminished,
-    () => Interval.AugmentedFourth
+    () => Interval.AugmentedFourth,
+    () => Interval.DiminishedFifth
   );
 
   public static readonly Tritone: Interval = new Interval(
@@ -130,7 +150,8 @@ export class Interval {
     'd5',
     6,
     IntervalQuality.Diminished,
-    () => Interval.AugmentedFourth
+    () => Interval.AugmentedFourth,
+    () => Interval.Tritone
   );
 
   public static readonly PerfectFifth: Interval = new Interval(
@@ -138,7 +159,8 @@ export class Interval {
     'P5',
     7,
     IntervalQuality.Perfect,
-    () => Interval.PerfectFourth
+    () => Interval.PerfectFourth,
+    () => Interval.PerfectFifth
   );
 
   public static readonly AugmentedFifth: Interval = new Interval(
@@ -146,7 +168,8 @@ export class Interval {
     'A5',
     8,
     IntervalQuality.Augmented,
-    () => Interval.AugmentedFourth
+    () => Interval.AugmentedFourth,
+    () => Interval.AugmentedFifth
   );
 
   public static readonly MinorSixth: Interval = new Interval(
@@ -154,7 +177,8 @@ export class Interval {
     'm6',
     8,
     IntervalQuality.Minor,
-    () => Interval.MajorThird
+    () => Interval.MajorThird,
+    () => Interval.MinorThirteenth
   );
 
   public static readonly MajorSixth: Interval = new Interval(
@@ -162,7 +186,8 @@ export class Interval {
     'M6',
     9,
     IntervalQuality.Major,
-    () => Interval.MinorThird
+    () => Interval.MinorThird,
+    () => Interval.MajorThirteenth
   );
 
   public static readonly DiminishedSeventh: Interval = new Interval(
@@ -170,7 +195,8 @@ export class Interval {
     'd7',
     9,
     IntervalQuality.Diminished,
-    () => Interval.AugmentedSecond
+    () => Interval.AugmentedSecond,
+    () => Interval.DiminishedSeventh
   );
 
   public static readonly MinorSeventh: Interval = new Interval(
@@ -178,7 +204,8 @@ export class Interval {
     'm7',
     10,
     IntervalQuality.Minor,
-    () => Interval.MajorSecond
+    () => Interval.MajorSecond,
+    () => Interval.MinorSeventh
   );
 
   public static readonly MajorSeventh: Interval = new Interval(
@@ -186,7 +213,8 @@ export class Interval {
     'M7',
     11,
     IntervalQuality.Major,
-    () => Interval.MinorSecond
+    () => Interval.MinorSecond,
+    () => Interval.MajorSeventh
   );
 
   public static readonly PerfectOctave: Interval = new Interval(
@@ -194,7 +222,17 @@ export class Interval {
     'PO',
     12,
     IntervalQuality.Perfect,
-    () => Interval.Unison
+    () => Interval.Unison,
+    () => Interval.PerfectOctave
+  );
+
+  public static readonly DiminishedNinth: Interval = new Interval(
+    'Diminished Ninth',
+    'd9',
+    13,
+    IntervalQuality.Minor,
+    () => Interval.AugmentedUnison,
+    () => Interval.DiminishedNinth
   );
 
   public static readonly MinorNinth: Interval = new Interval(
@@ -202,7 +240,8 @@ export class Interval {
     'm9',
     13,
     IntervalQuality.Minor,
-    () => Interval.MajorSeventh
+    () => Interval.MajorSeventh,
+    () => Interval.MinorNinth
   );
 
   public static readonly MajorNinth: Interval = new Interval(
@@ -210,7 +249,8 @@ export class Interval {
     'M9',
     14,
     IntervalQuality.Major,
-    () => Interval.MinorSeventh
+    () => Interval.MinorSeventh,
+    () => Interval.MajorNinth
   );
 
   public static readonly AugmentedNinth: Interval = new Interval(
@@ -218,7 +258,8 @@ export class Interval {
     'A9',
     15,
     IntervalQuality.Augmented,
-    () => Interval.DiminishedSeventh
+    () => Interval.DiminishedUnison,
+    () => Interval.AugmentedNinth
   );
 
   public static readonly PerfectEleventh: Interval = new Interval(
@@ -226,7 +267,8 @@ export class Interval {
     'P11',
     17,
     IntervalQuality.Perfect,
-    () => Interval.PerfectFifth
+    () => Interval.PerfectFifth,
+    () => Interval.PerfectEleventh
   );
 
   public static readonly AugmentedEleventh: Interval = new Interval(
@@ -234,7 +276,8 @@ export class Interval {
     'A11',
     18,
     IntervalQuality.Augmented,
-    () => Interval.DiminishedFifth
+    () => Interval.DiminishedFifth,
+    () => Interval.AugmentedEleventh
   );
 
   public static readonly MinorThirteenth: Interval = new Interval(
@@ -242,7 +285,8 @@ export class Interval {
     'm13',
     20,
     IntervalQuality.Minor,
-    () => Interval.MajorThird
+    () => Interval.MajorThird,
+    () => Interval.MinorThirteenth
   );
 
   public static readonly MajorThirteenth: Interval = new Interval(
@@ -250,8 +294,13 @@ export class Interval {
     'M13',
     21,
     IntervalQuality.Major,
-    () => Interval.MinorThird
+    () => Interval.MinorThird,
+    () => Interval.MajorThirteenth
   );
+
+  isLargarThan(reference: Interval): boolean {
+    return this.distance > reference.distance;
+  }
 
   public static get intervals(): Interval[] {
     return Interval.all;

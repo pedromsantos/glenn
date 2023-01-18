@@ -101,4 +101,29 @@ describe('First species counterpoint', () => {
       message: 'repeated note',
     });
   });
+
+  test('invalid note (leap to big)', () => {
+    const parts: CounterPointParts = {
+      counterPoint: {
+        phrase: new MelodicPhrase([
+          new Note(Pitch.B, Duration.Whole, Octave.C4),
+          new Note(Pitch.C, Duration.Whole, Octave.C4),
+        ]),
+        voice: Voice.Tenor,
+      },
+      cantusFirmus: new MelodicPhrase([
+        new Note(Pitch.C, Duration.Whole, Octave.C4),
+        new Note(Pitch.C, Duration.Whole, Octave.C4),
+      ]),
+      cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I, ScaleDegree.I]),
+    };
+
+    const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
+
+    expect(species.validate()).toStrictEqual({
+      isValid: false,
+      index: 1,
+      message: 'invalid leap',
+    });
+  });
 });

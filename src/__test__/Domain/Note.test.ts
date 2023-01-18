@@ -240,6 +240,7 @@ describe('Note', () => {
       { verbose: true }
     );
   });
+
   describe('C is chord tone of', () => {
     const note = new Note(Pitch.C, Duration.Quarter, Octave.C1);
 
@@ -270,6 +271,46 @@ describe('Note', () => {
 
       expect(note.isChordToneOf(chord)).toBeFalsy();
     });
+  });
+});
+
+describe('calculate interval between C1 and', () => {
+  const firstNote = new Note(Pitch.C, Duration.Quarter, Octave.C1);
+
+  test('D1 to be a major second', () => {
+    const secondNote = new Note(Pitch.D, Duration.Quarter, Octave.C1);
+
+    expect(firstNote.intervalTo(secondNote)).toStrictEqual(Interval.MajorSecond);
+  });
+
+  test('Eb1 to be a minor third', () => {
+    const secondNote = new Note(Pitch.EFlat, Duration.Quarter, Octave.C1);
+
+    expect(firstNote.intervalTo(secondNote)).toStrictEqual(Interval.MinorThird);
+  });
+
+  test('C1 to be a unisson', () => {
+    const secondNote = new Note(Pitch.C, Duration.Quarter, Octave.C1);
+
+    expect(firstNote.intervalTo(secondNote)).toStrictEqual(Interval.Unison);
+  });
+
+  test('C2 to be an octave', () => {
+    const secondNote = new Note(Pitch.C, Duration.Quarter, Octave.C2);
+
+    expect(firstNote.intervalTo(secondNote)).toStrictEqual(Interval.PerfectOctave);
+  });
+
+  test('F2 to be an eleventh', () => {
+    const secondNote = new Note(Pitch.F, Duration.Quarter, Octave.C2);
+
+    expect(firstNote.intervalTo(secondNote)).toStrictEqual(Interval.PerfectEleventh);
+  });
+
+  test('F#2 to be a sharp eleventh', () => {
+    const secondNote = new Note(Pitch.FSharp, Duration.Quarter, Octave.C2);
+
+    expect(firstNote.intervalTo(secondNote)).toStrictEqual(Interval.AugmentedEleventh);
   });
 });
 

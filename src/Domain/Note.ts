@@ -64,7 +64,11 @@ export class Note {
   }
 
   intervalTo(to: Note): Interval {
-    return this.pitch.intervalTo(to.pitch);
+    if (this.octave === to.octave) {
+      return this.pitch.intervalTo(to.pitch);
+    }
+
+    return this.pitch.intervalTo(to.pitch).raiseOctave();
   }
 
   intervalDirection(other: Note): IntervalDirection {
