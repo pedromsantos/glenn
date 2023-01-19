@@ -39,7 +39,7 @@ abstract class TimeSignature {
 
   abstract toFillMeasure(duration: Duration): number;
 
-  milisecondsFor(duration: Duration = this.duration): number {
+  milisecondsFor(duration: Duration): number {
     return this.bpm.miliSecondsFor(duration);
   }
 }
@@ -49,7 +49,7 @@ export class SimpleTimeSignature extends TimeSignature {
     super(beats, duration, bpm);
   }
 
-  override toFillMeasure(duration: Duration = this.duration): number {
+  override toFillMeasure(duration: Duration): number {
     return (this.beatDurationTicks / duration.tick) * this.beats;
   }
 }
@@ -67,7 +67,7 @@ export class CompoundTimeSignature extends TimeSignature {
     return this.duration.value * 3;
   }
 
-  override toFillMeasure(duration: Duration = this.duration): number {
+  override toFillMeasure(duration: Duration): number {
     return (this.beatDurationTicks / duration.tick) * this.beats * 3;
   }
 }
