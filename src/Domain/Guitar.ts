@@ -52,11 +52,11 @@ export class Fret {
     return this.Number.toString();
   }
 
-  private isHigher(other: Fret, margin = 0) {
+  private isHigher(other: Fret, margin: number) {
     return this.fret + margin > other.fret;
   }
 
-  private isLower(other: Fret, margin = 0) {
+  private isLower(other: Fret, margin: number) {
     return this.fret - margin < other.fret;
   }
 
@@ -359,10 +359,6 @@ export class GuitarChord implements Iterable<Fret> {
           mappedeFrets.push(fret);
           break;
         }
-      }
-
-      if (!mappedeFrets.find((f) => f.String === guitarString)) {
-        mappedeFrets.push(new BlankFret());
       }
     }
 
