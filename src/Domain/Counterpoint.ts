@@ -56,8 +56,8 @@ class CounterPoinRules {
       new OnlyChordTones(new SeventhHarmonizer(scale)),
       new OnlyWholeToneNotes(),
       new OnlyNotesInRange(),
-      new NonRepeatedNotes(),
-      new NonBigLeaps(),
+      new NoRepeatedNotes(),
+      new NoBigLeaps(),
     ];
   }
 
@@ -140,7 +140,7 @@ class OnlyNotesInRange implements CounterPointRule {
   }
 }
 
-class NonRepeatedNotes implements CounterPointRule {
+class NoRepeatedNotes implements CounterPointRule {
   validate(parts: CounterPointParts): CounterPointRuleStatus {
     let index = 0;
     let previous: Note | undefined = undefined;
@@ -157,7 +157,7 @@ class NonRepeatedNotes implements CounterPointRule {
   }
 }
 
-class NonBigLeaps implements CounterPointRule {
+class NoBigLeaps implements CounterPointRule {
   validate(parts: CounterPointParts): CounterPointRuleStatus {
     let index = 0;
     let previous: Note | undefined = undefined;
