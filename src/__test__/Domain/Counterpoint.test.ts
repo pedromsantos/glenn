@@ -49,7 +49,7 @@ describe('First species counterpoint', () => {
       cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I]),
     };
 
-    const species = FirstSpecies.OnlyChordTonesRule(parts, new Scale(ScalePattern.Ionian, Pitch.C));
+    const species = FirstSpecies.WithChordTonesRule(parts, new Scale(ScalePattern.Ionian, Pitch.C));
 
     expect(species.validate()).toStrictEqual({
       isValid: false,

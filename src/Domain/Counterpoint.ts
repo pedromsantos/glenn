@@ -37,7 +37,11 @@ export class FirstSpecies {
     this.rules = new CounterPoinRules(scale);
   }
 
-  static OnlyChordTonesRule(parts: CounterPointParts, scale: Scale): FirstSpecies {
+  validate(): CounterPointRuleStatus {
+    return this.rules.apply(this.parts);
+  }
+
+  static WithChordTonesRule(parts: CounterPointParts, scale: Scale): FirstSpecies {
     const firstSpecies = new FirstSpecies(parts, scale);
 
     firstSpecies.rules = new CounterPoinRules(scale, [
@@ -45,10 +49,6 @@ export class FirstSpecies {
     ]);
 
     return firstSpecies;
-  }
-
-  validate(): CounterPointRuleStatus {
-    return this.rules.apply(this.parts);
   }
 }
 
@@ -66,6 +66,7 @@ class CounterPoinRules {
       this.rules = rules;
       return;
     }
+
     this.rules = [
       new OnlyWholeToneNotes(),
       new OnlyNotesInRange(),
