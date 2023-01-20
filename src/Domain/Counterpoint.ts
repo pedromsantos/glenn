@@ -37,6 +37,16 @@ export class FirstSpecies {
     this.rules = new CounterPoinRules(scale);
   }
 
+  static OnlyChordTonesRule(parts: CounterPointParts, scale: Scale): FirstSpecies {
+    const firstSpecies = new FirstSpecies(parts, scale);
+
+    firstSpecies.rules = new CounterPoinRules(scale, [
+      new OnlyChordTones(new SeventhHarmonizer(scale)),
+    ]);
+
+    return firstSpecies;
+  }
+
   validate(): CounterPointRuleStatus {
     return this.rules.apply(this.parts);
   }
@@ -51,13 +61,18 @@ interface CounterPointRuleStatus {
 class CounterPoinRules {
   private rules: CounterPointRule[] = [];
 
-  constructor(scale: Scale) {
+  constructor(scale: Scale, rules?: CounterPointRule[]) {
+    if (rules) {
+      this.rules = rules;
+      return;
+    }
     this.rules = [
-      new OnlyChordTones(new SeventhHarmonizer(scale)),
       new OnlyWholeToneNotes(),
       new OnlyNotesInRange(),
       new NoRepeatedNotes(),
       new NoBigLeaps(),
+      new NoInvalidIntervals([Interval.MajorSecond, Interval.PerfectFourth, Interval.MajorSeventh]),
+      new OnlyChordTones(new SeventhHarmonizer(scale)),
     ];
   }
 
@@ -167,6 +182,33 @@ class NoBigLeaps implements CounterPointRule {
         return { isValid: false, message: 'invalid leap', index: index };
       }
       previous = note;
+      index++;
+    }
+
+    return { isValid: true };
+  }
+}
+
+class NoInvalidIntervals implements CounterPointRule {
+  constructor(private readonly intervals: Interval[]) {}
+
+  validate(parts: CounterPointParts): CounterPointRuleStatus {
+    const cantusFirmus = [...parts.cantusFirmus];
+    let index = 0;
+
+    for (const note of parts.counterPoint.phrase) {
+      const cantusFirmusNote = cantusFirmus[index];
+
+      for (const interval of this.intervals) {
+        if (cantusFirmusNote?.intervalTo(note) === interval) {
+          return {
+            isValid: false,
+            message: `invalid interval of a ${interval.Name}`,
+            index: index,
+          };
+        }
+      }
+
       index++;
     }
 

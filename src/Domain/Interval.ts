@@ -37,6 +37,10 @@ export class Interval {
     Interval.all.push(this);
   }
 
+  get Name(): string {
+    return this.name;
+  }
+
   get To(): IntervalPrimitives {
     return {
       name: this.name,
@@ -316,6 +320,76 @@ export class Interval {
     );
   }
 }
+
+// export class IntervalType {
+//   private static readonly all: IntervalType[] = [];
+
+//   private constructor(
+//     public diminished: () => Interval,
+//     public minor: () => Interval,
+//     public perfect: () => Interval,
+//     public major: () => Interval,
+//     public augmented: () => Interval
+//   ) {
+//     IntervalType.all.push(this);
+//   }
+
+//   public static readonly Unison: IntervalType = new IntervalType(
+//     () => Interval.MajorSeventh,
+//     () => Interval.Unison,
+//     () => Interval.Unison,
+//     () => Interval.Unison,
+//     () => Interval.MinorSecond
+//   );
+
+//   public static readonly Second: IntervalType = new IntervalType(
+//     () => Interval.Unison,
+//     () => Interval.MinorSecond,
+//     () => Interval.MajorSecond,
+//     () => Interval.MajorSecond,
+//     () => Interval.AugmentedSecond
+//   );
+
+//   public static readonly Third: IntervalType = new IntervalType(
+//     () => Interval.MajorSecond,
+//     () => Interval.MinorThird,
+//     () => Interval.MajorThird,
+//     () => Interval.MajorThird,
+//     () => Interval.PerfectFourth
+//   );
+
+//   public static readonly Fourth: IntervalType = new IntervalType(
+//     () => Interval.MinorThird,
+//     () => Interval.PerfectFourth,
+//     () => Interval.PerfectFourth,
+//     () => Interval.PerfectFourth,
+//     () => Interval.AugmentedFourth
+//   );
+
+//   public static readonly Fifth: IntervalType = new IntervalType(
+//     () => Interval.DiminishedFifth,
+//     () => Interval.DiminishedFifth,
+//     () => Interval.PerfectFifth,
+//     () => Interval.PerfectFifth,
+//     () => Interval.AugmentedFifth
+//   );
+
+//   public static readonly Sixth: IntervalType = new IntervalType(
+//     () => Interval.PerfectFifth,
+//     () => Interval.MinorSixth,
+//     () => Interval.MajorSixth,
+//     () => Interval.MajorSixth,
+//     () => Interval.MinorSeventh
+//   );
+
+//   public static readonly Seventh: IntervalType = new IntervalType(
+//     () => Interval.DiminishedSeventh,
+//     () => Interval.MinorSeventh,
+//     () => Interval.MajorSeventh,
+//     () => Interval.MajorSeventh,
+//     () => Interval.Unison
+//   );
+// }
 
 export const enum IntervalDirection {
   Ascending,

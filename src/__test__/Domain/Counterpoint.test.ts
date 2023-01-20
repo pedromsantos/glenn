@@ -42,14 +42,14 @@ describe('First species counterpoint', () => {
   test('invalid note (not a chord tone)', () => {
     const parts: CounterPointParts = {
       counterPoint: {
-        phrase: new MelodicPhrase([new Note(Pitch.F, Duration.Whole, Octave.C4)]),
+        phrase: new MelodicPhrase([new Note(Pitch.D, Duration.Whole, Octave.C4)]),
         voice: Voice.Soprano,
       },
       cantusFirmus: new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C4)]),
       cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I]),
     };
 
-    const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
+    const species = FirstSpecies.OnlyChordTonesRule(parts, new Scale(ScalePattern.Ionian, Pitch.C));
 
     expect(species.validate()).toStrictEqual({
       isValid: false,
@@ -124,6 +124,63 @@ describe('First species counterpoint', () => {
       isValid: false,
       index: 1,
       message: 'invalid leap',
+    });
+  });
+
+  test('invalid interval (Major Second)', () => {
+    const parts: CounterPointParts = {
+      counterPoint: {
+        phrase: new MelodicPhrase([new Note(Pitch.D, Duration.Whole, Octave.C4)]),
+        voice: Voice.Bass,
+      },
+      cantusFirmus: new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C4)]),
+      cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I]),
+    };
+
+    const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
+
+    expect(species.validate()).toStrictEqual({
+      isValid: false,
+      index: 0,
+      message: 'invalid interval of a Major Second',
+    });
+  });
+
+  test('invalid interval (Perfect Fourth)', () => {
+    const parts: CounterPointParts = {
+      counterPoint: {
+        phrase: new MelodicPhrase([new Note(Pitch.F, Duration.Whole, Octave.C4)]),
+        voice: Voice.Tenor,
+      },
+      cantusFirmus: new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C4)]),
+      cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I]),
+    };
+
+    const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
+
+    expect(species.validate()).toStrictEqual({
+      isValid: false,
+      index: 0,
+      message: 'invalid interval of a Perfect Fourth',
+    });
+  });
+
+  test('invalid interval (Major Seventh)', () => {
+    const parts: CounterPointParts = {
+      counterPoint: {
+        phrase: new MelodicPhrase([new Note(Pitch.B, Duration.Whole, Octave.C4)]),
+        voice: Voice.Tenor,
+      },
+      cantusFirmus: new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C4)]),
+      cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I]),
+    };
+
+    const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
+
+    expect(species.validate()).toStrictEqual({
+      isValid: false,
+      index: 0,
+      message: 'invalid interval of a Major Seventh',
     });
   });
 });
