@@ -109,7 +109,7 @@ describe('First species counterpoint', () => {
           new Note(Pitch.B, Duration.Whole, Octave.C4),
           new Note(Pitch.C, Duration.Whole, Octave.C4),
         ]),
-        voice: Voice.Tenor,
+        voice: Voice.ContrAlto,
       },
       cantusFirmus: new MelodicPhrase([
         new Note(Pitch.C, Duration.Whole, Octave.C4),
@@ -169,7 +169,7 @@ describe('First species counterpoint', () => {
     const parts: CounterPointParts = {
       counterPoint: {
         phrase: new MelodicPhrase([new Note(Pitch.B, Duration.Whole, Octave.C4)]),
-        voice: Voice.Tenor,
+        voice: Voice.ContrAlto,
       },
       cantusFirmus: new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C4)]),
       cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I]),
