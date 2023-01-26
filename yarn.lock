@@ -1248,7 +1248,11 @@
     semver "^7.3.7"
     tsutils "^3.21.0"
 
+<<<<<<< HEAD
 "@typescript-eslint/utils@5.49.0", "@typescript-eslint/utils@^5.10.0", "@typescript-eslint/utils@^5.36.1":
+=======
+"@typescript-eslint/utils@5.49.0", "@typescript-eslint/utils@^5.10.0":
+>>>>>>> 5b6da089ae855bee29fe5c898acbe9dbcfef8039
   version "5.49.0"
   resolved "https://registry.npmjs.org/@typescript-eslint/utils/-/utils-5.49.0.tgz"
   integrity sha512-cPJue/4Si25FViIb74sHCLtM4nTSBXtLx1d3/QT6mirQ/c65bV8arBEebBJJizfq8W2YyMoPI/WWPFWitmNqnQ==
