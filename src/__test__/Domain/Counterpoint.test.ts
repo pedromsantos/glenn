@@ -17,7 +17,7 @@ describe('First species counterpoint', () => {
     };
 
     const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
-    expect(species.validate()).toStrictEqual({ isValid: true });
+    expect(species.validate()).toStrictEqual([]);
   });
 
   test('invalid note (only whole notes)', () => {
@@ -32,7 +32,7 @@ describe('First species counterpoint', () => {
 
     const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
 
-    expect(species.validate()).toStrictEqual({
+    expect(species.validate()).toContainEqual({
       isValid: false,
       index: 0,
       message: 'not a whole note',
@@ -49,9 +49,9 @@ describe('First species counterpoint', () => {
       cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I]),
     };
 
-    const species = FirstSpecies.WithChordTonesRule(parts, new Scale(ScalePattern.Ionian, Pitch.C));
+    const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
 
-    expect(species.validate()).toStrictEqual({
+    expect(species.validate()).toContainEqual({
       isValid: false,
       index: 0,
       message: 'not a chord tone',
@@ -70,7 +70,7 @@ describe('First species counterpoint', () => {
 
     const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
 
-    expect(species.validate()).toStrictEqual({
+    expect(species.validate()).toContainEqual({
       isValid: false,
       index: 0,
       message: 'not in range',
@@ -95,7 +95,7 @@ describe('First species counterpoint', () => {
 
     const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
 
-    expect(species.validate()).toStrictEqual({
+    expect(species.validate()).toContainEqual({
       isValid: false,
       index: 1,
       message: 'repeated note',
@@ -120,7 +120,7 @@ describe('First species counterpoint', () => {
 
     const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
 
-    expect(species.validate()).toStrictEqual({
+    expect(species.validate()).toContainEqual({
       isValid: false,
       index: 1,
       message: 'invalid leap',
@@ -139,7 +139,7 @@ describe('First species counterpoint', () => {
 
     const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
 
-    expect(species.validate()).toStrictEqual({
+    expect(species.validate()).toContainEqual({
       isValid: false,
       index: 0,
       message: 'invalid interval of a Major Second',
@@ -158,7 +158,7 @@ describe('First species counterpoint', () => {
 
     const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
 
-    expect(species.validate()).toStrictEqual({
+    expect(species.validate()).toContainEqual({
       isValid: false,
       index: 0,
       message: 'invalid interval of a Perfect Fourth',
@@ -177,7 +177,7 @@ describe('First species counterpoint', () => {
 
     const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
 
-    expect(species.validate()).toStrictEqual({
+    expect(species.validate()).toContainEqual({
       isValid: false,
       index: 0,
       message: 'invalid interval of a Major Seventh',

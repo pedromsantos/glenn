@@ -5,9 +5,18 @@
       "options": {
         "parser": "typescript"
       }
+    },
+    {
+      "files": ".json",
+      "options": { "parser": "json" }
+    },
+    {
+      "files": ".*rc",
+      "options": { "parser": "json" }
     }
   ],
   "printWidth": 100,
+  "max_line_length": 120,
   "semi": true,
   "singleQuote": true,
   "tabWidth": 2,

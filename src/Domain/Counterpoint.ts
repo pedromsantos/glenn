@@ -37,18 +37,8 @@ export class FirstSpecies {
     this.rules = new CounterPoinRules(scale);
   }
 
-  validate(): CounterPointRuleStatus {
+  validate(): CounterPointRuleStatus[] {
     return this.rules.apply(this.parts);
-  }
-
-  static WithChordTonesRule(parts: CounterPointParts, scale: Scale): FirstSpecies {
-    const firstSpecies = new FirstSpecies(parts, scale);
-
-    firstSpecies.rules = new CounterPoinRules(scale, [
-      new OnlyChordTones(new SeventhHarmonizer(scale)),
-    ]);
-
-    return firstSpecies;
   }
 }
 
@@ -77,15 +67,11 @@ class CounterPoinRules {
     ];
   }
 
-  apply(parts: CounterPointParts): CounterPointRuleStatus {
-    for (const rule of this.rules) {
-      const status = rule.validate(parts);
-      if (!status.isValid) {
-        return status;
-      }
-    }
-
-    return { isValid: true };
+  apply(parts: CounterPointParts): CounterPointRuleStatus[] {
+    return this.rules.flatMap((r) => {
+      const status = r.validate(parts);
+      return status.isValid ? [] : [status];
+    });
   }
 }
 
