@@ -20,7 +20,12 @@
     "project": "./tsconfig.eslint.json",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint/eslint-plugin", "simple-import-sort", "import"],
+  "plugins": [
+    "@typescript-eslint/eslint-plugin",
+    "simple-import-sort",
+    "import",
+    "hexagonal-architecture"
+  ],
   "rules": {
     "no-console": 1,
     "import/first": "error",
@@ -28,5 +33,13 @@
     "import/no-duplicates": "error",
     "simple-import-sort/exports": "error",
     "simple-import-sort/imports": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["contexts/{backend,frontend}/*/src/**/*.ts"],
+      "rules": {
+        "hexagonal-architecture/enforce": ["error"]
+      }
+    }
+  ]
 }
