@@ -35,15 +35,9 @@ export class Fret {
   }
 
   toTab(ascending = true): TabColumn {
-    const frets: Fret[] = [];
-
-    for (const guitarString of GuitarString.guitarStrings) {
-      if (this.String.equals(guitarString)) {
-        frets.push(this);
-      } else {
-        frets.push(new BlankFret(guitarString));
-      }
-    }
+    const frets: Fret[] = GuitarString.guitarStrings.map((gs) =>
+      this.String.equals(gs) ? this : new BlankFret(gs)
+    );
 
     return ascending ? TabColumn.fromFrets([...frets].reverse()) : TabColumn.fromFrets([...frets]);
   }

@@ -296,14 +296,14 @@ export class ScalePattern {
     return ScalePattern.all;
   }
 
-  public static readonly MajorModePatterns = [
-    ScalePattern.Aolian,
-    ScalePattern.Dorian,
+  public static readonly MajorScaleModePatterns = [
     ScalePattern.Ionian,
-    ScalePattern.Locrian,
+    ScalePattern.Dorian,
+    ScalePattern.Phrygian,
     ScalePattern.Lydian,
     ScalePattern.Mixolydian,
-    ScalePattern.Phrygian,
+    ScalePattern.Aolian,
+    ScalePattern.Locrian,
   ];
 }
 
