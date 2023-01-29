@@ -31,7 +31,7 @@ describe('Blank fret should', () => {
 
 describe('Guitar matrix should', () => {
   describe('render', () => {
-    test('note F on sixth string', () => {
+    test('note F on sixth string 1st fret', () => {
       const tabColumn = new Fret(GuitarString.Sixth, 1).toTab();
 
       expect(new TabMatrix(tabColumn).render()).toStrictEqual([['-', '-', '-', '-', '-', '1']]);
@@ -53,7 +53,7 @@ E|--|`;
       expect(tab.render(new TabMatrix())).toBe(expectedTab);
     });
 
-    test('tunning + start + rest + end', () => {
+    test('render tuning + start + rest + end', () => {
       const renderedTab = new Tab().renderColumn(TabColumn.Rest);
 
       const expectedTab = `e|---|
