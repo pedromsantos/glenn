@@ -241,7 +241,7 @@ E|---|`;
           expect(renderedTab).toBe(expectedTab);
         });
 
-        test('from thord string', () => {
+        test('triad from third string', () => {
           const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
           const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Third);
           const renderedTab = new Tab().render(new TabMatrix(guitarChord.toTab()));
