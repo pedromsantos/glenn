@@ -33,8 +33,7 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "target": "ES2015"
+    "target": "ES5"
   },
-  "exclude": ["node_modules/**/*", "src/**/*.test.ts", "src/__test__/utils.ts"],
   "include": ["src/**/*.ts"]
 }

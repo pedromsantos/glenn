@@ -1,6 +1,9 @@
 build/
 dist/
 lib/
+tools/
 node_modules/
 .snapshots/
 *.min.js
+*.config.js
+*.config.ts
