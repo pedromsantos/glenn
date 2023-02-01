@@ -55,8 +55,8 @@
     "@stryker-mutator/jest-runner": "^6.3.1",
     "@stryker-mutator/typescript-checker": "^6.3.1",
     "@types/jest": "^28.1.7",
-    "@typescript-eslint/eslint-plugin": "^5.49.0",
-    "@typescript-eslint/parser": "^5.49.0",
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "@typescript-eslint/parser": "^5.50.0",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-hexagonal-architecture": "^1.0.3",
@@ -74,7 +74,7 @@
     "ts-coverage": "^0.1.5",
     "ts-jest": "^28.0.8",
     "type-coverage": "^2.24.1",
-    "typescript": "^4.9.4",
+    "typescript": "^4.9.5",
     "typescript-coverage-report": "^0.7.0"
   },
   "husky": {
