@@ -1,5 +1,11 @@
 {
-  "collectCoverageFrom": ["src/**/*.ts", "!lib/**/*.*", "!src/__test__/utils.ts", "!src/index.ts"],
+  "collectCoverageFrom": [
+    "src/**/*.ts",
+    "!lib/**/*.*",
+    "!tools/**/*.*",
+    "!src/__test__/**/*.*",
+    "!src/index.ts"
+  ],
   "coverageReporters": ["json", "lcov", "text", "html"],
   "coverageThreshold": {
     "global": {
