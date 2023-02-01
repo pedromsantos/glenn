@@ -47,9 +47,7 @@
     "types-report": "typescript-coverage-report --threshold 99",
     "prepare": "husky install"
   },
-  "dependencies": {
-    "@babel/preset-env": "^7.20.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
@@ -67,6 +65,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-sonarjs": "^0.18.0",
+    "@babel/preset-env": "^7.20.2",
     "fast-check": "^3.6.2",
     "husky": "^8.0.3",
     "jest": "^28.1.3",
