@@ -47,7 +47,9 @@
     "types-report": "typescript-coverage-report --threshold 99",
     "prepare": "husky install"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@babel/preset-env": "^7.20.2"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
