@@ -57,7 +57,7 @@ export class SimpleTimeSignature extends TimeSignature {
 export class CompoundTimeSignature extends TimeSignature {
   constructor(pulses: number, duration: Duration, bpm = 60) {
     if (pulses % 3 !== 0) {
-      throw new RangeError('Compond signatures pulse must be divisible by 3');
+      throw new RangeError('Compound signatures pulse must be divisible by 3');
     }
 
     super(pulses / 3, duration, bpm);
