@@ -11,8 +11,8 @@
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "isolatedModules": true,
-    "lib": ["ES2020"],
-    "module": "ES2020",
+    "lib": ["ES2022"],
+    "module": "ES2022",
     "moduleResolution": "Node",
     "noEmit": false,
     "noFallthroughCasesInSwitch": true,
@@ -33,7 +33,7 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "target": "ES5"
+    "target": "ES2022"
   },
   "include": ["src/**/*.ts"]
 }

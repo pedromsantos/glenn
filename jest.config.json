@@ -1,18 +1,19 @@
 {
   "collectCoverageFrom": [
     "src/**/*.ts",
-    "!lib/**/*.*",
-    "!tools/**/*.*",
-    "!src/__test__/**/*.*",
-    "!src/index.ts"
+    "!lib/**/*",
+    "!tools/**/*",
+    "!src/__test__/**/*",
+    "!src/index.ts",
+    "!babel.config.js"
   ],
   "coverageReporters": ["json", "lcov", "text", "html"],
   "coverageThreshold": {
     "global": {
-      "branches": 85,
-      "functions": 95,
-      "lines": 95,
-      "statements": 95
+      "branches": 90,
+      "functions": 98,
+      "lines": 98,
+      "statements": 98
     }
   },
   "preset": "ts-jest",
