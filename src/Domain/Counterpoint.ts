@@ -51,12 +51,7 @@ interface CounterPointRuleStatus {
 class CounterPoinRules {
   private rules: CounterPointRule[] = [];
 
-  constructor(scale: Scale, rules?: CounterPointRule[]) {
-    if (rules) {
-      this.rules = rules;
-      return;
-    }
-
+  constructor(scale: Scale) {
     this.rules = [
       new OnlyWholeToneNotes(),
       new OnlyNotesInRange(),
