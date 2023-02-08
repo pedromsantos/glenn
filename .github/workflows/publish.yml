@@ -1,6 +1,7 @@
-name: build
-
-on: push
+name: Publish Package to npmjs
+on:
+  release:
+    types: [published]
 
 jobs:
   build:
@@ -42,3 +43,11 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
