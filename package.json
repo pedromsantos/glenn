@@ -1,6 +1,6 @@
 {
   "name": "glenn",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Module for working with music theory concepts",
   "author": "Pedro Moreira Santos",
   "homepage": "https://github.com/pedromsantos/glenn",
@@ -15,12 +15,17 @@
   "license": "MIT",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
-  "types": "dist/types/index.d.js",
+  "types": "./lib/cjs/index.d.js",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "files": [
-    "lib/"
+    "lib/cjs",
+    "lib/esm",
+    "License.md",
+    "README.md",
+    "package.json"
   ],
   "repository": {
     "type": "git",
@@ -37,10 +42,9 @@
     "precommit": "npm-run-all -p clean lint types test:ci build",
     "test:ci": "jest --coverage --no-cache --runInBand",
     "mutants": "stryker run",
-    "build": "yarn build:cjs && yarn build:esm && yarn build:types",
-    "build:cjs": "node tools/cleanup cjs && tsc -p tsconfig.cjs.json",
-    "build:esm": "node tools/cleanup esm && tsc -p tsconfig.json",
-    "build:types": "node tools/cleanup cjs && tsc -p tsconfig.types.json",
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "node tools/cleanup cjs && tsc -p tsconfig.cjs.json && node tools/cleanup cjs/__test__",
+    "build:esm": "node tools/cleanup esm && tsc -p tsconfig.json  && node tools/cleanup esm/__test__",
     "lint": "eslint . --color --ext .ts --ignore-pattern 'node_modules/'",
     "lint:fix": "eslint . --ext .ts --ignore-pattern 'node_modules/' --fix",
     "types": "type-coverage -at-least 99",
