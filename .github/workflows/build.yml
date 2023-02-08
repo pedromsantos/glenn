@@ -35,6 +35,9 @@ jobs:
       - name: Test
         run: yarn test:ci
 
+      - name: Increase patch in version
+        run: yarn version patch
+
       - name: Build
         run: yarn build
 
