@@ -315,27 +315,30 @@ export class GuitarChord implements Iterable<Fret> {
 
   public static fromBassString(chord: Chord, bass: GuitarString): GuitarChord {
     const guitarChord = new GuitarChord();
-    let guitarString = bass;
+    const guitarString = bass;
 
+    guitarChord.map(chord, guitarString);
+    guitarChord.adjustOctaves();
+    guitarChord.chordFrets.reverse();
+    return guitarChord;
+  }
+
+  private map(chord: Chord, guitarString: GuitarString) {
     for (const pitch of chord) {
       let fret = guitarString.fretFor(pitch);
 
-      if (pitch != chord.Bass && guitarChord.isTooFar(fret)) {
+      if (pitch != chord.Bass && this.isTooFar(fret)) {
         fret = fret.raiseOctave();
       }
 
-      if (pitch != chord.Bass && guitarChord.isTooFar(fret)) {
+      if (pitch != chord.Bass && this.isTooFar(fret)) {
         guitarString = guitarString.NextAscending;
         fret = guitarString.fretFor(pitch);
       }
 
-      guitarChord.addFretFor(fret, guitarString);
+      this.addFretFor(fret, guitarString);
       guitarString = guitarString.NextAscending;
     }
-
-    guitarChord.adjustOctaves();
-    guitarChord.chordFrets.reverse();
-    return guitarChord;
   }
 
   private addFretFor(fret: Fret, guitarString: GuitarString) {

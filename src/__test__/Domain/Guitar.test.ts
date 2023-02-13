@@ -129,7 +129,7 @@ describe('Guitar String should', () => {
       });
     });
 
-    test('convert to fret', () => {
+    test('convert to fret bellow 12th fret', () => {
       fc.assert(
         fc.property(
           fc.constantFrom(...GuitarString.guitarStrings),
