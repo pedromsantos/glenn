@@ -9,7 +9,7 @@
     },
     {
       "type": "npm",
-      "script": "test:ci",
+      "script": "test",
       "group": "test",
       "label": "test"
     }
