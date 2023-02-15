@@ -129,7 +129,7 @@ export class Duration {
   );
   public static readonly DoubleDottedHalf: Duration = new Duration(
     'Double Dotted Half',
-    Duration.Half.duration * this.dotMultiplier,
+    Duration.Half.duration * this.doubleDotMultiplier,
     Duration.Half.tick * this.doubleDotMultiplier
   );
   public static readonly DottedHalf: Duration = new Duration(
@@ -144,7 +144,7 @@ export class Duration {
   );
   public static readonly DoubleDottedQuarter: Duration = new Duration(
     'Double Dotted Quarter',
-    Duration.Quarter.duration * this.dotMultiplier,
+    Duration.Quarter.duration * this.doubleDotMultiplier,
     this.ticksPerQuarterNote * this.doubleDotMultiplier
   );
   public static readonly DottedQuarter: Duration = new Duration(
@@ -159,7 +159,7 @@ export class Duration {
   );
   public static readonly DoubleDottedEighth: Duration = new Duration(
     'Double Dotted Quarter',
-    Duration.Eighth.duration * this.dotMultiplier,
+    Duration.Eighth.duration * this.doubleDotMultiplier,
     Duration.Eighth.tick * this.doubleDotMultiplier
   );
   public static readonly DottedEighth: Duration = new Duration(
@@ -174,7 +174,7 @@ export class Duration {
   );
   public static readonly DoubleDottedSixteenth: Duration = new Duration(
     'Double Dotted Sixteenth',
-    Duration.Sixteenth.duration * this.dotMultiplier,
+    Duration.Sixteenth.duration * this.doubleDotMultiplier,
     Duration.Sixteenth.tick * this.doubleDotMultiplier
   );
   public static readonly DottedSixteenth: Duration = new Duration(
@@ -189,7 +189,7 @@ export class Duration {
   );
   public static readonly DoubleDottedThirtySecond: Duration = new Duration(
     'Double Dotted ThirtySecond',
-    Duration.ThirtySecond.duration * this.dotMultiplier,
+    Duration.ThirtySecond.duration * this.doubleDotMultiplier,
     Duration.ThirtySecond.tick * this.doubleDotMultiplier
   );
   public static readonly DottedThirtySecond: Duration = new Duration(
@@ -299,10 +299,6 @@ export class Measure {
   }
 
   add(duration: Duration): Measure {
-    if (this.timeSignature.toFillMeasure(duration) < 1) {
-      throw new RangeError(`cannot fit -${duration.Name} note in measure`);
-    }
-
     if (this.phrase.ticks + duration.tick > this.timeSignature.ticksPerMeasure) {
       throw new RangeError(`cannot fit -${duration.Name} note in measure`);
     }
