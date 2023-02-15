@@ -380,6 +380,13 @@ describe('Chords should', () => {
     expect(Array.from(chord.drop2())).toStrictEqual(expectedPitches);
   });
 
+  test('not be able to be transformed into drop 2 chords when its a 3 note chord', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G];
+    expect(Array.from(chord.drop2())).toStrictEqual(expectedPitches);
+  });
+
   test('be able to be transformed drop 2 chords to closed chords', () => {
     const chord = new ClosedChord(Pitch.C, ChordPattern.Major7).drop2();
 
@@ -391,6 +398,13 @@ describe('Chords should', () => {
     const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
 
     const expectedPitches = [Pitch.C, Pitch.B, Pitch.E, Pitch.G];
+    expect(Array.from(chord.drop3())).toStrictEqual(expectedPitches);
+  });
+
+  test('not be able to be transformed into drop 3 chords when its a 3 note chord', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+
+    const expectedPitches = [Pitch.C, Pitch.E, Pitch.G];
     expect(Array.from(chord.drop3())).toStrictEqual(expectedPitches);
   });
 
