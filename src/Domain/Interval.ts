@@ -51,7 +51,7 @@ export class Interval {
   }
 
   public static readonly Unison: Interval = new Interval(
-    'Unisson',
+    'Unison',
     'U',
     0,
     IntervalQuality.Perfect,
