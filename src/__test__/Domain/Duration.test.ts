@@ -8,7 +8,7 @@ import {
 } from '../../Domain/Duration';
 
 describe('SimpleTimeSignature', () => {
-  test('Beat duration in miliseconds', () => {
+  test('Beat duration in milliseconds', () => {
     const timeSignature44 = new SimpleTimeSignature(4, Duration.Quarter, 60);
     const timeSignature34 = new SimpleTimeSignature(3, Duration.Quarter, 60);
     const timeSignature24 = new SimpleTimeSignature(2, Duration.Quarter, 60);
@@ -32,7 +32,7 @@ describe('SimpleTimeSignature', () => {
     expect(timeSignature24.beatDurationTicks).toBe(Duration.Quarter.tick);
   });
 
-  test('Note durations in miliseconds', () => {
+  test('Note durations in milliseconds', () => {
     const timeSignature = new SimpleTimeSignature(4, Duration.Quarter, 60);
 
     const wholeNoteExpectedDuration = 4000;
@@ -48,7 +48,7 @@ describe('SimpleTimeSignature', () => {
     expect(timeSignature.milisecondsFor(Duration.SixtyFourth)).toBe(wholeNoteExpectedDuration / 64);
   });
 
-  test('Measure durations in miliseconds', () => {
+  test('Measure durations in milliseconds', () => {
     const timeSignature = new SimpleTimeSignature(4, Duration.Quarter, 60);
 
     const expectedDuration = 4000;
@@ -100,7 +100,7 @@ describe('CompoundTimeSignature', () => {
     expect(() => new CompoundTimeSignature(7, Duration.Eighth, 60)).toThrow();
   });
 
-  test('Beat duration in miliseconds', () => {
+  test('Beat duration in milliseconds', () => {
     const timeSignature = new CompoundTimeSignature(6, Duration.Eighth, 60);
 
     expect(timeSignature.beatDurationMiliseconds).toBe(1000);
@@ -118,7 +118,7 @@ describe('CompoundTimeSignature', () => {
     expect(timeSignature.beatDurationTicks).toBe(Duration.Eighth.tick);
   });
 
-  test('Note durations in miliseconds', () => {
+  test('Note durations in milliseconds', () => {
     const timeSignature = new CompoundTimeSignature(6, Duration.Eighth, 60);
 
     const wholeNoteExpectedDuration = 8000;
@@ -134,7 +134,7 @@ describe('CompoundTimeSignature', () => {
     expect(timeSignature.milisecondsFor(Duration.SixtyFourth)).toBe(wholeNoteExpectedDuration / 64);
   });
 
-  test('Measure durations in miliseconds', () => {
+  test('Measure durations in milliseconds', () => {
     const timeSignature = new CompoundTimeSignature(6, Duration.Eighth, 60);
 
     const expectedDuration = 2000;
@@ -223,6 +223,23 @@ describe('Duration', () => {
     test.each(cases)('Measure', (duration: Duration, ticks: number) => {
       expect(duration.tick).toBe(ticks);
     });
+
+    test('create from value', () => {
+      expect(Duration.From(2.0)).toBe(Duration.Double);
+      expect(Duration.From(1.0)).toBe(Duration.Whole);
+      expect(Duration.From(0.5)).toBe(Duration.Half);
+      expect(Duration.From(0.5 * 1.75)).toBe(Duration.DoubleDottedHalf);
+      expect(Duration.From(0.5 * 1.5)).toBe(Duration.DottedHalf);
+      expect(Duration.From(0.25)).toBe(Duration.Quarter);
+      expect(Duration.From(0.25 * 1.75)).toBe(Duration.DoubleDottedQuarter);
+      expect(Duration.From(0.25 * 1.5)).toBe(Duration.DottedQuarter);
+      expect(Duration.From(1.0 / 8.0)).toBe(Duration.Eighth);
+      expect(Duration.From((1.0 / 8.0) * 1.75)).toBe(Duration.DoubleDottedEighth);
+      expect(Duration.From((1.0 / 8.0) * 1.5)).toBe(Duration.DottedEighth);
+      expect(Duration.From(1.0 / 16.0)).toBe(Duration.Sixteenth);
+      expect(Duration.From(1.0 / 32.0)).toBe(Duration.ThirtySecond);
+      expect(Duration.From(1.0 / 64.0)).toBe(Duration.SixtyFourth);
+    });
   });
 });
 
@@ -234,11 +251,11 @@ describe('BeatsPerMinute', () => {
       expect(bpm.seconds()).toBe(0.5);
     });
 
-    test('time in miliseconds for a beat', () => {
+    test('time in milliseconds for a beat', () => {
       expect(bpm.miliSeconds()).toBe(500);
     });
 
-    test('time in miliseconds for a measure of 4 beats', () => {
+    test('time in milliseconds for a measure of 4 beats', () => {
       expect(bpm.miliSeconds(4)).toBe(2000);
     });
 
@@ -282,15 +299,15 @@ describe('BeatsPerMinute', () => {
       expect(bpm.miliSecondsFor(Duration.Half)).toBe(2000);
     });
 
-    test('time in miliseconds for quarter note', () => {
+    test('time in milliseconds for quarter note', () => {
       expect(bpm.miliSecondsFor(Duration.Quarter)).toBe(1000);
     });
 
-    test('time in miliseconds for eighth note', () => {
+    test('time in milliseconds for eighth note', () => {
       expect(bpm.miliSecondsFor(Duration.Eighth)).toBe(500);
     });
 
-    test('time in miliseconds for sixteenth note', () => {
+    test('time in milliseconds for sixteenth note', () => {
       expect(bpm.miliSecondsFor(Duration.Sixteenth)).toBe(250);
     });
   });
@@ -313,15 +330,15 @@ describe('BeatsPerMinute', () => {
       expect(bpm.miliSecondsFor(Duration.Half)).toBe(4000);
     });
 
-    test('time in miliseconds for 1/4 note', () => {
+    test('time in milliseconds for 1/4 note', () => {
       expect(bpm.miliSecondsFor(Duration.Quarter)).toBe(2000);
     });
 
-    test('time in miliseconds for 1/8 note', () => {
+    test('time in milliseconds for 1/8 note', () => {
       expect(bpm.miliSecondsFor(Duration.Eighth)).toBe(1000);
     });
 
-    test('time in miliseconds for 1/16 note', () => {
+    test('time in milliseconds for 1/16 note', () => {
       expect(bpm.miliSecondsFor(Duration.Sixteenth)).toBe(500);
     });
   });
@@ -364,7 +381,7 @@ describe('Measure in 4/4', () => {
     ).toBeInstanceOf(FullMeasure);
   });
 
-  test('2 dottet quarter notes and a quarter note fill it', () => {
+  test('2 dotted quarter notes and a quarter note fill it', () => {
     const measure = new Measure(timeSignature);
 
     expect(

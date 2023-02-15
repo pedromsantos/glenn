@@ -373,8 +373,7 @@ describe('Pitch', () => {
           const newPitch = pitch.sharp().flat();
 
           expect(newPitch.NumericValue).toBe(pitch.NumericValue);
-        }),
-        { verbose: true }
+        })
       );
     });
 
@@ -384,8 +383,7 @@ describe('Pitch', () => {
           const newPitch = pitch.natural();
 
           expect(newPitch.Name[0]).toBe(pitch.Name[0]);
-        }),
-        { verbose: true }
+        })
       );
     });
 
@@ -395,8 +393,7 @@ describe('Pitch', () => {
           const newPitch = pitch.flat().sharp();
 
           expect(newPitch.NumericValue).toBe(pitch.NumericValue);
-        }),
-        { verbose: true }
+        })
       );
     });
 
@@ -408,8 +405,7 @@ describe('Pitch', () => {
           } else {
             expect(pitch.sharp().NumericValue).toBeGreaterThan(pitch.NumericValue);
           }
-        }),
-        { verbose: true }
+        })
       );
     });
 
@@ -421,8 +417,7 @@ describe('Pitch', () => {
           } else {
             expect(pitch.flat().NumericValue).toBeLessThan(pitch.NumericValue);
           }
-        }),
-        { verbose: true }
+        })
       );
     });
 
@@ -432,8 +427,7 @@ describe('Pitch', () => {
           const from = Pitch.From(pitch.To);
 
           expect(pitch.NumericValue).toBe(from?.NumericValue);
-        }),
-        { verbose: true }
+        })
       );
     });
 
@@ -451,8 +445,7 @@ describe('Pitch', () => {
           } else {
             expect(pitch.absoluteDistance(transposed)).toBe(distance);
           }
-        }),
-        { verbose: true }
+        })
       );
     });
 
@@ -470,8 +463,7 @@ describe('Pitch', () => {
           } else {
             expect(pitch.absoluteDistance(transposed)).toBe(12 - distance);
           }
-        }),
-        { verbose: true }
+        })
       );
     });
 
@@ -553,8 +545,7 @@ describe('Pitch', () => {
                 expect(resultingInterval).toBe(interval);
             }
           }
-        ),
-        { verbose: true }
+        )
       );
     });
   });

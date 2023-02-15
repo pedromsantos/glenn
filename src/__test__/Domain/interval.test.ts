@@ -43,8 +43,7 @@ describe('Interval', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Interval.unique), (interval: Interval) => {
           expect(interval.invert().invert()).toStrictEqual(interval);
-        }),
-        { verbose: true }
+        })
       );
     });
 
@@ -52,8 +51,22 @@ describe('Interval', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Interval.unique), (interval: Interval) => {
           expect(interval.invert().invert().To).toStrictEqual(interval.To);
-        }),
-        { verbose: true }
+        })
+      );
+    });
+
+    test('Major 13 interval bigger than other intervals', () => {
+      fc.assert(
+        fc.property(fc.constantFrom(...Interval.intervals), (interval: Interval) => {
+          const largerInterval = Interval.MajorThirteenth;
+
+          if (interval === Interval.MajorThirteenth) {
+            expect(largerInterval.isLargarThan(interval)).toBeFalsy();
+            return;
+          }
+
+          expect(largerInterval.isLargarThan(interval)).toBeTruthy();
+        })
       );
     });
 
@@ -95,8 +108,7 @@ describe('Interval', () => {
             default:
               expect(interval.invert().invert()).toBe(interval);
           }
-        }),
-        { verbose: true }
+        })
       );
     });
 
@@ -129,8 +141,7 @@ describe('Interval', () => {
             default:
               expect(interval.raiseOctave()).not.toBe(interval);
           }
-        }),
-        { verbose: true }
+        })
       );
     });
   });

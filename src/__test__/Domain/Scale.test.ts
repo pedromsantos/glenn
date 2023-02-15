@@ -6,6 +6,23 @@ import { ScaleDegree, ScalePattern, SeventhHarmonizer, TriadHarmonizer } from '.
 import { convertPitchesToDistances } from '../utils';
 
 describe('Scale properties', () => {
+  test('Converting to thirds', () => {
+    const scaleDegrees = [
+      ScaleDegree.I,
+      ScaleDegree.II,
+      ScaleDegree.III,
+      ScaleDegree.IV,
+      ScaleDegree.V,
+      ScaleDegree.VI,
+      ScaleDegree.VII,
+    ];
+    fc.assert(
+      fc.property(fc.constantFrom(...scaleDegrees), (scaleDegree: ScaleDegree) => {
+        expect(ScalePattern.Ionian.createScale(Pitch.C).thirdsFrom(scaleDegree)).toHaveLength(7);
+      })
+    );
+  });
+
   test('any Dorian should have same notes as C Dorian transposed by the interval from C to pitch', () => {
     fc.assert(
       fc.property(fc.constantFrom(...Pitch.natural), (pitch) => {
@@ -23,8 +40,7 @@ describe('Scale properties', () => {
         const transposedCScale = scalePitchesC.map((pitch) => pitch.transpose(intervalToC));
 
         expect(scalePitches).toStrictEqual(transposedCScale);
-      }),
-      { verbose: true }
+      })
     );
   });
 
@@ -382,7 +398,7 @@ describe('C Scales', () => {
     ]);
   });
 
-  test('Dominantb5DiminishedScale should have notes C D E F Gb G# Bb B', () => {
+  test('Dominantb5Diminished Scale should have notes C D E F Gb G# Bb B', () => {
     expect(Array.from(ScalePattern.Dominantb5Diminished.createScale(Pitch.C))).toStrictEqual([
       Pitch.C,
       Pitch.D,
