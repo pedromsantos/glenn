@@ -1,6 +1,6 @@
 import * as fc from 'fast-check';
 
-import { Fret, GuitarMelodicLine, GuitarString, Position } from '../../Domain/Guitar';
+import { BlankFret, Fret, GuitarMelodicLine, GuitarString, Position } from '../../Domain/Guitar';
 import Pitch, { MelodicLine, MelodicLineDirection } from '../../Domain/Pitch';
 
 describe('Fret should', () => {
@@ -26,6 +26,32 @@ describe('Fret should', () => {
         }
       )
     );
+  });
+
+  test('still be a blank fret when raised by an octave', () => {
+    const fret = new BlankFret();
+
+    expect(fret.raiseOctave().Number).toBe(-1);
+  });
+
+  test('not be within a range when a blank fret', () => {
+    const fret = new BlankFret();
+
+    expect(fret.isWithin(new BlankFret(), new BlankFret())).toBeFalsy();
+  });
+
+  test('Not be equal if not on same string', () => {
+    const fret1 = new Fret(GuitarString.First, 1);
+    const fret2 = new Fret(GuitarString.Second, 1);
+
+    expect(fret1.equals(fret2)).toBeFalsy();
+  });
+
+  test('Not be equal if not on same fret', () => {
+    const fret1 = new Fret(GuitarString.First, 1);
+    const fret2 = new Fret(GuitarString.First, 2);
+
+    expect(fret1.equals(fret2)).toBeFalsy();
   });
 
   test('be equal if they have same fret number and same string', () => {

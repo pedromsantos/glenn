@@ -83,8 +83,7 @@ export class BlankFret extends Fret {
     return new BlankFret(this.string, -1);
   }
 
-  /* istanbul ignore next */
-  override isWithin() {
+  override isWithin(_lowFret: Fret, _highFret: Fret, _lowerMargin = 0, _higherMargin = 0) {
     return false;
   }
 }
@@ -327,11 +326,11 @@ export class GuitarChord implements Iterable<Fret> {
     for (const pitch of chord) {
       let fret = guitarString.fretFor(pitch);
 
-      if (pitch != chord.Bass && this.isTooFar(fret)) {
+      if (this.isTooFar(fret)) {
         fret = fret.raiseOctave();
       }
 
-      if (pitch != chord.Bass && this.isTooFar(fret)) {
+      if (this.isTooFar(fret)) {
         guitarString = guitarString.NextAscending;
         fret = guitarString.fretFor(pitch);
       }
@@ -389,7 +388,7 @@ export class GuitarChord implements Iterable<Fret> {
   }
 
   private adjustOctaves() {
-    if (this.chordFrets.some((f) => f.Number > 8) && this.chordFrets.some((f) => f.Number == 0)) {
+    if (this.chordFrets.some((f) => f.Number === 0) && this.chordFrets.some((f) => f.Number > 3)) {
       this.chordFrets = this.chordFrets.map((f) => (f.Number === 0 ? f.raiseOctave() : f));
     }
   }
@@ -445,14 +444,9 @@ export class GuitarMelodicLine implements Iterable<Fret> {
   }
 
   private skipMappedString(line: Fret[], guitarString: GuitarString) {
-    if (line.length > 0) {
-      const lastFret = line[line.length - 1];
-      if (lastFret !== undefined && guitarString.isLowerThan(lastFret?.String)) {
-        return true;
-      }
-    }
+    const lastFret = line[line.length - 1];
 
-    return false;
+    return lastFret && guitarString.isLowerThan(lastFret.String);
   }
 
   private mapPitch(pitch: Pitch, guitarString: GuitarString, line: Fret[]): boolean {
