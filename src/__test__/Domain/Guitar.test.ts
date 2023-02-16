@@ -17,7 +17,7 @@ describe('Fret should', () => {
   test('raise by an octave', () => {
     fc.assert(
       fc.property(
-        fc.constantFrom(...GuitarString.guitarStrings),
+        fc.constantFrom(...GuitarString.standardTunning),
         fc.nat({ max: 11 }),
         (guitarString, fretNumber) => {
           const octaveFret = new Fret(guitarString, fretNumber).raiseOctave();
@@ -57,7 +57,7 @@ describe('Fret should', () => {
   test('be equal if they have same fret number and same string', () => {
     fc.assert(
       fc.property(
-        fc.constantFrom(...GuitarString.guitarStrings),
+        fc.constantFrom(...GuitarString.standardTunning),
         fc.nat({ max: 11 }),
         (guitarString, fretNumber) => {
           const fret1 = new Fret(guitarString, fretNumber);
@@ -72,7 +72,7 @@ describe('Fret should', () => {
   test('be within a fret range', () => {
     fc.assert(
       fc.property(
-        fc.constantFrom(...GuitarString.guitarStrings),
+        fc.constantFrom(...GuitarString.standardTunning),
         fc.nat({ max: 11 }),
         (guitarString, fretNumber) => {
           const fret = new Fret(guitarString, fretNumber);
@@ -88,7 +88,7 @@ describe('Fret should', () => {
   test('convert to tab', () => {
     fc.assert(
       fc.property(
-        fc.constantFrom(...GuitarString.guitarStrings),
+        fc.constantFrom(...GuitarString.standardTunning),
         fc.nat({ max: 11 }),
         (guitarString, fretNumber) => {
           const fret = new Fret(guitarString, fretNumber);
@@ -106,21 +106,21 @@ describe('Fret should', () => {
 describe('Guitar String should', () => {
   test('move ascending across strings', () => {
     for (let i = 0; i < 5; i++) {
-      expect(GuitarString.guitarStrings?.[i]?.NextAscending).toBe(
-        GuitarString.guitarStrings[i + 1]
+      expect(GuitarString.standardTunning?.[i]?.NextAscending).toBe(
+        GuitarString.standardTunning[i + 1]
       );
     }
 
-    expect(GuitarString.guitarStrings?.[5]?.NextAscending).toBe(GuitarString.First);
+    expect(GuitarString.standardTunning?.[5]?.NextAscending).toBe(GuitarString.First);
   });
 
   test('move descending across strings', () => {
-    const strings = GuitarString.guitarStrings.reverse();
+    const strings = GuitarString.standardTunning.reverse();
     for (let i = 0; i < 5; i++) {
       expect(strings?.[i]?.NextDescending).toBe(strings[i + 1]);
     }
 
-    expect(GuitarString.guitarStrings?.[5]?.NextDescending).toBe(GuitarString.Sixth);
+    expect(GuitarString.standardTunning?.[5]?.NextDescending).toBe(GuitarString.Sixth);
   });
 
   describe('Map pitches to frets on Sixth string', () => {
@@ -158,7 +158,7 @@ describe('Guitar String should', () => {
     test('convert to fret bellow 12th fret', () => {
       fc.assert(
         fc.property(
-          fc.constantFrom(...GuitarString.guitarStrings),
+          fc.constantFrom(...GuitarString.standardTunning),
           fc.constantFrom(...Pitch.pitches),
           (guitarString, pitch) => {
             const fret = guitarString.fretFor(pitch);

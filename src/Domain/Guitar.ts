@@ -34,8 +34,8 @@ export class Fret {
     );
   }
 
-  toTab(ascending = true): TabColumn {
-    const frets: Fret[] = GuitarString.guitarStrings.map((gs) =>
+  toTab(ascending = true, guitarStrings: GuitarString[] = GuitarString.standardTunning): TabColumn {
+    const frets: Fret[] = guitarStrings.map((gs) =>
       this.String.equals(gs) ? this : new BlankFret(gs)
     );
 
@@ -161,7 +161,7 @@ export class GuitarString {
     () => GuitarString.Second
   );
 
-  static get guitarStrings(): GuitarString[] {
+  static get standardTunning(): GuitarString[] {
     return GuitarString.all;
   }
 
@@ -299,30 +299,33 @@ export class GuitarChord implements Iterable<Fret> {
     }
   }
 
-  public static inPosition(chord: Chord, position: Position): GuitarChord {
+  public static inPosition(
+    chord: Chord,
+    position: Position,
+    guitarStrings: GuitarString[] = GuitarString.standardTunning
+  ): GuitarChord {
     const guitarChord = new GuitarChord();
     guitarChord.position = position;
 
     if (position === Position.Open) {
-      guitarChord.chordFrets = guitarChord.mapOpenPositionChord(chord).reverse();
+      guitarChord.chordFrets = guitarChord.mapOpenPositionChord(chord, guitarStrings).reverse();
       return guitarChord;
     }
 
-    guitarChord.chordFrets = guitarChord.mapNonOpenePositionChord(chord).reverse();
+    guitarChord.chordFrets = guitarChord.mapNonOpenePositionChord(chord, guitarStrings).reverse();
     return guitarChord;
   }
 
   public static fromBassString(chord: Chord, bass: GuitarString): GuitarChord {
     const guitarChord = new GuitarChord();
-    const guitarString = bass;
 
-    guitarChord.map(chord, guitarString);
+    guitarChord.mapFromBassString(chord, bass);
     guitarChord.adjustOctaves();
     guitarChord.chordFrets.reverse();
     return guitarChord;
   }
 
-  private map(chord: Chord, guitarString: GuitarString) {
+  private mapFromBassString(chord: Chord, guitarString: GuitarString) {
     for (const pitch of chord) {
       let fret = guitarString.fretFor(pitch);
 
@@ -344,10 +347,10 @@ export class GuitarChord implements Iterable<Fret> {
     this.chordFrets[guitarString.Index - 1] = fret;
   }
 
-  private mapOpenPositionChord(chord: Chord): Fret[] {
+  private mapOpenPositionChord(chord: Chord, guitarStrings: GuitarString[]): Fret[] {
     const mappedeFrets: Fret[] = [];
 
-    for (const guitarString of GuitarString.guitarStrings) {
+    for (const guitarString of guitarStrings) {
       for (const pitch of chord) {
         const fret = guitarString.fretFor(pitch);
 
@@ -361,11 +364,11 @@ export class GuitarChord implements Iterable<Fret> {
     return mappedeFrets;
   }
 
-  private mapNonOpenePositionChord(chord: Chord): Fret[] {
+  private mapNonOpenePositionChord(chord: Chord, guitarStrings: GuitarString[]): Fret[] {
     const mappedPitches: Pitch[] = [];
     const mappedeFrets: Fret[] = [];
 
-    for (const guitarString of GuitarString.guitarStrings) {
+    for (const guitarString of guitarStrings) {
       for (const pitch of chord) {
         if (mappedPitches.find((p) => p === pitch)) {
           continue;
@@ -405,10 +408,14 @@ export class GuitarMelodicLine implements Iterable<Fret> {
   private readonly melodicLineDirection: MelodicLineDirection = MelodicLineDirection.Ascending;
   private readonly position: Position = Position.Open;
 
-  constructor(melodicLine: MelodicLine, position: Position) {
+  constructor(
+    melodicLine: MelodicLine,
+    position: Position,
+    guitarStrings: GuitarString[] = GuitarString.standardTunning
+  ) {
     this.position = position;
     this.melodicLineDirection = melodicLine.Direction;
-    this.line = this.mapMelodicLine(melodicLine);
+    this.line = this.mapMelodicLine(melodicLine, guitarStrings);
   }
 
   toTab(): TabMatrix {
@@ -418,12 +425,12 @@ export class GuitarMelodicLine implements Iterable<Fret> {
     return new TabMatrix(...column);
   }
 
-  private mapMelodicLine(melodicLine: MelodicLine): Fret[] {
+  private mapMelodicLine(melodicLine: MelodicLine, guitarStrings: GuitarString[]): Fret[] {
     const line: Fret[] = [];
-    const guitarStrings = this.guitarStringsFor(melodicLine.Direction);
+    const guitarStringsOrdered = this.guitarStringsFor(melodicLine.Direction, guitarStrings);
 
     for (const pitch of melodicLine) {
-      for (const guitarString of guitarStrings) {
+      for (const guitarString of guitarStringsOrdered) {
         if (this.skipMappedString(line, guitarString)) {
           continue;
         }
@@ -437,10 +444,10 @@ export class GuitarMelodicLine implements Iterable<Fret> {
     return melodicLine.Direction == MelodicLineDirection.Ascending ? line : line.reverse();
   }
 
-  private guitarStringsFor(lineDirection: MelodicLineDirection) {
+  private guitarStringsFor(lineDirection: MelodicLineDirection, guitarStrings: GuitarString[]) {
     return lineDirection === MelodicLineDirection.Descending
-      ? GuitarString.guitarStrings.reverse()
-      : GuitarString.guitarStrings;
+      ? guitarStrings.reverse()
+      : guitarStrings;
   }
 
   private skipMappedString(line: Fret[], guitarString: GuitarString) {
