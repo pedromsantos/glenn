@@ -5,6 +5,7 @@ import {
   GuitarChord,
   GuitarMelodicLine,
   GuitarString,
+  GuitarStrings,
   Position,
   Tab,
   TabColumn,
@@ -18,7 +19,7 @@ describe('Blank fret should', () => {
   });
 
   test('render empty column after raising octave', () => {
-    expect(new BlankFret().raiseOctave().toTab().render()).toStrictEqual([
+    expect(new BlankFret().raiseOctave().toTab(new GuitarStrings()).render()).toStrictEqual([
       '-',
       '-',
       '-',
