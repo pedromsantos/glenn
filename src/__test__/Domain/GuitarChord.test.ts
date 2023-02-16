@@ -9,7 +9,7 @@ describe('Guitar chord', function () {
       const guitarChord = GuitarChord.inPosition(chord, Position.Open);
       const frets = Array.from(guitarChord);
 
-      const expected = [0, 1, 0, 2, 3, 0];
+      const expected = [0, 1, 0, 2, 3, 0].reverse();
 
       expect(frets.map((f) => f.Number)).toStrictEqual(expected);
     });
@@ -19,7 +19,7 @@ describe('Guitar chord', function () {
       const guitarChord = GuitarChord.inPosition(chord, Position.Open);
       const stringifiedChord = guitarChord.toString();
 
-      const expectedTab = '3\n0\n0\n0\n2\n3';
+      const expectedTab = '3\n0\n0\n0\n2\n3'.split('').reverse().join('');
 
       expect(stringifiedChord).toStrictEqual(expectedTab);
     });
@@ -29,7 +29,7 @@ describe('Guitar chord', function () {
       const guitarChord = GuitarChord.inPosition(chord, Position.Open);
       const stringifiedChord = guitarChord.toString();
 
-      const expectedTab = '0\n2\n2\n2\n0\n0';
+      const expectedTab = '0\n2\n2\n2\n0\n0'.split('').reverse().join('');
 
       expect(stringifiedChord).toStrictEqual(expectedTab);
     });
@@ -39,7 +39,7 @@ describe('Guitar chord', function () {
       const guitarChord = GuitarChord.inPosition(chord, Position.Open);
       const stringifiedChord = guitarChord.toString();
 
-      const expectedTab = '0\n1\n2\n2\n0\n0';
+      const expectedTab = '0\n1\n2\n2\n0\n0'.split('').reverse().join('');
 
       expect(stringifiedChord).toStrictEqual(expectedTab);
     });
@@ -49,7 +49,7 @@ describe('Guitar chord', function () {
       const guitarChord = GuitarChord.inPosition(chord, Position.Open);
       const stringifiedChord = guitarChord.toString();
 
-      const expectedTab = '0\n0\n1\n2\n2\n0';
+      const expectedTab = '0\n0\n1\n2\n2\n0'.split('').reverse().join('');
 
       expect(stringifiedChord).toStrictEqual(expectedTab);
     });
@@ -59,7 +59,7 @@ describe('Guitar chord', function () {
       const guitarChord = GuitarChord.inPosition(chord, Position.Open);
       const stringifiedChord = guitarChord.toString();
 
-      const expectedTab = '0\n0\n0\n2\n2\n0';
+      const expectedTab = '0\n0\n0\n2\n2\n0'.split('').reverse().join('');
 
       expect(stringifiedChord).toStrictEqual(expectedTab);
     });
@@ -69,7 +69,7 @@ describe('Guitar chord', function () {
       const guitarChord = GuitarChord.inPosition(chord, Position.A);
       const stringifiedChord = guitarChord.toString();
 
-      const expectedTab = '-\n-\n-\n5\n7\n8';
+      const expectedTab = '-\n-\n-\n5\n7\n8'.split('').reverse().join('');
 
       expect(stringifiedChord).toStrictEqual(expectedTab);
     });

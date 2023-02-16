@@ -24,7 +24,7 @@ describe('Guitar melodic line should', () => {
 
   describe('Map E to', () => {
     test('open string on sixth string for open position', () => {
-      const line = new MelodicLine([Pitch.E], MelodicLineDirection.Descending);
+      const line = new MelodicLine([Pitch.E], MelodicLineDirection.Ascending);
       const guitarLine = new GuitarMelodicLine(line, Position.Open);
 
       const fret = Array.from(guitarLine)[0];
@@ -74,7 +74,7 @@ describe('Guitar melodic line should', () => {
     });
 
     test('14th fret on fourth string for C8 Position', () => {
-      const line = new MelodicLine([Pitch.E], MelodicLineDirection.Descending);
+      const line = new MelodicLine([Pitch.E], MelodicLineDirection.Ascending);
       const guitarLine = new GuitarMelodicLine(line, Position.C8);
 
       const fret = Array.from(guitarLine)[0];
