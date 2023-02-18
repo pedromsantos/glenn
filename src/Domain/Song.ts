@@ -1,23 +1,36 @@
-import { Duration, RhythmicPhrase, TimeSignature } from './Duration';
+import { TimeSignature } from './Duration';
+import { Note } from './Note';
+
+export class NoteFragment {
+  private readonly fragment: Note[] = [];
+
+  push(note: Note): void {
+    this.fragment.push(note);
+  }
+
+  get ticks(): number {
+    return this.fragment.reduce((total, current) => total + current.tick, 0);
+  }
+}
 
 export class Measure {
-  protected phrase: RhythmicPhrase;
+  protected fragment: NoteFragment;
   private readonly timeSignature: TimeSignature;
 
   constructor(timeSignature: TimeSignature) {
-    this.phrase = new RhythmicPhrase();
+    this.fragment = new NoteFragment();
     this.timeSignature = timeSignature;
   }
 
-  add(duration: Duration): Measure {
-    if (this.phrase.ticks + duration.tick > this.timeSignature.ticksPerMeasure) {
-      throw new RangeError(`cannot fit -${duration.Name} note in measure`);
+  add(note: Note): Measure {
+    if (this.fragment.ticks + note.tick > this.timeSignature.ticksPerMeasure) {
+      throw new RangeError(`cannot fit -${note.DurationName} note in measure`);
     }
 
-    this.phrase.push(duration);
+    this.fragment.push(note);
 
-    if (this.phrase.ticks === this.timeSignature.ticksPerMeasure) {
-      return new FullMeasure(this.timeSignature, this.phrase);
+    if (this.fragment.ticks === this.timeSignature.ticksPerMeasure) {
+      return new FullMeasure(this.timeSignature, this.fragment);
     }
 
     return this;
@@ -25,13 +38,13 @@ export class Measure {
 }
 
 export class FullMeasure extends Measure {
-  constructor(timeSignature: TimeSignature, phrase: RhythmicPhrase) {
+  constructor(timeSignature: TimeSignature, fragment: NoteFragment) {
     super(timeSignature);
-    this.phrase = phrase;
+    this.fragment = fragment;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  override add(_: Duration): Measure {
+  override add(_: Note): Measure {
     return this;
   }
 }

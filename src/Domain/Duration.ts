@@ -276,15 +276,3 @@ export class BeatsPerMinute {
     return (durationToBeats / this.bpm) * 60 * 1000;
   }
 }
-
-export class RhythmicPhrase {
-  private readonly phrase: Duration[] = [];
-
-  push(duration: Duration): void {
-    this.phrase.push(duration);
-  }
-
-  get ticks(): number {
-    return this.phrase.reduce((total, current) => total + current.tick, 0);
-  }
-}

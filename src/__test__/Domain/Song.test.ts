@@ -1,4 +1,6 @@
 import { Duration, SimpleTimeSignature } from '../../Domain/Duration';
+import { Note, Octave } from '../../Domain/Note';
+import Pitch from '../../Domain/Pitch';
 import { FullMeasure, Measure } from '../../Domain/Song';
 
 describe('Measure in 4/4', () => {
@@ -7,7 +9,7 @@ describe('Measure in 4/4', () => {
   test('cannot fit double', () => {
     const measure = new Measure(timeSignature);
 
-    expect(() => measure.add(Duration.Double)).toThrow(
+    expect(() => measure.add(new Note(Pitch.C, Duration.Double, Octave.C4))).toThrow(
       `cannot fit -${Duration.Double.Name} note in measure`
     );
   });
@@ -15,15 +17,18 @@ describe('Measure in 4/4', () => {
   test('whole note fills it', () => {
     const measure = new Measure(timeSignature);
 
-    expect(measure.add(Duration.Whole)).toBeInstanceOf(FullMeasure);
+    expect(measure.add(new Note(Pitch.C, Duration.Whole, Octave.C4))).toBeInstanceOf(FullMeasure);
   });
 
   test('2 half notes notes fill it', () => {
     const measure = new Measure(timeSignature);
 
-    expect(measure.add(Duration.Half).add(Duration.Half).add(Duration.SixtyFourth)).toBeInstanceOf(
-      FullMeasure
-    );
+    expect(
+      measure
+        .add(new Note(Pitch.C, Duration.Half, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Half, Octave.C4))
+        .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C4))
+    ).toBeInstanceOf(FullMeasure);
   });
 
   test('4 quarter notes fill it', () => {
@@ -31,10 +36,10 @@ describe('Measure in 4/4', () => {
 
     expect(
       measure
-        .add(Duration.Quarter)
-        .add(Duration.Quarter)
-        .add(Duration.Quarter)
-        .add(Duration.Quarter)
+        .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
     ).toBeInstanceOf(FullMeasure);
   });
 
@@ -43,10 +48,10 @@ describe('Measure in 4/4', () => {
 
     expect(
       measure
-        .add(Duration.DottedQuarter)
-        .add(Duration.DottedQuarter)
-        .add(Duration.Quarter)
-        .add(Duration.SixtyFourth)
+        .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
+        .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+        .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C4))
     ).toBeInstanceOf(FullMeasure);
   });
 
@@ -55,15 +60,15 @@ describe('Measure in 4/4', () => {
 
     expect(
       measure
-        .add(Duration.Eighth)
-        .add(Duration.Eighth)
-        .add(Duration.Eighth)
-        .add(Duration.Eighth)
-        .add(Duration.Eighth)
-        .add(Duration.Eighth)
-        .add(Duration.Eighth)
-        .add(Duration.Eighth)
-        .add(Duration.SixtyFourth)
+        .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
+        .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C4))
     ).toBeInstanceOf(FullMeasure);
   });
 
@@ -71,7 +76,11 @@ describe('Measure in 4/4', () => {
     const measure = new Measure(timeSignature);
 
     expect(() =>
-      measure.add(Duration.Quarter).add(Duration.Quarter).add(Duration.Quarter).add(Duration.Half)
+      measure
+        .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+        .add(new Note(Pitch.C, Duration.Half, Octave.C4))
     ).toThrow(`cannot fit -${Duration.Half.Name} note in measure`);
   });
 });

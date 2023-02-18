@@ -105,6 +105,14 @@ export class Note {
     return this.duration;
   }
 
+  get DurationName(): string {
+    return this.duration.Name;
+  }
+
+  get tick() {
+    return this.Duration.tick;
+  }
+
   get MidiNumber(): number {
     return this.octave.MidiBaseValue + this.pitch.NumericValue;
   }
