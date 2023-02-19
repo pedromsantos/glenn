@@ -143,7 +143,7 @@ describe('CompoundTimeSignature', () => {
   test('Measure durations in ticks', () => {
     const timeSignature = new CompoundTimeSignature(6, Duration.Eighth, 60);
 
-    expect(timeSignature.ticksPerMeasure).toBe(480);
+    expect(timeSignature.ticksPerMeasure).toBe(1440);
   });
 
   describe('converted to beats in 6/8', () => {
