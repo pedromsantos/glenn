@@ -1,4 +1,4 @@
-export const cleffBrainDump = 'cleffBrainDump';
+export const cleffBrainDump = 'clefBrainDump';
 
 // import { Octave } from './Note';
 // import Pitch from './Pitch';
