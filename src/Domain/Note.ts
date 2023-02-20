@@ -30,6 +30,10 @@ export class Octave {
   public static readonly C7: Octave = new Octave('Four line', 8, 84);
   public static readonly C8: Octave = new Octave('Five line', 16, 96);
 
+  get Name() {
+    return this.octaveName;
+  }
+
   get MidiBaseValue(): number {
     return this.midiBaseValue;
   }
@@ -97,8 +101,16 @@ export class Note {
     return this.MidiNumber === other.MidiNumber;
   }
 
-  get Pitch(): Pitch {
+  get Pitch() {
     return this.pitch;
+  }
+
+  get PitchName() {
+    return this.pitch.Name;
+  }
+
+  get NaturalPitchName() {
+    return this.pitch.natural().Name;
   }
 
   get Duration(): Duration {
@@ -109,12 +121,24 @@ export class Note {
     return this.duration.Name;
   }
 
+  get Octave() {
+    return this.octave;
+  }
+
+  get OctaveName() {
+    return this.octave.Name;
+  }
+
   get tick() {
     return this.Duration.tick;
   }
 
   get MidiNumber(): number {
     return this.octave.MidiBaseValue + this.pitch.NumericValue;
+  }
+
+  get Accidental() {
+    return this.pitch.Accidental;
   }
 
   get To(): NotePrimitives {

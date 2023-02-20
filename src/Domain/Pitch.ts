@@ -1,5 +1,11 @@
 import { Interval } from './Interval';
 
+export enum Accidental {
+  Flat,
+  Natural,
+  Sharp,
+}
+
 export type PitchPrimitives = {
   name: string;
   value: number;
@@ -11,6 +17,7 @@ export default class Pitch {
   private constructor(
     private readonly name: string,
     private readonly value: number,
+    private readonly accidental: Accidental,
     public readonly sharp: () => Pitch,
     public readonly flat: () => Pitch,
     public readonly natural: () => Pitch,
@@ -43,6 +50,10 @@ export default class Pitch {
     return this.name;
   }
 
+  get Accidental() {
+    return this.accidental;
+  }
+
   get To(): PitchPrimitives {
     return {
       name: this.Name,
@@ -57,6 +68,7 @@ export default class Pitch {
   public static readonly C: Pitch = new Pitch(
     'C',
     0,
+    Accidental.Natural,
     () => Pitch.CSharp,
     () => Pitch.B,
     () => Pitch.C,
@@ -94,6 +106,7 @@ export default class Pitch {
   public static readonly CSharp: Pitch = new Pitch(
     'C#',
     1,
+    Accidental.Sharp,
     () => Pitch.D,
     () => Pitch.C,
     () => Pitch.C,
@@ -103,6 +116,7 @@ export default class Pitch {
   public static readonly DFlat: Pitch = new Pitch(
     'Db',
     1,
+    Accidental.Flat,
     () => Pitch.D,
     () => Pitch.C,
     () => Pitch.D,
@@ -112,6 +126,7 @@ export default class Pitch {
   public static readonly D: Pitch = new Pitch(
     'D',
     2,
+    Accidental.Natural,
     () => Pitch.DSharp,
     () => Pitch.DFlat,
     () => Pitch.D,
@@ -149,6 +164,7 @@ export default class Pitch {
   public static readonly DSharp: Pitch = new Pitch(
     'D#',
     3,
+    Accidental.Sharp,
     () => Pitch.E,
     () => Pitch.D,
     () => Pitch.D,
@@ -158,6 +174,7 @@ export default class Pitch {
   public static readonly EFlat: Pitch = new Pitch(
     'Eb',
     3,
+    Accidental.Flat,
     () => Pitch.E,
     () => Pitch.D,
     () => Pitch.E,
@@ -167,6 +184,7 @@ export default class Pitch {
   public static readonly E: Pitch = new Pitch(
     'E',
     4,
+    Accidental.Natural,
     () => Pitch.F,
     () => Pitch.EFlat,
     () => Pitch.E,
@@ -203,6 +221,7 @@ export default class Pitch {
   public static readonly F: Pitch = new Pitch(
     'F',
     5,
+    Accidental.Natural,
     () => Pitch.FSharp,
     () => Pitch.E,
     () => Pitch.F,
@@ -240,6 +259,7 @@ export default class Pitch {
   public static readonly ESharp: Pitch = new Pitch(
     'E#',
     5,
+    Accidental.Sharp,
     () => Pitch.F,
     () => Pitch.E,
     () => Pitch.E,
@@ -249,6 +269,7 @@ export default class Pitch {
   public static readonly FSharp: Pitch = new Pitch(
     'F#',
     6,
+    Accidental.Sharp,
     () => Pitch.G,
     () => Pitch.F,
     () => Pitch.F,
@@ -258,6 +279,7 @@ export default class Pitch {
   public static readonly GFlat: Pitch = new Pitch(
     'Gb',
     6,
+    Accidental.Flat,
     () => Pitch.G,
     () => Pitch.F,
     () => Pitch.G,
@@ -267,6 +289,7 @@ export default class Pitch {
   public static readonly G: Pitch = new Pitch(
     'G',
     7,
+    Accidental.Natural,
     () => Pitch.GSharp,
     () => Pitch.GFlat,
     () => Pitch.G,
@@ -304,6 +327,7 @@ export default class Pitch {
   public static readonly GSharp: Pitch = new Pitch(
     'G#',
     8,
+    Accidental.Sharp,
     () => Pitch.A,
     () => Pitch.G,
     () => Pitch.G,
@@ -313,6 +337,7 @@ export default class Pitch {
   public static readonly AFlat: Pitch = new Pitch(
     'Ab',
     8,
+    Accidental.Flat,
     () => Pitch.A,
     () => Pitch.G,
     () => Pitch.A,
@@ -322,6 +347,7 @@ export default class Pitch {
   public static readonly A: Pitch = new Pitch(
     'A',
     9,
+    Accidental.Natural,
     () => Pitch.ASharp,
     () => Pitch.AFlat,
     () => Pitch.A,
@@ -359,6 +385,7 @@ export default class Pitch {
   public static readonly ASharp: Pitch = new Pitch(
     'A#',
     10,
+    Accidental.Sharp,
     () => Pitch.B,
     () => Pitch.A,
     () => Pitch.A,
@@ -368,6 +395,7 @@ export default class Pitch {
   public static readonly BFlat: Pitch = new Pitch(
     'Bb',
     10,
+    Accidental.Flat,
     () => Pitch.B,
     () => Pitch.A,
     () => Pitch.B,
@@ -377,6 +405,7 @@ export default class Pitch {
   public static readonly B: Pitch = new Pitch(
     'B',
     11,
+    Accidental.Natural,
     () => Pitch.C,
     () => Pitch.BFlat,
     () => Pitch.B,
@@ -414,6 +443,7 @@ export default class Pitch {
   public static readonly BSharp: Pitch = new Pitch(
     'C',
     0,
+    Accidental.Sharp,
     () => Pitch.C,
     () => Pitch.B,
     () => Pitch.B,
@@ -423,6 +453,7 @@ export default class Pitch {
   public static readonly CFlat: Pitch = new Pitch(
     'Cb',
     11,
+    Accidental.Flat,
     () => Pitch.C,
     () => Pitch.B,
     () => Pitch.C,

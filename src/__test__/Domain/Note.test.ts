@@ -289,7 +289,7 @@ describe('calculate interval between C1 and', () => {
     expect(firstNote.intervalTo(secondNote)).toStrictEqual(Interval.MinorThird);
   });
 
-  test('C1 to be a unisson', () => {
+  test('C1 to be a unison', () => {
     const secondNote = new Note(Pitch.C, Duration.Quarter, Octave.C1);
 
     expect(firstNote.intervalTo(secondNote)).toStrictEqual(Interval.Unison);
