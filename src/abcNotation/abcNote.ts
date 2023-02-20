@@ -1,3 +1,4 @@
+import { Duration } from '../Domain/Duration';
 import { Note, Octave } from '../Domain/Note';
 import { Accidental } from '../Domain/Pitch';
 
@@ -12,12 +13,19 @@ export class abcNote {
     [Octave.C0.Name, ',,,,'],
   ]);
 
-  constructor(private readonly note: Note) {}
+  constructor(private readonly note: Note, private readonly defaultDuration: Duration) {}
 
   toString() {
-    const note = this.toAccidental(this.note.NaturalPitchName);
+    return this.toDuration(this.toOctave(this.toAccidental(this.note.NaturalPitchName)));
+  }
 
-    return this.toOctave(note);
+  private toDuration(note: string) {
+    const durationMultiplier = this.defaultDuration.equivalentTo(this.note.Duration);
+    const multiplierOrDivisor = this.note.DurationValue < this.defaultDuration.value ? '/' : '';
+
+    return (
+      note + multiplierOrDivisor + (durationMultiplier > 1 ? durationMultiplier.toString() : '')
+    );
   }
 
   private toAccidental(note: string) {

@@ -34,7 +34,7 @@ export class Octave {
     return this.octaveName;
   }
 
-  get MidiBaseValue(): number {
+  get MidiBaseValue() {
     return this.midiBaseValue;
   }
 
@@ -46,7 +46,7 @@ export class Octave {
     };
   }
 
-  public static get octaves(): Octave[] {
+  public static get octaves() {
     return Octave.all;
   }
 }
@@ -63,11 +63,11 @@ export class Note {
     private readonly octave: Octave
   ) {}
 
-  transpose(interval: Interval): Note {
+  transpose(interval: Interval) {
     return new Note(this.pitch.transpose(interval), this.duration, this.octave);
   }
 
-  intervalTo(to: Note): Interval {
+  intervalTo(to: Note) {
     if (this.octave === to.octave) {
       return this.pitch.intervalTo(to.pitch);
     }
@@ -97,7 +97,7 @@ export class Note {
     return false;
   }
 
-  isSamePitch(other: Note): boolean {
+  isSamePitch(other: Note) {
     return this.MidiNumber === other.MidiNumber;
   }
 
@@ -113,12 +113,16 @@ export class Note {
     return this.pitch.natural().Name;
   }
 
-  get Duration(): Duration {
+  get Duration() {
     return this.duration;
   }
 
-  get DurationName(): string {
+  get DurationName() {
     return this.duration.Name;
+  }
+
+  get DurationValue() {
+    return this.duration.value;
   }
 
   get Octave() {
@@ -133,7 +137,7 @@ export class Note {
     return this.Duration.tick;
   }
 
-  get MidiNumber(): number {
+  get MidiNumber() {
     return this.octave.MidiBaseValue + this.pitch.NumericValue;
   }
 
