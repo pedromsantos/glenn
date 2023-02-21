@@ -1,6 +1,22 @@
 import { Duration } from '../Domain/Duration';
 import { Note, Octave } from '../Domain/Note';
-import { Accidental } from '../Domain/Pitch';
+import Pitch, { Accidental } from '../Domain/Pitch';
+
+export class abcPitch {
+  constructor(private readonly pitch: Pitch) {}
+
+  toString() {
+    return this.toAccidental(this.pitch.natural().Name);
+  }
+
+  private toAccidental(pitch: string) {
+    return this.pitch.Accidental === Accidental.Sharp
+      ? '^' + pitch
+      : this.pitch.Accidental === Accidental.Flat
+      ? '_' + pitch
+      : pitch;
+  }
+}
 
 export class abcNote {
   octaveTransformations: Map<string, string> = new Map<string, string>([
@@ -16,7 +32,7 @@ export class abcNote {
   constructor(private readonly note: Note, private readonly defaultDuration: Duration) {}
 
   toString() {
-    return this.toDuration(this.toOctave(this.toAccidental(this.note.NaturalPitchName)));
+    return this.toDuration(this.toOctave(new abcPitch(this.note.Pitch).toString()));
   }
 
   private toDuration(note: string) {
@@ -26,14 +42,6 @@ export class abcNote {
     return (
       note + multiplierOrDivisor + (durationMultiplier > 1 ? durationMultiplier.toString() : '')
     );
-  }
-
-  private toAccidental(note: string) {
-    return this.note.Accidental === Accidental.Sharp
-      ? '^' + note
-      : this.note.Accidental === Accidental.Flat
-      ? '_' + note
-      : note;
   }
 
   private toOctave(note: string) {
