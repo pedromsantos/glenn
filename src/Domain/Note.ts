@@ -105,14 +105,6 @@ export class Note {
     return this.pitch;
   }
 
-  get PitchName() {
-    return this.pitch.Name;
-  }
-
-  get NaturalPitchName() {
-    return this.pitch.natural().Name;
-  }
-
   get Duration() {
     return this.duration;
   }
@@ -139,10 +131,6 @@ export class Note {
 
   get MidiNumber() {
     return this.octave.MidiBaseValue + this.pitch.NumericValue;
-  }
-
-  get Accidental() {
-    return this.pitch.Accidental;
   }
 
   get To(): NotePrimitives {
