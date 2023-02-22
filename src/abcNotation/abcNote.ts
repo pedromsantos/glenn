@@ -11,9 +11,9 @@ export class abcPitch {
 
   private toAccidental(pitch: string) {
     return this.pitch.Accidental === Accidental.Sharp
-      ? '^' + pitch
+      ? `^${pitch}`
       : this.pitch.Accidental === Accidental.Flat
-      ? '_' + pitch
+      ? `_${pitch}`
       : pitch;
   }
 }
