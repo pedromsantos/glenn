@@ -13,20 +13,24 @@
     "Tablature"
   ],
   "license": "MIT",
-  "main": "./lib/cjs/index.js",
-  "module": "./lib/esm/index.js",
-  "types": "./lib/cjs/index.d.js",
+  "main": "index.js",
+  "module": "./dist/index.mjs",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
   "files": [
-    "lib/cjs",
-    "lib/esm",
+    "dist",
     "License.md",
     "README.md",
     "package.json"
   ],
+  "exports": {
+    "default": "./dist/index.js",
+    "require": "./dist/index.js",
+    "import": "./dist/index.mjs",
+    "node": "./dist/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:pedromsantos/glenn.git"
@@ -37,14 +41,11 @@
   "scripts": {
     "release": "standard-version",
     "watch": "jest --watch",
-    "clean": "node tools/cleanup",
     "test": "jest --no-cache --runInBand",
-    "precommit": "npm-run-all -p clean lint types test:ci build",
+    "precommit": "npm-run-all -p lint types test:ci build",
     "test:ci": "jest --coverage --no-cache --runInBand",
     "mutants": "stryker run",
-    "build": "yarn build:cjs && yarn build:esm",
-    "build:cjs": "node tools/cleanup cjs && tsc -p tsconfig.cjs.json && node tools/cleanup cjs/__test__",
-    "build:esm": "node tools/cleanup esm && tsc -p tsconfig.json  && node tools/cleanup esm/__test__",
+    "build": "tsup src/index.ts",
     "lint": "eslint . --color --ext .ts --ignore-pattern 'node_modules/'",
     "lint:fix": "eslint . --ext .ts --ignore-pattern 'node_modules/' --fix",
     "types": "type-coverage -at-least 99",
@@ -53,7 +54,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@babel/preset-env": "^7.20.2",
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
     "@stryker-mutator/core": "^6.3.1",
@@ -78,6 +78,7 @@
     "standard-version": "^9.5.0",
     "ts-coverage": "^0.1.5",
     "ts-jest": "^28.0.8",
+    "tsup": "^6.6.3",
     "type-coverage": "^2.24.1",
     "typescript": "^4.9.5",
     "typescript-coverage-report": "^0.7.0"

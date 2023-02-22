@@ -4,3 +4,7 @@ sonarjs
 Maj
 Sus
 ts
+tsup
+iife
+cjs
+esm

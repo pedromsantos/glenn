@@ -1,4 +1,8 @@
+import { abcChord } from './abcNotation/abcChord';
+import { abcClef } from './abcNotation/abcClef';
+import { abcNote } from './abcNotation/abcNote';
 import { ChordFunction, ChordPattern, ClosedChord, Drop2Chord, Drop3Chord } from './Domain/Chord';
+import { Clef } from './Domain/Clef';
 import {
   GuitarChord,
   GuitarMelodicLine,
@@ -20,8 +24,12 @@ import Scale, {
 } from './Domain/Scale';
 
 export {
+  abcChord,
+  abcClef,
+  abcNote,
   ChordFunction,
   ChordPattern,
+  Clef,
   ClosedChord,
   Drop2Chord,
   Drop3Chord,

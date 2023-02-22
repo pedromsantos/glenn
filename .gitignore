@@ -42,3 +42,10 @@ coverage-ts/files/src/Domain/Key.ts.html
 coverage-ts/files/src/Domain/Note.ts.html
 coverage-ts/files/src/Domain/Pitch.ts.html
 coverage-ts/files/src/Domain/Scale.ts.html
+dist/index.d.ts
+dist/index.global.js
+dist/index.global.js.map
+dist/index.js
+dist/index.js.map
+dist/index.mjs
+dist/index.mjs.map

@@ -1,8 +1,0 @@
-{
-  "compilerOptions": {
-    "declaration": true /* Generates corresponding '.d.ts' file. */,
-    "emitDeclarationOnly": true,
-    "outDir": "./lib/types" /* Redirect output structure to the directory. */
-  },
-  "extends": "./tsconfig.json"
-}

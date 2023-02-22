@@ -9,7 +9,6 @@
     "downlevelIteration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "incremental": true,
     "isolatedModules": true,
     "lib": ["es2015"],
     "module": "es2015",
