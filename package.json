@@ -26,10 +26,13 @@
     "package.json"
   ],
   "exports": {
-    "default": "./dist/index.js",
-    "require": "./dist/index.js",
-    "import": "./dist/index.mjs",
-    "node": "./dist/index.js"
+    "./package.json": "./package.json",
+    ".": {
+      "default": "./dist/index.js",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "node": "./dist/index.js"
+    }
   },
   "repository": {
     "type": "git",
@@ -39,10 +42,10 @@
     "url": "https://github.com/pedromsantos/glenn/issues"
   },
   "scripts": {
-    "release": "standard-version",
+    "check_exports": "check-export-map",
     "watch": "jest --watch",
     "test": "jest --no-cache --runInBand",
-    "precommit": "npm-run-all -p lint types test:ci build",
+    "precommit": "turbo lint types test:ci check_exports",
     "test:ci": "jest --coverage --no-cache --runInBand",
     "mutants": "stryker run",
     "build": "tsup src/index.ts",
@@ -50,10 +53,13 @@
     "lint:fix": "eslint . --ext .ts --ignore-pattern 'node_modules/' --fix",
     "types": "type-coverage -at-least 99",
     "types-report": "typescript-coverage-report --threshold 99",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "release": "turbo run publish",
+    "publish": "changeset publish"
   },
   "dependencies": {},
   "devDependencies": {
+    "@changesets/cli": "^2.26.0",
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
     "@stryker-mutator/core": "^6.3.1",
@@ -62,6 +68,7 @@
     "@types/jest": "^28.1.7",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
+    "check-export-map": "^1.3.0",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-hexagonal-architecture": "^1.0.3",
@@ -73,12 +80,13 @@
     "fast-check": "^3.6.2",
     "husky": "^8.0.3",
     "jest": "^28.1.3",
-    "npm-run-all": "^4.1.5",
     "prettier": "^2.8.3",
     "standard-version": "^9.5.0",
     "ts-coverage": "^0.1.5",
     "ts-jest": "^28.0.8",
     "tsup": "^6.6.3",
+    "tsx": "^3.12.3",
+    "turbo": "^1.8.1",
     "type-coverage": "^2.24.1",
     "typescript": "^4.9.5",
     "typescript-coverage-report": "^0.7.0"
