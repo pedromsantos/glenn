@@ -5,38 +5,18 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
         with:
-          fetch-depth: --unshallow
-
-      - name: Cache node modules
-        uses: actions/cache@v3.2.6
-        env:
-          cache-name: cache-node-modules
+          version: 7
+      - uses: actions/setup-node@v3
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          node-version: 16.x
+          cache: "pnpm"
 
-      - name: Install Dependencies
-        run: yarn install
-
-      - name: Lint
-        run: yarn lint
-
-      - name: Types
-        run: yarn types
-
-      - name: Test
-        run: yarn test:ci
-
-      - name: Build
-        run: yarn build
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run ci
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
