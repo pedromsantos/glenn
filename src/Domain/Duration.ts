@@ -42,6 +42,8 @@ export abstract class TimeSignature {
   milisecondsFor(duration: Duration): number {
     return this.bpm.miliSecondsFor(duration);
   }
+
+  abstract toString(): string;
 }
 
 export class SimpleTimeSignature extends TimeSignature {
@@ -51,6 +53,14 @@ export class SimpleTimeSignature extends TimeSignature {
 
   override toFillMeasure(duration: Duration): number {
     return (this.beatDurationTicks / duration.tick) * this.beats;
+  }
+
+  override toString(): string {
+    return `${this.beats}/${
+      this.duration.toString().length > 1
+        ? this.duration.toString().slice(2)
+        : this.duration.toString()
+    }`;
   }
 }
 
@@ -73,6 +83,14 @@ export class CompoundTimeSignature extends TimeSignature {
 
   override get ticksPerMeasure(): number {
     return this.beatDurationTicks * this.beats * 3;
+  }
+
+  override toString(): string {
+    return `${this.beats * 3}/${
+      this.duration.toString().length > 1
+        ? this.duration.toString().slice(2)
+        : this.duration.toString()
+    }`;
   }
 }
 
@@ -113,119 +131,151 @@ export class Duration {
   private constructor(
     private readonly name: string,
     private readonly duration: number,
-    private readonly ticks: number
+    private readonly ticks: number,
+    private readonly stringRepresentation: string
   ) {
     Duration.all.push(this);
   }
 
-  public static readonly Double: Duration = new Duration('Double', Durations.Double, Ticks.Double);
-  public static readonly Whole: Duration = new Duration('Whole', Durations.Whole, Ticks.Whole);
-  public static readonly Half: Duration = new Duration('Half', Durations.Half, Ticks.Half);
+  public static readonly Double: Duration = new Duration(
+    'Double',
+    Durations.Double,
+    Ticks.Double,
+    '2'
+  );
+  public static readonly Whole: Duration = new Duration('Whole', Durations.Whole, Ticks.Whole, '1');
+  public static readonly Half: Duration = new Duration('Half', Durations.Half, Ticks.Half, '1/2');
   public static readonly Quarter: Duration = new Duration(
     'Quarter',
     Durations.Quarter,
-    Ticks.Quarter
+    Ticks.Quarter,
+    '1/4'
   );
-  public static readonly Eighth: Duration = new Duration('Eighth', Durations.Eighth, Ticks.Eighth);
+  public static readonly Eighth: Duration = new Duration(
+    'Eighth',
+    Durations.Eighth,
+    Ticks.Eighth,
+    '1/8'
+  );
   public static readonly Sixteenth: Duration = new Duration(
     'Sixteenth',
     Durations.Sixteenth,
-    Ticks.Sixteenth
+    Ticks.Sixteenth,
+    '1/16'
   );
   public static readonly ThirtySecond: Duration = new Duration(
     'ThirtySecond',
     Durations.ThirtySecond,
-    Ticks.ThirtySecond
+    Ticks.ThirtySecond,
+    '1/32'
   );
   public static readonly SixtyFourth: Duration = new Duration(
     'SixtyFourth',
     Durations.SixtyFourth,
-    Ticks.SixtyFourth
+    Ticks.SixtyFourth,
+    '1/64'
   );
   public static readonly DoubleDottedHalf: Duration = new Duration(
     'Double Dotted Half',
     Duration.Half.duration * this.doubleDotMultiplier,
-    Duration.Half.tick * this.doubleDotMultiplier
+    Duration.Half.tick * this.doubleDotMultiplier,
+    Duration.Half.toString() + '3/4'
   );
   public static readonly DottedHalf: Duration = new Duration(
     'Dotted Half',
     Duration.Half.duration * this.dotMultiplier,
-    Duration.Half.tick * this.dotMultiplier
+    Duration.Half.tick * this.dotMultiplier,
+    ''
   );
   public static readonly TripletWhole: Duration = new Duration(
     'Triplet Whole',
     Duration.Double.duration / 3,
-    Duration.Double.tick / 3
+    Duration.Double.tick / 3,
+    ''
   );
   public static readonly DoubleDottedQuarter: Duration = new Duration(
     'Double Dotted Quarter',
     Duration.Quarter.duration * this.doubleDotMultiplier,
-    ticksPerQuarterNote * this.doubleDotMultiplier
+    ticksPerQuarterNote * this.doubleDotMultiplier,
+    Duration.Quarter.toString() + '3/4'
   );
   public static readonly DottedQuarter: Duration = new Duration(
     'Dotted Quarter',
     Duration.Quarter.duration * this.dotMultiplier,
-    ticksPerQuarterNote * this.dotMultiplier
+    ticksPerQuarterNote * this.dotMultiplier,
+    Duration.Quarter.toString() + '1/2'
   );
   public static readonly TripletHalf: Duration = new Duration(
     'Triplet Half',
     Duration.Whole.duration * 3,
-    Duration.Whole.tick / 3
+    Duration.Whole.tick / 3,
+    ''
   );
   public static readonly DoubleDottedEighth: Duration = new Duration(
     'Double Dotted Quarter',
     Duration.Eighth.duration * this.doubleDotMultiplier,
-    Duration.Eighth.tick * this.doubleDotMultiplier
+    Duration.Eighth.tick * this.doubleDotMultiplier,
+    Duration.Eighth.toString() + '3/4'
   );
   public static readonly DottedEighth: Duration = new Duration(
     'Dotted Quarter',
     Duration.Eighth.duration * this.dotMultiplier,
-    Duration.Eighth.tick * this.dotMultiplier
+    Duration.Eighth.tick * this.dotMultiplier,
+    Duration.Eighth.toString() + '1/2'
   );
   public static readonly TripletQuarterNote: Duration = new Duration(
     'Triplet Quarter',
     Duration.Half.duration / 3,
-    Duration.Half.tick / 3
+    Duration.Half.tick / 3,
+    ''
   );
   public static readonly DoubleDottedSixteenth: Duration = new Duration(
     'Double Dotted Sixteenth',
     Duration.Sixteenth.duration * this.doubleDotMultiplier,
-    Duration.Sixteenth.tick * this.doubleDotMultiplier
+    Duration.Sixteenth.tick * this.doubleDotMultiplier,
+    Duration.Sixteenth.toString() + '3/4'
   );
   public static readonly DottedSixteenth: Duration = new Duration(
     'Dotted Sixteenth',
     Duration.Sixteenth.duration * this.dotMultiplier,
-    Duration.Sixteenth.tick * this.dotMultiplier
+    Duration.Sixteenth.tick * this.dotMultiplier,
+    Duration.Sixteenth.toString() + '1/2'
   );
   public static readonly TripletEighth: Duration = new Duration(
     'Triplet Eighth',
     Duration.Quarter.duration / 3,
-    ticksPerQuarterNote / 3
+    ticksPerQuarterNote / 3,
+    ''
   );
   public static readonly DoubleDottedThirtySecond: Duration = new Duration(
     'Double Dotted ThirtySecond',
     Duration.ThirtySecond.duration * this.doubleDotMultiplier,
-    Duration.ThirtySecond.tick * this.doubleDotMultiplier
+    Duration.ThirtySecond.tick * this.doubleDotMultiplier,
+    Duration.ThirtySecond.toString() + '3/4'
   );
   public static readonly DottedThirtySecond: Duration = new Duration(
     'Dotted ThirtySecond',
     Duration.ThirtySecond.duration * this.dotMultiplier,
-    Duration.ThirtySecond.tick * this.dotMultiplier
+    Duration.ThirtySecond.tick * this.dotMultiplier,
+    Duration.ThirtySecond.toString() + '1/2'
   );
   public static readonly TripletSixteenth: Duration = new Duration(
     'Triplet Sixteenth',
     Duration.Eighth.duration / 3,
-    this.Eighth.tick / 3
+    this.Eighth.tick / 3,
+    ''
   );
   public static readonly DottedSixtyFourth: Duration = new Duration(
     'Dotted SixtyFourth',
     Duration.SixtyFourth.duration * this.dotMultiplier,
-    Duration.SixtyFourth.tick * this.dotMultiplier
+    Duration.SixtyFourth.tick * this.dotMultiplier,
+    Duration.SixtyFourth.toString() + '1/2'
   );
   public static readonly TripletThirtySecond: Duration = new Duration(
     'Triplet ThirtySecond',
     Duration.Sixteenth.duration / 3,
-    Duration.Sixteenth.tick / 3
+    Duration.Sixteenth.tick / 3,
+    ''
   );
 
   get Name() {
@@ -265,6 +315,10 @@ export class Duration {
 
   static get durations() {
     return Duration.all;
+  }
+
+  toString() {
+    return this.stringRepresentation;
   }
 }
 

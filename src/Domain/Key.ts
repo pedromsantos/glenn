@@ -1,6 +1,6 @@
 import Pitch from './Pitch';
 
-const enum KeyType {
+enum KeyType {
   Major,
   Minor,
 }
@@ -42,6 +42,14 @@ export default class Key implements Iterable<Pitch> {
   public static readonly AMinor: Key = new Key(Pitch.A, 0, KeyType.Minor);
   public static readonly BFlatMinor: Key = new Key(Pitch.BFlat, -5, KeyType.Minor);
   public static readonly BMinor: Key = new Key(Pitch.B, 2, KeyType.Minor);
+
+  public get Name() {
+    return this.root.Name + this.Type;
+  }
+
+  private get Type() {
+    return KeyType[this.type];
+  }
 
   private flatKey(fifths: Pitch[]): Pitch[] {
     const flats = fifths.slice(this.accidentals).map((p) => p.flat());

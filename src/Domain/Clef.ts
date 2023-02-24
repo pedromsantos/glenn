@@ -3,7 +3,7 @@ import Pitch from './Pitch';
 
 export const cleffBrainDump = 'clefBrainDump';
 
-export enum ClefLine {
+export const enum ClefLine {
   First = 1,
   Second,
   Third,
