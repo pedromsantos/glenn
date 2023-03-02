@@ -1,3 +1,6 @@
+import { Duration } from 'src/Domain/Duration';
+import { Measure } from 'src/Domain/Song';
+
 import { abcDuration } from './abcDuration';
 import { abcKey } from './abcKey';
 import { abcMeasure } from './abcMeasure';
@@ -33,7 +36,20 @@ export interface abcHeader {
 }
 
 export class abcBody {
-  constructor(private readonly measures: abcMeasure[]) {}
+  private readonly measures: abcMeasure[] = [];
+
+  constructor(private readonly referenceDuration: Duration) {}
+
+  addMeasure(measure: Measure, masureReferenceDuration?: Duration) {
+    this.measures.push(
+      new abcMeasure(
+        measure,
+        masureReferenceDuration ? masureReferenceDuration : this.referenceDuration
+      )
+    );
+
+    return this;
+  }
 
   toString() {
     return `|${this.measures.map((m) => m.toString()).join('|')}|`;
@@ -42,5 +58,18 @@ export class abcBody {
 
 export class abcTune {
   // private readonly header: abcHeader;
-  // private readonly body: abcBody;
+  private readonly body: abcBody;
+
+  constructor(defaultDuration: Duration) {
+    this.body = new abcBody(defaultDuration);
+  }
+
+  addMeasure(measure: Measure, masureReferenceDuration?: Duration) {
+    this.body.addMeasure(measure, masureReferenceDuration);
+    return this;
+  }
+
+  toString() {
+    return this.body.toString();
+  }
 }
