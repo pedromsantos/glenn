@@ -8,3 +8,11 @@ export class abcChord {
     return `[${[...this.chord].map((p) => new abcPitch(p).toString()).join('')}]`;
   }
 }
+
+export class abcGuitarChord {
+  constructor(private readonly chord: Chord) {}
+
+  toString() {
+    return `"${this.chord.Abbreviation}"`;
+  }
+}

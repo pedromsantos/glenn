@@ -263,9 +263,9 @@ describe('Chords should', () => {
     expect(name).toBe('CMinor 7 b5');
   });
 
-  test('be named after the root note and the abreviated quality', () => {
+  test('be named after the root note and the abbreviated quality', () => {
     const name = new ClosedChord(Pitch.C, ChordPattern.Diminished7).Abbreviation;
-    expect(name).toBe('Cdim 7');
+    expect(name).toBe('Cdim7');
   });
 
   test('have bass note equal to root when not inverted', () => {

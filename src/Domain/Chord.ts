@@ -135,6 +135,7 @@ export interface Chord extends Iterable<Pitch> {
   get Bass(): Pitch;
   get Lead(): Pitch;
   get Name(): string;
+  get Abbreviation(): string;
   get Pattern(): ChordPattern;
   pitchForFunction(func: ChordFunction): Pitch;
   remove(func: ChordFunction): Chord;
@@ -423,7 +424,7 @@ export class ChordPattern {
     return ChordPattern.patterns.find((n) => n.Name === name);
   }
 
-  public static readonly Major: ChordPattern = new ChordPattern('Major', 'Maj', [
+  public static readonly Major: ChordPattern = new ChordPattern('Major', '', [
     Interval.MajorThird,
     Interval.PerfectFifth,
   ]);
@@ -432,7 +433,7 @@ export class ChordPattern {
     Interval.MajorThird,
     Interval.AugmentedFifth,
   ]);
-  public static readonly Major6: ChordPattern = new ChordPattern('Major 6', 'Maj 6', [
+  public static readonly Major6: ChordPattern = new ChordPattern('Major 6', 'Maj6', [
     Interval.MajorThird,
     Interval.PerfectFifth,
     Interval.MajorSixth,
@@ -447,12 +448,12 @@ export class ChordPattern {
     'Maj 6 b5 add 9',
     [Interval.MajorThird, Interval.DiminishedFifth, Interval.MajorSixth, Interval.MajorNinth]
   );
-  public static readonly Major7: ChordPattern = new ChordPattern('Major 7', 'Maj 7', [
+  public static readonly Major7: ChordPattern = new ChordPattern('Major 7', 'Maj7', [
     Interval.MajorThird,
     Interval.PerfectFifth,
     Interval.MajorSeventh,
   ]);
-  public static readonly Major9: ChordPattern = new ChordPattern('Major 9', 'Maj 9', [
+  public static readonly Major9: ChordPattern = new ChordPattern('Major 9', 'Maj9', [
     Interval.MajorThird,
     Interval.PerfectFifth,
     Interval.MajorSeventh,
@@ -460,7 +461,7 @@ export class ChordPattern {
   ]);
   public static readonly Major9Sharp11: ChordPattern = new ChordPattern(
     'Major 9 sharp 11',
-    'Maj 9 #11',
+    'Maj9#11',
     [
       Interval.MajorThird,
       Interval.PerfectFifth,
@@ -470,14 +471,14 @@ export class ChordPattern {
     ]
   );
 
-  public static readonly Major11: ChordPattern = new ChordPattern('Major 11', 'Maj 11', [
+  public static readonly Major11: ChordPattern = new ChordPattern('Major 11', 'Maj11', [
     Interval.MajorThird,
     Interval.PerfectFifth,
     Interval.MajorSeventh,
     Interval.PerfectEleventh,
   ]);
 
-  public static readonly Major13: ChordPattern = new ChordPattern('Major 13', 'Maj 13', [
+  public static readonly Major13: ChordPattern = new ChordPattern('Major 13', 'Maj13', [
     Interval.MajorThird,
     Interval.PerfectFifth,
     Interval.MajorSeventh,
@@ -486,7 +487,7 @@ export class ChordPattern {
 
   public static readonly Major13Sharp11: ChordPattern = new ChordPattern(
     'Major 13 sharp11',
-    'Maj 13 #11',
+    'Maj13#11',
     [
       Interval.MajorThird,
       Interval.PerfectFifth,
@@ -496,7 +497,7 @@ export class ChordPattern {
     ]
   );
 
-  public static readonly Augmented7: ChordPattern = new ChordPattern('Augmented 7', 'Aug 7', [
+  public static readonly Augmented7: ChordPattern = new ChordPattern('Augmented 7', 'Aug7', [
     Interval.MajorThird,
     Interval.AugmentedFifth,
     Interval.MajorSeventh,
@@ -510,31 +511,31 @@ export class ChordPattern {
 
   public static readonly Dominant7Flat5: ChordPattern = new ChordPattern(
     'Dominant 7 flat 5',
-    '7 b5',
+    '7b5',
     [Interval.MajorThird, Interval.DiminishedFifth, Interval.MinorSeventh]
   );
 
   public static readonly Dominant7Flat9: ChordPattern = new ChordPattern(
     'Dominant 7 flat 9',
-    '7 b9',
+    '7b9',
     [Interval.MajorThird, Interval.PerfectFifth, Interval.MinorSeventh, Interval.MinorNinth]
   );
 
   public static readonly Dominant7Sharp9: ChordPattern = new ChordPattern(
     'Dominant 7 sharp 9',
-    '7 #9',
+    '7#9',
     [Interval.MajorThird, Interval.PerfectFifth, Interval.MinorSeventh, Interval.AugmentedNinth]
   );
 
   public static readonly Dominant7Flat5Flat9: ChordPattern = new ChordPattern(
     'Dominant 7 flat 5 flat9',
-    '7 b5 b9',
+    '7b5b9',
     [Interval.MajorThird, Interval.DiminishedFifth, Interval.MinorSeventh, Interval.MinorNinth]
   );
 
   public static readonly Dominant7Flat5Sharp9: ChordPattern = new ChordPattern(
     'Dominant 7 flat 5 sharp9',
-    '7 b5 #9',
+    '7b5#9',
     [Interval.MajorThird, Interval.DiminishedFifth, Interval.MinorSeventh, Interval.AugmentedNinth]
   );
 
@@ -562,7 +563,7 @@ export class ChordPattern {
     Interval.MajorThirteenth,
   ]);
 
-  public static readonly Minor: ChordPattern = new ChordPattern('Minor', 'min', [
+  public static readonly Minor: ChordPattern = new ChordPattern('Minor', 'm', [
     Interval.MinorThird,
     Interval.PerfectFifth,
   ]);
@@ -572,13 +573,13 @@ export class ChordPattern {
     Interval.DiminishedFifth,
   ]);
 
-  public static readonly Minor7: ChordPattern = new ChordPattern('Minor 7', 'min 7', [
+  public static readonly Minor7: ChordPattern = new ChordPattern('Minor 7', 'm7', [
     Interval.MinorThird,
     Interval.PerfectFifth,
     Interval.MinorSeventh,
   ]);
 
-  public static readonly Minor6: ChordPattern = new ChordPattern('Minor 6', 'min 6', [
+  public static readonly Minor6: ChordPattern = new ChordPattern('Minor 6', 'm6', [
     Interval.MinorThird,
     Interval.PerfectFifth,
     Interval.MajorSixth,
@@ -590,32 +591,32 @@ export class ChordPattern {
     [Interval.MinorThird, Interval.PerfectFifth, Interval.MajorSixth, Interval.MajorNinth]
   );
 
-  public static readonly Minor9: ChordPattern = new ChordPattern('Minor 9', 'min 9', [
+  public static readonly Minor9: ChordPattern = new ChordPattern('Minor 9', 'm9', [
     Interval.MinorThird,
     Interval.PerfectFifth,
     Interval.MinorSeventh,
     Interval.MajorNinth,
   ]);
 
-  public static readonly Diminished7: ChordPattern = new ChordPattern('Diminished7 ', 'dim 7', [
+  public static readonly Diminished7: ChordPattern = new ChordPattern('Diminished7 ', 'dim7', [
     Interval.MinorThird,
     Interval.DiminishedFifth,
     Interval.DiminishedSeventh,
   ]);
 
-  public static readonly Minor7b5: ChordPattern = new ChordPattern('Minor 7 b5', 'min 7 b5', [
+  public static readonly Minor7b5: ChordPattern = new ChordPattern('Minor 7 b5', 'm7b5', [
     Interval.MinorThird,
     Interval.DiminishedFifth,
     Interval.MinorSeventh,
   ]);
 
-  public static readonly MinorMaj7: ChordPattern = new ChordPattern('Minor Major 7', 'min Maj 7', [
+  public static readonly MinorMaj7: ChordPattern = new ChordPattern('Minor Major 7', 'mMaj7', [
     Interval.MinorThird,
     Interval.PerfectFifth,
     Interval.MajorSeventh,
   ]);
 
-  public static readonly MinorMaj9: ChordPattern = new ChordPattern('Minor Major 9', 'min Maj 9', [
+  public static readonly MinorMaj9: ChordPattern = new ChordPattern('Minor Major 9', 'mMaj9', [
     Interval.MinorThird,
     Interval.PerfectFifth,
     Interval.MajorSeventh,
@@ -629,30 +630,30 @@ export class ChordPattern {
 
   public static readonly Sus2Diminished: ChordPattern = new ChordPattern(
     'Sus 2 diminished',
-    'Sus 2 dim',
+    'Sus2dim',
     [Interval.MajorSecond, Interval.DiminishedFifth]
   );
 
   public static readonly Sus2Augmented: ChordPattern = new ChordPattern(
     'Sus 2 Augmented',
-    'Sus 2 Aug',
+    'Sus2Aug',
     [Interval.MajorSecond, Interval.AugmentedFifth]
   );
 
-  public static readonly Sus4: ChordPattern = new ChordPattern('Sus 4', 'Sus 4', [
+  public static readonly Sus4: ChordPattern = new ChordPattern('Sus 4', 'Sus4', [
     Interval.PerfectFourth,
     Interval.PerfectFifth,
   ]);
 
   public static readonly Sus4Diminished: ChordPattern = new ChordPattern(
     'Sus 4 diminished',
-    'Sus 4 dim',
+    'Sus4dim',
     [Interval.PerfectFourth, Interval.DiminishedFifth]
   );
 
   public static readonly Sus4Augmented: ChordPattern = new ChordPattern(
     'Sus 4 Augmented',
-    'Sus 4 aug',
+    'Sus4aug',
     [Interval.PerfectFourth, Interval.AugmentedFifth]
   );
 
