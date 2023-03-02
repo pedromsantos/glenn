@@ -43,16 +43,8 @@ export default class Key implements Iterable<Pitch> {
   public static readonly BFlatMinor: Key = new Key(Pitch.BFlat, -5, KeyType.Minor);
   public static readonly BMinor: Key = new Key(Pitch.B, 2, KeyType.Minor);
 
-  public get Name() {
-    return this.root.Name + this.Type;
-  }
-
   public get Abbreviation() {
     return this.type === KeyType.Major ? this.root.Name : this.root.Name + 'm';
-  }
-
-  private get Type() {
-    return KeyType[this.type];
   }
 
   private flatKey(fifths: Pitch[]): Pitch[] {

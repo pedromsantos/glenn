@@ -14,13 +14,13 @@ describe('abc Tune should', () => {
       .add(new Note(Pitch.G, Duration.Eighth, Octave.C4))
       .add(new Note(Pitch.A, Duration.Eighth, Octave.C4))
       .add(new Note(Pitch.B, Duration.Eighth, Octave.C4))
-      .add(new Note(Pitch.C, Duration.Eighth, Octave.C4));
+      .add(new Note(Pitch.C, Duration.Eighth, Octave.C5));
 
     const tune = new abcTune(Key.CMajor, timeSignature, Duration.Eighth)
       .addMeasure(measure)
       .addMeasure(measure, Duration.Sixteenth)
       .addMeasure(measure, Duration.Quarter);
 
-    expect(tune.toString()).toBe('K:C/nM:4/4/nL:1/8/n|C2E2GABC|C4E4G2A2B2C2|CEG/2A/2B/2C/2|');
+    expect(tune.toString()).toBe('K:C/nM:4/4/nL:1/8/n|C2E2GABc|C4E4G2A2B2c2|CEG/2A/2B/2c/2|');
   });
 });

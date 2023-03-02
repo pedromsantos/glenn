@@ -78,6 +78,6 @@ export class abcTune {
   }
 
   toString() {
-    return `${this.header.key?.toString()}/n${this.header.meter?.toString()}/n${this.header.unit_note_length?.toString()}/n${this.body.toString()}`;
+    return `${this.header.key.toString()}/n${this.header.meter.toString()}/n${this.header.unit_note_length.toString()}/n${this.body.toString()}`;
   }
 }
