@@ -1,5 +1,7 @@
 import { abcDuration } from './abcDuration';
 import { abcKey } from './abcKey';
+import { abcMeasure } from './abcMeasure';
+import { abcMeter } from './abcMeter';
 
 export interface abcHeader {
   area?: string;
@@ -12,7 +14,7 @@ export interface abcHeader {
   instruction?: string;
   key: abcKey;
   unit_note_length: abcDuration;
-  meter: string;
+  meter: abcMeter;
   macro?: string;
   notes?: string;
   origin?: string;
@@ -30,8 +32,15 @@ export interface abcHeader {
   transcription?: string;
 }
 
-export class abcBody {}
+export class abcBody {
+  constructor(private readonly measures: abcMeasure[]) {}
+
+  toString() {
+    return `|${this.measures.map((m) => m.toString()).join('|')}|`;
+  }
+}
 
 export class abcTune {
-  //private header: abcHeader;
+  // private readonly header: abcHeader;
+  // private readonly body: abcBody;
 }

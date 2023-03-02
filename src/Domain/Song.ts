@@ -1,19 +1,25 @@
 import { TimeSignature } from './Duration';
 import { Note } from './Note';
 
-export class NoteFragment {
-  private readonly fragment: Note[] = [];
+export class NoteFragment implements Iterable<Note> {
+  private readonly notes: Note[] = [];
 
   push(note: Note): void {
-    this.fragment.push(note);
+    this.notes.push(note);
   }
 
   get ticks(): number {
-    return this.fragment.reduce((total, current) => total + current.tick, 0);
+    return this.notes.reduce((total, current) => total + current.tick, 0);
+  }
+
+  *[Symbol.iterator](): Iterator<Note> {
+    for (const note of this.notes) {
+      yield note;
+    }
   }
 }
 
-export class Measure {
+export class Measure implements Iterable<Note> {
   protected fragment: NoteFragment;
   private readonly timeSignature: TimeSignature;
 
@@ -34,6 +40,12 @@ export class Measure {
     }
 
     return this;
+  }
+
+  *[Symbol.iterator](): Iterator<Note> {
+    for (const note of this.fragment) {
+      yield note;
+    }
   }
 }
 
