@@ -1,12 +1,12 @@
-import { Duration } from 'src/Domain/Duration';
-import { Measure } from 'src/Domain/Song';
-
+import { Duration, SimpleTimeSignature, TimeSignature } from '../Domain/Duration';
+import Key from '../Domain/Key';
+import { Measure } from '../Domain/Song';
 import { abcDuration } from './abcDuration';
 import { abcKey } from './abcKey';
 import { abcMeasure } from './abcMeasure';
 import { abcMeter } from './abcMeter';
 
-export interface abcHeader {
+interface abcHeader {
   area?: string;
   book?: string;
   composer?: string;
@@ -22,7 +22,7 @@ export interface abcHeader {
   notes?: string;
   origin?: string;
   parts?: string;
-  tempo: string;
+  tempo?: string;
   rhythm?: string;
   remark?: string;
   source?: string;
@@ -31,11 +31,11 @@ export interface abcHeader {
   user_defined?: string;
   voice?: string;
   words?: string;
-  reference_number: number;
+  reference_number?: number;
   transcription?: string;
 }
 
-export class abcBody {
+class abcBody {
   private readonly measures: abcMeasure[] = [];
 
   constructor(private readonly referenceDuration: Duration) {}
@@ -57,11 +57,19 @@ export class abcBody {
 }
 
 export class abcTune {
-  // private readonly header: abcHeader;
+  private readonly header: abcHeader = {
+    key: new abcKey(Key.CMajor),
+    unit_note_length: new abcDuration(Duration.Eighth),
+    meter: new abcMeter(new SimpleTimeSignature(4, Duration.Quarter)),
+  };
   private readonly body: abcBody;
 
-  constructor(defaultDuration: Duration) {
-    this.body = new abcBody(defaultDuration);
+  constructor(key: Key, meter: TimeSignature, unitNoteLength: Duration) {
+    this.header.unit_note_length = new abcDuration(unitNoteLength);
+    this.header.key = new abcKey(key);
+    this.header.meter = new abcMeter(meter);
+
+    this.body = new abcBody(unitNoteLength);
   }
 
   addMeasure(measure: Measure, masureReferenceDuration?: Duration) {
@@ -70,6 +78,6 @@ export class abcTune {
   }
 
   toString() {
-    return this.body.toString();
+    return `${this.header.key?.toString()}/n${this.header.meter?.toString()}/n${this.header.unit_note_length?.toString()}/n${this.body.toString()}`;
   }
 }

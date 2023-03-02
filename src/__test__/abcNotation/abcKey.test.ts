@@ -6,13 +6,27 @@ describe('abc Key should', () => {
     const key = Key.CMajor;
     const abc_key = new abcKey(key);
 
-    expect(abc_key.toString()).toBe('K:CMajor');
+    expect(abc_key.toString()).toBe('K:C');
   });
 
   test('convert A minor key to abc notation', () => {
     const key = Key.AMinor;
     const abc_key = new abcKey(key);
 
-    expect(abc_key.toString()).toBe('K:AMinor');
+    expect(abc_key.toString()).toBe('K:Am');
+  });
+
+  test('convert Bb Major key to abc notation', () => {
+    const key = Key.BFlatMajor;
+    const abc_key = new abcKey(key);
+
+    expect(abc_key.toString()).toBe('K:Bb');
+  });
+
+  test('convert C# minor key to abc notation', () => {
+    const key = Key.CSharpMinor;
+    const abc_key = new abcKey(key);
+
+    expect(abc_key.toString()).toBe('K:C#m');
   });
 });
