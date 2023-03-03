@@ -1,6 +1,6 @@
 {
   "name": "glenn",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Module for working with music theory concepts",
   "author": "Pedro Moreira Santos",
   "homepage": "https://github.com/pedromsantos/glenn",
@@ -16,8 +16,7 @@
   "main": "index.js",
   "module": "./dist/index.mjs",
   "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   },
   "files": [
     "dist",
