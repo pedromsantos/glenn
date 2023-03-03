@@ -9,9 +9,5 @@
       "statements": 98
     }
   },
-  "preset": "ts-jest",
-  "transform": {
-    "^.+\\.ts?$": "ts-jest",
-    "^.+\\.js$": "babel-jest"
-  }
+  "preset": "ts-jest"
 }
