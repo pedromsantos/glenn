@@ -57,12 +57,12 @@ class abcBody {
 }
 
 export class abcTune {
+  private readonly body: abcBody;
   private readonly header: abcHeader = {
     key: new abcKey(Key.CMajor),
     unit_note_length: new abcDuration(Duration.Eighth),
     meter: new abcMeter(new SimpleTimeSignature(4, Duration.Quarter)),
   };
-  private readonly body: abcBody;
 
   constructor(key: Key, meter: TimeSignature, unitNoteLength: Duration) {
     this.header.unit_note_length = new abcDuration(unitNoteLength);
