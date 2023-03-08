@@ -1,4 +1,5 @@
 import { TimeSignature } from './Duration';
+import ensure from './Ensure';
 import { Note } from './Note';
 
 export class NoteFragment implements Iterable<Note> {
@@ -58,5 +59,33 @@ export class FullMeasure extends Measure {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   override add(_: Note): Measure {
     return this;
+  }
+}
+
+export class Song implements Iterable<Measure> {
+  private readonly measures: Measure[] = [];
+
+  constructor(private readonly timeSignature: TimeSignature) {}
+
+  addMeasure(measure: FullMeasure) {
+    this.measures.push(measure);
+    return this;
+  }
+
+  addNote(note: Note) {
+    let lastMeasure = this.measures[this.measures.length - 1];
+
+    if (!lastMeasure) {
+      this.measures.push(new Measure(this.timeSignature));
+      lastMeasure = this.measures[this.measures.length - 1];
+    }
+
+    return ensure(lastMeasure).add(note);
+  }
+
+  *[Symbol.iterator](): Iterator<Measure> {
+    for (const measure of this.measures) {
+      yield measure;
+    }
   }
 }

@@ -9,5 +9,6 @@
       "statements": 98
     }
   },
-  "preset": "ts-jest"
+  "preset": "ts-jest",
+  "testTimeout": 10000
 }

@@ -1,7 +1,7 @@
 import { CompoundTimeSignature, Duration, SimpleTimeSignature } from '../../Domain/Duration';
 import { Note, Octave } from '../../Domain/Note';
 import Pitch from '../../Domain/Pitch';
-import { FullMeasure, Measure } from '../../Domain/Song';
+import { FullMeasure, Measure, Song } from '../../Domain/Song';
 
 describe('Measure', () => {
   describe('in 4/4', () => {
@@ -312,5 +312,31 @@ describe('Measure', () => {
           .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
       ).toThrow(`cannot fit -${Duration.DottedQuarter.Name} note in measure`);
     });
+  });
+});
+
+describe('Song should', () => {
+  test('allow adding measures to itself', () => {
+    const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
+    const song = new Song(timeSignature);
+    const initialMeasureCount = [...song].length;
+
+    song.addMeasure(new Measure(timeSignature));
+
+    const finalMeasureCount = [...song].length;
+
+    expect(initialMeasureCount).toBeLessThan(finalMeasureCount);
+  });
+
+  test('allow adding notes to last measure', () => {
+    const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
+    const song = new Song(timeSignature);
+    const initialMeasureCount = [...song].length;
+
+    song.addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4));
+
+    const finalMeasureCount = [...song].length;
+
+    expect(initialMeasureCount).toBeLessThan(finalMeasureCount);
   });
 });
