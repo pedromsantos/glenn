@@ -80,7 +80,7 @@ export class ChordPitches implements Iterable<Pitch> {
     return new ChordPitches(this.drop2().drop2().pitches);
   }
 
-  rotate(amount = 1): ChordPitches {
+  rotate(amount: number): ChordPitches {
     amount = amount % this.pitches.length;
     return new ChordPitches(this.pitches.slice(amount).concat(this.pitches.slice(0, amount)));
   }

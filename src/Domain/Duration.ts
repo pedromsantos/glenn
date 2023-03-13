@@ -4,7 +4,7 @@ export abstract class TimeSignature {
   protected constructor(
     protected readonly beats: number,
     protected readonly duration: Duration,
-    bpm = 60
+    bpm: number
   ) {
     this.bpm = new BeatsPerMinute(bpm, duration);
   }
