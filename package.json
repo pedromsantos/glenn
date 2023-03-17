@@ -1,6 +1,6 @@
 {
   "name": "glenn",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Module for working with music theory concepts",
   "author": "Pedro Moreira Santos",
   "homepage": "https://github.com/pedromsantos/glenn",
@@ -54,10 +54,7 @@
     "lint:fix": "eslint . --ext .ts --ignore-pattern 'node_modules/' --fix",
     "types": "type-coverage -at-least 99",
     "types-report": "typescript-coverage-report --threshold 99",
-    "prepare": "husky install",
-    "release": "npm publish",
-    "release:dry": "npm publish --dry-run",
-    "publish": "changeset publish"
+    "prepare": "husky install"
   },
   "dependencies": {},
   "devDependencies": {
