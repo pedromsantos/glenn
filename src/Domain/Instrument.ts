@@ -1,6 +1,6 @@
 import { Duration } from './Duration';
 import { Note, Octave } from './Note';
-import Pitch from './Pitch';
+import { Pitch } from './Pitch';
 
 export class Voice {
   private static readonly all: Voice[] = [];

@@ -11,7 +11,7 @@ export type PitchPrimitives = {
   value: number;
 };
 
-export default class Pitch {
+export class Pitch {
   PITCHES = 12;
 
   private constructor(

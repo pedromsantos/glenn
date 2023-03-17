@@ -1,5 +1,5 @@
 import { Duration, SimpleTimeSignature, TimeSignature } from '../Domain/Duration';
-import Key from '../Domain/Key';
+import { Key } from '../Domain/Key';
 import { Measure } from '../Domain/Song';
 import { abcDuration } from './abcDuration';
 import { abcKey } from './abcKey';

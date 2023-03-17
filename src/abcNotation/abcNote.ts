@@ -1,6 +1,6 @@
 import { Duration } from '../Domain/Duration';
 import { Note, Octave } from '../Domain/Note';
-import Pitch, { Accidental } from '../Domain/Pitch';
+import { Accidental, Pitch } from '../Domain/Pitch';
 
 export class abcPitch {
   constructor(private readonly pitch: Pitch) {}

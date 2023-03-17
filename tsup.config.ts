@@ -5,6 +5,8 @@ const config: Options = {
   dts: true,
   clean: true,
   sourcemap: true,
+  splitting: false,
+  target: 'es2020',
   format: ['iife', 'cjs', 'esm'],
 };
 

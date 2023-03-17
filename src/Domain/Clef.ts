@@ -1,5 +1,5 @@
 import { Octave } from './Note';
-import Pitch from './Pitch';
+import { Pitch } from './Pitch';
 
 export const cleffBrainDump = 'clefBrainDump';
 

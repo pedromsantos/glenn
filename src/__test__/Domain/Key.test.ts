@@ -1,7 +1,7 @@
 import * as fc from 'fast-check';
 
-import Key from '../../Domain/Key';
-import Pitch from '../../Domain/Pitch';
+import { Key } from '../../Domain/Key';
+import { Pitch } from '../../Domain/Pitch';
 import { convertPitchesToDistances } from '../utils';
 
 describe('Major keys', () => {

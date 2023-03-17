@@ -1,5 +1,5 @@
 import { abcKey } from '../../abcNotation/abcKey';
-import Key from '../../Domain/Key';
+import { Key } from '../../Domain/Key';
 
 describe('abc Key should', () => {
   test('convert C Major key to abc notation', () => {

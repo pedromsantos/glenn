@@ -4,7 +4,7 @@
 import * as fc from 'fast-check';
 
 import { Interval } from '../../Domain/Interval';
-import Pitch from '../../Domain/Pitch';
+import { Pitch } from '../../Domain/Pitch';
 
 describe('Pitch', () => {
   describe('sharp should raise it by half a tone', () => {

@@ -11,7 +11,7 @@ import {
   TabColumn,
   TabMatrix,
 } from '../../Domain/Guitar';
-import Pitch, { MelodicLine, MelodicLineDirection } from '../../Domain/Pitch';
+import { MelodicLine, MelodicLineDirection, Pitch } from '../../Domain/Pitch';
 
 describe('Blank fret should', () => {
   test('render empty column', () => {

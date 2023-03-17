@@ -1,6 +1,6 @@
 import { ChordPattern, ClosedChord } from '../../Domain/Chord';
 import { GuitarChord, Position } from '../../Domain/Guitar';
-import Pitch from '../../Domain/Pitch';
+import { Pitch } from '../../Domain/Pitch';
 
 describe('Guitar chord', function () {
   describe('chord', () => {

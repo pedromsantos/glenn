@@ -1,6 +1,6 @@
 import { abcChord, abcGuitarChord } from '../../abcNotation/abcChord';
 import { ChordPattern, ClosedChord } from '../../Domain/Chord';
-import Pitch from '../../Domain/Pitch';
+import { Pitch } from '../../Domain/Pitch';
 
 describe('abc Chord should', () => {
   test('convert a C major triad to abc notation', () => {

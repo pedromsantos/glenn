@@ -4,7 +4,7 @@ import { ChordPattern, ClosedChord } from '../../Domain/Chord';
 import { Duration } from '../../Domain/Duration';
 import { Interval, IntervalDirection } from '../../Domain/Interval';
 import { MelodicPhrase, Note, Octave } from '../../Domain/Note';
-import Pitch from '../../Domain/Pitch';
+import { Pitch } from '../../Domain/Pitch';
 
 describe('Note', () => {
   describe('transpose using a', () => {

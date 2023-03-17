@@ -1,6 +1,6 @@
 {
   "name": "glenn",
-  "version": "0.0.3",
+  "version": "0.0.14",
   "description": "Module for working with music theory concepts",
   "author": "Pedro Moreira Santos",
   "homepage": "https://github.com/pedromsantos/glenn",
@@ -13,7 +13,8 @@
     "Tablature"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "module": "./dist/index.mjs",
   "publishConfig": {
     "access": "public"
@@ -48,13 +49,14 @@
     "ci": "turbo lint types test:ci",
     "test:ci": "jest --coverage --no-cache --runInBand",
     "mutants": "stryker run",
-    "build": "tsup src/index.ts",
+    "build": "tsup",
     "lint": "eslint . --color --ext .ts --ignore-pattern 'node_modules/'",
     "lint:fix": "eslint . --ext .ts --ignore-pattern 'node_modules/' --fix",
     "types": "type-coverage -at-least 99",
     "types-report": "typescript-coverage-report --threshold 99",
     "prepare": "husky install",
-    "release": "turbo run publish",
+    "release": "npm publish",
+    "release:dry": "npm publish --dry-run",
     "publish": "changeset publish"
   },
   "dependencies": {},

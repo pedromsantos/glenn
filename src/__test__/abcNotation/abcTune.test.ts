@@ -1,8 +1,8 @@
 import { abcTune } from '../../abcNotation/abcTune';
 import { Duration, SimpleTimeSignature } from '../../Domain/Duration';
-import Key from '../../Domain/Key';
+import { Key } from '../../Domain/Key';
 import { Note, Octave } from '../../Domain/Note';
-import Pitch from '../../Domain/Pitch';
+import { Pitch } from '../../Domain/Pitch';
 import { Measure } from '../../Domain/Song';
 
 describe('abc Tune should', () => {

@@ -1,7 +1,7 @@
 import { abcNote } from '../../abcNotation/abcNote';
 import { Duration } from '../../Domain/Duration';
 import { Note, Octave } from '../../Domain/Note';
-import Pitch from '../../Domain/Pitch';
+import { Pitch } from '../../Domain/Pitch';
 
 describe('abc Note should', () => {
   describe('using octaves', () => {

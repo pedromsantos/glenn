@@ -1,7 +1,7 @@
 import { abcMeasure } from '../../abcNotation/abcMeasure';
 import { Duration, SimpleTimeSignature } from '../../Domain/Duration';
 import { Note, Octave } from '../../Domain/Note';
-import Pitch from '../../Domain/Pitch';
+import { Pitch } from '../../Domain/Pitch';
 import { Measure } from '../../Domain/Song';
 
 describe('abc Measure should', () => {

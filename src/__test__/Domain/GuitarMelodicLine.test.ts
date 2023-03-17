@@ -1,5 +1,5 @@
 import { Fret, GuitarMelodicLine, GuitarString, Position } from '../../Domain/Guitar';
-import Pitch, { MelodicLine, MelodicLineDirection } from '../../Domain/Pitch';
+import { MelodicLine, MelodicLineDirection, Pitch } from '../../Domain/Pitch';
 import { ScalePattern } from '../../Domain/Scale';
 
 describe('Guitar melodic line should', () => {

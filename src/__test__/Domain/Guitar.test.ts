@@ -1,7 +1,7 @@
 import * as fc from 'fast-check';
 
 import { BlankFret, Fret, GuitarMelodicLine, GuitarString, Position } from '../../Domain/Guitar';
-import Pitch, { MelodicLine, MelodicLineDirection } from '../../Domain/Pitch';
+import { MelodicLine, MelodicLineDirection, Pitch } from '../../Domain/Pitch';
 
 describe('Fret should', () => {
   test('convert to primitive', () => {

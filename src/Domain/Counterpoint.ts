@@ -2,7 +2,7 @@ import { Duration } from './Duration';
 import { Voice } from './Instrument';
 import { Interval } from './Interval';
 import { MelodicPhrase, Note } from './Note';
-import Pitch from './Pitch';
+import { Pitch } from './Pitch';
 import Scale, {
   ScaleDegree,
   ScaleHarmonizer,

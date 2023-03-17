@@ -1,4 +1,4 @@
-import Pitch from '../Domain/Pitch';
+import { Pitch } from 'src/Domain/Pitch';
 
 export function convertPitchesToDistances(pitches: Pitch[]): number[] {
   return pitches

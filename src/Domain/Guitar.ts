@@ -1,5 +1,5 @@
 import { Chord } from './Chord';
-import Pitch, { MelodicLine, MelodicLineDirection } from './Pitch';
+import { MelodicLine, MelodicLineDirection, Pitch } from './Pitch';
 
 export class Fret {
   constructor(protected readonly string: GuitarString, private readonly fret: number) {}

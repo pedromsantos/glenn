@@ -1,11 +1,11 @@
-import Pitch from './Pitch';
+import { Pitch } from './Pitch';
 
 enum KeyType {
   Major,
   Minor,
 }
 
-export default class Key implements Iterable<Pitch> {
+export class Key implements Iterable<Pitch> {
   private static readonly all: Key[] = [];
 
   private constructor(

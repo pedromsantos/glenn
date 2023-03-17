@@ -1,7 +1,7 @@
 import * as fc from 'fast-check';
 
 import { ChordPattern } from '../../Domain/Chord';
-import Pitch from '../../Domain/Pitch';
+import { Pitch } from '../../Domain/Pitch';
 import { ScaleDegree, ScalePattern, SeventhHarmonizer, TriadHarmonizer } from '../../Domain/Scale';
 import { convertPitchesToDistances } from '../utils';
 

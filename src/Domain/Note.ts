@@ -1,7 +1,7 @@
 import { Chord } from './Chord';
 import { Duration, DurationPrimitives } from './Duration';
 import { Interval, IntervalDirection } from './Interval';
-import Pitch, { PitchPrimitives } from './Pitch';
+import { Pitch, PitchPrimitives } from './Pitch';
 
 export type OctavePrimitives = {
   name: string;
