@@ -3,7 +3,7 @@ import { Duration } from '../../Domain/Duration';
 import { Voice } from '../../Domain/Instrument';
 import { MelodicPhrase, Note, Octave } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
-import Scale, { ScaleDegree, ScalePattern } from '../../Domain/Scale';
+import { Scale, ScaleDegree, ScalePattern } from '../../Domain/Scale';
 
 describe('First species counterpoint', () => {
   test('valid', () => {

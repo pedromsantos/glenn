@@ -18,7 +18,8 @@ import { Interval } from './Domain/Interval';
 import { Key } from './Domain/Key';
 import { MelodicPhrase, Note, Octave } from './Domain/Note';
 import { Pitch } from './Domain/Pitch';
-import Scale, {
+import {
+  Scale,
   ScaleDegree,
   ScalePattern,
   SeventhHarmonizer,

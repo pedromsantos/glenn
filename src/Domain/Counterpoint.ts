@@ -3,7 +3,8 @@ import { Voice } from './Instrument';
 import { Interval } from './Interval';
 import { MelodicPhrase, Note } from './Note';
 import { Pitch } from './Pitch';
-import Scale, {
+import {
+  Scale,
   ScaleDegree,
   ScaleHarmonizer,
   ScalePattern,

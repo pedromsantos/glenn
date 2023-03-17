@@ -313,7 +313,7 @@ export type ScalePrimitives = {
   pitches: PitchPrimitives[];
 };
 
-export default class Scale implements Iterable<Pitch> {
+export class Scale implements Iterable<Pitch> {
   constructor(
     private readonly scalePattern: ScalePattern,
     private readonly root: Pitch,
