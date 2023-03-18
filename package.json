@@ -1,6 +1,6 @@
 {
   "name": "glenn",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Module for working with music theory concepts",
   "author": "Pedro Moreira Santos",
   "homepage": "https://github.com/pedromsantos/glenn",
@@ -28,10 +28,10 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "default": "./dist/index.js",
       "require": "./dist/index.js",
       "import": "./dist/index.mjs",
-      "node": "./dist/index.js"
+      "node": "./dist/index.js",
+      "default": "./dist/index.js"
     }
   },
   "repository": {
