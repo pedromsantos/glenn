@@ -67,7 +67,7 @@ export class BlankFret extends Fret {
   override toTab(guitarStrings: GuitarStrings = new GuitarStrings()): TabColumn {
     const frets: Fret[] = [...guitarStrings].map((gs) => new BlankFret(gs));
 
-    return TabColumn.fromFrets([...frets].reverse());
+    return TabColumn.fromFrets([...frets]);
   }
 
   override toString() {
