@@ -21,6 +21,6 @@ describe('abc Tune should', () => {
       .addMeasure(measure, Duration.Sixteenth)
       .addMeasure(measure, Duration.Quarter);
 
-    expect(tune.toString()).toBe('K:C/nM:4/4/nL:1/8/n|C2E2GABc|C4E4G2A2B2c2|CEG/2A/2B/2c/2|');
+    expect(tune.toString()).toBe('X:1\nK:C\nM:4/4\nL:1/8\n|C2E2GABc|C4E4G2A2B2c2|CEG/2A/2B/2c/2|');
   });
 });

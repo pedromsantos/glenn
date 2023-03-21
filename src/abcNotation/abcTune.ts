@@ -1,4 +1,5 @@
 import { Duration, SimpleTimeSignature, TimeSignature } from '../Domain/Duration';
+import ensure from '../Domain/Ensure';
 import { Key } from '../Domain/Key';
 import { Measure } from '../Domain/Song';
 import { abcDuration } from './abcDuration';
@@ -64,10 +65,11 @@ export class abcTune {
     meter: new abcMeter(new SimpleTimeSignature(4, Duration.Quarter)),
   };
 
-  constructor(key: Key, meter: TimeSignature, unitNoteLength: Duration) {
+  constructor(key: Key, meter: TimeSignature, unitNoteLength: Duration, referenceNumber = 1) {
     this.header.unit_note_length = new abcDuration(unitNoteLength);
     this.header.key = new abcKey(key);
     this.header.meter = new abcMeter(meter);
+    this.header.reference_number = referenceNumber;
 
     this.body = new abcBody(unitNoteLength);
   }
@@ -78,6 +80,8 @@ export class abcTune {
   }
 
   toString() {
-    return `${this.header.key.toString()}/n${this.header.meter.toString()}/n${this.header.unit_note_length.toString()}/n${this.body.toString()}`;
+    const referenceNumber = ensure(this.header.reference_number?.toString());
+
+    return `X:${referenceNumber}\n${this.header.key.toString()}\n${this.header.meter.toString()}\n${this.header.unit_note_length.toString()}\n${this.body.toString()}`;
   }
 }
