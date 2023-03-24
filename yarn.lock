@@ -1434,12 +1434,12 @@
     weapon-regex "~1.0.2"
 
 "@stryker-mutator/jest-runner@^6.3.1":
-  version "6.4.1"
-  resolved "https://registry.yarnpkg.com/@stryker-mutator/jest-runner/-/jest-runner-6.4.1.tgz#352456309680cbc9360d8e3bf297d10c261bc110"
-  integrity sha512-Hqs+M4KtniLikcrP76XjxSSrAfW6VJYRBzPnqOOCe8T5w/CrFZ3aRN7UqbvCl3/BYA2+lf6AzKpsl4BWPOk5BQ==
+  version "6.4.2"
+  resolved "https://registry.yarnpkg.com/@stryker-mutator/jest-runner/-/jest-runner-6.4.2.tgz#27806e8f5e1c3b62272b0febfe7f3da9e4143726"
+  integrity sha512-rDetgBolcqvtugsoDetOnVuQc5fvggSfAVmMqX/QILfd4aG55y1GJI9NBNzDF3Ye5HBs6t7jGODFz+z75W6PKw==
   dependencies:
-    "@stryker-mutator/api" "6.4.1"
-    "@stryker-mutator/util" "6.4.1"
+    "@stryker-mutator/api" "6.4.2"
+    "@stryker-mutator/util" "6.4.2"
     semver "~7.3.7"
     tslib "~2.5.0"
 
