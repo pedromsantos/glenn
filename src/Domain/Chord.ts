@@ -323,6 +323,7 @@ export class Drop3Chord extends BaseChord implements Iterable<Pitch> {
   }
 }
 
+type IntervalsToFunction = [Interval[], ChordFunction];
 export class ChordFunction {
   private static readonly all: ChordFunction[] = [];
 
@@ -340,36 +341,35 @@ export class ChordFunction {
   public static readonly Thirteenth: ChordFunction = new ChordFunction('Thirteenth');
 
   public static functionForInterval(interval: Interval): ChordFunction {
-    switch (interval) {
-      case Interval.MajorThird:
-      case Interval.MinorThird:
-      case Interval.MajorSecond:
-      case Interval.MinorSecond:
-      case Interval.PerfectFourth:
-      case Interval.AugmentedFourth:
-        return ChordFunction.Third;
-      case Interval.PerfectFifth:
-      case Interval.DiminishedFifth:
-      case Interval.AugmentedFifth:
-        return ChordFunction.Fifth;
-      case Interval.MinorSixth:
-      case Interval.MajorSixth:
-        return ChordFunction.Sixth;
-      case Interval.MajorSeventh:
-      case Interval.MinorSeventh:
-      case Interval.DiminishedSeventh:
-        return ChordFunction.Seventh;
-      case Interval.MajorNinth:
-      case Interval.MinorNinth:
-        return ChordFunction.Ninth;
-      case Interval.PerfectEleventh:
-      case Interval.AugmentedEleventh:
-        return ChordFunction.Eleventh;
-      case Interval.MajorThirteenth:
-        return ChordFunction.Thirteenth;
-      default:
-        return ChordFunction.Root;
-    }
+    const intervalToFunction: IntervalsToFunction[] = [
+      [
+        [
+          Interval.MajorThird,
+          Interval.MinorThird,
+          Interval.MajorSecond,
+          Interval.MinorSecond,
+          Interval.PerfectFourth,
+          Interval.AugmentedFourth,
+        ],
+        ChordFunction.Third,
+      ],
+      [
+        [Interval.PerfectFifth, Interval.DiminishedFifth, Interval.AugmentedFifth],
+        ChordFunction.Fifth,
+      ],
+      [[Interval.MinorSixth, Interval.MajorSixth], ChordFunction.Sixth],
+      [
+        [Interval.MajorSeventh, Interval.MinorSeventh, Interval.DiminishedSeventh],
+        ChordFunction.Seventh,
+      ],
+      [[Interval.MinorNinth, Interval.MajorNinth], ChordFunction.Ninth],
+      [[Interval.PerfectEleventh, Interval.AugmentedEleventh], ChordFunction.Eleventh],
+      [[Interval.MajorThirteenth], ChordFunction.Thirteenth],
+    ];
+
+    const element = intervalToFunction.find((e) => e[0].includes(interval));
+
+    return element ? element[1] : ChordFunction.Root;
   }
 
   get To(): Readonly<string> {
