@@ -17,7 +17,7 @@ describe('abc Tune should', () => {
     .addNote(new Note(Pitch.B, Duration.Eighth, Octave.C4))
     .addNote(new Note(Pitch.C, Duration.Eighth, Octave.C5));
 
-  test('create abc notation tune', () => {
+  test('create abc notation with eighth duration', () => {
     const tune = new abcTune(song, Duration.Eighth);
 
     expect(tune.toString()).toBe('X:1\nK:C\nM:4/4\nL:1/8\n|C2E2GABc|');
