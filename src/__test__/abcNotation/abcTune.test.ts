@@ -17,19 +17,19 @@ describe('abc Tune should', () => {
     .addNote(new Note(Pitch.B, Duration.Eighth, Octave.C4))
     .addNote(new Note(Pitch.C, Duration.Eighth, Octave.C5));
 
-  test('create abc notation with eighth duration', () => {
+  test('create abc notation with eighth note default duration', () => {
     const tune = new abcTune(song, Duration.Eighth);
 
     expect(tune.toString()).toBe('X:1\nK:C\nM:4/4\nL:1/8\n|C2E2GABc|');
   });
 
-  test('create abc notation tune with sixteenth default duration', () => {
+  test('create abc notation tune with sixteenth note default duration', () => {
     const tune = new abcTune(song, Duration.Sixteenth);
 
     expect(tune.toString()).toBe('X:1\nK:C\nM:4/4\nL:1/16\n|C4E4G2A2B2c2|');
   });
 
-  test('create abc notation tune with quarter default duration', () => {
+  test('create abc notation tune with quarter note default duration', () => {
     const tune = new abcTune(song, Duration.Quarter);
 
     expect(tune.toString()).toBe('X:1\nK:C\nM:4/4\nL:1/4\n|CEG/2A/2B/2c/2|');
