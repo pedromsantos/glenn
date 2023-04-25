@@ -1,7 +1,7 @@
-import { Duration, SimpleTimeSignature, TimeSignature } from '../Domain/Duration';
+import { Duration, SimpleTimeSignature } from '../Domain/Duration';
 import ensure from '../Domain/Ensure';
 import { Key } from '../Domain/Key';
-import { Measure } from '../Domain/Song';
+import { Song } from '../Domain/Song';
 import { abcDuration } from './abcDuration';
 import { abcKey } from './abcKey';
 import { abcMeasure } from './abcMeasure';
@@ -37,20 +37,7 @@ interface abcHeader {
 }
 
 class abcBody {
-  private readonly measures: abcMeasure[] = [];
-
-  constructor(private readonly referenceDuration: Duration) {}
-
-  addMeasure(measure: Measure, masureReferenceDuration?: Duration) {
-    this.measures.push(
-      new abcMeasure(
-        measure,
-        masureReferenceDuration ? masureReferenceDuration : this.referenceDuration
-      )
-    );
-
-    return this;
-  }
+  constructor(private readonly measures: abcMeasure[] = []) {}
 
   toString() {
     return `|${this.measures.map((m) => m.toString()).join('|')}|`;
@@ -65,18 +52,13 @@ export class abcTune {
     meter: new abcMeter(new SimpleTimeSignature(4, Duration.Quarter)),
   };
 
-  constructor(key: Key, meter: TimeSignature, unitNoteLength: Duration, referenceNumber = 1) {
+  constructor(song: Song, unitNoteLength: Duration, referenceNumber = 1) {
     this.header.unit_note_length = new abcDuration(unitNoteLength);
-    this.header.key = new abcKey(key);
-    this.header.meter = new abcMeter(meter);
+    this.header.key = new abcKey(song.Key);
+    this.header.meter = new abcMeter(song.TimeSignature);
     this.header.reference_number = referenceNumber;
 
-    this.body = new abcBody(unitNoteLength);
-  }
-
-  addMeasure(measure: Measure, masureReferenceDuration?: Duration) {
-    this.body.addMeasure(measure, masureReferenceDuration);
-    return this;
+    this.body = new abcBody([...song].map((m) => new abcMeasure(m, unitNoteLength)));
   }
 
   toString() {

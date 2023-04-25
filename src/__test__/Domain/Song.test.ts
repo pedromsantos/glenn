@@ -1,4 +1,5 @@
 import { CompoundTimeSignature, Duration, SimpleTimeSignature } from '../../Domain/Duration';
+import { Key } from '../../Domain/Key';
 import { Note, Octave } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
 import { FullMeasure, Measure, Song } from '../../Domain/Song';
@@ -318,7 +319,7 @@ describe('Measure', () => {
 describe('Song should', () => {
   test('allow adding measures to itself', () => {
     const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
-    const song = new Song(timeSignature);
+    const song = new Song(timeSignature, Key.CMajor);
     const initialMeasureCount = [...song].length;
 
     song.addMeasure(new Measure(timeSignature));
@@ -330,7 +331,7 @@ describe('Song should', () => {
 
   test('allow adding notes to last measure', () => {
     const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
-    const song = new Song(timeSignature);
+    const song = new Song(timeSignature, Key.CMajor);
     const initialMeasureCount = [...song].length;
 
     song.addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4));
@@ -338,5 +339,20 @@ describe('Song should', () => {
     const finalMeasureCount = [...song].length;
 
     expect(initialMeasureCount).toBeLessThan(finalMeasureCount);
+  });
+
+  test('allow adding notes and when measure is full add a new measure', () => {
+    const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
+    const song = new Song(timeSignature, Key.CMajor);
+
+    song.addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4));
+    song.addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4));
+    song.addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4));
+    song.addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4));
+    song.addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4));
+
+    const finalMeasureCount = [...song].length;
+
+    expect(finalMeasureCount).toBe(2);
   });
 });

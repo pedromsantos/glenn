@@ -3,24 +3,23 @@ import { Duration, SimpleTimeSignature } from '../../Domain/Duration';
 import { Key } from '../../Domain/Key';
 import { Note, Octave } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
-import { Measure } from '../../Domain/Song';
+import { Song } from '../../Domain/Song';
 
 describe('abc Tune should', () => {
   test('create abc notation tune', () => {
     const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
-    const measure = new Measure(timeSignature)
-      .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-      .add(new Note(Pitch.E, Duration.Quarter, Octave.C4))
-      .add(new Note(Pitch.G, Duration.Eighth, Octave.C4))
-      .add(new Note(Pitch.A, Duration.Eighth, Octave.C4))
-      .add(new Note(Pitch.B, Duration.Eighth, Octave.C4))
-      .add(new Note(Pitch.C, Duration.Eighth, Octave.C5));
+    const song = new Song(timeSignature, Key.CMajor);
 
-    const tune = new abcTune(Key.CMajor, timeSignature, Duration.Eighth)
-      .addMeasure(measure)
-      .addMeasure(measure, Duration.Sixteenth)
-      .addMeasure(measure, Duration.Quarter);
+    song
+      .addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+      .addNote(new Note(Pitch.E, Duration.Quarter, Octave.C4))
+      .addNote(new Note(Pitch.G, Duration.Eighth, Octave.C4))
+      .addNote(new Note(Pitch.A, Duration.Eighth, Octave.C4))
+      .addNote(new Note(Pitch.B, Duration.Eighth, Octave.C4))
+      .addNote(new Note(Pitch.C, Duration.Eighth, Octave.C5));
 
-    expect(tune.toString()).toBe('X:1\nK:C\nM:4/4\nL:1/8\n|C2E2GABc|C4E4G2A2B2c2|CEG/2A/2B/2c/2|');
+    const tune = new abcTune(song, Duration.Eighth);
+
+    expect(tune.toString()).toBe('X:1\nK:C\nM:4/4\nL:1/8\n|C2E2GABc|');
   });
 });

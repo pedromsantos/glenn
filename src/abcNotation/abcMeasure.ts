@@ -7,7 +7,6 @@ export class abcMeasure {
   constructor(private readonly measure: Measure, private readonly defaultDuration: Duration) {}
 
   toString() {
-    const measureNotes = [...this.measure];
-    return measureNotes.map((n) => new abcNote(n, this.defaultDuration)).join('');
+    return [...this.measure].map((n) => new abcNote(n, this.defaultDuration)).join('');
   }
 }
