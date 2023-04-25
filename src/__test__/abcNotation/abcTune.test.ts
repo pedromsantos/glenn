@@ -6,20 +6,32 @@ import { Pitch } from '../../Domain/Pitch';
 import { Song } from '../../Domain/Song';
 
 describe('abc Tune should', () => {
+  const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
+  const song = new Song(timeSignature, Key.CMajor);
+
+  song
+    .addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+    .addNote(new Note(Pitch.E, Duration.Quarter, Octave.C4))
+    .addNote(new Note(Pitch.G, Duration.Eighth, Octave.C4))
+    .addNote(new Note(Pitch.A, Duration.Eighth, Octave.C4))
+    .addNote(new Note(Pitch.B, Duration.Eighth, Octave.C4))
+    .addNote(new Note(Pitch.C, Duration.Eighth, Octave.C5));
+
   test('create abc notation tune', () => {
-    const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
-    const song = new Song(timeSignature, Key.CMajor);
-
-    song
-      .addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-      .addNote(new Note(Pitch.E, Duration.Quarter, Octave.C4))
-      .addNote(new Note(Pitch.G, Duration.Eighth, Octave.C4))
-      .addNote(new Note(Pitch.A, Duration.Eighth, Octave.C4))
-      .addNote(new Note(Pitch.B, Duration.Eighth, Octave.C4))
-      .addNote(new Note(Pitch.C, Duration.Eighth, Octave.C5));
-
     const tune = new abcTune(song, Duration.Eighth);
 
     expect(tune.toString()).toBe('X:1\nK:C\nM:4/4\nL:1/8\n|C2E2GABc|');
+  });
+
+  test('create abc notation tune with sixteenth default duration', () => {
+    const tune = new abcTune(song, Duration.Sixteenth);
+
+    expect(tune.toString()).toBe('X:1\nK:C\nM:4/4\nL:1/16\n|C4E4G2A2B2c2|');
+  });
+
+  test('create abc notation tune with quarter default duration', () => {
+    const tune = new abcTune(song, Duration.Quarter);
+
+    expect(tune.toString()).toBe('X:1\nK:C\nM:4/4\nL:1/4\n|CEG/2A/2B/2c/2|');
   });
 });
