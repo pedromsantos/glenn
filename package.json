@@ -45,7 +45,7 @@
     "check_exports": "check-export-map",
     "watch": "jest --watch",
     "test": "jest --no-cache --runInBand",
-    "precommit": "turbo lint types test:ci",
+    "precommit": "turbo lint types test:ci check_exports",
     "ci": "turbo lint types test:ci",
     "test:ci": "jest --coverage --no-cache --runInBand",
     "mutants": "stryker run",

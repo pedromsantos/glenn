@@ -29,23 +29,5 @@ yarn-error.log*
 
 # reports
 reports
-coverage-ts/index.html
-coverage-ts/typescript-coverage.json
-coverage-ts/assets/source-file.css
-coverage-ts/assets/source-file.js
-coverage-ts/files/src/index.ts.html
-coverage-ts/files/src/Domain/Chord.ts.html
-coverage-ts/files/src/Domain/Duration.ts.html
-coverage-ts/files/src/Domain/Guitar.ts.html
-coverage-ts/files/src/Domain/Interval.ts.html
-coverage-ts/files/src/Domain/Key.ts.html
-coverage-ts/files/src/Domain/Note.ts.html
-coverage-ts/files/src/Domain/Pitch.ts.html
-coverage-ts/files/src/Domain/Scale.ts.html
-dist/index.d.ts
-dist/index.global.js
-dist/index.global.js.map
-dist/index.js
-dist/index.js.map
-dist/index.mjs
-dist/index.mjs.map
+dist
+coverage-ts
