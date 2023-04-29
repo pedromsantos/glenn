@@ -37,7 +37,7 @@ interface abcHeader {
 }
 
 class abcBody {
-  constructor(private readonly measures: abcMeasure[] = []) {}
+  constructor(private readonly measures: abcMeasure[]) {}
 
   toString() {
     return `|${this.measures.map((m) => m.toString()).join('|')}|`;
