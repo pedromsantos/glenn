@@ -1,6 +1,6 @@
 import { abcChord } from './abcNotation/abcChord';
 import { abcClef } from './abcNotation/abcClef';
-import { abcNote } from './abcNotation/abcNote';
+import { abcNote, abcRest } from './abcNotation/abcNote';
 import { abcTune } from './abcNotation/abcTune';
 import { ChordFunction, ChordPattern, ClosedChord, Drop2Chord, Drop3Chord } from './Domain/Chord';
 import { Clef } from './Domain/Clef';
@@ -16,7 +16,7 @@ import {
 } from './Domain/Guitar';
 import { Interval } from './Domain/Interval';
 import { Key } from './Domain/Key';
-import { MelodicPhrase, Note, Octave } from './Domain/Note';
+import { MelodicPhrase, Note, Octave, Rest } from './Domain/Note';
 import { Pitch } from './Domain/Pitch';
 import {
   Scale,
@@ -31,6 +31,7 @@ export {
   abcChord,
   abcClef,
   abcNote,
+  abcRest,
   abcTune,
   ChordFunction,
   ChordPattern,
@@ -51,6 +52,7 @@ export {
   Octave,
   Pitch,
   Position,
+  Rest,
   Scale,
   ScaleDegree,
   ScalePattern,

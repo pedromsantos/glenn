@@ -1,7 +1,90 @@
-import { abcNote } from '../../abcNotation/abcNote';
+import { abcNote, abcRest } from '../../abcNotation/abcNote';
 import { Duration } from '../../Domain/Duration';
-import { Note, Octave } from '../../Domain/Note';
+import { Note, Octave, Rest } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
+
+describe('abc Rest should', () => {
+  describe('represent a whole rest', () => {
+    const rest = new Rest(Duration.Whole);
+    test('using default duration whole', () => {
+      const abc_rest = new abcRest(rest, Duration.Whole);
+
+      expect(abc_rest.toString()).toBe('z');
+    });
+
+    test('using default duration half', () => {
+      const abc_rest = new abcRest(rest, Duration.Half);
+
+      expect(abc_rest.toString()).toBe('z2');
+    });
+
+    test('using default duration quarter', () => {
+      const abc_rest = new abcRest(rest, Duration.Quarter);
+
+      expect(abc_rest.toString()).toBe('z4');
+    });
+
+    test('using default duration eighth', () => {
+      const abc_rest = new abcRest(rest, Duration.Eighth);
+
+      expect(abc_rest.toString()).toBe('z8');
+    });
+  });
+
+  describe('represent a half rest', () => {
+    const rest = new Rest(Duration.Half);
+    test('with default duration whole', () => {
+      const abc_rest = new abcRest(rest, Duration.Whole);
+
+      expect(abc_rest.toString()).toBe('z/2');
+    });
+
+    test('with default duration half', () => {
+      const abc_rest = new abcRest(rest, Duration.Half);
+
+      expect(abc_rest.toString()).toBe('z');
+    });
+
+    test('with default duration quarter', () => {
+      const abc_rest = new abcRest(rest, Duration.Quarter);
+
+      expect(abc_rest.toString()).toBe('z2');
+    });
+
+    test('with default duration eighth', () => {
+      const abc_rest = new abcRest(rest, Duration.Eighth);
+
+      expect(abc_rest.toString()).toBe('z4');
+    });
+  });
+
+  describe('represent a quarter rest', () => {
+    const rest = new Rest(Duration.Quarter);
+    test('defining default duration as whole', () => {
+      const abc_rest = new abcRest(rest, Duration.Whole);
+
+      expect(abc_rest.toString()).toBe('z/4');
+    });
+
+    test('defining default duration as half', () => {
+      const abc_rest = new abcRest(rest, Duration.Half);
+
+      expect(abc_rest.toString()).toBe('z/2');
+    });
+
+    test('defining default duration as quarter', () => {
+      const abc_rest = new abcRest(rest, Duration.Quarter);
+
+      expect(abc_rest.toString()).toBe('z');
+    });
+
+    test('defining default duration as eighth', () => {
+      const abc_rest = new abcRest(rest, Duration.Eighth);
+
+      expect(abc_rest.toString()).toBe('z2');
+    });
+  });
+});
 
 describe('abc Note should', () => {
   describe('using octaves', () => {

@@ -1,5 +1,5 @@
 import { Duration } from '../Domain/Duration';
-import { Note, Octave } from '../Domain/Note';
+import { Note, Octave, Rest } from '../Domain/Note';
 import { Accidental, Pitch } from '../Domain/Pitch';
 
 export class abcPitch {
@@ -32,15 +32,9 @@ export class abcNote {
   constructor(private readonly note: Note, private readonly defaultDuration: Duration) {}
 
   toString() {
-    return this.toDuration(this.toOctave(new abcPitch(this.note.Pitch).toString()));
-  }
-
-  private toDuration(note: string) {
-    const durationMultiplier = this.defaultDuration.equivalentTo(this.note.Duration);
-    const multiplierOrDivisor = this.note.DurationValue < this.defaultDuration.value ? '/' : '';
-
     return (
-      note + multiplierOrDivisor + (durationMultiplier > 1 ? durationMultiplier.toString() : '')
+      this.toOctave(new abcPitch(this.note.Pitch).toString()) +
+      new abcDuration(this.note.Duration, this.defaultDuration).toString()
     );
   }
 
@@ -56,5 +50,24 @@ export class abcNote {
     }
 
     return note;
+  }
+}
+
+export class abcRest {
+  constructor(private readonly rest: Rest, private readonly defaultDuration: Duration) {}
+
+  toString() {
+    return 'z' + new abcDuration(this.rest.Duration, this.defaultDuration).toString();
+  }
+}
+
+class abcDuration {
+  constructor(private readonly duration: Duration, private readonly defaultDuration: Duration) {}
+
+  toString() {
+    const durationMultiplier = this.defaultDuration.equivalentTo(this.duration);
+    const multiplierOrDivisor = this.duration.value < this.defaultDuration.value ? '/' : '';
+
+    return multiplierOrDivisor + (durationMultiplier > 1 ? durationMultiplier.toString() : '');
   }
 }
