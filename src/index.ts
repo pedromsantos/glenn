@@ -25,7 +25,7 @@ import {
   SeventhHarmonizer,
   TriadHarmonizer,
 } from './Domain/Scale';
-import { Measure } from './Domain/Song';
+import { Measure, Song } from './Domain/Song';
 
 export {
   abcChord,
@@ -58,6 +58,7 @@ export {
   ScalePattern,
   SeventhHarmonizer,
   SimpleTimeSignature,
+  Song,
   Tab,
   TabColumn,
   TabMatrix,
