@@ -7,19 +7,19 @@ import { Note, Rest } from './Note';
 export type Unit = Note | Rest | Chord;
 
 class Fragment implements Iterable<Unit> {
-  private readonly notes: Unit[] = [];
+  private readonly units: Unit[] = [];
 
   push(unit: Unit): void {
-    this.notes.push(unit);
+    this.units.push(unit);
   }
 
   get ticks(): number {
-    return this.notes.reduce((total, current) => total + current.tick, 0);
+    return this.units.reduce((total, current) => total + current.tick, 0);
   }
 
   *[Symbol.iterator](): Iterator<Unit> {
-    for (const note of this.notes) {
-      yield note;
+    for (const unit of this.units) {
+      yield unit;
     }
   }
 }
@@ -48,8 +48,8 @@ export class Measure implements Iterable<Unit> {
   }
 
   *[Symbol.iterator](): Iterator<Unit> {
-    for (const note of this.fragment) {
-      yield note;
+    for (const unit of this.fragment) {
+      yield unit;
     }
   }
 }
