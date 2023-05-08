@@ -334,7 +334,7 @@ describe('Song should', () => {
     const song = new Song(timeSignature, Key.CMajor);
     const initialMeasureCount = [...song].length;
 
-    song.addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4));
+    song.add(new Note(Pitch.C, Duration.Quarter, Octave.C4));
 
     const finalMeasureCount = [...song].length;
 
@@ -345,11 +345,11 @@ describe('Song should', () => {
     const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
     const song = new Song(timeSignature, Key.CMajor);
 
-    song.addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4));
-    song.addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4));
-    song.addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4));
-    song.addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4));
-    song.addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4));
+    song.add(new Note(Pitch.C, Duration.Quarter, Octave.C4));
+    song.add(new Note(Pitch.C, Duration.Quarter, Octave.C4));
+    song.add(new Note(Pitch.C, Duration.Quarter, Octave.C4));
+    song.add(new Note(Pitch.C, Duration.Quarter, Octave.C4));
+    song.add(new Note(Pitch.C, Duration.Quarter, Octave.C4));
 
     const finalMeasureCount = [...song].length;
 

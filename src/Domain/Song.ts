@@ -1,41 +1,44 @@
+import { Chord } from './Chord';
 import { TimeSignature } from './Duration';
 import ensure from './Ensure';
 import { Key } from './Key';
-import { Note } from './Note';
+import { Note, Rest } from './Note';
 
-export class NoteFragment implements Iterable<Note> {
-  private readonly notes: Note[] = [];
+export type Unit = Note | Rest | Chord;
 
-  push(note: Note): void {
-    this.notes.push(note);
+class Fragment implements Iterable<Unit> {
+  private readonly notes: Unit[] = [];
+
+  push(unit: Unit): void {
+    this.notes.push(unit);
   }
 
   get ticks(): number {
     return this.notes.reduce((total, current) => total + current.tick, 0);
   }
 
-  *[Symbol.iterator](): Iterator<Note> {
+  *[Symbol.iterator](): Iterator<Unit> {
     for (const note of this.notes) {
       yield note;
     }
   }
 }
 
-export class Measure implements Iterable<Note> {
-  protected fragment: NoteFragment;
+export class Measure implements Iterable<Unit> {
+  protected fragment: Fragment;
   private readonly timeSignature: TimeSignature;
 
   constructor(timeSignature: TimeSignature) {
-    this.fragment = new NoteFragment();
+    this.fragment = new Fragment();
     this.timeSignature = timeSignature;
   }
 
-  add(note: Note): Measure {
-    if (this.fragment.ticks + note.tick > this.timeSignature.ticksPerMeasure) {
-      throw new RangeError(`cannot fit -${note.DurationName} note in measure`);
+  add(unit: Unit): Measure {
+    if (this.fragment.ticks + unit.tick > this.timeSignature.ticksPerMeasure) {
+      throw new RangeError(`cannot fit -${unit.DurationName} note in measure`);
     }
 
-    this.fragment.push(note);
+    this.fragment.push(unit);
 
     if (this.fragment.ticks === this.timeSignature.ticksPerMeasure) {
       return new FullMeasure(this.timeSignature, this.fragment);
@@ -44,7 +47,7 @@ export class Measure implements Iterable<Note> {
     return this;
   }
 
-  *[Symbol.iterator](): Iterator<Note> {
+  *[Symbol.iterator](): Iterator<Unit> {
     for (const note of this.fragment) {
       yield note;
     }
@@ -52,13 +55,13 @@ export class Measure implements Iterable<Note> {
 }
 
 export class FullMeasure extends Measure {
-  constructor(timeSignature: TimeSignature, fragment: NoteFragment) {
+  constructor(timeSignature: TimeSignature, fragment: Fragment) {
     super(timeSignature);
     this.fragment = fragment;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  override add(_: Note): Measure {
+  override add(_: Unit): Measure {
     return this;
   }
 }
@@ -81,7 +84,7 @@ export class Song implements Iterable<Measure> {
     return this;
   }
 
-  addNote(note: Note) {
+  add(unit: Unit) {
     let lastMeasure = this.measures[this.measures.length - 1];
 
     if (!lastMeasure) {
@@ -90,11 +93,11 @@ export class Song implements Iterable<Measure> {
     }
 
     try {
-      ensure(lastMeasure).add(note);
+      ensure(lastMeasure).add(unit);
     } catch (err) {
       this.measures.push(new Measure(this.timeSignature));
       lastMeasure = this.measures[this.measures.length - 1];
-      ensure(lastMeasure).add(note);
+      ensure(lastMeasure).add(unit);
     }
 
     return this;

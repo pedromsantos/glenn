@@ -10,12 +10,12 @@ describe('abc Tune should', () => {
   const song = new Song(timeSignature, Key.CMajor);
 
   song
-    .addNote(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-    .addNote(new Note(Pitch.E, Duration.Quarter, Octave.C4))
-    .addNote(new Note(Pitch.G, Duration.Eighth, Octave.C4))
-    .addNote(new Note(Pitch.A, Duration.Eighth, Octave.C4))
-    .addNote(new Note(Pitch.B, Duration.Eighth, Octave.C4))
-    .addNote(new Note(Pitch.C, Duration.Eighth, Octave.C5));
+    .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+    .add(new Note(Pitch.E, Duration.Quarter, Octave.C4))
+    .add(new Note(Pitch.G, Duration.Eighth, Octave.C4))
+    .add(new Note(Pitch.A, Duration.Eighth, Octave.C4))
+    .add(new Note(Pitch.B, Duration.Eighth, Octave.C4))
+    .add(new Note(Pitch.C, Duration.Eighth, Octave.C5));
 
   test('create abc notation with eighth note default duration', () => {
     const tune = new abcTune(song, Duration.Eighth);

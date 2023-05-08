@@ -1,6 +1,7 @@
 import { Duration } from './Duration';
 import ensure from './Ensure';
 import { Interval } from './Interval';
+import { Rhythm } from './Note';
 import { Pitch, PitchPrimitives } from './Pitch';
 
 export type ChordPitchPrimitives = {
@@ -131,7 +132,7 @@ export class ChordPitches implements Iterable<Pitch> {
   }
 }
 
-export interface Chord extends Iterable<Pitch> {
+export interface Chord extends Iterable<Pitch>, Rhythm {
   get Bass(): Pitch;
   get Lead(): Pitch;
   get Name(): string;
@@ -191,6 +192,22 @@ class BaseChord implements Chord, Iterable<Pitch> {
 
   get Pattern(): ChordPattern {
     return this.pattern;
+  }
+
+  get Duration() {
+    return this.duration;
+  }
+
+  get tick() {
+    return this.duration.tick;
+  }
+
+  get DurationName() {
+    return this.duration.Name;
+  }
+
+  get DurationValue() {
+    return this.duration.value;
   }
 
   get To(): Readonly<ChordPrimitives> {

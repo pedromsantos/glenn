@@ -51,10 +51,11 @@ export class Octave {
   }
 }
 
-export interface RhythmElement {
+export interface Rhythm {
   get Duration(): Duration;
   get DurationName(): string;
   get DurationValue(): number;
+  get tick(): number;
 }
 
 export type NotePrimitives = {
@@ -62,7 +63,7 @@ export type NotePrimitives = {
   duration: DurationPrimitives;
 };
 
-export class Note implements RhythmElement {
+export class Note implements Rhythm {
   constructor(
     private readonly pitch: Pitch,
     private readonly duration: Duration,
@@ -147,7 +148,7 @@ export class Note implements RhythmElement {
   }
 }
 
-export class Rest implements RhythmElement {
+export class Rest implements Rhythm {
   constructor(private readonly duration: Duration) {}
 
   get Duration() {
@@ -160,6 +161,10 @@ export class Rest implements RhythmElement {
 
   get DurationValue() {
     return this.duration.value;
+  }
+
+  get tick() {
+    return this.Duration.tick;
   }
 }
 
