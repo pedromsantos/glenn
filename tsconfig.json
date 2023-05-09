@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "emitDecoratorMetadata": false,
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
@@ -8,6 +7,7 @@
     "declaration": true,
     "declarationMap": true,
     "downlevelIteration": true,
+    "emitDecoratorMetadata": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
@@ -35,6 +35,6 @@
     "strictPropertyInitialization": true,
     "target": "es2020"
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts"]
+  "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts"],
+  "include": ["src/**/*.ts"]
 }
