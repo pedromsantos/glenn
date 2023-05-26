@@ -20,6 +20,10 @@ Still a work in progress.
 
 [![CodeScene Code Health](https://codescene.io/projects/29675/status-badges/code-health)](https://codescene.io/projects/29675) [![CodeScene System Mastery](https://codescene.io/projects/29675/status-badges/system-mastery)](https://codescene.io/projects/29675)
 
+### Coveralls
+
+[![Coverage Status](https://coveralls.io/repos/github/pedromsantos/glenn/badge.svg?branch=refs/heads/master)](https://coveralls.io/github/pedromsantos/glenn?branch=refs/heads/master)
+
 ### Mutation testing
 
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fpedromsantos%2Fglenn%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/pedromsantos/glenn/master)
