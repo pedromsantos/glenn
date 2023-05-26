@@ -44,5 +44,5 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
       
       - name: Coveralls GitHub Action
-        uses: coverallsapp/github-action@v1
+        uses: coverallsapp/github-action@v2
 
