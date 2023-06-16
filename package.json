@@ -83,7 +83,7 @@
     "standard-version": "^9.5.0",
     "ts-coverage": "^0.1.5",
     "ts-jest": "^29.0.5",
-    "tsup": "^6.6.3",
+    "tsup": "^7.0.0",
     "tsx": "^3.12.5",
     "turbo": "^1.8.1",
     "type-coverage": "^2.25.0",
