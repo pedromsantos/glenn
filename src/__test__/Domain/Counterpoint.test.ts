@@ -23,10 +23,10 @@ describe('First species counterpoint', () => {
   test('invalid note (only whole notes)', () => {
     const parts: CounterPointParts = {
       counterPoint: {
-        phrase: new MelodicPhrase([new Note(Pitch.C, Duration.Quarter, Octave.C4)]),
+        phrase: new MelodicPhrase([new Note(Pitch.C, Duration.Quarter, Octave.C5)]),
         voice: Voice.Soprano,
       },
-      cantusFirmus: new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C4)]),
+      cantusFirmus: new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C5)]),
       cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I]),
     };
 
@@ -42,10 +42,10 @@ describe('First species counterpoint', () => {
   test('invalid note (not a chord tone)', () => {
     const parts: CounterPointParts = {
       counterPoint: {
-        phrase: new MelodicPhrase([new Note(Pitch.D, Duration.Whole, Octave.C4)]),
+        phrase: new MelodicPhrase([new Note(Pitch.D, Duration.Whole, Octave.C3)]),
         voice: Voice.Soprano,
       },
-      cantusFirmus: new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C4)]),
+      cantusFirmus: new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C3)]),
       cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I]),
     };
 
@@ -81,14 +81,14 @@ describe('First species counterpoint', () => {
     const parts: CounterPointParts = {
       counterPoint: {
         phrase: new MelodicPhrase([
-          new Note(Pitch.C, Duration.Whole, Octave.C4),
-          new Note(Pitch.C, Duration.Whole, Octave.C4),
+          new Note(Pitch.C, Duration.Whole, Octave.C3),
+          new Note(Pitch.C, Duration.Whole, Octave.C3),
         ]),
         voice: Voice.Bass,
       },
       cantusFirmus: new MelodicPhrase([
-        new Note(Pitch.C, Duration.Whole, Octave.C4),
-        new Note(Pitch.A, Duration.Whole, Octave.C4),
+        new Note(Pitch.C, Duration.Whole, Octave.C3),
+        new Note(Pitch.A, Duration.Whole, Octave.C3),
       ]),
       cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I, ScaleDegree.VI]),
     };
@@ -106,14 +106,14 @@ describe('First species counterpoint', () => {
     const parts: CounterPointParts = {
       counterPoint: {
         phrase: new MelodicPhrase([
-          new Note(Pitch.B, Duration.Whole, Octave.C4),
-          new Note(Pitch.C, Duration.Whole, Octave.C4),
+          new Note(Pitch.B, Duration.Whole, Octave.C5),
+          new Note(Pitch.C, Duration.Whole, Octave.C5),
         ]),
         voice: Voice.ContrAlto,
       },
       cantusFirmus: new MelodicPhrase([
-        new Note(Pitch.C, Duration.Whole, Octave.C4),
-        new Note(Pitch.C, Duration.Whole, Octave.C4),
+        new Note(Pitch.C, Duration.Whole, Octave.C5),
+        new Note(Pitch.C, Duration.Whole, Octave.C5),
       ]),
       cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I, ScaleDegree.I]),
     };
@@ -149,10 +149,10 @@ describe('First species counterpoint', () => {
   test('invalid interval (Perfect Fourth)', () => {
     const parts: CounterPointParts = {
       counterPoint: {
-        phrase: new MelodicPhrase([new Note(Pitch.F, Duration.Whole, Octave.C4)]),
+        phrase: new MelodicPhrase([new Note(Pitch.F, Duration.Whole, Octave.C5)]),
         voice: Voice.Tenor,
       },
-      cantusFirmus: new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C4)]),
+      cantusFirmus: new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C5)]),
       cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I]),
     };
 
@@ -168,10 +168,10 @@ describe('First species counterpoint', () => {
   test('invalid interval (Major Seventh)', () => {
     const parts: CounterPointParts = {
       counterPoint: {
-        phrase: new MelodicPhrase([new Note(Pitch.B, Duration.Whole, Octave.C4)]),
+        phrase: new MelodicPhrase([new Note(Pitch.B, Duration.Whole, Octave.C2)]),
         voice: Voice.ContrAlto,
       },
-      cantusFirmus: new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C4)]),
+      cantusFirmus: new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C2)]),
       cantusFirmusHarmony: new CounterPointHarmony([ScaleDegree.I]),
     };
 

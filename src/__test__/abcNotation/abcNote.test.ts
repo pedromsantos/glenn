@@ -7,48 +7,34 @@ describe('abc Rest should', () => {
   describe('represent a whole rest', () => {
     const rest = new Rest(Duration.Whole);
     test('using default duration whole', () => {
-      const abc_rest = new AbcRest(rest, Duration.Whole);
-
-      expect(abc_rest.toString()).toBe('z');
+      expect(new AbcRest(rest, Duration.Whole).toString()).toBe('z');
     });
 
     test('using default duration half', () => {
-      const abc_rest = new AbcRest(rest, Duration.Half);
-
-      expect(abc_rest.toString()).toBe('z2');
+      expect(new AbcRest(rest, Duration.Half).toString()).toBe('z2');
     });
 
     test('using default duration quarter', () => {
-      const abc_rest = new AbcRest(rest, Duration.Quarter);
-
-      expect(abc_rest.toString()).toBe('z4');
+      expect(new AbcRest(rest, Duration.Quarter).toString()).toBe('z4');
     });
 
     test('using default duration eighth', () => {
-      const abc_rest = new AbcRest(rest, Duration.Eighth);
-
-      expect(abc_rest.toString()).toBe('z8');
+      expect(new AbcRest(rest, Duration.Eighth).toString()).toBe('z8');
     });
   });
 
   describe('represent a half rest', () => {
     const rest = new Rest(Duration.Half);
     test('with default duration whole', () => {
-      const abc_rest = new AbcRest(rest, Duration.Whole);
-
-      expect(abc_rest.toString()).toBe('z/2');
+      expect(new AbcRest(rest, Duration.Whole).toString()).toBe('z/2');
     });
 
     test('with default duration half', () => {
-      const abc_rest = new AbcRest(rest, Duration.Half);
-
-      expect(abc_rest.toString()).toBe('z');
+      expect(new AbcRest(rest, Duration.Half).toString()).toBe('z');
     });
 
     test('with default duration quarter', () => {
-      const abc_rest = new AbcRest(rest, Duration.Quarter);
-
-      expect(abc_rest.toString()).toBe('z2');
+      expect(new AbcRest(rest, Duration.Quarter).toString()).toBe('z2');
     });
 
     test('with default duration eighth', () => {
@@ -61,27 +47,19 @@ describe('abc Rest should', () => {
   describe('represent a quarter rest', () => {
     const rest = new Rest(Duration.Quarter);
     test('defining default duration as whole', () => {
-      const abc_rest = new AbcRest(rest, Duration.Whole);
-
-      expect(abc_rest.toString()).toBe('z/4');
+      expect(new AbcRest(rest, Duration.Whole).toString()).toBe('z/4');
     });
 
     test('defining default duration as half', () => {
-      const abc_rest = new AbcRest(rest, Duration.Half);
-
-      expect(abc_rest.toString()).toBe('z/2');
+      expect(new AbcRest(rest, Duration.Half).toString()).toBe('z/2');
     });
 
     test('defining default duration as quarter', () => {
-      const abc_rest = new AbcRest(rest, Duration.Quarter);
-
-      expect(abc_rest.toString()).toBe('z');
+      expect(new AbcRest(rest, Duration.Quarter).toString()).toBe('z');
     });
 
     test('defining default duration as eighth', () => {
-      const abc_rest = new AbcRest(rest, Duration.Eighth);
-
-      expect(abc_rest.toString()).toBe('z2');
+      expect(new AbcRest(rest, Duration.Eighth).toString()).toBe('z2');
     });
   });
 });
