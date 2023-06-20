@@ -107,32 +107,27 @@ describe('abc Note should', () => {
   });
 
   describe('represent a note', () => {
-    type TestTuple = [Octave, Duration, string];
+    type TestTuple = [Octave, Duration, Duration, string];
 
     test.each<TestTuple>([
-      [Octave.C3, Duration.ThirtySecond, '_E,/2'],
-      [Octave.C3, Duration.Sixteenth, '_E,'],
-      [Octave.C3, Duration.Eighth, '_E,2'],
-      [Octave.C4, Duration.Quarter, '_E4'],
-      [Octave.C5, Duration.Half, '_e8'],
-    ])('relative to a Sixteenth', (octave: Octave, duration: Duration, expected: string) => {
-      const note = new Note(Pitch.EFlat, duration, octave);
-      const abc_note = new AbcNote(note, Duration.Sixteenth);
+      [Octave.C3, Duration.Sixteenth, Duration.ThirtySecond, '_E,/2'],
+      [Octave.C3, Duration.Sixteenth, Duration.Sixteenth, '_E,'],
+      [Octave.C3, Duration.Sixteenth, Duration.Eighth, '_E,2'],
+      [Octave.C4, Duration.Sixteenth, Duration.Quarter, '_E4'],
+      [Octave.C5, Duration.Sixteenth, Duration.Half, '_e8'],
+      [Octave.C3, Duration.Whole, Duration.Sixteenth, '_E,/16'],
+      [Octave.C3, Duration.Whole, Duration.Eighth, '_E,/8'],
+      [Octave.C3, Duration.Whole, Duration.Quarter, '_E,/4'],
+      [Octave.C3, Duration.Whole, Duration.Half, '_E,/2'],
+      [Octave.C3, Duration.Whole, Duration.Whole, '_E,'],
+    ])(
+      'relative to',
+      (octave: Octave, referenceDuration: Duration, duration: Duration, expected: string) => {
+        const note = new Note(Pitch.EFlat, duration, octave);
+        const abc_note = new AbcNote(note, referenceDuration);
 
-      expect(abc_note.toString()).toBe(expected);
-    });
-
-    test.each<TestTuple>([
-      [Octave.C3, Duration.Sixteenth, '_E,/16'],
-      [Octave.C3, Duration.Eighth, '_E,/8'],
-      [Octave.C3, Duration.Quarter, '_E,/4'],
-      [Octave.C3, Duration.Half, '_E,/2'],
-      [Octave.C3, Duration.Whole, '_E,'],
-    ])('relative to a Whole', (octave: Octave, duration: Duration, expected: string) => {
-      const note = new Note(Pitch.EFlat, duration, octave);
-      const abc_note = new AbcNote(note, Duration.Whole);
-
-      expect(abc_note.toString()).toBe(expected);
-    });
+        expect(abc_note.toString()).toBe(expected);
+      }
+    );
   });
 });
