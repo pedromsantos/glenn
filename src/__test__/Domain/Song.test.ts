@@ -27,18 +27,18 @@ describe('Measure', () => {
     test('2 half notes notes fill it', () => {
       expect(
         measure
-          .add(new Note(Pitch.C, Duration.Half, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Half, Octave.C4))
-          .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C4))
+          .add(new Note(Pitch.C, Duration.Half, Octave.C1))
+          .add(new Note(Pitch.C, Duration.Half, Octave.C2))
+          .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C3))
       ).toBeInstanceOf(FullMeasure);
     });
 
     test('4 quarter notes fill it', () => {
       expect(
         measure
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C1))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C2))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C3))
           .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
       ).toBeInstanceOf(FullMeasure);
     });
@@ -46,9 +46,9 @@ describe('Measure', () => {
     test('2 dotted quarter notes and a quarter note fill it', () => {
       expect(
         measure
-          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C1))
+          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C2))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C3))
           .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C4))
       ).toBeInstanceOf(FullMeasure);
     });
@@ -56,24 +56,24 @@ describe('Measure', () => {
     test('8 eighth notes fill it', () => {
       expect(
         measure
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C1))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C2))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C3))
           .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C4))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C5))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C6))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C7))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C8))
+          .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C0))
       ).toBeInstanceOf(FullMeasure);
     });
 
     test('cannot add half note to 3 quarter notes', () => {
       expect(() =>
         measure
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C1))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C2))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C3))
           .add(new Note(Pitch.C, Duration.Half, Octave.C4))
       ).toThrow(`cannot fit -${Duration.Half.Name} note in measure`);
     });
@@ -102,9 +102,9 @@ describe('Measure', () => {
     test('2 dotted quarter notes notes fill it', () => {
       expect(
         measure
-          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C4))
+          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C0))
+          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C1))
+          .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C2))
       ).toBeInstanceOf(FullMeasure);
     });
 
@@ -112,39 +112,39 @@ describe('Measure', () => {
       expect(
         measure
           .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C5))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C6))
       ).toBeInstanceOf(FullMeasure);
     });
 
     test('2 dotted quarter notes and a quarter note fill it', () => {
       expect(
         measure
-          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C4))
+          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C0))
+          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C1))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C2))
+          .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C5))
       ).toBeInstanceOf(FullMeasure);
     });
 
     test('6 eighth notes fill it', () => {
       expect(
         measure
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C6))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C5))
           .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C3))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C2))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C1))
       ).toBeInstanceOf(FullMeasure);
     });
 
     test('cannot add dotted quarter to 2 quarter notes', () => {
       expect(() =>
         measure
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C1))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C2))
+          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C3))
       ).toThrow(`cannot fit -${Duration.DottedQuarter.Name} note in measure`);
     });
   });
@@ -166,8 +166,8 @@ describe('Measure', () => {
     test('2 dotted half note fills it', () => {
       expect(
         measure
-          .add(new Note(Pitch.C, Duration.DottedHalf, Octave.C4))
-          .add(new Note(Pitch.C, Duration.DottedHalf, Octave.C4))
+          .add(new Note(Pitch.C, Duration.DottedHalf, Octave.C5))
+          .add(new Note(Pitch.C, Duration.DottedHalf, Octave.C6))
       ).toBeInstanceOf(FullMeasure);
     });
 
@@ -175,9 +175,9 @@ describe('Measure', () => {
       expect(
         measure
           .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
+          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C3))
+          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C2))
+          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C0))
       ).toBeInstanceOf(FullMeasure);
     });
 
@@ -185,40 +185,40 @@ describe('Measure', () => {
       expect(
         measure
           .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C5))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C3))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C6))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C2))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C1))
       ).toBeInstanceOf(FullMeasure);
     });
 
     test('12 eighth notes fill it', () => {
       expect(
         measure
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C0))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C1))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C2))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C3))
           .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C5))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C6))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C7))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C8))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C0))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C1))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C2))
       ).toBeInstanceOf(FullMeasure);
     });
 
     test('cannot add dotted quarter to 5 quarter notes', () => {
       expect(() =>
         measure
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C1))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C2))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C3))
           .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C5))
           .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
       ).toThrow(`cannot fit -${Duration.DottedQuarter.Name} note in measure`);
     });
@@ -247,8 +247,8 @@ describe('Measure', () => {
     test('2 dotted quarter notes notes fill it', () => {
       expect(
         measure
-          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
+          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C0))
+          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C1))
       ).toBeInstanceOf(FullMeasure);
     });
 
@@ -256,20 +256,20 @@ describe('Measure', () => {
       expect(
         measure
           .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C3))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C2))
       ).toBeInstanceOf(FullMeasure);
     });
 
     test('6 eighth notes fill it', () => {
       expect(
         measure
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C3))
           .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Eighth, Octave.C4))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C5))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C6))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C7))
+          .add(new Note(Pitch.C, Duration.Eighth, Octave.C8))
       ).toBeInstanceOf(FullMeasure);
     });
 
@@ -277,8 +277,8 @@ describe('Measure', () => {
       expect(() =>
         measure
           .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
-          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C4))
+          .add(new Note(Pitch.C, Duration.Quarter, Octave.C6))
+          .add(new Note(Pitch.C, Duration.DottedQuarter, Octave.C5))
       ).toThrow(`cannot fit -${Duration.DottedQuarter.Name} note in measure`);
     });
   });
