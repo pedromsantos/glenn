@@ -11,9 +11,9 @@ describe('abc Rest should', () => {
     [Duration.Half, 'z2'],
     [Duration.Quarter, 'z4'],
     [Duration.Eighth, 'z8'],
-  ])('represent a whole', (duration: Duration, expected: string) => {
+  ])('represent a whole', (relativeDuration: Duration, expected: string) => {
     const rest = new Rest(Duration.Whole);
-    expect(new AbcRest(rest, duration).toString()).toBe(expected);
+    expect(new AbcRest(rest, relativeDuration).toString()).toBe(expected);
   });
 
   test.each<TestTuple>([
@@ -21,9 +21,9 @@ describe('abc Rest should', () => {
     [Duration.Half, 'z'],
     [Duration.Quarter, 'z2'],
     [Duration.Eighth, 'z4'],
-  ])('represent a half', (duration: Duration, expected: string) => {
+  ])('represent a half', (relativeDuration: Duration, expected: string) => {
     const rest = new Rest(Duration.Half);
-    expect(new AbcRest(rest, duration).toString()).toBe(expected);
+    expect(new AbcRest(rest, relativeDuration).toString()).toBe(expected);
   });
 
   test.each<TestTuple>([
@@ -31,9 +31,9 @@ describe('abc Rest should', () => {
     [Duration.Half, 'z/2'],
     [Duration.Quarter, 'z'],
     [Duration.Eighth, 'z2'],
-  ])('represent a quarter', (duration: Duration, expected: string) => {
+  ])('represent a quarter', (relativeDuration: Duration, expected: string) => {
     const rest = new Rest(Duration.Quarter);
-    expect(new AbcRest(rest, duration).toString()).toBe(expected);
+    expect(new AbcRest(rest, relativeDuration).toString()).toBe(expected);
   });
 });
 
