@@ -1,7 +1,7 @@
-import { abcChord } from './abcNotation/abcChord';
-import { abcClef } from './abcNotation/abcClef';
-import { abcNote, abcRest } from './abcNotation/abcNote';
-import { abcTune } from './abcNotation/abcTune';
+import { AbcChord } from './abcNotation/abcChord';
+import { AbcClef } from './abcNotation/abcClef';
+import { AbcNote, AbcRest } from './abcNotation/abcNote';
+import { AbcTune } from './abcNotation/abcTune';
 import { ChordFunction, ChordPattern, ClosedChord, Drop2Chord, Drop3Chord } from './Domain/Chord';
 import { Clef } from './Domain/Clef';
 import { CompoundTimeSignature, Duration, SimpleTimeSignature } from './Domain/Duration';
@@ -28,11 +28,11 @@ import {
 import { Measure, Song } from './Domain/Song';
 
 export {
-  abcChord,
-  abcClef,
-  abcNote,
-  abcRest,
-  abcTune,
+  AbcChord as abcChord,
+  AbcClef as abcClef,
+  AbcNote as abcNote,
+  AbcRest as abcRest,
+  AbcTune as abcTune,
   ChordFunction,
   ChordPattern,
   Clef,

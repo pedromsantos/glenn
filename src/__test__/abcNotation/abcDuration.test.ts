@@ -1,4 +1,4 @@
-import { abcDuration } from '../../abcNotation/abcDuration';
+import { AbcDuration } from '../../abcNotation/abcDuration';
 import { Duration } from '../../Domain/Duration';
 
 describe('abc Duration should', () => {
@@ -12,7 +12,7 @@ describe('abc Duration should', () => {
     [Duration.ThirtySecond, 'L:1/32'],
     [Duration.SixtyFourth, 'L:1/64'],
   ])('convert quarter note duration to abc notation', (duration: Duration, expected: string) => {
-    const abc_duration = new abcDuration(duration);
+    const abc_duration = new AbcDuration(duration);
 
     expect(abc_duration.toString()).toBe(expected);
   });

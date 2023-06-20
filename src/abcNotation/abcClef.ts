@@ -1,6 +1,6 @@
 import { Clef } from 'src/Domain/Clef';
 
-export class abcClef {
+export class AbcClef {
   constructor(private readonly clef: Clef) {}
 
   toString() {

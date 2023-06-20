@@ -121,7 +121,7 @@ export class ChordPitches implements Iterable<Pitch> {
     return pitch.Pitch;
   }
 
-  private pitchMove(fromIndex: number, toIndex: number): ChordPitches {
+  private pitchMove(fromIndex: number, toIndex: number): this {
     const element: ChordPitch | undefined = this.pitches[fromIndex];
     if (element) {
       this.pitches.splice(fromIndex, 1);
@@ -171,7 +171,7 @@ class BaseChord implements Chord, Iterable<Pitch> {
     this.pattern = pattern;
     this.root = new ChordPitch(root, ChordFunction.Root);
     this.duration = duration;
-    this._pitches = overridePitches || ChordPitches.createFromRootAndPattern(root, pattern);
+    this._pitches = overridePitches ?? ChordPitches.createFromRootAndPattern(root, pattern);
   }
 
   get Bass(): Pitch {

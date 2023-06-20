@@ -1,4 +1,4 @@
-import { abcMeasure } from '../../abcNotation/abcMeasure';
+import { AbcMeasure } from '../../abcNotation/abcMeasure';
 import { Duration, SimpleTimeSignature } from '../../Domain/Duration';
 import { Note, Octave, Rest } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
@@ -15,7 +15,7 @@ describe('abc Measure should', () => {
       .add(new Note(Pitch.B, Duration.Eighth, Octave.C4))
       .add(new Note(Pitch.C, Duration.Eighth, Octave.C4));
 
-    const abc = new abcMeasure(measure, Duration.Eighth);
+    const abc = new AbcMeasure(measure, Duration.Eighth);
 
     expect(abc.toString()).toBe('C2E2GABC');
   });
@@ -27,7 +27,7 @@ describe('abc Measure should', () => {
       .add(new Rest(Duration.Quarter))
       .add(new Rest(Duration.Quarter));
 
-    const abc = new abcMeasure(measure, Duration.Quarter);
+    const abc = new AbcMeasure(measure, Duration.Quarter);
 
     expect(abc.toString()).toBe('z2zz');
   });
@@ -40,7 +40,7 @@ describe('abc Measure should', () => {
       .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
       .add(new Rest(Duration.Quarter));
 
-    const abc = new abcMeasure(measure, Duration.Quarter);
+    const abc = new AbcMeasure(measure, Duration.Quarter);
 
     expect(abc.toString()).toBe('CzCz');
   });

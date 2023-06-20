@@ -1,6 +1,6 @@
 import { TimeSignature } from '../Domain/Duration';
 
-export class abcMeter {
+export class AbcMeter {
   constructor(private readonly timeSignature: TimeSignature) {}
 
   toString() {

@@ -1,15 +1,15 @@
 import { Chord } from '../Domain/Chord';
-import { abcPitch } from './abcNote';
+import { AbcPitch } from './abcNote';
 
-export class abcChord {
+export class AbcChord {
   constructor(private readonly chord: Chord) {}
 
   toString() {
-    return `[${[...this.chord].map((p) => new abcPitch(p).toString()).join('')}]`;
+    return `[${[...this.chord].map((p) => new AbcPitch(p).toString()).join('')}]`;
   }
 }
 
-export class abcGuitarChord {
+export class AbcGuitarChord {
   constructor(private readonly chord: Chord) {}
 
   toString() {

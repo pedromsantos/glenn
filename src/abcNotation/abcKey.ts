@@ -1,6 +1,6 @@
 import { Key } from 'src/Domain/Key';
 
-export class abcKey {
+export class AbcKey {
   constructor(private readonly key: Key) {}
 
   toString() {

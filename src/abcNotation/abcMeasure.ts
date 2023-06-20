@@ -1,9 +1,9 @@
 import { Duration } from '../Domain/Duration';
 import { Note, Rest } from '../Domain/Note';
 import { Measure, Unit } from '../Domain/Song';
-import { abcNote, abcRest } from './abcNote';
+import { AbcNote, AbcRest } from './abcNote';
 
-export class abcMeasure {
+export class AbcMeasure {
   constructor(private readonly measure: Measure, private readonly defaultDuration: Duration) {}
 
   toString() {
@@ -12,9 +12,9 @@ export class abcMeasure {
 
   private map(unit: Unit) {
     if (unit instanceof Note) {
-      return new abcNote(unit, this.defaultDuration).toString();
+      return new AbcNote(unit, this.defaultDuration).toString();
     } else {
-      return new abcRest(unit as Rest, this.defaultDuration).toString();
+      return new AbcRest(unit as Rest, this.defaultDuration).toString();
     }
   }
 }

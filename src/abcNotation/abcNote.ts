@@ -2,7 +2,7 @@ import { Duration } from '../Domain/Duration';
 import { Note, Octave, Rest } from '../Domain/Note';
 import { Accidental, Pitch } from '../Domain/Pitch';
 
-export class abcPitch {
+export class AbcPitch {
   constructor(private readonly pitch: Pitch) {}
 
   toString() {
@@ -18,7 +18,7 @@ export class abcPitch {
   }
 }
 
-export class abcNote {
+export class AbcNote {
   octaveTransformations: Map<string, string> = new Map<string, string>([
     [Octave.C8.Name, "''''"],
     [Octave.C7.Name, "'''"],
@@ -33,8 +33,8 @@ export class abcNote {
 
   toString() {
     return (
-      this.toOctave(new abcPitch(this.note.Pitch).toString()) +
-      new abcDuration(this.note.Duration, this.defaultDuration).toString()
+      this.toOctave(new AbcPitch(this.note.Pitch).toString()) +
+      new AbcDuration(this.note.Duration, this.defaultDuration).toString()
     );
   }
 
@@ -53,15 +53,15 @@ export class abcNote {
   }
 }
 
-export class abcRest {
+export class AbcRest {
   constructor(private readonly rest: Rest, private readonly defaultDuration: Duration) {}
 
   toString() {
-    return 'z' + new abcDuration(this.rest.Duration, this.defaultDuration).toString();
+    return 'z' + new AbcDuration(this.rest.Duration, this.defaultDuration).toString();
   }
 }
 
-class abcDuration {
+class AbcDuration {
   constructor(private readonly duration: Duration, private readonly defaultDuration: Duration) {}
 
   toString() {

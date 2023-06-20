@@ -522,7 +522,7 @@ export class TabMatrix {
     return this;
   }
 
-  separateWith(separator: string): TabMatrix {
+  separateWith(separator: string): this {
     this.tabMatrix = this.tabMatrix.map((column, i) =>
       i == this.tabMatrix.length - 1 ? column : column.map((value) => `${value}${separator}`)
     );

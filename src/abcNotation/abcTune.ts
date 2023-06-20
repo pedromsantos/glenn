@@ -2,12 +2,12 @@ import { Duration, SimpleTimeSignature } from '../Domain/Duration';
 import ensure from '../Domain/Ensure';
 import { Key } from '../Domain/Key';
 import { Song } from '../Domain/Song';
-import { abcDuration } from './abcDuration';
-import { abcKey } from './abcKey';
-import { abcMeasure } from './abcMeasure';
-import { abcMeter } from './abcMeter';
+import { AbcDuration } from './abcDuration';
+import { AbcKey } from './abcKey';
+import { AbcMeasure } from './abcMeasure';
+import { AbcMeter } from './abcMeter';
 
-interface abcHeader {
+interface AbcHeader {
   area?: string;
   book?: string;
   composer?: string;
@@ -16,9 +16,9 @@ interface abcHeader {
   group?: string;
   history?: string;
   instruction?: string;
-  key: abcKey;
-  unit_note_length: abcDuration;
-  meter: abcMeter;
+  key: AbcKey;
+  unit_note_length: AbcDuration;
+  meter: AbcMeter;
   macro?: string;
   notes?: string;
   origin?: string;
@@ -36,29 +36,29 @@ interface abcHeader {
   transcription?: string;
 }
 
-class abcBody {
-  constructor(private readonly measures: abcMeasure[]) {}
+class AbcBody {
+  constructor(private readonly measures: AbcMeasure[]) {}
 
   toString() {
     return `|${this.measures.map((m) => m.toString()).join('|')}|`;
   }
 }
 
-export class abcTune {
-  private readonly body: abcBody;
-  private readonly header: abcHeader = {
-    key: new abcKey(Key.CMajor),
-    unit_note_length: new abcDuration(Duration.Eighth),
-    meter: new abcMeter(new SimpleTimeSignature(4, Duration.Quarter)),
+export class AbcTune {
+  private readonly body: AbcBody;
+  private readonly header: AbcHeader = {
+    key: new AbcKey(Key.CMajor),
+    unit_note_length: new AbcDuration(Duration.Eighth),
+    meter: new AbcMeter(new SimpleTimeSignature(4, Duration.Quarter)),
   };
 
   constructor(song: Song, unitNoteLength: Duration, referenceNumber = 1) {
-    this.header.unit_note_length = new abcDuration(unitNoteLength);
-    this.header.key = new abcKey(song.Key);
-    this.header.meter = new abcMeter(song.TimeSignature);
+    this.header.unit_note_length = new AbcDuration(unitNoteLength);
+    this.header.key = new AbcKey(song.Key);
+    this.header.meter = new AbcMeter(song.TimeSignature);
     this.header.reference_number = referenceNumber;
 
-    this.body = new abcBody([...song].map((m) => new abcMeasure(m, unitNoteLength)));
+    this.body = new AbcBody([...song].map((m) => new AbcMeasure(m, unitNoteLength)));
   }
 
   toString() {
