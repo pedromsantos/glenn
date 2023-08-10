@@ -20,6 +20,10 @@ Still a work in progress.
 
 [![CodeScene Code Health](https://codescene.io/projects/29675/status-badges/code-health)](https://codescene.io/projects/29675) [![CodeScene System Mastery](https://codescene.io/projects/29675/status-badges/system-mastery)](https://codescene.io/projects/29675)
 
+### Code climate
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/0e30b8c79d21be9b0665/maintainability)](https://codeclimate.com/github/pedromsantos/glenn/maintainability)
+
 ### Coveralls
 
 [![Coverage Status](https://coveralls.io/repos/github/pedromsantos/glenn/badge.svg?branch=refs/heads/master)](https://coveralls.io/github/pedromsantos/glenn?branch=refs/heads/master)
