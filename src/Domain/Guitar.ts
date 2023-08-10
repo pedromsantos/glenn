@@ -2,7 +2,10 @@ import { Chord } from './Chord';
 import { MelodicLine, MelodicLineDirection, Pitch } from './Pitch';
 
 export class Fret {
-  constructor(protected readonly string: GuitarString, private readonly fret: number) {}
+  constructor(
+    protected readonly string: GuitarString,
+    private readonly fret: number
+  ) {}
 
   get Number(): number {
     return this.fret;
@@ -78,6 +81,7 @@ export class BlankFret extends Fret {
     return new BlankFret(this.string, -1);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   override isWithin(_lowFret: Fret, _highFret: Fret, _lowerMargin = 0, _higherMargin = 0) {
     return false;
   }
@@ -204,7 +208,11 @@ export type PositionPrimitives = {
 export class Position {
   private static readonly all: Position[] = [];
 
-  private constructor(private name: string, private lowFret: Fret, private highFret: Fret) {
+  private constructor(
+    private name: string,
+    private lowFret: Fret,
+    private highFret: Fret
+  ) {
     Position.all.push(this);
   }
 

@@ -323,7 +323,10 @@ export class Duration {
 }
 
 export class BeatsPerMinute {
-  constructor(private bpm: number, private duration: Duration = Duration.Quarter) {}
+  constructor(
+    private bpm: number,
+    private duration: Duration = Duration.Quarter
+  ) {}
 
   get beatsPerMinute(): number {
     return this.bpm;

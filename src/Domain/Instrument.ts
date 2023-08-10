@@ -5,7 +5,10 @@ import { Pitch } from './Pitch';
 export class Voice {
   private static readonly all: Voice[] = [];
 
-  private constructor(private readonly minRange: Note, private readonly maxRange: Note) {
+  private constructor(
+    private readonly minRange: Note,
+    private readonly maxRange: Note
+  ) {
     Voice.all.push(this);
   }
 

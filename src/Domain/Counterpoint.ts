@@ -34,7 +34,10 @@ export class CounterPointHarmony implements Iterable<ScaleDegree> {
 export class FirstSpecies {
   private rules: CounterPoinRules;
 
-  constructor(private readonly parts: CounterPointParts, scale: Scale) {
+  constructor(
+    private readonly parts: CounterPointParts,
+    scale: Scale
+  ) {
     this.rules = new CounterPoinRules(scale);
   }
 

@@ -29,7 +29,10 @@ export class AbcNote {
     [Octave.C0.Name, ',,,,'],
   ]);
 
-  constructor(private readonly note: Note, private readonly defaultDuration: Duration) {}
+  constructor(
+    private readonly note: Note,
+    private readonly defaultDuration: Duration
+  ) {}
 
   toString() {
     return (
@@ -54,7 +57,10 @@ export class AbcNote {
 }
 
 export class AbcRest {
-  constructor(private readonly rest: Rest, private readonly defaultDuration: Duration) {}
+  constructor(
+    private readonly rest: Rest,
+    private readonly defaultDuration: Duration
+  ) {}
 
   toString() {
     return 'z' + new AbcDuration(this.rest.Duration, this.defaultDuration).toString();
@@ -62,7 +68,10 @@ export class AbcRest {
 }
 
 class AbcDuration {
-  constructor(private readonly duration: Duration, private readonly defaultDuration: Duration) {}
+  constructor(
+    private readonly duration: Duration,
+    private readonly defaultDuration: Duration
+  ) {}
 
   toString() {
     const durationMultiplier = this.defaultDuration.equivalentTo(this.duration);

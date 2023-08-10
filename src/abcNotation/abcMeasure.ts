@@ -4,7 +4,10 @@ import { Measure, Unit } from '../Domain/Song';
 import { AbcNote, AbcRest } from './abcNote';
 
 export class AbcMeasure {
-  constructor(private readonly measure: Measure, private readonly defaultDuration: Duration) {}
+  constructor(
+    private readonly measure: Measure,
+    private readonly defaultDuration: Duration
+  ) {}
 
   toString() {
     return [...this.measure].map((n) => this.map(n)).join('');

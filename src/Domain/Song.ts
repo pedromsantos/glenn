@@ -69,7 +69,10 @@ export class FullMeasure extends Measure {
 export class Song implements Iterable<Measure> {
   private readonly measures: Measure[] = [];
 
-  constructor(private readonly timeSignature: TimeSignature, private readonly key: Key) {}
+  constructor(
+    private readonly timeSignature: TimeSignature,
+    private readonly key: Key
+  ) {}
 
   get Key() {
     return this.key;

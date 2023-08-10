@@ -16,7 +16,10 @@ export const enum ScaleDegree {
 export class ScalePattern {
   private static readonly all: ScalePattern[] = [];
 
-  private constructor(private readonly name: string, private readonly pattern: Interval[]) {
+  private constructor(
+    private readonly name: string,
+    private readonly pattern: Interval[]
+  ) {
     ScalePattern.all.push(this);
   }
 
