@@ -1,7 +1,7 @@
 import { Duration } from './Duration';
 import ensure from './Ensure';
 import { Interval } from './Interval';
-import { Rhythm } from './Note';
+import { Octave, Pitches, Rhythm } from './Note';
 import { Pitch, PitchPrimitives } from './Pitch';
 
 export type ChordPitchPrimitives = {
@@ -156,7 +156,7 @@ export type ChordPrimitives = {
   duration: number;
 };
 
-class BaseChord implements Chord, Iterable<Pitch> {
+class BaseChord implements Chord, Pitches, Iterable<Pitch> {
   protected readonly pattern: ChordPattern;
   protected readonly _pitches: ChordPitches;
   protected readonly root: ChordPitch;
@@ -172,6 +172,18 @@ class BaseChord implements Chord, Iterable<Pitch> {
     this.root = new ChordPitch(root, ChordFunction.Root);
     this.duration = duration;
     this._pitches = overridePitches ?? ChordPitches.createFromRootAndPattern(root, pattern);
+  }
+  get Pitch(): Iterable<Pitch> {
+    return [...this._pitches];
+  }
+  get Octave(): Iterable<Octave> {
+    return [];
+  }
+  get OctaveName(): Iterable<string> {
+    return [];
+  }
+  get MidiNumber(): Iterable<number> {
+    return [];
   }
 
   get Bass(): Pitch {

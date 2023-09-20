@@ -58,12 +58,19 @@ export interface Rhythm {
   get tick(): number;
 }
 
+export interface Pitches {
+  get Pitch(): Iterable<Pitch>;
+  get Octave(): Iterable<Octave>;
+  get OctaveName(): Iterable<string>;
+  get MidiNumber(): Iterable<number>;
+}
+
 export type NotePrimitives = {
   pitch: PitchPrimitives;
   duration: DurationPrimitives;
 };
 
-export class Note implements Rhythm {
+export class Note implements Rhythm, Pitches {
   constructor(
     private readonly pitch: Pitch,
     private readonly duration: Duration,
@@ -105,11 +112,11 @@ export class Note implements Rhythm {
   }
 
   isSamePitch(other: Note) {
-    return this.MidiNumber === other.MidiNumber;
+    return this.MidiNumber.pop() === other.MidiNumber.pop();
   }
 
   get Pitch() {
-    return this.pitch;
+    return [this.pitch];
   }
 
   get Duration() {
@@ -125,7 +132,7 @@ export class Note implements Rhythm {
   }
 
   get Octave() {
-    return this.octave;
+    return [this.octave];
   }
 
   get OctaveName() {
@@ -137,7 +144,7 @@ export class Note implements Rhythm {
   }
 
   get MidiNumber() {
-    return this.octave.MidiBaseValue + this.pitch.NumericValue;
+    return [this.octave.MidiBaseValue + this.pitch.NumericValue];
   }
 
   get To(): NotePrimitives {
@@ -148,8 +155,21 @@ export class Note implements Rhythm {
   }
 }
 
-export class Rest implements Rhythm {
+export class Rest implements Rhythm, Pitches {
   constructor(private readonly duration: Duration) {}
+
+  get Pitch(): Iterable<Pitch> {
+    return [];
+  }
+  get Octave(): Iterable<Octave> {
+    return [];
+  }
+  get OctaveName(): Iterable<string> {
+    return [];
+  }
+  get MidiNumber(): Iterable<number> {
+    return [];
+  }
 
   get Duration() {
     return this.duration;

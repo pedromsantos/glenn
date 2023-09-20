@@ -1,4 +1,4 @@
-import { Key } from 'src/Domain/Key';
+import { Key } from '../Domain/Key';
 
 export class AbcKey {
   constructor(private readonly key: Key) {}

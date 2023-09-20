@@ -36,7 +36,7 @@ export class AbcNote {
 
   toString() {
     return (
-      this.toOctave(new AbcPitch(this.note.Pitch).toString()) +
+      this.toOctave(new AbcPitch(this.note.Pitch.pop()!).toString()) +
       new AbcDuration(this.note.Duration, this.defaultDuration).toString()
     );
   }
@@ -48,7 +48,7 @@ export class AbcNote {
       return note + octaveTransformation;
     }
 
-    if (this.note.Octave === Octave.C5) {
+    if (this.note.Octave.pop() === Octave.C5) {
       return note.toLowerCase();
     }
 

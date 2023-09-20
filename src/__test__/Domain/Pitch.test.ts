@@ -367,7 +367,7 @@ describe('Pitch', () => {
   });
 
   describe('properties', () => {
-    test('sharping and flating a pitch results in the original note pitch', () => {
+    test('sharping and flattening a pitch results in the original note pitch', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Pitch.pitches), (pitch) => {
           const newPitch = pitch.sharp().flat();

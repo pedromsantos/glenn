@@ -1,4 +1,4 @@
-import { Clef } from 'src/Domain/Clef';
+import { Clef } from '../Domain/Clef';
 
 export class AbcClef {
   constructor(private readonly clef: Clef) {}

@@ -11,67 +11,67 @@ describe('Note', () => {
     const note = new Note(Pitch.C, Duration.Quarter, Octave.C1);
 
     test('Unison from C to C', () => {
-      expect(note.transpose(Interval.Unison).Pitch).toBe(Pitch.C);
+      expect(note.transpose(Interval.Unison).Pitch.pop()).toBe(Pitch.C);
     });
 
     test('MinorSecond from C to D flat', () => {
-      expect(note.transpose(Interval.MinorSecond).Pitch).toBe(Pitch.DFlat);
+      expect(note.transpose(Interval.MinorSecond).Pitch.pop()).toBe(Pitch.DFlat);
     });
 
     test('MajorSecond from C to D', () => {
-      expect(note.transpose(Interval.MajorSecond).Pitch).toBe(Pitch.D);
+      expect(note.transpose(Interval.MajorSecond).Pitch.pop()).toBe(Pitch.D);
     });
 
     test('AugmentedSecond from C to D sharp', () => {
-      expect(note.transpose(Interval.AugmentedSecond).Pitch).toBe(Pitch.DSharp);
+      expect(note.transpose(Interval.AugmentedSecond).Pitch.pop()).toBe(Pitch.DSharp);
     });
 
     test('MinorThird from C to E flat', () => {
-      expect(note.transpose(Interval.MinorThird).Pitch).toBe(Pitch.EFlat);
+      expect(note.transpose(Interval.MinorThird).Pitch.pop()).toBe(Pitch.EFlat);
     });
 
     test('MajorThird from C to E', () => {
-      expect(note.transpose(Interval.MajorThird).Pitch).toBe(Pitch.E);
+      expect(note.transpose(Interval.MajorThird).Pitch.pop()).toBe(Pitch.E);
     });
 
     test('PerfectFourth from C to F', () => {
-      expect(note.transpose(Interval.PerfectFourth).Pitch).toBe(Pitch.F);
+      expect(note.transpose(Interval.PerfectFourth).Pitch.pop()).toBe(Pitch.F);
     });
 
     test('AugmentedFourth from C to F sharp', () => {
-      expect(note.transpose(Interval.AugmentedFourth).Pitch).toBe(Pitch.FSharp);
+      expect(note.transpose(Interval.AugmentedFourth).Pitch.pop()).toBe(Pitch.FSharp);
     });
 
     test('DiminishedFifth from C to G flat', () => {
-      expect(note.transpose(Interval.DiminishedFifth).Pitch).toBe(Pitch.GFlat);
+      expect(note.transpose(Interval.DiminishedFifth).Pitch.pop()).toBe(Pitch.GFlat);
     });
 
     test('PerfectFifth from C to G', () => {
-      expect(note.transpose(Interval.PerfectFifth).Pitch).toBe(Pitch.G);
+      expect(note.transpose(Interval.PerfectFifth).Pitch.pop()).toBe(Pitch.G);
     });
 
     test('AugmentedFifth from C to G sharp', () => {
-      expect(note.transpose(Interval.AugmentedFifth).Pitch).toBe(Pitch.GSharp);
+      expect(note.transpose(Interval.AugmentedFifth).Pitch.pop()).toBe(Pitch.GSharp);
     });
 
     test('MinorSixth from C to A flat', () => {
-      expect(note.transpose(Interval.MinorSixth).Pitch).toBe(Pitch.AFlat);
+      expect(note.transpose(Interval.MinorSixth).Pitch.pop()).toBe(Pitch.AFlat);
     });
 
     test('MajorSixth from C to A', () => {
-      expect(note.transpose(Interval.MajorSixth).Pitch).toBe(Pitch.A);
+      expect(note.transpose(Interval.MajorSixth).Pitch.pop()).toBe(Pitch.A);
     });
 
     test('diminished seventh from C to B flat flat', () => {
-      expect(note.transpose(Interval.DiminishedSeventh).Pitch).toBe(Pitch.A);
+      expect(note.transpose(Interval.DiminishedSeventh).Pitch.pop()).toBe(Pitch.A);
     });
 
     test('minor seventh from C to B flat', () => {
-      expect(note.transpose(Interval.MinorSeventh).Pitch).toBe(Pitch.BFlat);
+      expect(note.transpose(Interval.MinorSeventh).Pitch.pop()).toBe(Pitch.BFlat);
     });
 
     test('MajorSeventh from C to B', () => {
-      expect(note.transpose(Interval.MajorSeventh).Pitch).toBe(Pitch.B);
+      expect(note.transpose(Interval.MajorSeventh).Pitch.pop()).toBe(Pitch.B);
     });
   });
 
@@ -234,7 +234,7 @@ describe('Note', () => {
         (pitch: Pitch, octave: Octave) => {
           const note = new Note(pitch, Duration.Quarter, octave);
 
-          expect(note.MidiNumber).toBe(octave.MidiBaseValue + pitch.NumericValue);
+          expect(note.MidiNumber.pop()).toBe(octave.MidiBaseValue + pitch.NumericValue);
         }
       ),
       { verbose: true }
