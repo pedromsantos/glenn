@@ -1,7 +1,7 @@
 import { Duration } from './Duration';
 import ensure from './Ensure';
 import { Interval } from './Interval';
-import { Octave, Pitches, Rhythm } from './Note';
+import { Note, Octave, Playable } from './Note';
 import { Pitch, PitchPrimitives } from './Pitch';
 
 export type ChordPitchPrimitives = {
@@ -132,7 +132,7 @@ export class ChordPitches implements Iterable<Pitch> {
   }
 }
 
-export interface Chord extends Iterable<Pitch>, Rhythm {
+export interface Chord extends Iterable<Pitch>, Playable {
   get Bass(): Pitch;
   get Lead(): Pitch;
   get Name(): string;
@@ -156,34 +156,49 @@ export type ChordPrimitives = {
   duration: number;
 };
 
-class BaseChord implements Chord, Pitches, Iterable<Pitch> {
+class BaseChord implements Chord, Iterable<Pitch> {
   protected readonly pattern: ChordPattern;
   protected readonly _pitches: ChordPitches;
   protected readonly root: ChordPitch;
   protected readonly duration: Duration;
+  protected readonly octave: Octave;
 
   protected constructor(
     root: Pitch,
     pattern: ChordPattern,
     duration: Duration = Duration.Whole,
+    octave: Octave = Octave.C4,
     overridePitches?: ChordPitches
   ) {
     this.pattern = pattern;
     this.root = new ChordPitch(root, ChordFunction.Root);
     this.duration = duration;
+    this.octave = octave;
     this._pitches = overridePitches ?? ChordPitches.createFromRootAndPattern(root, pattern);
   }
-  get Pitch(): Iterable<Pitch> {
+
+  get HasPitch(): boolean {
+    return true;
+  }
+
+  get Pitches(): Iterable<Pitch> {
     return [...this._pitches];
   }
-  get Octave(): Iterable<Octave> {
+
+  get Octaves(): Iterable<Octave> {
     return [];
   }
-  get OctaveName(): Iterable<string> {
+
+  get OctaveNames(): Iterable<string> {
     return [];
   }
-  get MidiNumber(): Iterable<number> {
+
+  get MidiNumbers(): Iterable<number> {
     return [];
+  }
+
+  get Notes(): Iterable<Note> {
+    return [...this._pitches].map((p) => new Note(p, this.duration, this.octave));
   }
 
   get Bass(): Pitch {
@@ -239,18 +254,36 @@ class BaseChord implements Chord, Pitches, Iterable<Pitch> {
   }
 
   remove(func: ChordFunction): Chord {
-    return new BaseChord(this.root.Pitch, this.pattern, this.duration, this._pitches.remove(func));
+    return new BaseChord(
+      this.root.Pitch,
+      this.pattern,
+      this.duration,
+      this.octave,
+      this._pitches.remove(func)
+    );
   }
 
   invert(): Chord {
-    return new BaseChord(this.root.Pitch, this.pattern, this.duration, this._pitches.rotate(1));
+    return new BaseChord(
+      this.root.Pitch,
+      this.pattern,
+      this.duration,
+      this.octave,
+      this._pitches.rotate(1)
+    );
   }
 
   drop2(): Chord {
     if (Array.from(this._pitches).length < 4) {
       return this;
     }
-    return new Drop2Chord(this.root.Pitch, this.pattern, this.duration, this._pitches.drop2());
+    return new Drop2Chord(
+      this.root.Pitch,
+      this.pattern,
+      this.duration,
+      this.octave,
+      this._pitches.drop2()
+    );
   }
 
   drop3(): Chord {
@@ -258,7 +291,13 @@ class BaseChord implements Chord, Pitches, Iterable<Pitch> {
       return this;
     }
 
-    return new Drop3Chord(this.root.Pitch, this.pattern, this.duration, this._pitches.drop3());
+    return new Drop3Chord(
+      this.root.Pitch,
+      this.pattern,
+      this.duration,
+      this.octave,
+      this._pitches.drop3()
+    );
   }
 
   closed(): Chord {
@@ -286,9 +325,10 @@ export class ClosedChord extends BaseChord implements Iterable<Pitch> {
     root: Pitch,
     pattern: ChordPattern,
     duration: Duration = Duration.Whole,
+    octave: Octave = Octave.C4,
     overridePitches?: ChordPitches
   ) {
-    super(root, pattern, duration, overridePitches);
+    super(root, pattern, duration, octave, overridePitches);
   }
 
   override closed(): Chord {
@@ -301,9 +341,10 @@ export class Drop2Chord extends BaseChord implements Iterable<Pitch> {
     root: Pitch,
     pattern: ChordPattern,
     duration: Duration = Duration.Whole,
+    octave: Octave = Octave.C4,
     overridePitches?: ChordPitches
   ) {
-    super(root, pattern, duration, overridePitches);
+    super(root, pattern, duration, octave, overridePitches);
   }
 
   override invert(): Chord {
@@ -311,12 +352,19 @@ export class Drop2Chord extends BaseChord implements Iterable<Pitch> {
       this.root.Pitch,
       this.pattern,
       this.duration,
+      this.octave,
       this._pitches.rotate(3).rotateLastSkipFirst().rotateLastSkipFirst()
     );
   }
 
   override remove(func: ChordFunction): Chord {
-    return new Drop2Chord(this.root.Pitch, this.pattern, this.duration, this._pitches.remove(func));
+    return new Drop2Chord(
+      this.root.Pitch,
+      this.pattern,
+      this.duration,
+      this.octave,
+      this._pitches.remove(func)
+    );
   }
 
   override drop2(): Chord {
@@ -329,9 +377,10 @@ export class Drop3Chord extends BaseChord implements Iterable<Pitch> {
     root: Pitch,
     pattern: ChordPattern,
     duration: Duration = Duration.Whole,
+    octave: Octave = Octave.C4,
     overridePitches?: ChordPitches
   ) {
-    super(root, pattern, duration, overridePitches);
+    super(root, pattern, duration, octave, overridePitches);
   }
 
   override invert(): Chord {
@@ -339,12 +388,19 @@ export class Drop3Chord extends BaseChord implements Iterable<Pitch> {
       this.root.Pitch,
       this.pattern,
       this.duration,
+      this.octave,
       this._pitches.rotate(2).rotateLastSkipFirst(2).rotateLastSkipFirst(1).rotateLastSkipFirst(1)
     );
   }
 
   override remove(func: ChordFunction): Chord {
-    return new Drop3Chord(this.root.Pitch, this.pattern, this.duration, this._pitches.remove(func));
+    return new Drop3Chord(
+      this.root.Pitch,
+      this.pattern,
+      this.duration,
+      this.octave,
+      this._pitches.remove(func)
+    );
   }
 
   override drop3(): Chord {

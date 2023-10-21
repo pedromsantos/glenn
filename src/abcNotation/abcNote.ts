@@ -36,19 +36,19 @@ export class AbcNote {
 
   toString() {
     return (
-      this.toOctave(new AbcPitch(this.note.Pitch.pop()!).toString()) +
+      this.toOctave(new AbcPitch(this.note.Pitches.pop()!).toString()) +
       new AbcDuration(this.note.Duration, this.defaultDuration).toString()
     );
   }
 
   private toOctave(note: string) {
-    const octaveTransformation = this.octaveTransformations.get(this.note.OctaveName);
+    const octaveTransformation = this.octaveTransformations.get(this.note.OctaveNames);
 
     if (octaveTransformation) {
       return note + octaveTransformation;
     }
 
-    if (this.note.Octave.pop() === Octave.C5) {
+    if (this.note.Octaves.pop() === Octave.C5) {
       return note.toLowerCase();
     }
 

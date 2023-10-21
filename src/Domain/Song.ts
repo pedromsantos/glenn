@@ -1,67 +1,64 @@
-import { Chord } from './Chord';
 import { TimeSignature } from './Duration';
 import ensure from './Ensure';
 import { Key } from './Key';
-import { Note, Rest } from './Note';
+import { Playable } from './Note';
 
-export type Unit = Note | Rest | Chord;
+class Playables implements Iterable<Playable> {
+  private readonly playables: Playable[] = [];
 
-class Fragment implements Iterable<Unit> {
-  private readonly units: Unit[] = [];
-
-  push(unit: Unit): void {
-    this.units.push(unit);
+  push(playable: Playable): void {
+    this.playables.push(playable);
   }
 
   get ticks(): number {
-    return this.units.reduce((total, current) => total + current.tick, 0);
+    return this.playables.reduce((total, current) => total + current.tick, 0);
   }
 
-  *[Symbol.iterator](): Iterator<Unit> {
-    for (const unit of this.units) {
-      yield unit;
+  *[Symbol.iterator](): Iterator<Playable> {
+    for (const playable of this.playables) {
+      yield playable;
     }
   }
 }
 
-export class Measure implements Iterable<Unit> {
-  protected fragment: Fragment;
+export class Measure implements Iterable<Playable> {
+  protected playables: Playables;
   private readonly timeSignature: TimeSignature;
 
   constructor(timeSignature: TimeSignature) {
-    this.fragment = new Fragment();
+    this.playables = new Playables();
     this.timeSignature = timeSignature;
   }
 
-  add(unit: Unit): Measure {
-    if (this.fragment.ticks + unit.tick > this.timeSignature.ticksPerMeasure) {
-      throw new RangeError(`cannot fit -${unit.DurationName} note in measure`);
+  add(playable: Playable): Measure {
+    if (this.playables.ticks + playable.tick > this.timeSignature.ticksPerMeasure) {
+      throw new RangeError(`cannot fit -${playable.DurationName} note in measure`);
     }
 
-    this.fragment.push(unit);
+    this.playables.push(playable);
 
-    if (this.fragment.ticks === this.timeSignature.ticksPerMeasure) {
-      return new FullMeasure(this.timeSignature, this.fragment);
+    if (this.playables.ticks === this.timeSignature.ticksPerMeasure) {
+      return new FullMeasure(this.timeSignature, this.playables);
     }
 
     return this;
   }
 
-  *[Symbol.iterator](): Iterator<Unit> {
-    for (const unit of this.fragment) {
+  *[Symbol.iterator](): Iterator<Playable> {
+    for (const unit of this.playables) {
       yield unit;
     }
   }
 }
 
 export class FullMeasure extends Measure {
-  constructor(timeSignature: TimeSignature, fragment: Fragment) {
+  constructor(timeSignature: TimeSignature, playables: Playables) {
     super(timeSignature);
-    this.fragment = fragment;
+    this.playables = playables;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  override add(_: Unit): Measure {
+  override add(_: Playable): Measure {
     return this;
   }
 }
@@ -87,7 +84,7 @@ export class Song implements Iterable<Measure> {
     return this;
   }
 
-  add(unit: Unit) {
+  add(playable: Playable) {
     let lastMeasure = this.measures[this.measures.length - 1];
 
     if (!lastMeasure) {
@@ -96,11 +93,11 @@ export class Song implements Iterable<Measure> {
     }
 
     try {
-      ensure(lastMeasure).add(unit);
+      ensure(lastMeasure).add(playable);
     } catch (err) {
       this.measures.push(new Measure(this.timeSignature));
       lastMeasure = this.measures[this.measures.length - 1];
-      ensure(lastMeasure).add(unit);
+      ensure(lastMeasure).add(playable);
     }
 
     return this;

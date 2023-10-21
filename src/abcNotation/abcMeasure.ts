@@ -1,6 +1,6 @@
 import { Duration } from '../Domain/Duration';
-import { Note, Rest } from '../Domain/Note';
-import { Measure, Unit } from '../Domain/Song';
+import { Playable, Rest } from '../Domain/Note';
+import { Measure } from '../Domain/Song';
 import { AbcNote, AbcRest } from './abcNote';
 
 export class AbcMeasure {
@@ -10,14 +10,20 @@ export class AbcMeasure {
   ) {}
 
   toString() {
-    return [...this.measure].map((n) => this.map(n)).join('');
+    return [...this.measure].map((p) => this.map(p)).join('');
   }
 
-  private map(unit: Unit) {
-    if (unit instanceof Note) {
-      return new AbcNote(unit, this.defaultDuration).toString();
-    } else {
-      return new AbcRest(unit as Rest, this.defaultDuration).toString();
+  private map(playable: Playable) {
+    if (playable.HasPitch) {
+      const notes = [...playable.Notes];
+
+      if (notes[0]) {
+        return new AbcNote(notes[0], this.defaultDuration).toString();
+      }
+
+      return new AbcRest(new Rest(playable.Duration), this.defaultDuration).toString();
     }
+
+    return new AbcRest(new Rest(playable.Duration), this.defaultDuration).toString();
   }
 }

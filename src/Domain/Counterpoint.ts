@@ -128,8 +128,8 @@ class OnlyNotesInRange implements CounterPointRule {
 
     for (const note of parts.counterPoint.phrase) {
       if (
-        note.MidiNumber > parts.counterPoint.voice.Max.MidiNumber ||
-        note.MidiNumber < parts.counterPoint.voice.Min.MidiNumber
+        note.MidiNumbers > parts.counterPoint.voice.Max.MidiNumbers ||
+        note.MidiNumbers < parts.counterPoint.voice.Min.MidiNumbers
       ) {
         return { isValid: false, message: 'not in range', index: index };
       }

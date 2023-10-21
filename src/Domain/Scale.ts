@@ -1,6 +1,7 @@
 import { Chord, ChordFunction, ChordPattern, ChordPitch, ChordPitches, ClosedChord } from './Chord';
 import { Duration } from './Duration';
 import { Interval } from './Interval';
+import { Octave } from './Note';
 import { MelodicLine, MelodicLineDirection, Pitch, PitchPrimitives } from './Pitch';
 
 export const enum ScaleDegree {
@@ -376,6 +377,7 @@ export class TriadHarmonizer implements ScaleHarmonizer {
       /* istanbul ignore next */
       ChordPattern.patternFor(chordPitches.toIntervals()) ?? ChordPattern.Major,
       Duration.Whole,
+      Octave.C4,
       chordPitches
     );
   }
@@ -399,6 +401,7 @@ export class SeventhHarmonizer implements ScaleHarmonizer {
       /* istanbul ignore next */
       ChordPattern.patternFor(chordPitches.toIntervals()) ?? ChordPattern.Major7,
       Duration.Whole,
+      Octave.C4,
       chordPitches
     );
   }
