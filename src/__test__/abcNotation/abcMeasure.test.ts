@@ -1,4 +1,5 @@
 import { AbcMeasure } from '../../abcNotation/abcMeasure';
+import { ChordPattern, ClosedChord } from '../../Domain/Chord';
 import { Duration, SimpleTimeSignature } from '../../Domain/Duration';
 import { Note, Octave, Rest } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
@@ -43,5 +44,18 @@ describe('abc Measure should', () => {
     const abc = new AbcMeasure(measure, Duration.Quarter);
 
     expect(abc.toString()).toBe('CzCz');
+  });
+
+  test('convert measure containing notes, rests and chords to abc notation', () => {
+    const timeSignature = new SimpleTimeSignature(4, Duration.Quarter);
+    const measure = new Measure(timeSignature)
+      .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
+      .add(new Rest(Duration.Quarter))
+      .add(new Note(Pitch.G, Duration.Quarter, Octave.C4))
+      .add(new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter));
+
+    const abc = new AbcMeasure(measure, Duration.Quarter);
+
+    expect(abc.toString()).toBe('CzG[CEG]');
   });
 });
