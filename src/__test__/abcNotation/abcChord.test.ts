@@ -61,4 +61,23 @@ describe('abc Guitar Chord should', () => {
 
     expect(abc_chord.toString()).toBe('"Cdim"');
   });
+
+  describe('represent a chord duration', () => {
+    type TestTuple = [Duration, Duration, string];
+
+    test.each<TestTuple>([
+      [Duration.Whole, Duration.Half, '[C/2E/2G/2]'],
+      [Duration.Whole, Duration.Quarter, '[C/4E/4G/4]'],
+      [Duration.Quarter, Duration.Whole, '[C4E4G4]'],
+      [Duration.Quarter, Duration.Quarter, '[CEG]'],
+      [Duration.Quarter, Duration.Eighth, '[C/2E/2G/2]'],
+      [Duration.Quarter, Duration.Sixteenth, '[C/4E/4G/4]'],
+    ])('relative to', (referenceDuration: Duration, duration: Duration, expected: string) => {
+      const chord = new ClosedChord(Pitch.C, ChordPattern.Major, duration);
+
+      const abc_chord = new AbcChord(chord, referenceDuration);
+
+      expect(abc_chord.toString()).toBe(expected);
+    });
+  });
 });
