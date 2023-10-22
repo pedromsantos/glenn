@@ -186,15 +186,15 @@ class BaseChord implements Chord, Iterable<Pitch> {
   }
 
   get Octaves(): Iterable<Octave> {
-    return [];
+    return [this.octave];
   }
 
   get OctaveNames(): Iterable<string> {
-    return [];
+    return [this.octave.Name];
   }
 
   get MidiNumbers(): Iterable<number> {
-    return [];
+    return [...this.Notes].map((n) => n.MidiNumbers).flat();
   }
 
   get Notes(): Iterable<Note> {

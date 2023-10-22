@@ -1,6 +1,8 @@
 import * as fc from 'fast-check';
 
 import { ChordFunction, ChordPattern, ClosedChord } from '../../Domain/Chord';
+import { Duration } from '../../Domain/Duration';
+import { Octave } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
 
 describe('Major Chords should', () => {
@@ -511,6 +513,35 @@ describe('Chords should', () => {
     };
 
     expect(() => ClosedChord.From(chordPrimitives)).toThrow();
+  });
+
+  test('has a duration', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter);
+
+    expect(chord.Duration).toBe(Duration.Quarter);
+    expect(chord.DurationName).toBe(Duration.Quarter.Name);
+    expect(chord.DurationValue).toBe(Duration.Quarter.value);
+    expect(chord.tick).toBe(Duration.Quarter.tick);
+  });
+
+  test('to have pitches', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter);
+
+    expect([...chord.Pitches]).toHaveLength(4);
+  });
+
+  test('does have an octave', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C3);
+
+    expect([...chord.Octaves].pop()).toBe(Octave.C3);
+    expect([...chord.OctaveNames].pop()).toBe(Octave.C3.Name);
+  });
+
+  test('does have a note', () => {
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter);
+
+    expect([...chord.Notes]).toHaveLength(4);
+    expect([...chord.MidiNumbers]).toHaveLength(4);
   });
 });
 
