@@ -3,8 +3,38 @@ import * as fc from 'fast-check';
 import { ChordPattern, ClosedChord } from '../../Domain/Chord';
 import { Duration } from '../../Domain/Duration';
 import { Interval, IntervalDirection } from '../../Domain/Interval';
-import { MelodicPhrase, Note, Octave } from '../../Domain/Note';
+import { MelodicPhrase, Note, Octave, Rest } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
+
+describe('Rest', () => {
+  test('has a duration', () => {
+    const rest = new Rest(Duration.Quarter);
+
+    expect(rest.Duration).toBe(Duration.Quarter);
+    expect(rest.DurationName).toBe(Duration.Quarter.Name);
+    expect(rest.tick).toBe(Duration.Quarter.tick);
+  });
+
+  test('does not have a pitch', () => {
+    const rest = new Rest(Duration.Quarter);
+
+    expect([...rest.Pitches]).toHaveLength(0);
+  });
+
+  test('does not have an octave', () => {
+    const rest = new Rest(Duration.Quarter);
+
+    expect([...rest.Octaves]).toHaveLength(0);
+    expect([...rest.OctaveNames]).toHaveLength(0);
+  });
+
+  test('does not have a note', () => {
+    const rest = new Rest(Duration.Quarter);
+
+    expect([...rest.Notes]).toHaveLength(0);
+    expect([...rest.MidiNumbers]).toHaveLength(0);
+  });
+});
 
 describe('Note', () => {
   describe('transpose using a', () => {

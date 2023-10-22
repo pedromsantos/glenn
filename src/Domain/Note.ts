@@ -54,7 +54,6 @@ export class Octave {
 export interface Rhythmable {
   get Duration(): Duration;
   get DurationName(): string;
-  get DurationValue(): number;
   get tick(): number;
 }
 
@@ -135,10 +134,6 @@ export class Note implements Playable {
     return this.duration.Name;
   }
 
-  get DurationValue() {
-    return this.duration.value;
-  }
-
   get Octaves() {
     return [this.octave];
   }
@@ -204,10 +199,6 @@ export class Rest implements Playable {
 
   get DurationName() {
     return this.duration.Name;
-  }
-
-  get DurationValue() {
-    return this.duration.value;
   }
 
   get tick() {
