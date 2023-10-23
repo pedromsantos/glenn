@@ -26,7 +26,7 @@ Still a work in progress.
 
 ### Coveralls
 
-[![Coverage Status](https://coveralls.io/repos/github/pedromsantos/glenn/badge.svg?branch=refs/heads/master)](https://coveralls.io/github/pedromsantos/glenn?branch=refs/heads/master)
+[![Coverage Status](https://coveralls.io/repos/github/pedromsantos/glenn/badge.svg?branch=master)](https://coveralls.io/github/pedromsantos/glenn?branch=master)
 
 ### Mutation testing
 
