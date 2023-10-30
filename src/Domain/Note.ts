@@ -51,13 +51,10 @@ export class Octave {
   }
 }
 
-export interface Rhythmable {
+export interface Playable {
   get Duration(): Duration;
   get DurationName(): string;
   get tick(): number;
-}
-
-export interface Pitchable {
   get Pitches(): Iterable<Pitch>;
   get Octaves(): Iterable<Octave>;
   get OctaveNames(): Iterable<string>;
@@ -65,8 +62,6 @@ export interface Pitchable {
   get Notes(): Iterable<Note>;
   get HasPitch(): boolean;
 }
-
-export interface Playable extends Rhythmable, Pitchable {}
 
 export type NotePrimitives = {
   pitch: PitchPrimitives;
