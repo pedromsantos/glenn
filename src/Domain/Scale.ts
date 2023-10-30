@@ -374,7 +374,6 @@ export class TriadHarmonizer implements ScaleHarmonizer {
 
     return new ClosedChord(
       chordPitches.pitchForFunction(ChordFunction.Root),
-      /* istanbul ignore next */
       ChordPattern.patternFor(chordPitches.toIntervals()) ?? ChordPattern.Major,
       Duration.Whole,
       Octave.C4,
@@ -398,7 +397,6 @@ export class SeventhHarmonizer implements ScaleHarmonizer {
 
     return new ClosedChord(
       chordPitches.pitchForFunction(ChordFunction.Root),
-      /* istanbul ignore next */
       ChordPattern.patternFor(chordPitches.toIntervals()) ?? ChordPattern.Major7,
       Duration.Whole,
       Octave.C4,

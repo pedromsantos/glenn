@@ -11,9 +11,7 @@ export type ChordPitchPrimitives = {
 
 export class ChordPitch {
   constructor(
-    /* istanbul ignore next */
     private readonly _pitch: Pitch = Pitch.C,
-    /* istanbul ignore next */
     private readonly _func: ChordFunction = ChordFunction.Root
   ) {}
 
@@ -23,6 +21,10 @@ export class ChordPitch {
 
   get Function() {
     return this._func;
+  }
+
+  get Name() {
+    return this.Pitch.Name;
   }
 
   get To(): Readonly<ChordPitchPrimitives> {
@@ -102,7 +104,6 @@ export class ChordPitches implements Iterable<Pitch> {
   private first(): Pitch {
     const pitch = this.pitches[0];
 
-    /* istanbul ignore next */
     if (!pitch) {
       throw Error('first pitch cannot be null/undefined');
     }
@@ -113,7 +114,6 @@ export class ChordPitches implements Iterable<Pitch> {
   private last(): Pitch {
     const pitch = this.pitches.slice(-1)[0];
 
-    /* istanbul ignore next */
     if (!pitch) {
       throw Error('last pitch cannot be null/undefined');
     }
@@ -210,11 +210,11 @@ class BaseChord implements Chord, Iterable<Pitch> {
   }
 
   get Name(): string {
-    return this.root.Pitch.Name + this.pattern.Name;
+    return this.root.Name + this.pattern.Name;
   }
 
   get Abbreviation(): string {
-    return this.root.Pitch.Name + this.pattern.Abbreviation;
+    return this.root.Name + this.pattern.Abbreviation;
   }
 
   get Pattern(): ChordPattern {
