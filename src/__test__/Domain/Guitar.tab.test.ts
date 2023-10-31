@@ -365,5 +365,21 @@ E|-8-10-5-1-3-|`;
 
       expect(renderedTab).toBe(expectedTab);
     });
+
+    test('On fifth string', () => {
+      const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Fifth));
+
+      const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
+      const renderedTab = new Tab().render(matrix);
+
+      const expectedTab = `e|-3-5-0--8-10-|
+B|-5-6-1-10-12-|
+G|-4-5-0--9-10-|
+D|-------------|
+A|-3-5-0--8-10-|
+E|-------------|`;
+
+      expect(renderedTab).toBe(expectedTab);
+    });
   });
 });
