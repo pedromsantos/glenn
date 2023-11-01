@@ -87,6 +87,44 @@ export class BlankFret extends Fret {
   }
 }
 
+class Frets implements Iterable<Fret> {
+  private frets: Fret[] = Array<Fret>(6).fill(new BlankFret());
+
+  constructor(frets: Fret[] = Array<Fret>(6).fill(new BlankFret())) {
+    this.frets = frets;
+  }
+
+  updateFretAt(fret: Fret, position: number) {
+    this.frets[position] = fret;
+  }
+
+  adjustOctaves() {
+    if (this.frets.some((f) => f.Number === 0) && this.frets.some((f) => f.Number > 3)) {
+      this.frets = this.frets.map((f) => (f.Number === 0 ? f.raiseOctave() : f));
+    }
+  }
+
+  isTooFar(fret: Fret): boolean {
+    return this.frets
+      .filter((f) => f.Number !== -1)
+      .some((f) => Math.abs(f.Number - fret.Number) > 4);
+  }
+
+  reverse() {
+    this.frets.reverse();
+  }
+
+  toString(): string {
+    return this.frets.map((f) => f.toString()).join('\n');
+  }
+
+  *[Symbol.iterator](): Iterator<Fret> {
+    for (const pitch of this.frets) {
+      yield pitch;
+    }
+  }
+}
+
 export type GuitarStringPrimitives = {
   name: string;
   index: number;
@@ -294,7 +332,7 @@ export class Position {
 }
 
 export class GuitarChord implements Iterable<Fret> {
-  private chordFrets: Fret[] = Array<Fret>(6).fill(new BlankFret());
+  private chordFrets: Frets = new Frets();
   private position: Position = Position.Open;
 
   toTab(): TabColumn {
@@ -302,12 +340,12 @@ export class GuitarChord implements Iterable<Fret> {
   }
 
   toString(): string {
-    return this.chordFrets.map((f) => f.toString()).join('\n');
+    return this.chordFrets.toString();
   }
 
   *[Symbol.iterator](): Iterator<Fret> {
-    for (const pitch of this.chordFrets) {
-      yield pitch;
+    for (const fret of this.chordFrets) {
+      yield fret;
     }
   }
 
@@ -320,11 +358,11 @@ export class GuitarChord implements Iterable<Fret> {
     guitarChord.position = position;
 
     if (position === Position.Open) {
-      guitarChord.chordFrets = guitarChord.mapOpenPositionChord(chord, guitarStrings);
+      guitarChord.chordFrets = new Frets(guitarChord.mapOpenPositionChord(chord, guitarStrings));
       return guitarChord;
     }
 
-    guitarChord.chordFrets = guitarChord.mapNonOpenePositionChord(chord, guitarStrings);
+    guitarChord.chordFrets = new Frets(guitarChord.mapNonOpenePositionChord(chord, guitarStrings));
     return guitarChord;
   }
 
@@ -332,7 +370,7 @@ export class GuitarChord implements Iterable<Fret> {
     const guitarChord = new GuitarChord();
 
     guitarChord.mapFromBassString(chord, bass);
-    guitarChord.adjustOctaves();
+    guitarChord.chordFrets.adjustOctaves();
     guitarChord.chordFrets.reverse();
     return guitarChord;
   }
@@ -341,11 +379,11 @@ export class GuitarChord implements Iterable<Fret> {
     for (const pitch of chord) {
       let fret = guitarString.fretFor(pitch);
 
-      if (this.isTooFar(fret)) {
+      if (this.chordFrets.isTooFar(fret)) {
         fret = fret.raiseOctave();
       }
 
-      if (this.isTooFar(fret)) {
+      if (this.chordFrets.isTooFar(fret)) {
         guitarString = guitarString.NextAscending;
         fret = guitarString.fretFor(pitch);
       }
@@ -356,7 +394,7 @@ export class GuitarChord implements Iterable<Fret> {
   }
 
   private addFretFor(fret: Fret, guitarString: GuitarString) {
-    this.chordFrets[guitarString.Index - 1] = fret;
+    this.chordFrets.updateFretAt(fret, guitarString.Index - 1);
   }
 
   private mapOpenPositionChord(chord: Chord, guitarStrings: GuitarStrings): Fret[] {
@@ -400,18 +438,6 @@ export class GuitarChord implements Iterable<Fret> {
     }
 
     return mappedeFrets;
-  }
-
-  private adjustOctaves() {
-    if (this.chordFrets.some((f) => f.Number === 0) && this.chordFrets.some((f) => f.Number > 3)) {
-      this.chordFrets = this.chordFrets.map((f) => (f.Number === 0 ? f.raiseOctave() : f));
-    }
-  }
-
-  private isTooFar(fret: Fret): boolean {
-    return this.chordFrets
-      .filter((f) => f.Number !== -1)
-      .some((f) => Math.abs(f.Number - fret.Number) > 4);
   }
 }
 
