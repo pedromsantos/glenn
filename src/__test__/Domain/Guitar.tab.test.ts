@@ -308,10 +308,7 @@ E|-3-0-|`;
       });
 
       test('On sixth string', () => {
-        const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Sixth));
-
-        const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
-        const renderedTab = new Tab().render(matrix);
+        const renderedTab = tabChordsWithBassOnString(chords, GuitarString.Sixth);
 
         const expectedTab = `e|-------------|
 B|-------------|
@@ -324,10 +321,7 @@ E|--8-10-0-1-3-|`;
       });
 
       test('On fifth string', () => {
-        const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Fifth));
-
-        const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
-        const renderedTab = new Tab().render(matrix);
+        const renderedTab = tabChordsWithBassOnString(chords, GuitarString.Fifth);
 
         const expectedTab = `e|-------------|
 B|-5-6-8-10-12-|
@@ -340,10 +334,7 @@ E|-------------|`;
       });
 
       test('On fourth string', () => {
-        const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Fourth));
-
-        const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
-        const renderedTab = new Tab().render(matrix);
+        const renderedTab = tabChordsWithBassOnString(chords, GuitarString.Fourth);
 
         const expectedTab = `e|-12-1-3-5-7-|
 B|-12-1-3-5-6-|
@@ -364,10 +355,7 @@ E|------------|`;
       });
 
       test('On sixth string', () => {
-        const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Sixth));
-
-        const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
-        const renderedTab = new Tab().render(matrix);
+        const renderedTab = tabChordsWithBassOnString(chords, GuitarString.Sixth);
 
         const expectedTab = `e|------------|
 B|-8-10-5-1-3-|
@@ -380,10 +368,7 @@ E|-8-10-5-1-3-|`;
       });
 
       test('On fifth string', () => {
-        const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Fifth));
-
-        const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
-        const renderedTab = new Tab().render(matrix);
+        const renderedTab = tabChordsWithBassOnString(chords, GuitarString.Fifth);
 
         const expectedTab = `e|-3-5-0--8-10-|
 B|-5-6-1-10-12-|
@@ -396,4 +381,10 @@ E|-------------|`;
       });
     });
   });
+
+  const tabChordsWithBassOnString = (chords: Chord[], bassString: GuitarString) => {
+    const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, bassString));
+    const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
+    return new Tab().render(matrix);
+  };
 });
