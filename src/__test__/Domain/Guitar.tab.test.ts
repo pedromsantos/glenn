@@ -1,4 +1,4 @@
-import { ChordPattern, ClosedChord } from '../../Domain/Chord';
+import { Chord, ChordPattern, ClosedChord } from '../../Domain/Chord';
 import {
   BlankFret,
   Fret,
@@ -283,103 +283,117 @@ E|-3-0-|`;
       expect(renderedTab).toBe(expectedTab);
     });
   });
+  describe('Drop chords', () => {
+    let cMaj7: Chord;
+    let dMin7: Chord;
+    let eMin7: Chord;
+    let fMaj7: Chord;
+    let g7: Chord;
+    let aMin7: Chord;
 
-  describe('Drop 2 chords', () => {
-    const cMaj7 = new ClosedChord(Pitch.C, ChordPattern.Major7).drop2();
-    const dMin7 = new ClosedChord(Pitch.D, ChordPattern.Minor7).drop2();
-    const eMin7 = new ClosedChord(Pitch.E, ChordPattern.Minor7).drop2();
-    const fMaj7 = new ClosedChord(Pitch.F, ChordPattern.Major7).drop2();
-    const g7 = new ClosedChord(Pitch.G, ChordPattern.Dominant7).drop2();
-    const chords = [cMaj7, dMin7, eMin7, fMaj7, g7];
+    beforeEach(() => {
+      cMaj7 = new ClosedChord(Pitch.C, ChordPattern.Major7);
+      dMin7 = new ClosedChord(Pitch.D, ChordPattern.Minor7);
+      eMin7 = new ClosedChord(Pitch.E, ChordPattern.Minor7);
+      fMaj7 = new ClosedChord(Pitch.F, ChordPattern.Major7);
+      g7 = new ClosedChord(Pitch.G, ChordPattern.Dominant7);
+      aMin7 = new ClosedChord(Pitch.A, ChordPattern.Minor7);
+    });
 
-    test('On sixth string', () => {
-      const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Sixth));
+    describe('Drop 2 chords', () => {
+      let chords: Chord[] = [];
 
-      const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
-      const renderedTab = new Tab().render(matrix);
+      beforeEach(() => {
+        chords = [cMaj7, dMin7, eMin7, fMaj7, g7].map((c) => c.drop2());
+      });
 
-      const expectedTab = `e|-------------|
+      test('On sixth string', () => {
+        const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Sixth));
+
+        const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
+        const renderedTab = new Tab().render(matrix);
+
+        const expectedTab = `e|-------------|
 B|-------------|
 G|--9-10-0-2-4-|
 D|--9-10-0-2-3-|
 A|-10-12-2-3-5-|
 E|--8-10-0-1-3-|`;
 
-      expect(renderedTab).toBe(expectedTab);
-    });
+        expect(renderedTab).toBe(expectedTab);
+      });
 
-    test('On fifth string', () => {
-      const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Fifth));
+      test('On fifth string', () => {
+        const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Fifth));
 
-      const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
-      const renderedTab = new Tab().render(matrix);
+        const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
+        const renderedTab = new Tab().render(matrix);
 
-      const expectedTab = `e|-------------|
+        const expectedTab = `e|-------------|
 B|-5-6-8-10-12-|
 G|-4-5-7--9-10-|
 D|-5-7-9-10-12-|
 A|-3-5-7--8-10-|
 E|-------------|`;
 
-      expect(renderedTab).toBe(expectedTab);
-    });
+        expect(renderedTab).toBe(expectedTab);
+      });
 
-    test('On fourth string', () => {
-      const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Fourth));
+      test('On fourth string', () => {
+        const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Fourth));
 
-      const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
-      const renderedTab = new Tab().render(matrix);
+        const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
+        const renderedTab = new Tab().render(matrix);
 
-      const expectedTab = `e|-12-1-3-5-7-|
+        const expectedTab = `e|-12-1-3-5-7-|
 B|-12-1-3-5-6-|
 G|-12-2-4-5-7-|
 D|-10-0-2-3-5-|
 A|------------|
 E|------------|`;
 
-      expect(renderedTab).toBe(expectedTab);
+        expect(renderedTab).toBe(expectedTab);
+      });
     });
-  });
 
-  describe('Drop 3 chords', () => {
-    const cMaj7 = new ClosedChord(Pitch.C, ChordPattern.Major7).drop3();
-    const dMin7 = new ClosedChord(Pitch.D, ChordPattern.Minor7).drop3();
-    const eMin7 = new ClosedChord(Pitch.A, ChordPattern.Minor7).drop3();
-    const fMaj7 = new ClosedChord(Pitch.F, ChordPattern.Major7).drop3();
-    const g7 = new ClosedChord(Pitch.G, ChordPattern.Dominant7).drop3();
+    describe('Drop 3 chords', () => {
+      let chords: Chord[] = [];
 
-    const chords = [cMaj7, dMin7, eMin7, fMaj7, g7];
+      beforeEach(() => {
+        chords = [cMaj7, dMin7, aMin7, fMaj7, g7].map((c) => c.drop3());
+      });
 
-    test('On sixth string', () => {
-      const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Sixth));
+      test('On sixth string', () => {
+        const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Sixth));
 
-      const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
-      const renderedTab = new Tab().render(matrix);
+        const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
+        const renderedTab = new Tab().render(matrix);
 
-      const expectedTab = `e|------------|
+        const expectedTab = `e|------------|
 B|-8-10-5-1-3-|
 G|-9-10-5-2-4-|
 D|-9-10-5-2-3-|
 A|------------|
 E|-8-10-5-1-3-|`;
 
-      expect(renderedTab).toBe(expectedTab);
-    });
+        expect(renderedTab).toBe(expectedTab);
+      });
 
-    test('On fifth string', () => {
-      const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Fifth));
+      test('On fifth string', () => {
+        const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Fifth));
 
-      const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
-      const renderedTab = new Tab().render(matrix);
+        const matrix = new TabMatrix(...guitarChords.map((c) => c.toTab()));
+        const renderedTab = new Tab().render(matrix);
 
-      const expectedTab = `e|-3-5-0--8-10-|
+        const expectedTab = `e|-3-5-0--8-10-|
 B|-5-6-1-10-12-|
 G|-4-5-0--9-10-|
 D|-------------|
 A|-3-5-0--8-10-|
 E|-------------|`;
 
-      expect(renderedTab).toBe(expectedTab);
+        expect(renderedTab).toBe(expectedTab);
+      });
     });
   });
 });
