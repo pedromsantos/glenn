@@ -87,19 +87,42 @@ export class BlankFret extends Fret {
   }
 }
 
-class VerticalFrets implements Iterable<Fret> {
-  private frets: Fret[] = Array<Fret>(6).fill(new BlankFret());
+abstract class Frets implements Iterable<Fret> {
+  protected frets: Fret[] = [];
 
-  constructor(frets: Fret[] = Array<Fret>(6).fill(new BlankFret())) {
+  protected constructor(frets: Fret[] = []) {
     this.frets = frets;
+  }
+
+  *[Symbol.iterator](): Iterator<Fret> {
+    for (const f of this.frets) {
+      yield f;
+    }
+  }
+
+  reverse() {
+    this.frets.reverse();
+  }
+
+  toString(): string {
+    return this.frets.map((f) => f.toString()).join(',');
+  }
+}
+
+class VerticalFrets extends Frets {
+  constructor(frets: Fret[] = Array<Fret>(6).fill(new BlankFret())) {
+    super(frets);
   }
 
   updateFretAt(fret: Fret, position: number) {
     this.frets[position] = fret;
   }
 
-  adjustOctaves() {
-    if (this.frets.some((f) => f.Number === 0) && this.frets.some((f) => f.Number > 3)) {
+  adjustOpenStringOctaves() {
+    if (
+      this.frets.some((f) => f.Number === Position.Open.Low) &&
+      this.frets.some((f) => f.Number > Position.Open.High)
+    ) {
       this.frets = this.frets.map((f) => (f.Number === 0 ? f.raiseOctave() : f));
     }
   }
@@ -110,48 +133,22 @@ class VerticalFrets implements Iterable<Fret> {
       .some((f) => Math.abs(f.Number - fret.Number) > 4);
   }
 
-  reverse() {
-    this.frets.reverse();
-  }
-
-  toString(): string {
+  override toString(): string {
     return this.frets.map((f) => f.toString()).join('\n');
-  }
-
-  *[Symbol.iterator](): Iterator<Fret> {
-    for (const f of this.frets) {
-      yield f;
-    }
   }
 }
 
-class HorizontalFrets implements Iterable<Fret> {
-  private frets: Fret[] = [];
-
+class HorizontalFrets extends Frets {
   constructor(frets: Fret[] = []) {
-    this.frets = frets;
+    super(frets);
   }
 
   push(fret: Fret) {
     this.frets.push(fret);
   }
 
-  reverse() {
-    this.frets.reverse();
-  }
-
-  toString(): string {
-    return this.frets.map((f) => f.toString()).join(',');
-  }
-
   last() {
     return this.frets[this.frets.length - 1];
-  }
-
-  *[Symbol.iterator](): Iterator<Fret> {
-    for (const fret of this.frets) {
-      yield fret;
-    }
   }
 }
 
@@ -284,6 +281,14 @@ export class Position {
     Position.all.push(this);
   }
 
+  get High() {
+    return this.highFret.Number;
+  }
+
+  get Low() {
+    return this.lowFret.Number;
+  }
+
   get To(): PositionPrimitives {
     return {
       name: this.name,
@@ -404,7 +409,7 @@ export class GuitarChord implements Iterable<Fret> {
     const guitarChord = new GuitarChord();
 
     guitarChord.mapFromBassString(chord, bass);
-    guitarChord.chordFrets.adjustOctaves();
+    guitarChord.chordFrets.adjustOpenStringOctaves();
     guitarChord.chordFrets.reverse();
     return guitarChord;
   }
