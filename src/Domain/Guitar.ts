@@ -165,6 +165,14 @@ export type FretPrimitives = {
 export class GuitarStrings implements Iterable<GuitarString> {
   constructor(private readonly guitarStrings: GuitarString[] = GuitarString.standardTunning) {}
 
+  toTunning(tunning: GuitarTuning) {
+    return new GuitarStrings(this.guitarStrings.map((gs) => gs.toTunning(tunning)));
+  }
+
+  guitarString(guitarStringIndex: number) {
+    return this.guitarStrings.find((gs) => gs.Index == guitarStringIndex)!;
+  }
+
   *[Symbol.iterator](): Iterator<GuitarString> {
     for (const guitarString of this.guitarStrings) {
       yield guitarString;
@@ -177,7 +185,7 @@ export class GuitarString {
 
   private constructor(
     private readonly name: string,
-    private readonly openStringPitch: Pitch,
+    private openStringPitch: Pitch,
     private readonly index: number,
     private readonly nextAscending: () => GuitarString,
     private readonly nextDescending: () => GuitarString
@@ -239,6 +247,16 @@ export class GuitarString {
     return GuitarString.all;
   }
 
+  toTunning(tunning: GuitarTuning) {
+    return new GuitarString(
+      this.name,
+      tunning.openStringPitchFor(this),
+      this.Index,
+      () => this.NextDescending,
+      () => this.NextAscending
+    );
+  }
+
   fretFor(pitch: Pitch): Fret {
     return new Fret(this, this.openStringPitch.absoluteDistance(pitch));
   }
@@ -262,6 +280,85 @@ export class GuitarString {
   get NextDescending(): GuitarString {
     return this.nextDescending();
   }
+}
+
+export class GuitarTuning {
+  private static readonly all: GuitarTuning[] = [];
+
+  private constructor(
+    private readonly name: string,
+    private readonly pitches: Pitch[]
+  ) {
+    GuitarTuning.all.push(this);
+  }
+
+  get Name() {
+    return this.name;
+  }
+
+  openStringPitchFor(guitarString: GuitarString) {
+    return this.pitches[guitarString.Index - 1]!;
+  }
+
+  public static readonly OpenA: GuitarTuning = new GuitarTuning(
+    'Open A',
+    [Pitch.E, Pitch.A, Pitch.CSharp, Pitch.E, Pitch.A, Pitch.E].reverse()
+  );
+
+  public static readonly OpenAltA: GuitarTuning = new GuitarTuning(
+    'Open A alternate',
+    [Pitch.A, Pitch.E, Pitch.A, Pitch.E, Pitch.A, Pitch.CSharp].reverse()
+  );
+
+  public static readonly OpenASlide: GuitarTuning = new GuitarTuning(
+    'Open A alternate',
+    [Pitch.E, Pitch.A, Pitch.E, Pitch.A, Pitch.CSharp, Pitch.E].reverse()
+  );
+
+  public static readonly OpenB: GuitarTuning = new GuitarTuning(
+    'Open B',
+    [Pitch.B, Pitch.FSharp, Pitch.B, Pitch.FSharp, Pitch.B, Pitch.DSharp].reverse()
+  );
+
+  public static readonly OpenAltB: GuitarTuning = new GuitarTuning(
+    'Open B alternate',
+    [Pitch.FSharp, Pitch.B, Pitch.DSharp, Pitch.FSharp, Pitch.B, Pitch.DSharp].reverse()
+  );
+
+  public static readonly OpenC: GuitarTuning = new GuitarTuning(
+    'Open C',
+    [Pitch.C, Pitch.G, Pitch.C, Pitch.G, Pitch.C, Pitch.E].reverse()
+  );
+
+  public static readonly OpenAltC: GuitarTuning = new GuitarTuning(
+    'Open C alternate',
+    [Pitch.C, Pitch.E, Pitch.G, Pitch.C, Pitch.E, Pitch.G].reverse()
+  );
+
+  public static readonly OpenD: GuitarTuning = new GuitarTuning(
+    'Open D',
+    [Pitch.D, Pitch.A, Pitch.D, Pitch.FSharp, Pitch.A, Pitch.D].reverse()
+  );
+
+  public static readonly DropD: GuitarTuning = new GuitarTuning(
+    'Drop D',
+    [Pitch.D, Pitch.A, Pitch.D, Pitch.G, Pitch.B, Pitch.E].reverse()
+  );
+
+  public static readonly OpenG: GuitarTuning = new GuitarTuning(
+    'Open G',
+    [Pitch.D, Pitch.G, Pitch.D, Pitch.G, Pitch.B, Pitch.D].reverse()
+  );
+
+  public static readonly EFlat: GuitarTuning = new GuitarTuning(
+    'Eb',
+    [Pitch.EFlat, Pitch.AFlat, Pitch.DFlat, Pitch.GFlat, Pitch.BFlat, Pitch.EFlat].reverse()
+  );
+
+  public static readonly D: GuitarTuning = new GuitarTuning(
+    'D',
+    [Pitch.D, Pitch.G, Pitch.C, Pitch.F, Pitch.A, Pitch.D].reverse()
+  );
 }
 
 export type PositionPrimitives = {

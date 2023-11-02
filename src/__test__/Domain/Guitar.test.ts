@@ -1,6 +1,14 @@
 import * as fc from 'fast-check';
 
-import { BlankFret, Fret, GuitarMelodicLine, GuitarString, Position } from '../../Domain/Guitar';
+import {
+  BlankFret,
+  Fret,
+  GuitarMelodicLine,
+  GuitarString,
+  GuitarStrings,
+  GuitarTuning,
+  Position,
+} from '../../Domain/Guitar';
 import { MelodicLine, MelodicLineDirection, Pitch } from '../../Domain/Pitch';
 
 describe('Fret should', () => {
@@ -168,6 +176,62 @@ describe('Guitar String should', () => {
           }
         )
       );
+    });
+  });
+
+  describe('Non standard tunings', () => {
+    test('OpenA', () => {
+      const guitarStrings = new GuitarStrings().toTunning(GuitarTuning.OpenA);
+
+      const sixth = guitarStrings.guitarString(6);
+      const fifth = guitarStrings.guitarString(5);
+      const fourth = guitarStrings.guitarString(4);
+      const third = guitarStrings.guitarString(3);
+      const second = guitarStrings.guitarString(2);
+      const first = guitarStrings.guitarString(1);
+
+      expect(sixth.fretFor(Pitch.E)).toStrictEqual(new Fret(sixth, 0));
+      expect(fifth.fretFor(Pitch.A)).toStrictEqual(new Fret(fifth, 0));
+      expect(fourth.fretFor(Pitch.CSharp)).toStrictEqual(new Fret(fourth, 0));
+      expect(third.fretFor(Pitch.E)).toStrictEqual(new Fret(third, 0));
+      expect(second.fretFor(Pitch.A)).toStrictEqual(new Fret(second, 0));
+      expect(first.fretFor(Pitch.E)).toStrictEqual(new Fret(first, 0));
+    });
+
+    test('OpenB', () => {
+      const guitarStrings = new GuitarStrings().toTunning(GuitarTuning.OpenB);
+
+      const sixth = guitarStrings.guitarString(6);
+      const fifth = guitarStrings.guitarString(5);
+      const fourth = guitarStrings.guitarString(4);
+      const third = guitarStrings.guitarString(3);
+      const second = guitarStrings.guitarString(2);
+      const first = guitarStrings.guitarString(1);
+
+      expect(sixth.fretFor(Pitch.B)).toStrictEqual(new Fret(sixth, 0));
+      expect(fifth.fretFor(Pitch.FSharp)).toStrictEqual(new Fret(fifth, 0));
+      expect(fourth.fretFor(Pitch.B)).toStrictEqual(new Fret(fourth, 0));
+      expect(third.fretFor(Pitch.FSharp)).toStrictEqual(new Fret(third, 0));
+      expect(second.fretFor(Pitch.B)).toStrictEqual(new Fret(second, 0));
+      expect(first.fretFor(Pitch.DSharp)).toStrictEqual(new Fret(first, 0));
+    });
+
+    test('EFlat', () => {
+      const guitarStrings = new GuitarStrings().toTunning(GuitarTuning.EFlat);
+
+      const sixth = guitarStrings.guitarString(6);
+      const fifth = guitarStrings.guitarString(5);
+      const fourth = guitarStrings.guitarString(4);
+      const third = guitarStrings.guitarString(3);
+      const second = guitarStrings.guitarString(2);
+      const first = guitarStrings.guitarString(1);
+
+      expect(sixth.fretFor(Pitch.EFlat)).toStrictEqual(new Fret(sixth, 0));
+      expect(fifth.fretFor(Pitch.AFlat)).toStrictEqual(new Fret(fifth, 0));
+      expect(fourth.fretFor(Pitch.DFlat)).toStrictEqual(new Fret(fourth, 0));
+      expect(third.fretFor(Pitch.GFlat)).toStrictEqual(new Fret(third, 0));
+      expect(second.fretFor(Pitch.BFlat)).toStrictEqual(new Fret(second, 0));
+      expect(first.fretFor(Pitch.EFlat)).toStrictEqual(new Fret(first, 0));
     });
   });
 });
