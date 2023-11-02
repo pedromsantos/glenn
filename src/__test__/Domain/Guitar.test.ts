@@ -180,7 +180,7 @@ describe('Guitar String should', () => {
   });
 
   describe('Non standard tunings', () => {
-    test('OpenA', () => {
+    test('Open A', () => {
       const guitarStrings = new GuitarStrings().toTunning(GuitarTuning.OpenA);
 
       const sixth = guitarStrings.guitarString(6);
@@ -198,7 +198,7 @@ describe('Guitar String should', () => {
       expect(first.fretFor(Pitch.E)).toStrictEqual(new Fret(first, 0));
     });
 
-    test('OpenB', () => {
+    test('Open B', () => {
       const guitarStrings = new GuitarStrings().toTunning(GuitarTuning.OpenB);
 
       const sixth = guitarStrings.guitarString(6);
@@ -216,7 +216,7 @@ describe('Guitar String should', () => {
       expect(first.fretFor(Pitch.DSharp)).toStrictEqual(new Fret(first, 0));
     });
 
-    test('EFlat', () => {
+    test('Eb', () => {
       const guitarStrings = new GuitarStrings().toTunning(GuitarTuning.EFlat);
 
       const sixth = guitarStrings.guitarString(6);
