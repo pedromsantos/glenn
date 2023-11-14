@@ -592,9 +592,9 @@ export class GuitarMelodicLine implements Iterable<Fret> {
     this.line = this.mapMelodicLine(melodicLine, guitarStrings);
   }
 
-  toTab(): TabMatrix {
+  toTab(): Tab {
     const column = [...this.line].map((fret) => fret.toTab(this.guitarStrings));
-    return new TabMatrix(...column);
+    return new Tab(...column);
   }
 
   private mapMelodicLine(melodicLine: MelodicLine, guitarStrings: GuitarStrings) {
@@ -679,7 +679,7 @@ export class TabColumn {
   }
 }
 
-export class TabMatrix {
+export class Tab {
   private tabMatrix: string[][];
 
   constructor(...columns: TabColumn[]) {
@@ -710,10 +710,8 @@ export class TabMatrix {
   private mapColumns(columns: TabColumn[]): string[][] {
     return columns.map((column) => column.render());
   }
-}
 
-export class Tab {
-  render(tab: TabMatrix): string {
+  static render(tab: Tab): string {
     return tab
       .separateWith('-')
       .prefixWith(TabColumn.Start)
@@ -724,7 +722,7 @@ export class Tab {
       .join('\n');
   }
 
-  renderColumn(column: TabColumn): string {
-    return this.render(new TabMatrix(column));
+  static renderColumn(column: TabColumn): string {
+    return Tab.render(new Tab(column));
   }
 }

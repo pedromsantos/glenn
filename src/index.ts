@@ -12,12 +12,11 @@ import {
   Position,
   Tab,
   TabColumn,
-  TabMatrix,
 } from './Domain/Guitar';
 import { Interval } from './Domain/Interval';
 import { Key } from './Domain/Key';
 import { MelodicPhrase, Note, Octave, Rest } from './Domain/Note';
-import { Pitch } from './Domain/Pitch';
+import { MelodicLine, Pitch } from './Domain/Pitch';
 import {
   Scale,
   ScaleDegree,
@@ -47,6 +46,7 @@ export {
   Interval,
   Key,
   Measure,
+  MelodicLine,
   MelodicPhrase,
   Note,
   Octave,
@@ -61,6 +61,6 @@ export {
   Song,
   Tab,
   TabColumn,
-  TabMatrix,
+  Tab as TabMatrix,
   TriadHarmonizer,
 };
