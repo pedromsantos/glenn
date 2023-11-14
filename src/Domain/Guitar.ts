@@ -711,7 +711,7 @@ export class Tab {
     return columns.map((column) => column.render());
   }
 
-  static render(tab: Tab): string {
+  static render(tab: Tab = new Tab()): string {
     return tab
       .separateWith('-')
       .prefixWith(TabColumn.Start)

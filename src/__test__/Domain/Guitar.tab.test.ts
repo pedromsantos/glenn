@@ -49,7 +49,7 @@ D|--|
 A|--|
 E|--|`;
 
-      expect(Tab.render(new Tab())).toBe(expectedTab);
+      expect(Tab.render()).toBe(expectedTab);
     });
 
     test('render tuning + start + rest + end', () => {
