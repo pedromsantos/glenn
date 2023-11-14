@@ -680,31 +680,31 @@ export class TabColumn {
 }
 
 export class Tab {
-  private tabMatrix: string[][];
+  private tab: string[][];
 
   constructor(...columns: TabColumn[]) {
-    this.tabMatrix = this.mapColumns(columns);
+    this.tab = this.mapColumns(columns);
   }
 
   sufixWith(...columns: TabColumn[]) {
-    this.tabMatrix = this.tabMatrix.concat(this.mapColumns(columns));
+    this.tab = this.tab.concat(this.mapColumns(columns));
     return this;
   }
 
   prefixWith(...columns: TabColumn[]) {
-    this.tabMatrix = this.mapColumns(columns).concat(this.tabMatrix);
+    this.tab = this.mapColumns(columns).concat(this.tab);
     return this;
   }
 
   separateWith(separator: string): this {
-    this.tabMatrix = this.tabMatrix.map((column, i) =>
-      i == this.tabMatrix.length - 1 ? column : column.map((value) => `${value}${separator}`)
+    this.tab = this.tab.map((column, i) =>
+      i == this.tab.length - 1 ? column : column.map((value) => `${value}${separator}`)
     );
     return this;
   }
 
   render(): string[][] {
-    return this.tabMatrix;
+    return this.tab;
   }
 
   private mapColumns(columns: TabColumn[]): string[][] {
