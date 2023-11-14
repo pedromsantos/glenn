@@ -10,11 +10,14 @@ export class AbcPitch {
   }
 
   private toAccidental(pitch: string) {
-    return this.pitch.Accidental === Accidental.Sharp
-      ? `^${pitch}`
-      : this.pitch.Accidental === Accidental.Flat
-      ? `_${pitch}`
-      : pitch;
+    if (this.pitch.Accidental === Accidental.Sharp) {
+      return `^${pitch}`;
+    }
+    if (this.pitch.Accidental === Accidental.Flat) {
+      return `_${pitch}`;
+    }
+
+    return pitch;
   }
 }
 
