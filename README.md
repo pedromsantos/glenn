@@ -132,20 +132,24 @@ console.log("Chord drop 3", Array.from(chord.drop3()).map((p: Pitch) => p.Name))
 ### Working with guitar tab
 
 ```TypeScript
-console.log("Empty tab:\n", Tab.render(new Tab()));
+console.log("Empty tab:\n", Tab.render());
+console.log("\n");
 
 const melodicLine = ScalePattern.Ionian.createMelodicLineScale(Pitch.C);
 const guitarLine = new GuitarMelodicLine(melodicLine, Position.C);
 const guitarLine1 = new GuitarMelodicLine(line, Position.Open);
 
 console.log("Guitar melodic line (C position):\n", Tab.render(guitarLine.toTab()));
+console.log("\n");
 console.log("Guitar melodic line (Open position ):\n", Tab.render(guitarLine1.toTab()));
+console.log("\n");
 
 const cChord = new ClosedChord(Pitch.C, ChordPattern.Major);
 const guitarChord = GuitarChord.inPosition(cChord, Position.Open);
 const chordTab = Tab.render(new Tab(guitarChord.toTab()));
 
 console.log("Chord as tab:\n", chordTab);
+console.log("\n");
 
 const cMaj7 = new ClosedChord(Pitch.C, ChordPattern.Major7);
 const dMin7 = new ClosedChord(Pitch.D, ChordPattern.Minor7);
@@ -154,9 +158,9 @@ const fMaj7 = new ClosedChord(Pitch.F, ChordPattern.Major7);
 const g7 = new ClosedChord(Pitch.G, ChordPattern.Dominant7);
 const chords = [cMaj7, dMin7, eMin7, fMaj7, g7].map((c) => c.drop2());
 
-const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, GuitarString.Fifth));
-const matrix = new Tab(...guitarChords.map((c) => c.toTab()));
-const chordsTab = Tab.render(matrix);
+const harmonicLine = new GuitarHarmonicLine(GuitarString.Sixth, chords);
 
+const chordsTab = Tab.render(harmonicLine.toTab());
 console.log("Chords as tab:\n", chordsTab);
+console.log("\n");
 ```
