@@ -656,6 +656,31 @@ export class GuitarMelodicLine implements Iterable<Fret> {
   }
 }
 
+export class GuitarHarmonicLine implements Iterable<GuitarChord> {
+  private readonly chords: GuitarChord[] = [];
+  private readonly bassString: GuitarString = GuitarString.Sixth;
+
+  constructor(bassString: GuitarString, chords: Chord[] = []) {
+    this.bassString = bassString;
+    chords.forEach((c) => this.add(c));
+  }
+
+  add(chord: Chord) {
+    this.chords.push(GuitarChord.fromBassString(chord, this.bassString));
+  }
+
+  toTab(): Tab {
+    const column = [...this.chords].map((c) => c.toTab());
+    return new Tab(...column);
+  }
+
+  *[Symbol.iterator](): Iterator<GuitarChord> {
+    for (const fret of this.chords) {
+      yield fret;
+    }
+  }
+}
+
 export class TabColumn {
   private readonly maxRowLength: number = 0;
 

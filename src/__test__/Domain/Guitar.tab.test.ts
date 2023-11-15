@@ -3,6 +3,7 @@ import {
   BlankFret,
   Fret,
   GuitarChord,
+  GuitarHarmonicLine,
   GuitarMelodicLine,
   GuitarString,
   GuitarStrings,
@@ -299,14 +300,16 @@ E|-3-0-|`;
     });
 
     describe('Drop 2 chords', () => {
-      let chords: Chord[] = [];
+      let chords: Chord[];
 
       beforeEach(() => {
         chords = [cMaj7, dMin7, eMin7, fMaj7, g7].map((c) => c.drop2());
       });
 
       test('On sixth string', () => {
-        const renderedTab = tabChordsWithBassOnString(chords, GuitarString.Sixth);
+        const harmonicLine = new GuitarHarmonicLine(GuitarString.Sixth, chords);
+
+        const renderedTab = Tab.render(harmonicLine.toTab());
 
         const expectedTab = `e|-------------|
 B|-------------|
@@ -319,7 +322,9 @@ E|--8-10-0-1-3-|`;
       });
 
       test('On fifth string', () => {
-        const renderedTab = tabChordsWithBassOnString(chords, GuitarString.Fifth);
+        const harmonicLine = new GuitarHarmonicLine(GuitarString.Fifth, chords);
+
+        const renderedTab = Tab.render(harmonicLine.toTab());
 
         const expectedTab = `e|-------------|
 B|-5-6-8-10-12-|
@@ -332,7 +337,9 @@ E|-------------|`;
       });
 
       test('On fourth string', () => {
-        const renderedTab = tabChordsWithBassOnString(chords, GuitarString.Fourth);
+        const harmonicLine = new GuitarHarmonicLine(GuitarString.Fourth, chords);
+
+        const renderedTab = Tab.render(harmonicLine.toTab());
 
         const expectedTab = `e|-12-1-3-5-7-|
 B|-12-1-3-5-6-|
@@ -346,14 +353,16 @@ E|------------|`;
     });
 
     describe('Drop 3 chords', () => {
-      let chords: Chord[] = [];
+      let chords: Chord[];
 
       beforeEach(() => {
         chords = [cMaj7, dMin7, aMin7, fMaj7, g7].map((c) => c.drop3());
       });
 
       test('On sixth string', () => {
-        const renderedTab = tabChordsWithBassOnString(chords, GuitarString.Sixth);
+        const harmonicLine = new GuitarHarmonicLine(GuitarString.Sixth, chords);
+
+        const renderedTab = Tab.render(harmonicLine.toTab());
 
         const expectedTab = `e|------------|
 B|-8-10-5-1-3-|
@@ -366,7 +375,9 @@ E|-8-10-5-1-3-|`;
       });
 
       test('On fifth string', () => {
-        const renderedTab = tabChordsWithBassOnString(chords, GuitarString.Fifth);
+        const harmonicLine = new GuitarHarmonicLine(GuitarString.Fifth, chords);
+
+        const renderedTab = Tab.render(harmonicLine.toTab());
 
         const expectedTab = `e|-3-5-0--8-10-|
 B|-5-6-1-10-12-|
@@ -379,10 +390,4 @@ E|-------------|`;
       });
     });
   });
-
-  const tabChordsWithBassOnString = (chords: Chord[], bassString: GuitarString) => {
-    const guitarChords = chords.map((c) => GuitarChord.fromBassString(c, bassString));
-    const matrix = new Tab(...guitarChords.map((c) => c.toTab()));
-    return Tab.render(matrix);
-  };
 });
