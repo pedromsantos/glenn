@@ -7,6 +7,7 @@ import { Clef } from './Domain/Clef';
 import { CompoundTimeSignature, Duration, SimpleTimeSignature } from './Domain/Duration';
 import {
   GuitarChord,
+  GuitarHarmonicLine,
   GuitarMelodicLine,
   GuitarString,
   Position,
@@ -41,6 +42,7 @@ export {
   Drop3Chord,
   Duration,
   GuitarChord,
+  GuitarHarmonicLine,
   GuitarMelodicLine,
   GuitarString,
   Interval,
