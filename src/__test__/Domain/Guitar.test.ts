@@ -219,6 +219,18 @@ describe('Guitar String should', () => {
       expect(first.fretFor(Pitch.EFlat)).toStrictEqual(new Fret(first, 0));
     });
   });
+
+  function GuitarTunningStrings(tunning: GuitarTuning) {
+    const guitarStrings = new GuitarStrings().toTunning(tunning);
+
+    const sixth = guitarStrings.guitarString(6);
+    const fifth = guitarStrings.guitarString(5);
+    const fourth = guitarStrings.guitarString(4);
+    const third = guitarStrings.guitarString(3);
+    const second = guitarStrings.guitarString(2);
+    const first = guitarStrings.guitarString(1);
+    return { sixth, fifth, fourth, third, second, first };
+  }
 });
 
 describe('Position should', () => {
@@ -238,14 +250,3 @@ describe('Position should', () => {
     );
   });
 });
-function GuitarTunningStrings(tunning: GuitarTuning) {
-  const guitarStrings = new GuitarStrings().toTunning(tunning);
-
-  const sixth = guitarStrings.guitarString(6);
-  const fifth = guitarStrings.guitarString(5);
-  const fourth = guitarStrings.guitarString(4);
-  const third = guitarStrings.guitarString(3);
-  const second = guitarStrings.guitarString(2);
-  const first = guitarStrings.guitarString(1);
-  return { sixth, fifth, fourth, third, second, first };
-}
