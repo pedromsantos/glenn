@@ -669,7 +669,7 @@ export class GuitarHarmonicLine implements Iterable<GuitarChord> {
     this.chords.push(GuitarChord.fromBassString(chord, this.bassString));
   }
 
-  toTab(): Tab {
+  toTab() {
     const column = [...this.chords].map((c) => c.toTab());
     return new Tab(...column);
   }
