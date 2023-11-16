@@ -43,15 +43,15 @@ const c = Pitch.C;
 
 console.log("Pitch detail of 'C':\n", c);
 console.log("\n");
-console.log("Pitch detail of 'c.sharp()':\n", c.sharp().To);
+console.log("Pitch summary of 'c.sharp()':\n", c.sharp().To);
 console.log("\n");
-console.log("Pitch detail of 'c.flat()':\n", c.flat().To);
+console.log("Pitch summary of 'c.flat()':\n", c.flat().To);
 console.log("\n");
 console.log("Absulute distance from 'C' to 'D':", c.absoluteDistance(Pitch.D));
 console.log("\n");
 console.log("Interval from 'C' to 'F':\n", c.intervalTo(Pitch.F).To);
 console.log("\n");
-console.log("Transpose 'C' by a 'minor third':\n", c.transpose(Interval.MinorThird).To);q
+console.log("Transpose 'C' by a 'minor third':\n", c.transpose(Interval.MinorThird).To);
 ```
 
 #### Pitch Output
@@ -99,7 +99,7 @@ console.log("Interval name:", interval.Name);
 console.log("\n");
 console.log("Invert 'minor third' interval:\n", interval.invert());
 console.log("\n");
-console.log("'minor seventh' interval is larger than 'minor third' interval:\n", otherInterval.isLargarThan(interval));
+console.log("'m7' interval is larger than 'm3' interval:\n", otherInterval.isLargarThan(interval));
 ```
 
 #### Intervals Output
