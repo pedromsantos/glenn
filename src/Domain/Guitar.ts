@@ -1,6 +1,29 @@
 import { Chord } from './Chord';
 import { MelodicLine, MelodicLineDirection, Pitch } from './Pitch';
 
+export class TabColumn {
+  private readonly maxRowLength: number = 0;
+
+  private constructor(private readonly rows: string[]) {
+    this.maxRowLength = Math.max(...rows.map((r) => r.length));
+  }
+
+  public static readonly Start: TabColumn = new TabColumn(Array<string>(6).fill('|-'));
+  public static readonly Bar: TabColumn = new TabColumn(Array<string>(6).fill('-|-'));
+  public static readonly End: TabColumn = new TabColumn(Array<string>(6).fill('-|'));
+  public static readonly Rest: TabColumn = new TabColumn(Array<string>(6).fill(`-`));
+  public static readonly Separator: TabColumn = new TabColumn(Array<string>(6).fill(`-`));
+  public static readonly StandardTunning: TabColumn = new TabColumn(['e', 'B', 'G', 'D', 'A', 'E']);
+
+  render(): string[] {
+    return this.rows.map((r) => (r.length < this.maxRowLength ? `-${r}` : r));
+  }
+
+  static fromFrets(frets: Fret[]): TabColumn {
+    return new TabColumn(frets.map((f) => f.toString()));
+  }
+}
+
 export class Fret {
   constructor(
     protected readonly string: GuitarString,
@@ -678,29 +701,6 @@ export class GuitarHarmonicLine implements Iterable<GuitarChord> {
     for (const fret of this.chords) {
       yield fret;
     }
-  }
-}
-
-export class TabColumn {
-  private readonly maxRowLength: number = 0;
-
-  private constructor(private readonly rows: string[]) {
-    this.maxRowLength = Math.max(...rows.map((r) => r.length));
-  }
-
-  public static readonly Start: TabColumn = new TabColumn(Array<string>(6).fill('|-'));
-  public static readonly Bar: TabColumn = new TabColumn(Array<string>(6).fill('-|-'));
-  public static readonly End: TabColumn = new TabColumn(Array<string>(6).fill('-|'));
-  public static readonly Rest: TabColumn = new TabColumn(Array<string>(6).fill(`-`));
-  public static readonly Separator: TabColumn = new TabColumn(Array<string>(6).fill(`-`));
-  public static readonly StandardTunning: TabColumn = new TabColumn(['e', 'B', 'G', 'D', 'A', 'E']);
-
-  render(): string[] {
-    return this.rows.map((r) => (r.length < this.maxRowLength ? `-${r}` : r));
-  }
-
-  static fromFrets(frets: Fret[]): TabColumn {
-    return new TabColumn(frets.map((f) => f.toString()));
   }
 }
 
