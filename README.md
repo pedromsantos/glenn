@@ -54,6 +54,41 @@ console.log("\n");
 console.log("Transpose 'C' by a 'minor third':\n", c.transpose(Interval.MinorThird).To);q
 ```
 
+#### Pitch Output
+
+```bash
+Pitch detail of 'C':
+ _Pitch {
+  name: 'C',
+  value: 0,
+  accidental: 1,
+  sharp: [Function (anonymous)],
+  flat: [Function (anonymous)],
+  natural: [Function (anonymous)],
+  intervals: [Function (anonymous)],
+  PITCHES: 12
+}
+
+Pitch detail of 'c.sharp()':
+ { name: 'C#', value: 1 }
+
+Pitch detail of 'c.flat()':
+ { name: 'B', value: 11 }
+
+Absulute distance from 'C' to 'D': 2
+
+Interval from 'C' to 'F':
+ {
+  name: 'Perfect Fourth',
+  abreviature: 'P4',
+  distance: 5,
+  quality: 'Perfect'
+}
+
+Transpose 'C' by a 'minor third':
+ { name: 'Eb', value: 3 }
+```
+
 ### Working with intervals
 
 ```TypeScript
@@ -67,6 +102,24 @@ console.log("\n");
 console.log("'minor seventh' interval is larger than 'minor third' interval:\n", otherInterval.isLargarThan(interval));
 ```
 
+#### Intervals Output
+
+```bash
+Interval name: Minor Third
+
+Invert 'minor third' interval:
+ _Interval {
+  name: 'Major Sixth',
+  abreviature: 'M6',
+  distance: 9,
+  quality: _IntervalQuality { name: 'Major' },
+  invert: [Function (anonymous)],
+  raiseOctave: [Function (anonymous)]
+}
+
+'minor seventh' interval is larger than 'minor third' interval: true
+```
+
 ### Working with keys
 
 ```TypeScript
@@ -77,6 +130,30 @@ console.log("\n");
 console.log("Major keys:", Key.majorKeys.map((k) => k.Abbreviation));
 console.log("\n");
 console.log("Minor keys: ", Key.minorKeys.map((k) => k.Abbreviation));
+```
+
+#### Keys Output
+
+```bash
+Key notes: [
+  'C', 'D', 'E',
+  'F', 'G', 'A',
+  'B'
+]
+
+Major keys: [
+  'C', 'Db', 'D',  'Eb',
+  'E', 'F',  'F#', 'Gb',
+  'G', 'Ab', 'A',  'Bb',
+  'B'
+]
+
+Minor keys:  [
+  'Cm',  'C#m', 'Dm',
+  'Ebm', 'Em',  'Fm',
+  'F#m', 'Gm',  'G#m',
+  'Am',  'Bbm', 'Bm'
+]
 ```
 
 ### Working with scales
@@ -105,6 +182,37 @@ console.log("Chord for scale degree I: ", triad.Name);
 console.log("Chord for scale degree II: ", seventhChord.Name);
 ```
 
+#### Scales Output
+
+```bash
+Scale pitches: [
+  'C', 'D', 'E',
+  'F', 'G', 'A',
+  'B'
+]
+
+Scale pitches: [
+  'C', 'D', 'E',
+  'F', 'G', 'A',
+  'B'
+]
+
+Scale melodic line: [
+  'C', 'D', 'E',
+  'F', 'G', 'A',
+  'B'
+]
+
+Scale descending melodic line: [
+  'C', 'D', 'E',
+  'F', 'G', 'A',
+  'B'
+]
+
+Chord for scale degree I: CMajor
+Chord for scale degree II: DMinor 7
+```
+
 ### Working with chords
 
 ```TypeScript
@@ -127,6 +235,21 @@ chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
 console.log("Chord ", Array.from(chord).map((p: Pitch) => p.Name));
 console.log("Chord drop 2", Array.from(chord.drop2()).map((p: Pitch) => p.Name));
 console.log("Chord drop 3", Array.from(chord.drop3()).map((p: Pitch) => p.Name));
+```
+
+#### Chords Output
+
+```bash
+Chord name: CMajor
+Pich for chord root: C
+Chord pitches: [ 'C', 'E', 'G' ]
+Chord bass pitch: C
+Chord lead pitch: G
+Chord no fifth: [ 'C', 'E' ]
+Chord inverted: [ 'E', 'G', 'C' ]
+Chord: [ 'C', 'E', 'G', 'B' ]
+Chord drop 2: [ 'C', 'G', 'B', 'E' ]
+Chord drop 3: [ 'C', 'E', 'G', 'B' ]
 ```
 
 ### Working with guitar tab
@@ -163,4 +286,52 @@ const harmonicLine = new GuitarHarmonicLine(GuitarString.Sixth, chords);
 const chordsTab = Tab.render(harmonicLine.toTab());
 console.log("Chords as tab:\n", chordsTab);
 console.log("\n");
+```
+
+#### Guitar Tab Output
+
+```bash
+Empty tab:
+e|--|
+B|--|
+G|--|
+D|--|
+A|--|
+E|--|
+
+
+Guitar melodic line (C position):
+e|---------------|
+B|---------------|
+G|-----------2-4-|
+D|-----2-3-5-----|
+A|-3-5-----------|
+E|---------------|
+
+
+Guitar melodic line (Open position ):
+e|---------------|
+B|---------------|
+G|---------0-2-4-|
+D|---0-2-3-------|
+A|-3-------------|
+E|---------------|
+
+
+Chord as tab:
+e|-0-|
+B|-1-|
+G|-0-|
+D|-2-|
+A|-3-|
+E|-0-|
+
+
+Chords as tab:
+e|-------------|
+B|-------------|
+G|--9-10-0-2-4-|
+D|--9-10-0-2-3-|
+A|-10-12-2-3-5-|
+E|--8-10-0-1-3-|
 ```
