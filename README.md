@@ -56,7 +56,7 @@ console.log("Transpose 'C' by a 'minor third':\n", c.transpose(Interval.MinorThi
 
 #### Pitch Output
 
-```bash
+```text
 Pitch detail of 'C':
  _Pitch {
   name: 'C',
@@ -104,7 +104,7 @@ console.log("'minor seventh' interval is larger than 'minor third' interval:\n",
 
 #### Intervals Output
 
-```bash
+```text
 Interval name: Minor Third
 
 Invert 'minor third' interval:
@@ -134,7 +134,7 @@ console.log("Minor keys: ", Key.minorKeys.map((k) => k.Abbreviation));
 
 #### Keys Output
 
-```bash
+```text
 Key notes: [
   'C', 'D', 'E',
   'F', 'G', 'A',
@@ -184,7 +184,7 @@ console.log("Chord for scale degree II: ", seventhChord.Name);
 
 #### Scales Output
 
-```bash
+```text
 Scale pitches: [
   'C', 'D', 'E',
   'F', 'G', 'A',
@@ -239,7 +239,7 @@ console.log("Chord drop 3", Array.from(chord.drop3()).map((p: Pitch) => p.Name))
 
 #### Chords Output
 
-```bash
+```text
 Chord name: CMajor
 Pich for chord root: C
 Chord pitches: [ 'C', 'E', 'G' ]
@@ -290,7 +290,7 @@ console.log("\n");
 
 #### Guitar Tab Output
 
-```bash
+```text
 Empty tab:
 e|--|
 B|--|
