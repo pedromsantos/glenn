@@ -21,6 +21,22 @@ export interface CounterPointParts {
   cantusFirmusHarmony: CounterPointHarmony;
 }
 
+export const createCounterpointParts = (
+  counterpoint: MelodicPhrase,
+  cantusFirmus: MelodicPhrase,
+  harmony: ScaleDegree[],
+  voice: Voice = Voice.MezzoSoprano
+): CounterPointParts => {
+  return {
+    counterPoint: {
+      phrase: counterpoint,
+      voice: voice,
+    },
+    cantusFirmus: cantusFirmus,
+    cantusFirmusHarmony: new CounterPointHarmony(harmony),
+  };
+};
+
 export class CounterPointHarmony implements Iterable<ScaleDegree> {
   constructor(private readonly harmony: ScaleDegree[]) {}
 
