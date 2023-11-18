@@ -1,3 +1,5 @@
+import { ClefPrimitives } from 'src/primitives/Clef';
+
 import { Octave } from './Note';
 import { Pitch } from './Pitch';
 
@@ -12,9 +14,9 @@ export const enum ClefLine {
 }
 
 export enum ClefType {
-  G,
-  F,
-  C,
+  G = 'G',
+  F = 'F',
+  C = 'C',
 }
 
 export class Clef {
@@ -39,6 +41,15 @@ export class Clef {
 
   get Line() {
     return this.line.valueOf();
+  }
+
+  get To(): ClefPrimitives {
+    return {
+      pitch: this.pitch.To,
+      octave: this.octave.To,
+      line: this.line,
+      type: this.type,
+    };
   }
 
   public static Treble: Clef = new Clef(Pitch.G, Octave.C4, ClefLine.Second, ClefType.G);
