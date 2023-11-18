@@ -3,3 +3,7 @@ export type DurationPrimitives = {
   value: number;
   fraction: string;
 };
+
+export interface TimeSignaturePrimitives {
+  signature: string;
+}

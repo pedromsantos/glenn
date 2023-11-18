@@ -1,4 +1,4 @@
-import { DurationPrimitives } from 'src/primitives/Duration';
+import { DurationPrimitives, TimeSignaturePrimitives } from 'src/primitives/Duration';
 
 export abstract class TimeSignature {
   private bpm: BeatsPerMinute = new BeatsPerMinute(60, Duration.Quarter);
@@ -46,6 +46,10 @@ export abstract class TimeSignature {
   }
 
   abstract toString(): string;
+
+  get To(): TimeSignaturePrimitives {
+    return { signature: this.toString() };
+  }
 }
 
 export class SimpleTimeSignature extends TimeSignature {

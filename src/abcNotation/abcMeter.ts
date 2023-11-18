@@ -1,9 +1,9 @@
-import { TimeSignature } from '../Domain/Duration';
+import { TimeSignaturePrimitives } from 'src/primitives/Duration';
 
 export class AbcMeter {
-  constructor(private readonly timeSignature: TimeSignature) {}
+  constructor(private readonly timeSignature: TimeSignaturePrimitives) {}
 
   toString() {
-    return `M:${this.timeSignature.toString()}`;
+    return `M:${this.timeSignature.signature}`;
   }
 }
