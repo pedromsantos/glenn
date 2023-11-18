@@ -413,9 +413,10 @@ describe('C Scales', () => {
 });
 
 describe('Triad harmonizer should', () => {
+  const scale = ScalePattern.Ionian.createScale(Pitch.C);
+  const harmonizer = new TriadHarmonizer(scale);
+
   test('Harmonize I degree of Ionian mode as a triad', () => {
-    const scale = ScalePattern.Ionian.createScale(Pitch.C);
-    const harmonizer = new TriadHarmonizer(scale);
     const chord = harmonizer.chordFor(ScaleDegree.I);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Major);
@@ -423,8 +424,6 @@ describe('Triad harmonizer should', () => {
   });
 
   test('Harmonize II degree of Ionian mode as a triad', () => {
-    const scale = ScalePattern.Ionian.createScale(Pitch.C);
-    const harmonizer = new TriadHarmonizer(scale);
     const chord = harmonizer.chordFor(ScaleDegree.II);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Minor);
@@ -434,8 +433,6 @@ describe('Triad harmonizer should', () => {
   });
 
   test('Harmonize III degree of Ionian mode as a triad', () => {
-    const scale = ScalePattern.Ionian.createScale(Pitch.C);
-    const harmonizer = new TriadHarmonizer(scale);
     const chord = harmonizer.chordFor(ScaleDegree.III);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Minor);
@@ -445,8 +442,6 @@ describe('Triad harmonizer should', () => {
   });
 
   test('Harmonize IV degree of Ionian mode as a triad', () => {
-    const scale = ScalePattern.Ionian.createScale(Pitch.C);
-    const harmonizer = new TriadHarmonizer(scale);
     const chord = harmonizer.chordFor(ScaleDegree.IV);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Major);
@@ -456,8 +451,6 @@ describe('Triad harmonizer should', () => {
   });
 
   test('Harmonize V degree of Ionian mode as a triad', () => {
-    const scale = ScalePattern.Ionian.createScale(Pitch.C);
-    const harmonizer = new TriadHarmonizer(scale);
     const chord = harmonizer.chordFor(ScaleDegree.V);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Major);
@@ -467,8 +460,6 @@ describe('Triad harmonizer should', () => {
   });
 
   test('Harmonize VI degree of Ionian mode as a triad', () => {
-    const scale = ScalePattern.Ionian.createScale(Pitch.C);
-    const harmonizer = new TriadHarmonizer(scale);
     const chord = harmonizer.chordFor(ScaleDegree.VI);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Minor);
@@ -478,8 +469,6 @@ describe('Triad harmonizer should', () => {
   });
 
   test('Harmonize VII degree of Ionian mode as a triad', () => {
-    const scale = ScalePattern.Ionian.createScale(Pitch.C);
-    const harmonizer = new TriadHarmonizer(scale);
     const chord = harmonizer.chordFor(ScaleDegree.VII);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Diminished);
@@ -490,9 +479,10 @@ describe('Triad harmonizer should', () => {
 });
 
 describe('Sevenths harmonizer should', () => {
+  const scale = ScalePattern.Ionian.createScale(Pitch.C);
+  const harmonizer = new SeventhHarmonizer(scale);
+
   test('Harmonize I degree of Ionian mode as a seventh chord', () => {
-    const scale = ScalePattern.Ionian.createScale(Pitch.C);
-    const harmonizer = new SeventhHarmonizer(scale);
     const chord = harmonizer.chordFor(ScaleDegree.I);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Major7);
@@ -500,8 +490,6 @@ describe('Sevenths harmonizer should', () => {
   });
 
   test('Harmonize II degree of Ionian mode as a seventh chord', () => {
-    const scale = ScalePattern.Ionian.createScale(Pitch.C);
-    const harmonizer = new SeventhHarmonizer(scale);
     const chord = harmonizer.chordFor(ScaleDegree.II);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Minor7);
@@ -511,8 +499,6 @@ describe('Sevenths harmonizer should', () => {
   });
 
   test('Harmonize III degree of Ionian mode as a seventh chord', () => {
-    const scale = ScalePattern.Ionian.createScale(Pitch.C);
-    const harmonizer = new SeventhHarmonizer(scale);
     const chord = harmonizer.chordFor(ScaleDegree.III);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Minor7);
@@ -522,8 +508,6 @@ describe('Sevenths harmonizer should', () => {
   });
 
   test('Harmonize IV degree of Ionian mode as a seventh chord', () => {
-    const scale = ScalePattern.Ionian.createScale(Pitch.C);
-    const harmonizer = new SeventhHarmonizer(scale);
     const chord = harmonizer.chordFor(ScaleDegree.IV);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Major7);
@@ -533,8 +517,6 @@ describe('Sevenths harmonizer should', () => {
   });
 
   test('Harmonize V degree of Ionian mode as a seventh chord', () => {
-    const scale = ScalePattern.Ionian.createScale(Pitch.C);
-    const harmonizer = new SeventhHarmonizer(scale);
     const chord = harmonizer.chordFor(ScaleDegree.V);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Dominant7);
@@ -544,8 +526,6 @@ describe('Sevenths harmonizer should', () => {
   });
 
   test('Harmonize VI degree of Ionian mode as a seventh chord', () => {
-    const scale = ScalePattern.Ionian.createScale(Pitch.C);
-    const harmonizer = new SeventhHarmonizer(scale);
     const chord = harmonizer.chordFor(ScaleDegree.VI);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Minor7);
@@ -555,8 +535,6 @@ describe('Sevenths harmonizer should', () => {
   });
 
   test('Harmonize VII degree of Ionian mode as a seventh chord', () => {
-    const scale = ScalePattern.Ionian.createScale(Pitch.C);
-    const harmonizer = new SeventhHarmonizer(scale);
     const chord = harmonizer.chordFor(ScaleDegree.VII);
 
     expect(chord.Pattern).toStrictEqual(ChordPattern.Minor7b5);
