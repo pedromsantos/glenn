@@ -1,9 +1,9 @@
-import { Key } from '../Domain/Key';
+import { KeyPrimitives } from 'src/primitives/Key';
 
 export class AbcKey {
-  constructor(private readonly key: Key) {}
+  constructor(private readonly key: KeyPrimitives) {}
 
   toString() {
-    return `K:${this.key.Abbreviation}`;
+    return `K:${this.key.abbreviation}`;
   }
 }

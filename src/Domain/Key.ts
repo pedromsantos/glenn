@@ -1,8 +1,10 @@
+import { KeyPrimitives } from 'src/primitives/Key';
+
 import { Pitch } from './Pitch';
 
 enum KeyType {
-  Major,
-  Minor,
+  Major = 'M',
+  Minor = 'm',
 }
 
 export class Key implements Iterable<Pitch> {
@@ -10,7 +12,7 @@ export class Key implements Iterable<Pitch> {
 
   private constructor(
     private readonly root: Pitch,
-    private readonly accidentals: number,
+    private readonly accidentals: -6 | -5 | -4 | -3 | -2 | -1 | 0 | 1 | 2 | 3 | 4 | 5 | 6,
     private readonly type: KeyType
   ) {
     Key.all.push(this);
@@ -77,6 +79,15 @@ export class Key implements Iterable<Pitch> {
 
   public static get keys(): Key[] {
     return Key.all;
+  }
+
+  public get To(): KeyPrimitives {
+    return {
+      root: this.root.To,
+      accidentals: this.accidentals,
+      abbreviation: this.Abbreviation,
+      type: this.type,
+    };
   }
 
   *[Symbol.iterator](): Iterator<Pitch> {
