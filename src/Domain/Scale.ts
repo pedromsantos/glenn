@@ -1,8 +1,10 @@
+import { ScalePrimitives } from 'src/primitives/Scale';
+
 import { Chord, ChordFunction, ChordPattern, ChordPitch, ChordPitches, ClosedChord } from './Chord';
 import { Duration } from './Duration';
 import { Interval } from './Interval';
 import { Octave } from './Note';
-import { MelodicLine, MelodicLineDirection, Pitch, PitchPrimitives } from './Pitch';
+import { MelodicLine, MelodicLineDirection, Pitch } from './Pitch';
 
 export const enum ScaleDegree {
   I,
@@ -310,12 +312,6 @@ export class ScalePattern {
     ScalePattern.Locrian,
   ];
 }
-
-export type ScalePrimitives = {
-  pattern: string;
-  root: PitchPrimitives;
-  pitches: PitchPrimitives[];
-};
 
 export class Scale implements Iterable<Pitch> {
   constructor(

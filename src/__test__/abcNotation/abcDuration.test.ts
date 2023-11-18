@@ -12,7 +12,7 @@ describe('abc Duration should', () => {
     [Duration.ThirtySecond, 'L:1/32'],
     [Duration.SixtyFourth, 'L:1/64'],
   ])('convert quarter note duration to abc notation', (duration: Duration, expected: string) => {
-    const abc_duration = new AbcDuration(duration);
+    const abc_duration = new AbcDuration(duration.To);
 
     expect(abc_duration.toString()).toBe(expected);
   });

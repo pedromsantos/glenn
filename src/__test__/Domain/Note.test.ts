@@ -251,8 +251,9 @@ describe('Note', () => {
     const notePrimitive = note.To;
 
     expect(notePrimitive).toStrictEqual({
-      duration: { duration: 0.25, name: 'Quarter' },
-      pitch: { name: 'C', value: 0 },
+      duration: { value: 0.25, name: 'Quarter', fraction: '1/4' },
+      pitch: { name: 'C', naturalName: 'C', value: 0, accidental: 0 },
+      octave: { midi: 12, name: 'Contra', value: -8 },
     });
   });
 
@@ -362,8 +363,9 @@ describe('Melodic phrase', () => {
     expect(phrasePrimitive).toStrictEqual({
       notes: [
         {
-          duration: { duration: 0.25, name: 'Quarter' },
-          pitch: { name: 'C', value: 0 },
+          duration: { value: 0.25, name: 'Quarter', fraction: '1/4' },
+          pitch: { name: 'C', value: 0, naturalName: 'C', accidental: 0 },
+          octave: { midi: 12, name: 'Contra', value: -8 },
         },
       ],
     });

@@ -22,16 +22,16 @@ export class AbcMeasure {
 
       if (notes.length > 1) {
         const chord = playable as Chord;
-        return new AbcChord(chord, this.defaultDuration).toString();
+        if (chord) {
+          return new AbcChord(chord.To, this.defaultDuration.To).toString();
+        }
       }
 
       if (notes[0]) {
-        return new AbcNote(notes[0], this.defaultDuration).toString();
+        return new AbcNote(notes[0].To, this.defaultDuration.To).toString();
       }
-
-      return new AbcRest(new Rest(playable.Duration), this.defaultDuration).toString();
     }
 
-    return new AbcRest(new Rest(playable.Duration), this.defaultDuration).toString();
+    return new AbcRest(new Rest(playable.Duration).To, this.defaultDuration.To).toString();
   }
 }

@@ -1,13 +1,14 @@
-import { Chord } from './Chord';
-import { Duration, DurationPrimitives } from './Duration';
-import { Interval, IntervalDirection } from './Interval';
-import { Pitch, PitchPrimitives } from './Pitch';
+import {
+  MelodicPhrasePrimitives,
+  NotePrimitives,
+  OctavePrimitives,
+  RestPrimitives,
+} from 'src/primitives/Note';
 
-export type OctavePrimitives = {
-  name: string;
-  value: number;
-  midi: number;
-};
+import { Chord } from './Chord';
+import { Duration } from './Duration';
+import { Interval, IntervalDirection } from './Interval';
+import { Pitch } from './Pitch';
 
 export class Octave {
   private static readonly all: Octave[] = [];
@@ -62,11 +63,6 @@ export interface Playable {
   get Notes(): Iterable<Note>;
   get HasPitch(): boolean;
 }
-
-export type NotePrimitives = {
-  pitch: PitchPrimitives;
-  duration: DurationPrimitives;
-};
 
 export class Note implements Playable {
   constructor(
@@ -157,6 +153,7 @@ export class Note implements Playable {
     return {
       pitch: this.pitch.To,
       duration: this.duration.To,
+      octave: this.octave.To,
     };
   }
 }
@@ -199,11 +196,13 @@ export class Rest implements Playable {
   get tick() {
     return this.Duration.tick;
   }
-}
 
-export type MelodicPhrasePrimitives = {
-  notes: NotePrimitives[];
-};
+  get To(): RestPrimitives {
+    return {
+      duration: this.duration.To,
+    };
+  }
+}
 
 export class MelodicPhrase implements Iterable<Note> {
   private readonly phrase: Note[] = [];

@@ -1,15 +1,12 @@
+import { PitchPrimitives } from 'src/primitives/Pitch';
+
 import { Interval } from './Interval';
 
 export enum Accidental {
-  Flat,
-  Natural,
-  Sharp,
+  Flat = -1,
+  Natural = 0,
+  Sharp = 1,
 }
-
-export type PitchPrimitives = {
-  name: string;
-  value: number;
-};
 
 export class Pitch {
   PITCHES = 12;
@@ -56,8 +53,10 @@ export class Pitch {
 
   get To(): PitchPrimitives {
     return {
-      name: this.Name,
+      name: this.name,
+      naturalName: this.natural().name,
       value: this.value,
+      accidental: this.accidental,
     };
   }
 

@@ -1,9 +1,4 @@
-export type IntervalPrimitives = {
-  name: string;
-  abreviature: string;
-  distance: number;
-  quality: string;
-};
+import { IntervalPrimitives } from 'src/primitives/Interval';
 
 export class IntervalQuality {
   private static readonly all: IntervalQuality[] = [];

@@ -1,3 +1,5 @@
+import { DurationPrimitives } from 'src/primitives/Duration';
+
 export abstract class TimeSignature {
   private bpm: BeatsPerMinute = new BeatsPerMinute(60, Duration.Quarter);
 
@@ -93,11 +95,6 @@ export class CompoundTimeSignature extends TimeSignature {
     }`;
   }
 }
-
-export type DurationPrimitives = {
-  name: string;
-  duration: number;
-};
 
 enum Durations {
   Double = 2.0 / 1.0,
@@ -309,7 +306,8 @@ export class Duration {
   get To(): DurationPrimitives {
     return {
       name: this.name,
-      duration: this.duration,
+      value: this.duration,
+      fraction: this.stringRepresentation,
     };
   }
 

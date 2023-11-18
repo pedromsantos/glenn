@@ -1,13 +1,10 @@
+import { ChordPitchPrimitives, ChordPrimitives } from 'src/primitives/Chord';
+
 import { Duration } from './Duration';
 import ensure from './Ensure';
 import { Interval } from './Interval';
 import { Note, Octave, Playable } from './Note';
-import { Pitch, PitchPrimitives } from './Pitch';
-
-export type ChordPitchPrimitives = {
-  pitch: PitchPrimitives;
-  function: string;
-};
+import { Pitch } from './Pitch';
 
 export class ChordPitch {
   constructor(
@@ -144,17 +141,8 @@ export interface Chord extends Iterable<Pitch>, Playable {
   drop2(): Chord;
   drop3(): Chord;
   closed(): Chord;
+  get To(): Readonly<ChordPrimitives>;
 }
-
-export type ChordPrimitives = {
-  name: string;
-  root: PitchPrimitives;
-  pitches: ChordPitchPrimitives[];
-  pattern: string;
-  bass: PitchPrimitives;
-  lead: PitchPrimitives;
-  duration: number;
-};
 
 class BaseChord implements Chord, Iterable<Pitch> {
   protected readonly pattern: ChordPattern;
@@ -244,12 +232,14 @@ class BaseChord implements Chord, Iterable<Pitch> {
   get To(): Readonly<ChordPrimitives> {
     return {
       name: this.Name,
+      abbreviation: this.Abbreviation,
       root: this.Root.To,
       pitches: this._pitches.To.map((p) => p),
       pattern: this.pattern.To,
       bass: this.Bass.To,
       lead: this.Lead.To,
-      duration: this.duration.value,
+      duration: this.duration.To,
+      octave: this.octave.To,
     };
   }
 
@@ -320,7 +310,7 @@ class BaseChord implements Chord, Iterable<Pitch> {
     if (root === undefined || pattern === undefined) {
       throw new TypeError('Cannot create instance from state');
     }
-    return new BaseChord(root, pattern, Duration.From(state.duration));
+    return new BaseChord(root, pattern, Duration.From(state.duration.value));
   }
 }
 

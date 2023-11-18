@@ -1,57 +1,57 @@
-import { Duration } from '../Domain/Duration';
-import { Note, Octave, Rest } from '../Domain/Note';
-import { Accidental, Pitch } from '../Domain/Pitch';
+import { DurationPrimitives } from 'src/primitives/Duration';
+import { NotePrimitives, RestPrimitives } from 'src/primitives/Note';
+import { PitchPrimitives } from 'src/primitives/Pitch';
 
 export class AbcPitch {
-  constructor(private readonly pitch: Pitch) {}
+  constructor(private readonly pitch: PitchPrimitives) {}
 
   toString() {
-    return this.toAccidental(this.pitch.natural().Name);
+    return this.toAccidental();
   }
 
-  private toAccidental(pitch: string) {
-    if (this.pitch.Accidental === Accidental.Sharp) {
-      return `^${pitch}`;
+  private toAccidental() {
+    if (this.pitch.accidental === 1) {
+      return `^${this.pitch.naturalName}`;
     }
-    if (this.pitch.Accidental === Accidental.Flat) {
-      return `_${pitch}`;
+    if (this.pitch.accidental === -1) {
+      return `_${this.pitch.naturalName}`;
     }
 
-    return pitch;
+    return this.pitch.naturalName;
   }
 }
 
 export class AbcNote {
-  octaveTransformations: Map<string, string> = new Map<string, string>([
-    [Octave.C8.Name, "''''"],
-    [Octave.C7.Name, "'''"],
-    [Octave.C6.Name, "''"],
-    [Octave.C3.Name, ','],
-    [Octave.C2.Name, ',,'],
-    [Octave.C1.Name, ',,,'],
-    [Octave.C0.Name, ',,,,'],
+  octaveTransformations: Map<number, string> = new Map<number, string>([
+    [16, "''''"],
+    [8, "'''"],
+    [4, "''"],
+    [-2, ','],
+    [-4, ',,'],
+    [-8, ',,,'],
+    [-16, ',,,,'],
   ]);
 
   constructor(
-    private readonly note: Note,
-    private readonly defaultDuration: Duration
+    private readonly note: NotePrimitives,
+    private readonly defaultDuration: DurationPrimitives
   ) {}
 
   toString() {
     return (
-      this.toOctave(new AbcPitch(this.note.Pitches.pop()!).toString()) +
-      new AbcDuration(this.note.Duration, this.defaultDuration).toString()
+      this.toOctave(new AbcPitch(this.note.pitch).toString()) +
+      new AbcDuration(this.note.duration, this.defaultDuration).toString()
     );
   }
 
   private toOctave(note: string) {
-    const octaveTransformation = this.octaveTransformations.get(this.note.OctaveNames);
+    const octaveTransformation = this.octaveTransformations.get(this.note.octave.value);
 
     if (octaveTransformation) {
       return note + octaveTransformation;
     }
 
-    if (this.note.Octaves.pop() === Octave.C5) {
+    if (this.note.octave.value === 2) {
       return note.toLowerCase();
     }
 
@@ -61,25 +61,35 @@ export class AbcNote {
 
 export class AbcRest {
   constructor(
-    private readonly rest: Rest,
-    private readonly defaultDuration: Duration
+    private readonly rest: RestPrimitives,
+    private readonly defaultDuration: DurationPrimitives
   ) {}
 
   toString() {
-    return 'z' + new AbcDuration(this.rest.Duration, this.defaultDuration).toString();
+    return 'z' + new AbcDuration(this.rest.duration, this.defaultDuration).toString();
   }
 }
 
 class AbcDuration {
   constructor(
-    private readonly duration: Duration,
-    private readonly defaultDuration: Duration
+    private readonly duration: DurationPrimitives,
+    private readonly defaultDuration: DurationPrimitives
   ) {}
 
   toString() {
-    const durationMultiplier = this.defaultDuration.equivalentTo(this.duration);
     const multiplierOrDivisor = this.duration.value < this.defaultDuration.value ? '/' : '';
 
-    return multiplierOrDivisor + (durationMultiplier > 1 ? durationMultiplier.toString() : '');
+    return (
+      multiplierOrDivisor +
+      (this.equivalentDurations() > 1 ? this.equivalentDurations().toString() : '')
+    );
+  }
+
+  private equivalentDurations() {
+    if (this.defaultDuration.value > this.duration.value) {
+      return this.defaultDuration.value / this.duration.value;
+    }
+
+    return this.duration.value / this.defaultDuration.value;
   }
 }

@@ -48,12 +48,12 @@ export class AbcTune {
   private readonly body: AbcBody;
   private readonly header: AbcHeader = {
     key: new AbcKey(Key.CMajor),
-    unit_note_length: new AbcDuration(Duration.Eighth),
+    unit_note_length: new AbcDuration(Duration.Eighth.To),
     meter: new AbcMeter(new SimpleTimeSignature(4, Duration.Quarter)),
   };
 
   constructor(song: Song, unitNoteLength: Duration, referenceNumber = 1) {
-    this.header.unit_note_length = new AbcDuration(unitNoteLength);
+    this.header.unit_note_length = new AbcDuration(unitNoteLength.To);
     this.header.key = new AbcKey(song.Key);
     this.header.meter = new AbcMeter(song.TimeSignature);
     this.header.reference_number = referenceNumber;

@@ -3,7 +3,7 @@ import * as fc from 'fast-check';
 import { ChordFunction, ChordPattern, ClosedChord } from '../../Domain/Chord';
 import { Duration } from '../../Domain/Duration';
 import { Octave } from '../../Domain/Note';
-import { Pitch } from '../../Domain/Pitch';
+import { Accidental, Pitch } from '../../Domain/Pitch';
 
 describe('Major Chords should', () => {
   test('have a name', () => {
@@ -504,12 +504,14 @@ describe('Chords should', () => {
   test('not be able to create chord from invalid primitive types', () => {
     const chordPrimitives = {
       name: 'C Major',
-      root: { name: 'V', value: 0 },
+      abbreviation: 'CM',
+      root: { name: 'V', naturalName: 'V', value: 0, accidental: Accidental.Natural },
       pitches: [],
       pattern: 'Major',
-      bass: { name: 'H', value: 0 },
-      lead: { name: 'Z', value: 0 },
-      duration: 1,
+      bass: { name: 'H', naturalName: 'H', value: 0, accidental: Accidental.Natural },
+      lead: { name: 'Z', naturalName: 'Z', value: 0, accidental: Accidental.Natural },
+      duration: Duration.Quarter.To,
+      octave: Octave.C4.To,
     };
 
     expect(() => ClosedChord.From(chordPrimitives)).toThrow();

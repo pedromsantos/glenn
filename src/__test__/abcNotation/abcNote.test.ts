@@ -12,8 +12,8 @@ describe('abc Rest should', () => {
     [Duration.Quarter, 'z4'],
     [Duration.Eighth, 'z8'],
   ])('represent a whole', (relativeDuration: Duration, expected: string) => {
-    const rest = new Rest(Duration.Whole);
-    expect(new AbcRest(rest, relativeDuration).toString()).toBe(expected);
+    const rest = new Rest(Duration.Whole).To;
+    expect(new AbcRest(rest, relativeDuration.To).toString()).toBe(expected);
   });
 
   test.each<TestTuple>([
@@ -22,8 +22,8 @@ describe('abc Rest should', () => {
     [Duration.Quarter, 'z2'],
     [Duration.Eighth, 'z4'],
   ])('represent a half', (relativeDuration: Duration, expected: string) => {
-    const rest = new Rest(Duration.Half);
-    expect(new AbcRest(rest, relativeDuration).toString()).toBe(expected);
+    const rest = new Rest(Duration.Half).To;
+    expect(new AbcRest(rest, relativeDuration.To).toString()).toBe(expected);
   });
 
   test.each<TestTuple>([
@@ -33,7 +33,7 @@ describe('abc Rest should', () => {
     [Duration.Eighth, 'z2'],
   ])('represent a quarter', (relativeDuration: Duration, expected: string) => {
     const rest = new Rest(Duration.Quarter);
-    expect(new AbcRest(rest, relativeDuration).toString()).toBe(expected);
+    expect(new AbcRest(rest.To, relativeDuration.To).toString()).toBe(expected);
   });
 });
 
@@ -50,7 +50,7 @@ describe('abc Note should', () => {
       [Octave.C7, "C'''"],
     ])('represent a note with octave', (octave: Octave, expected: string) => {
       const note = new Note(Pitch.C, Duration.Whole, octave);
-      const abc_note = new AbcNote(note, Duration.Whole);
+      const abc_note = new AbcNote(note.To, Duration.Whole.To);
 
       expect(abc_note.toString()).toBe(expected);
     });
@@ -59,21 +59,21 @@ describe('abc Note should', () => {
   describe('using accidentals', () => {
     test('represent a sharp F4 note', () => {
       const note = new Note(Pitch.FSharp, Duration.Whole, Octave.C4);
-      const abc_note = new AbcNote(note, Duration.Whole);
+      const abc_note = new AbcNote(note.To, Duration.Whole.To);
 
       expect(abc_note.toString()).toBe('^F');
     });
 
     test('represent a sharp C5 note', () => {
       const note = new Note(Pitch.CSharp, Duration.Whole, Octave.C5);
-      const abc_note = new AbcNote(note, Duration.Whole);
+      const abc_note = new AbcNote(note.To, Duration.Whole.To);
 
       expect(abc_note.toString()).toBe('^c');
     });
 
     test('represent a flat E5 note', () => {
       const note = new Note(Pitch.EFlat, Duration.Whole, Octave.C5);
-      const abc_note = new AbcNote(note, Duration.Whole);
+      const abc_note = new AbcNote(note.To, Duration.Whole.To);
 
       expect(abc_note.toString()).toBe('_e');
     });
@@ -97,7 +97,7 @@ describe('abc Note should', () => {
       'relative to',
       (octave: Octave, referenceDuration: Duration, duration: Duration, expected: string) => {
         const note = new Note(Pitch.EFlat, duration, octave);
-        const abc_note = new AbcNote(note, referenceDuration);
+        const abc_note = new AbcNote(note.To, referenceDuration.To);
 
         expect(abc_note.toString()).toBe(expected);
       }

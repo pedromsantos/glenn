@@ -1,3 +1,5 @@
+import { FretPrimitives, GuitarStringPrimitives, PositionPrimitives } from 'src/primitives/Guitar';
+
 import { Chord } from './Chord';
 import { MelodicLine, MelodicLineDirection, Pitch } from './Pitch';
 
@@ -174,16 +176,6 @@ class HorizontalFrets extends Frets {
     return this.frets[this.frets.length - 1];
   }
 }
-
-export type GuitarStringPrimitives = {
-  name: string;
-  index: number;
-};
-
-export type FretPrimitives = {
-  string: GuitarStringPrimitives;
-  fret: number;
-};
 
 export class GuitarStrings implements Iterable<GuitarString> {
   constructor(private readonly guitarStrings: GuitarString[] = GuitarString.standardTunning) {}
@@ -383,12 +375,6 @@ export class GuitarTuning {
     [Pitch.D, Pitch.G, Pitch.C, Pitch.F, Pitch.A, Pitch.D].reverse()
   );
 }
-
-export type PositionPrimitives = {
-  name: string;
-  lowestFret: FretPrimitives;
-  highestFret: FretPrimitives;
-};
 
 export class Position {
   private static readonly all: Position[] = [];
