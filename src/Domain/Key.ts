@@ -1,5 +1,4 @@
-import { KeyPrimitives } from 'src/primitives/Key';
-
+import { KeyPrimitives } from '../primitives/Key';
 import { Pitch } from './Pitch';
 
 enum KeyType {

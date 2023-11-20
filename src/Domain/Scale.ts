@@ -1,5 +1,4 @@
-import { ScalePrimitives } from 'src/primitives/Scale';
-
+import { ScalePrimitives } from '../primitives/Scale';
 import { Chord, ChordFunction, ChordPattern, ChordPitch, ChordPitches, ClosedChord } from './Chord';
 import { Duration } from './Duration';
 import { Interval } from './Interval';

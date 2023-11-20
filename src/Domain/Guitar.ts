@@ -1,5 +1,4 @@
-import { FretPrimitives, GuitarStringPrimitives, PositionPrimitives } from 'src/primitives/Guitar';
-
+import { FretPrimitives, GuitarStringPrimitives, PositionPrimitives } from '../primitives/Guitar';
 import { Chord } from './Chord';
 import { MelodicLine, MelodicLineDirection, Pitch } from './Pitch';
 

@@ -1,6 +1,5 @@
-import { ChordPrimitives } from 'src/primitives/Chord';
-import { DurationPrimitives } from 'src/primitives/Duration';
-
+import { ChordPrimitives } from '../primitives/Chord';
+import { DurationPrimitives } from '../primitives/Duration';
 import { AbcNote } from './abcNote';
 
 export class AbcChord {

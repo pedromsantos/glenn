@@ -1,5 +1,4 @@
-import { PitchPrimitives } from 'src/primitives/Pitch';
-
+import { PitchPrimitives } from '../primitives/Pitch';
 import { Interval } from './Interval';
 
 export enum Accidental {

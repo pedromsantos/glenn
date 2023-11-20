@@ -1,5 +1,4 @@
-import { ClefPrimitives } from 'src/primitives/Clef';
-
+import { ClefPrimitives } from '../primitives/Clef';
 import { Octave } from './Note';
 import { Pitch } from './Pitch';
 

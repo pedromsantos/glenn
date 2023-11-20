@@ -1,6 +1,6 @@
-import { DurationPrimitives } from 'src/primitives/Duration';
-import { NotePrimitives, RestPrimitives } from 'src/primitives/Note';
-import { PitchPrimitives } from 'src/primitives/Pitch';
+import { DurationPrimitives } from '../primitives/Duration';
+import { NotePrimitives, RestPrimitives } from '../primitives/Note';
+import { PitchPrimitives } from '../primitives/Pitch';
 
 export class AbcPitch {
   constructor(private readonly pitch: PitchPrimitives) {}

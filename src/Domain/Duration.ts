@@ -1,4 +1,4 @@
-import { DurationPrimitives, TimeSignaturePrimitives } from 'src/primitives/Duration';
+import { DurationPrimitives, TimeSignaturePrimitives } from '../primitives/Duration';
 
 export abstract class TimeSignature {
   private bpm: BeatsPerMinute = new BeatsPerMinute(60, Duration.Quarter);

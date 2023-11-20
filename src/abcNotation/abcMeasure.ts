@@ -1,37 +1,32 @@
-import { Chord } from 'src/Domain/Chord';
-import { DurationPrimitives } from 'src/primitives/Duration';
-
-import { Playable, Rest } from '../Domain/Note';
-import { Measure } from '../Domain/Song';
+import { DurationPrimitives } from '../primitives/Duration';
+import { PlayablePrimitives, PlayableType } from '../primitives/Playables';
+import { MeasurePrimitives } from '../primitives/Song';
 import { AbcChord } from './abcChord';
 import { AbcNote, AbcRest } from './abcNote';
 
 export class AbcMeasure {
   constructor(
-    private readonly measure: Measure,
+    private readonly measure: MeasurePrimitives,
     private readonly defaultDuration: DurationPrimitives
   ) {}
 
   toString() {
-    return [...this.measure].map((p) => this.map(p)).join('');
+    return this.measure.playables.map((p) => this.map(p)).join('');
   }
 
-  private map(playable: Playable) {
-    if (playable.HasPitch) {
-      const notes = [...playable.Notes];
-
-      if (notes.length > 1) {
-        const chord = playable as Chord;
-        if (chord) {
-          return new AbcChord(chord.To, this.defaultDuration).toString();
-        }
-      }
-
-      if (notes[0]) {
-        return new AbcNote(notes[0].To, this.defaultDuration).toString();
-      }
+  private map(playable: PlayablePrimitives) {
+    if (playable.playableType == PlayableType.Chord && playable.chord) {
+      return new AbcChord(playable.chord, this.defaultDuration).toString();
     }
 
-    return new AbcRest(new Rest(playable.Duration).To, this.defaultDuration).toString();
+    if (playable.playableType == PlayableType.Note && playable.note) {
+      return new AbcNote(playable.note, this.defaultDuration).toString();
+    }
+
+    if (playable.rest) {
+      return new AbcRest(playable.rest, this.defaultDuration).toString();
+    }
+
+    return '';
   }
 }

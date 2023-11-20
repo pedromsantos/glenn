@@ -20,19 +20,19 @@ describe('abc Tune should', () => {
     .add(new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Whole));
 
   test('create abc notation with eighth note default duration', () => {
-    const tune = new AbcTune(song, Duration.Eighth);
+    const tune = new AbcTune(song.To, Duration.Eighth.To);
 
     expect(tune.toString()).toBe('X:1\nK:C\nM:4/4\nL:1/8\n|C2E2GzBc|[C8E8G8]|');
   });
 
   test('create abc notation tune with sixteenth note default duration', () => {
-    const tune = new AbcTune(song, Duration.Sixteenth);
+    const tune = new AbcTune(song.To, Duration.Sixteenth.To);
 
     expect(tune.toString()).toBe('X:1\nK:C\nM:4/4\nL:1/16\n|C4E4G2z2B2c2|[C16E16G16]|');
   });
 
   test('create abc notation tune with quarter note default duration', () => {
-    const tune = new AbcTune(song, Duration.Quarter);
+    const tune = new AbcTune(song.To, Duration.Quarter.To);
 
     expect(tune.toString()).toBe('X:1\nK:C\nM:4/4\nL:1/4\n|CEG/2z/2B/2c/2|[C4E4G4]|');
   });

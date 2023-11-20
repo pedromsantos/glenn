@@ -1,4 +1,4 @@
-import { IntervalPrimitives } from 'src/primitives/Interval';
+import { IntervalPrimitives } from '../primitives/Interval';
 
 export class IntervalQuality {
   private static readonly all: IntervalQuality[] = [];

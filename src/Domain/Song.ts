@@ -1,3 +1,4 @@
+import { MeasurePrimitives, SongPrimitives } from '../primitives/Song';
 import { TimeSignature } from './Duration';
 import ensure from './Ensure';
 import { Key } from './Key';
@@ -48,6 +49,13 @@ export class Measure implements Iterable<Playable> {
     for (const unit of this.playables) {
       yield unit;
     }
+  }
+
+  get To(): MeasurePrimitives {
+    return {
+      playables: [...this.playables].map((p) => p.ToPlayablePrimitives),
+      timeSignature: this.timeSignature.To,
+    };
   }
 }
 
@@ -107,5 +115,13 @@ export class Song implements Iterable<Measure> {
     for (const measure of this.measures) {
       yield measure;
     }
+  }
+
+  get To(): SongPrimitives {
+    return {
+      measures: this.measures.map((m) => m.To),
+      timeSignature: this.timeSignature.To,
+      key: this.key.To,
+    };
   }
 }

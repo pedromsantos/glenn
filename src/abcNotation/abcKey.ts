@@ -1,4 +1,4 @@
-import { KeyPrimitives } from 'src/primitives/Key';
+import { KeyPrimitives } from '../primitives/Key';
 
 export class AbcKey {
   constructor(private readonly key: KeyPrimitives) {}

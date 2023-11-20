@@ -16,7 +16,7 @@ describe('abc Measure should', () => {
       .add(new Note(Pitch.B, Duration.Eighth, Octave.C4))
       .add(new Note(Pitch.C, Duration.Eighth, Octave.C4));
 
-    const abc = new AbcMeasure(measure, Duration.Eighth.To);
+    const abc = new AbcMeasure(measure.To, Duration.Eighth.To);
 
     expect(abc.toString()).toBe('C2E2GABC');
   });
@@ -28,7 +28,7 @@ describe('abc Measure should', () => {
       .add(new Rest(Duration.Quarter))
       .add(new Rest(Duration.Quarter));
 
-    const abc = new AbcMeasure(measure, Duration.Quarter.To);
+    const abc = new AbcMeasure(measure.To, Duration.Quarter.To);
 
     expect(abc.toString()).toBe('z2zz');
   });
@@ -41,7 +41,7 @@ describe('abc Measure should', () => {
       .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
       .add(new Rest(Duration.Quarter));
 
-    const abc = new AbcMeasure(measure, Duration.Quarter.To);
+    const abc = new AbcMeasure(measure.To, Duration.Quarter.To);
 
     expect(abc.toString()).toBe('CzCz');
   });
@@ -54,7 +54,7 @@ describe('abc Measure should', () => {
       .add(new Note(Pitch.G, Duration.Quarter, Octave.C4))
       .add(new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter));
 
-    const abc = new AbcMeasure(measure, Duration.Quarter.To);
+    const abc = new AbcMeasure(measure.To, Duration.Quarter.To);
 
     expect(abc.toString()).toBe('CzG[CEG]');
   });

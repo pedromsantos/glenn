@@ -1,7 +1,6 @@
-import { Duration, SimpleTimeSignature } from '../Domain/Duration';
 import ensure from '../Domain/Ensure';
-import { Key } from '../Domain/Key';
-import { Song } from '../Domain/Song';
+import { DurationPrimitives } from '../primitives/Duration';
+import { SongPrimitives } from '../primitives/Song';
 import { AbcDuration } from './abcDuration';
 import { AbcKey } from './abcKey';
 import { AbcMeasure } from './abcMeasure';
@@ -46,24 +45,22 @@ class AbcBody {
 
 export class AbcTune {
   private readonly body: AbcBody;
-  private readonly header: AbcHeader = {
-    key: new AbcKey(Key.CMajor.To),
-    unit_note_length: new AbcDuration(Duration.Eighth.To),
-    meter: new AbcMeter(new SimpleTimeSignature(4, Duration.Quarter).To),
-  };
+  private readonly header?: AbcHeader;
 
-  constructor(song: Song, unitNoteLength: Duration, referenceNumber = 1) {
-    this.header.unit_note_length = new AbcDuration(unitNoteLength.To);
-    this.header.key = new AbcKey(song.Key.To);
-    this.header.meter = new AbcMeter(song.TimeSignature.To);
-    this.header.reference_number = referenceNumber;
+  constructor(song: SongPrimitives, unitNoteLength: DurationPrimitives, referenceNumber = 1) {
+    this.header = {
+      unit_note_length: new AbcDuration(unitNoteLength),
+      key: new AbcKey(song.key),
+      meter: new AbcMeter(song.timeSignature),
+      reference_number: referenceNumber,
+    };
 
-    this.body = new AbcBody([...song].map((m) => new AbcMeasure(m, unitNoteLength.To)));
+    this.body = new AbcBody(song.measures.map((m) => new AbcMeasure(m, unitNoteLength)));
   }
 
   toString() {
-    const referenceNumber = ensure(this.header.reference_number?.toString());
+    const referenceNumber = ensure(this.header?.reference_number?.toString());
 
-    return `X:${referenceNumber}\n${this.header.key.toString()}\n${this.header.meter.toString()}\n${this.header.unit_note_length.toString()}\n${this.body.toString()}`;
+    return `X:${referenceNumber}\n${this.header?.key.toString()}\n${this.header?.meter.toString()}\n${this.header?.unit_note_length.toString()}\n${this.body.toString()}`;
   }
 }

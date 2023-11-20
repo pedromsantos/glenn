@@ -1,4 +1,4 @@
-import { DurationPrimitives } from 'src/primitives/Duration';
+import { DurationPrimitives } from '../primitives/Duration';
 
 export class AbcDuration {
   constructor(private readonly duration: DurationPrimitives) {}

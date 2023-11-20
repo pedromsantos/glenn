@@ -1,4 +1,4 @@
-import { TimeSignaturePrimitives } from 'src/primitives/Duration';
+import { TimeSignaturePrimitives } from '../primitives/Duration';
 
 export class AbcMeter {
   constructor(private readonly timeSignature: TimeSignaturePrimitives) {}

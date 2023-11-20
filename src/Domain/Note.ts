@@ -5,6 +5,7 @@ import {
   RestPrimitives,
 } from 'src/primitives/Note';
 
+import { PlayablePrimitives, PlayableType } from '../primitives/Playables';
 import { Chord } from './Chord';
 import { Duration } from './Duration';
 import { Interval, IntervalDirection } from './Interval';
@@ -62,6 +63,7 @@ export interface Playable {
   get MidiNumbers(): Iterable<number>;
   get Notes(): Iterable<Note>;
   get HasPitch(): boolean;
+  get ToPlayablePrimitives(): PlayablePrimitives;
 }
 
 export class Note implements Playable {
@@ -156,6 +158,13 @@ export class Note implements Playable {
       octave: this.octave.To,
     };
   }
+
+  get ToPlayablePrimitives(): PlayablePrimitives {
+    return {
+      note: this.To,
+      playableType: PlayableType.Note,
+    };
+  }
 }
 
 export class Rest implements Playable {
@@ -200,6 +209,13 @@ export class Rest implements Playable {
   get To(): RestPrimitives {
     return {
       duration: this.duration.To,
+    };
+  }
+
+  get ToPlayablePrimitives(): PlayablePrimitives {
+    return {
+      rest: this.To,
+      playableType: PlayableType.Rest,
     };
   }
 }
