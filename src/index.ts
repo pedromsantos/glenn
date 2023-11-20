@@ -63,6 +63,5 @@ export {
   Song,
   Tab,
   TabColumn,
-  Tab as TabMatrix,
   TriadHarmonizer,
 };
