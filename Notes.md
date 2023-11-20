@@ -1,6 +1,6 @@
 # Notes
 
-## Note duration in tabature
+## Note duration in tablature
 
 w = whole note
 h = half note
