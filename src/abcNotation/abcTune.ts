@@ -6,7 +6,7 @@ import { AbcKey } from './abcKey';
 import { AbcMeasure } from './abcMeasure';
 import { AbcMeter } from './abcMeter';
 
-interface AbcHeader {
+type AbcHeader = {
   area?: string;
   book?: string;
   composer?: string;
@@ -33,7 +33,7 @@ interface AbcHeader {
   words?: string;
   reference_number?: number;
   transcription?: string;
-}
+};
 
 class AbcBody {
   constructor(private readonly measures: AbcMeasure[]) {}
@@ -45,7 +45,7 @@ class AbcBody {
 
 export class AbcTune {
   private readonly body: AbcBody;
-  private readonly header?: AbcHeader;
+  private readonly header: AbcHeader;
 
   constructor(song: SongPrimitives, unitNoteLength: DurationPrimitives, referenceNumber = 1) {
     this.header = {
@@ -59,8 +59,8 @@ export class AbcTune {
   }
 
   toString() {
-    const referenceNumber = ensure(this.header?.reference_number?.toString());
+    const referenceNumber = ensure(this.header.reference_number?.toString());
 
-    return `X:${referenceNumber}\n${this.header?.key.toString()}\n${this.header?.meter.toString()}\n${this.header?.unit_note_length.toString()}\n${this.body.toString()}`;
+    return `X:${referenceNumber}\n${this.header.key.toString()}\n${this.header.meter.toString()}\n${this.header.unit_note_length.toString()}\n${this.body.toString()}`;
   }
 }
