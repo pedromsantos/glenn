@@ -5,12 +5,14 @@
   "author": "Pedro Moreira Santos",
   "homepage": "https://github.com/pedromsantos/glenn",
   "keywords": [
-    "Music",
-    "Theory",
-    "Music Theory",
-    "Guitar",
-    "Tab",
-    "Tablature"
+    "music",
+    "notation",
+    "theory",
+    "music theory",
+    "guitar",
+    "tab",
+    "tablature",
+    "abc"
   ],
   "license": "MIT",
   "main": "./dist/index.js",
