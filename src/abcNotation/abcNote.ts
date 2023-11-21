@@ -86,7 +86,7 @@ class AbcDuration {
   }
 
   private equivalentDurations() {
-    if (this.defaultDuration.value > this.duration.value) {
+    if (this.defaultDuration.value >= this.duration.value) {
       return this.defaultDuration.value / this.duration.value;
     }
 
