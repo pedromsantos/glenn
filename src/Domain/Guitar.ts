@@ -693,16 +693,16 @@ export class Tab {
   private tab: string[][];
 
   constructor(...columns: TabColumn[]) {
-    this.tab = this.mapColumns(columns);
+    this.tab = this.renderColumns(columns);
   }
 
   sufixWith(...columns: TabColumn[]) {
-    this.tab = this.tab.concat(this.mapColumns(columns));
+    this.tab = this.tab.concat(this.renderColumns(columns));
     return this;
   }
 
   prefixWith(...columns: TabColumn[]) {
-    this.tab = this.mapColumns(columns).concat(this.tab);
+    this.tab = this.renderColumns(columns).concat(this.tab);
     return this;
   }
 
@@ -715,10 +715,6 @@ export class Tab {
 
   render(): string[][] {
     return this.tab;
-  }
-
-  private mapColumns(columns: TabColumn[]): string[][] {
-    return columns.map((column) => column.render());
   }
 
   static render(tab: Tab = new Tab()): string {
@@ -734,5 +730,9 @@ export class Tab {
 
   static renderColumn(column: TabColumn): string {
     return Tab.render(new Tab(column));
+  }
+
+  private renderColumns(columns: TabColumn[]): string[][] {
+    return columns.map((column) => column.render());
   }
 }
