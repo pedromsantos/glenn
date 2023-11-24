@@ -2476,10 +2476,10 @@ chardet@^0.7.0:
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
-check-export-map@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/check-export-map/-/check-export-map-1.3.0.tgz#9e055504caefdbcdc18377094e691bc48f197210"
-  integrity sha512-5UCK+1T+hi08B5RZ4mjMk4ddlI0WMVjd04PPDnPO0/CMQDi+3p7gxYdBmLmM67JRtp1+GJxZbStnooyB6xakiQ==
+check-export-map@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/check-export-map/-/check-export-map-1.3.1.tgz#8b15dcbd00d2a135e8f1ebe4d4b1b852d25eaad2"
+  integrity sha512-HX3ZRYk8/CLBJ6kjf7B3U4RGbhcbboswAq9CVsbuEIDQ0OoRI15ms2h3z3RL7sOo6KEVgVb/BiVGw/XMdCLAJg==
   dependencies:
     kolorist "^1.5.0"
     mri "^1.2.0"
