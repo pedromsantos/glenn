@@ -4,6 +4,6 @@ export type DurationPrimitives = {
   fraction: string;
 };
 
-export interface TimeSignaturePrimitives {
+export type TimeSignaturePrimitives = {
   signature: string;
-}
+};
