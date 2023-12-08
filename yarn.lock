@@ -1640,29 +1640,29 @@
   dependencies:
     "@sinonjs/commons" "^3.0.0"
 
-"@stryker-mutator/api@7.3.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@stryker-mutator/api/-/api-7.3.0.tgz#cde05daa8c7e098b35189d8d2a8a776f5b9330a5"
-  integrity sha512-0tiQF0E38ypgg2fb2a4wbr2wpu4ugY7HwwsgrI9NttY1EojOS0BtaKHo1DIrj5SVMRXq0kaMgl5h2ohSuysvRA==
+"@stryker-mutator/api@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@stryker-mutator/api/-/api-8.0.0.tgz#df9a0fa86aa5a515ccbda9efc3a13c42c6379e93"
+  integrity sha512-4R8yieczpgOrOBQYq1d1aRJLcgenltpMH9ugtIYPPVmENFUo+mWm9HmaahLe+TVHnJSb4OZ4lvI7dVIhoBaiSQ==
   dependencies:
-    mutation-testing-metrics "2.0.3"
-    mutation-testing-report-schema "2.0.3"
+    mutation-testing-metrics "3.0.0"
+    mutation-testing-report-schema "3.0.0"
     tslib "~2.6.0"
     typed-inject "~4.0.0"
 
-"@stryker-mutator/core@^7.3.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@stryker-mutator/core/-/core-7.3.0.tgz#ac998dd752de54f7254b77c8a21e2ff4be73af61"
-  integrity sha512-O9m2jEnJXbKBlj27/ps9nGCpm0HtQC0YlNV/aenocmERnySnvqEM6bwxvQ4apK5bad8ZyGJyhDIyJrwoVGmfVQ==
+"@stryker-mutator/core@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@stryker-mutator/core/-/core-8.0.0.tgz#30cd85af93aff3a883d4c1782adf70bc6e0979fb"
+  integrity sha512-dyPs60wtLS9vgghgL5a49k/7KOovOnavXzm5SIBBsBJuxoO+5rvGXRohZaqSoZdb0yWIvp+LFdu6qWcdlJPkoQ==
   dependencies:
-    "@stryker-mutator/api" "7.3.0"
-    "@stryker-mutator/instrumenter" "7.3.0"
-    "@stryker-mutator/util" "7.3.0"
+    "@stryker-mutator/api" "8.0.0"
+    "@stryker-mutator/instrumenter" "8.0.0"
+    "@stryker-mutator/util" "8.0.0"
     ajv "~8.12.0"
     chalk "~5.3.0"
     commander "~11.1.0"
     diff-match-patch "1.0.5"
-    emoji-regex "~10.2.1"
+    emoji-regex "~10.3.0"
     execa "~8.0.0"
     file-url "~4.0.0"
     get-port "~7.0.0"
@@ -1671,9 +1671,9 @@
     lodash.groupby "~4.6.0"
     log4js "~6.9.0"
     minimatch "~9.0.1"
-    mutation-testing-elements "2.0.3"
-    mutation-testing-metrics "2.0.3"
-    mutation-testing-report-schema "2.0.3"
+    mutation-testing-elements "3.0.1"
+    mutation-testing-metrics "3.0.0"
+    mutation-testing-report-schema "3.0.0"
     npm-run-path "~5.1.0"
     progress "~2.0.0"
     rxjs "~7.8.0"
@@ -1684,44 +1684,45 @@
     typed-inject "~4.0.0"
     typed-rest-client "~1.8.0"
 
-"@stryker-mutator/instrumenter@7.3.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@stryker-mutator/instrumenter/-/instrumenter-7.3.0.tgz#cc277e7e9e77a9915f289cfc47147000c9678dad"
-  integrity sha512-RdfQF08GclNdKldG3rH9YztapPhfTYsc90p8Tev+b6yZJSpk1j8mKZRMjxk/mylDtXFZZ2IVhI9txAt2YYT+OQ==
+"@stryker-mutator/instrumenter@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@stryker-mutator/instrumenter/-/instrumenter-8.0.0.tgz#40cb0d2886655d5fdc02ce13f0e753c8130df425"
+  integrity sha512-kS3BdpqDuJeRBDBw2eP68rhUrgtlT5EGERNOwCwUGpfTtUan7y2zX9ZGEblOtMI5yTtyBArFZMtwhPGi+waJ/Q==
   dependencies:
     "@babel/core" "~7.23.0"
     "@babel/generator" "~7.23.0"
     "@babel/parser" "~7.23.0"
     "@babel/plugin-proposal-decorators" "~7.23.0"
     "@babel/preset-typescript" "~7.23.0"
-    "@stryker-mutator/api" "7.3.0"
-    "@stryker-mutator/util" "7.3.0"
-    angular-html-parser "~4.0.0"
+    "@stryker-mutator/api" "8.0.0"
+    "@stryker-mutator/util" "8.0.0"
+    angular-html-parser "~5.0.0"
+    semver "~7.5.4"
     weapon-regex "~1.1.0"
 
-"@stryker-mutator/jest-runner@^7.3.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@stryker-mutator/jest-runner/-/jest-runner-7.3.0.tgz#9fad2297ac1b26bb1a630270adae8da3459fb691"
-  integrity sha512-9iNJ/CwHK3tve/ZExG99MyRahlISmE3BAJ7MPVueMBVSif7Vh/jPevDyYHw0yc/DFZ2rM4A5UiWh1aiIM0HGVg==
+"@stryker-mutator/jest-runner@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@stryker-mutator/jest-runner/-/jest-runner-8.0.0.tgz#5248f58050f6b8df8ee1d005aa2c7d38b4e94c77"
+  integrity sha512-umQZcI0nHIhTVaUrTdG5DwElDmLuOmaeHmdmulxUMMGOiaYpX4Na4mMKZTgCq7RpXuOGXNTnRpPcJc52LmEyzg==
   dependencies:
-    "@stryker-mutator/api" "7.3.0"
-    "@stryker-mutator/util" "7.3.0"
+    "@stryker-mutator/api" "8.0.0"
+    "@stryker-mutator/util" "8.0.0"
     semver "~7.5.0"
     tslib "~2.6.0"
 
-"@stryker-mutator/typescript-checker@^7.3.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@stryker-mutator/typescript-checker/-/typescript-checker-7.3.0.tgz#77a3cd49a76025f8bb72eab1a4f9724434e4d05d"
-  integrity sha512-WNYeDRJNeyA6r6eSQLO9HPd0t88QD77Nv422EGzInGT9DIgpRffH46JijFsdcLZtzAq1OACFZZ25bgdHTEjCrQ==
+"@stryker-mutator/typescript-checker@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@stryker-mutator/typescript-checker/-/typescript-checker-8.0.0.tgz#099c7ca673f6267a74536f42cff202eb1d5d94b1"
+  integrity sha512-8E6yci2yxsEYHy54xOpWSdBrLs2KDt/xl3tvxJc4hAwwIHY/Zni+scJ8kflpEZAashOB8W5Hn8f4aqF1TQ4ZKw==
   dependencies:
-    "@stryker-mutator/api" "7.3.0"
-    "@stryker-mutator/util" "7.3.0"
+    "@stryker-mutator/api" "8.0.0"
+    "@stryker-mutator/util" "8.0.0"
     semver "~7.5.0"
 
-"@stryker-mutator/util@7.3.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@stryker-mutator/util/-/util-7.3.0.tgz#954372a3f265f9fb268330c9e1032cca391174dd"
-  integrity sha512-bdFvuw7F3LC05dOFqgGjuipLt8ng5uXyjjdKeqqeTowm1wAyeDt0GTQKBuiINSAtcZxN75wTXq4DsCZXb/LMjw==
+"@stryker-mutator/util@8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@stryker-mutator/util/-/util-8.0.0.tgz#c66221f08082588a9443aa7957d72da68426e3be"
+  integrity sha512-geb2JvbYXDs6vOjGV9514PK+L6NiYFQIYhkpKvzfZQWYijNYnLhxXKz/X264a9StTYbGb/ZBADOkzsVde/5zig==
 
 "@types/babel__core@^7.1.14":
   version "7.20.2"
@@ -2028,12 +2029,12 @@ ajv@^8.11.0, ajv@~8.12.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-angular-html-parser@~4.0.0:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/angular-html-parser/-/angular-html-parser-4.0.1.tgz#c6b57af1b1768d3872e376a10f18c8de749f38ec"
-  integrity sha512-x9SLf2jNNh3nG+haVIwKX/GVW8PcvSRmkeT9WqTDYSAVuwT9IzwEyVm09FCZpOo/dtFRxE9vaNXqcAf/MIxphg==
+angular-html-parser@~5.0.0:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/angular-html-parser/-/angular-html-parser-5.0.2.tgz#5d70181c1a0a164cd3bb137272862010b467e24e"
+  integrity sha512-fov2PwgZDgDsvZXPRa0+lbJyakOZOlFb5eiACR2i6RSn9ad5A+84/SwVfj/dUCbUAHH1ta2uvaoAKEijG93Sfg==
   dependencies:
-    tslib "^2.5.0"
+    tslib "^2.6.2"
 
 ansi-colors@^4.1.1, ansi-colors@^4.1.3:
   version "4.1.3"
@@ -3083,10 +3084,10 @@ emoji-regex@^9.2.2:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.2.2.tgz#840c8803b0d8047f4ff0cf963176b32d4ef3ed72"
   integrity sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==
 
-emoji-regex@~10.2.1:
-  version "10.2.1"
-  resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-10.2.1.tgz#a41c330d957191efd3d9dfe6e1e8e1e9ab048b3f"
-  integrity sha512-97g6QgOk8zlDRdgq1WxwgTMgEWGVAQvB5Fdpgc1MkNy56la5SKP9GsMXKDOdqwn90/41a8yPwIGk1Y6WVbeMQA==
+emoji-regex@~10.3.0:
+  version "10.3.0"
+  resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-10.3.0.tgz#76998b9268409eb3dae3de989254d456e70cfe23"
+  integrity sha512-QpLs9D9v9kArv4lfDEgg1X/gN5XLnf/A6l9cs8SPZLRZR3ZkY9+kwIQTxm+fsSej5UMYGE8fdoaZVIBlqG0XTw==
 
 enquirer@^2.3.0:
   version "2.4.1"
@@ -5297,22 +5298,22 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-mutation-testing-elements@2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/mutation-testing-elements/-/mutation-testing-elements-2.0.3.tgz#12b42dbeb0201e3e4f59cc501c642365a21e80af"
-  integrity sha512-V00F5dVriVZTPoDcflX2Lp+/cA1LrkX9RwPntrrAEmM8OLEUG+jSZIJeYImTGK/opW5yD+q9ugykVjHbw2KQTg==
+mutation-testing-elements@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/mutation-testing-elements/-/mutation-testing-elements-3.0.1.tgz#b7f42365f4a3c8b1a5d3da418c0e692a1699b071"
+  integrity sha512-hsBKkabjD2sjyR2vhdEFPDxZfYLw71geIWjEh4rcZSSQAtyWRfjGf6UbdMjleuyw1ZZTgGt6CImtwRY7s3lrVg==
 
-mutation-testing-metrics@2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/mutation-testing-metrics/-/mutation-testing-metrics-2.0.3.tgz#0d2ca042eeea089d786c8fb6b3e14b02da8a8f73"
-  integrity sha512-pvrrE8Qf5xuimkm+TYUwX3g6Op6K4jE2/tD4NX8UZdTzuT/NHwAJw/YUXI7UJSA9M9Jpz9+VCjB31YnAX6wm7Q==
+mutation-testing-metrics@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/mutation-testing-metrics/-/mutation-testing-metrics-3.0.0.tgz#a311ba0b959ba15d4387a3e517d82d5e2988ba8d"
+  integrity sha512-WslGuCdpqT+6SpeIahMhLrJl5+YbutlOCFKxuULIkAkaHfsWBK8UCq6euE7PiDEx+R1pYZo//kqRbFIOFmdQug==
   dependencies:
-    mutation-testing-report-schema "2.0.3"
+    mutation-testing-report-schema "3.0.0"
 
-mutation-testing-report-schema@2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/mutation-testing-report-schema/-/mutation-testing-report-schema-2.0.3.tgz#d68514e4c7a92a5d6a739510837ca380fca34239"
-  integrity sha512-+x6ssyq4xVkUyHbbbbiU1pCla7QHO/VRaxfHsOb4JGCw+56EtCJ4w4wQuQ24J5DYTRCAZ5y2oBk7DwP8UXWbwg==
+mutation-testing-report-schema@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/mutation-testing-report-schema/-/mutation-testing-report-schema-3.0.0.tgz#9801f571a14cd907343b922901f4b035f3585a5b"
+  integrity sha512-70+ZPYoyedruSGiEcXQnFiTtIusBYlsL/2EMwfR+/HOqBGxBpmI798spqc86ZVYXPVCL5mt2rWjE1dTQwcjpmQ==
 
 mute-stream@1.0.0:
   version "1.0.0"
@@ -6069,7 +6070,7 @@ safe-regex-test@^1.0.0:
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.2.tgz#48d55db737c3287cd4835e17fa13feace1c41ef8"
   integrity sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==
 
-semver@7.5.4, semver@^7.1.1, semver@^7.3.4, semver@^7.3.5, semver@^7.3.7, semver@^7.5.3, semver@^7.5.4, semver@~7.5.0:
+semver@7.5.4, semver@^7.1.1, semver@^7.3.4, semver@^7.3.5, semver@^7.3.7, semver@^7.5.3, semver@^7.5.4, semver@~7.5.0, semver@~7.5.4:
   version "7.5.4"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.4.tgz#483986ec4ed38e1c6c48c34894a9182dbff68a6e"
   integrity sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==
@@ -6604,7 +6605,7 @@ tsconfig-paths@^3.14.2:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
-"tslib@1 || 2", tslib@2.6.2, tslib@^2.1.0, tslib@^2.5.0, tslib@^2.6.0, tslib@~2.6.0:
+"tslib@1 || 2", tslib@2.6.2, tslib@^2.1.0, tslib@^2.5.0, tslib@^2.6.0, tslib@^2.6.2, tslib@~2.6.0:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.2.tgz#703ac29425e7b37cd6fd456e92404d46d1f3e4ae"
   integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
@@ -6669,47 +6670,47 @@ tunnel@0.0.6:
   resolved "https://registry.yarnpkg.com/tunnel/-/tunnel-0.0.6.tgz#72f1314b34a5b192db012324df2cc587ca47f92c"
   integrity sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==
 
-turbo-darwin-64@1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/turbo-darwin-64/-/turbo-darwin-64-1.11.0.tgz#a3c62e833b83ae769c13e8b1f0814d3b111c471e"
-  integrity sha512-yLDeJ7QgpI1Niw87ydRNvygX67Dra+6MnxR88vwXnQJKsmHTKycBhY9w3Bhe5xvnIg4JoEWoEF5EJtw6ShrlEw==
+turbo-darwin-64@1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/turbo-darwin-64/-/turbo-darwin-64-1.11.1.tgz#fc9c2e578bd2d270b9942b11750a519a39850c57"
+  integrity sha512-JmwL8kcfxncDf2SZFioSa6dUvpMq/HbMcurh9mGm6BxWLQoB0d3fP/q3HizgCSbOE4ihScXoQ+c/C2xhl6Ngjg==
 
-turbo-darwin-arm64@1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/turbo-darwin-arm64/-/turbo-darwin-arm64-1.11.0.tgz#29ace24b724fce44422c7d447337779cbb50ca15"
-  integrity sha512-lZGlfTG6+u3R7+6eVY9j/07WpVF/tx8UNkmRWfMNt4ZGSEBMg6A+Vimvp+rni92WdPhD/rhxv+qYI/kco9hNXg==
+turbo-darwin-arm64@1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/turbo-darwin-arm64/-/turbo-darwin-arm64-1.11.1.tgz#77ba7f16106dc6e48acad03ce37ccf41d2851017"
+  integrity sha512-lIpT7nPkU0xmpkI8VOGQcgoQKmUATRMpRhTDclz6j/Px7Qtxjc+2PitKHKfR3aCnseoRMGkgMzPEJTPUwCpnlQ==
 
-turbo-linux-64@1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/turbo-linux-64/-/turbo-linux-64-1.11.0.tgz#bc7b78924ddae107a2066004aace925f1f8ddfbe"
-  integrity sha512-I88/WieHzTZ8V2y0j79RSjVERPp0IJTynTwLi7ddYX0PahkuyaHs1p8ktFMcs6awnJMeT6spaXlyzv5ZxnAdkg==
+turbo-linux-64@1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/turbo-linux-64/-/turbo-linux-64-1.11.1.tgz#40458e4db3c7b56b6347a42d9e4aab43acdcf197"
+  integrity sha512-mHFSqMkgy3h/M8Ocj2oiOr6CqlCqB6coCPWVIAmraBk+SQywwsszgJ69GWBfm7lwwJvb3B1YN1wkZNe9ZZnBfg==
 
-turbo-linux-arm64@1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/turbo-linux-arm64/-/turbo-linux-arm64-1.11.0.tgz#13be0290136b83540eeaf1704dc6dc3a22c50cf9"
-  integrity sha512-jHsKuTFa7KwrA/FIxOnyXnfSEgDEUv0UVcseqQhP0VbdL+En93ZdBZ9S9/lI6VWooXrCqPooBmC+M/6jmwY/Ig==
+turbo-linux-arm64@1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/turbo-linux-arm64/-/turbo-linux-arm64-1.11.1.tgz#3eb32d42851dbe7fb9627de29687171af2c20295"
+  integrity sha512-6ybojTkAkymo1Ig7kU3s2YQUUSRf3l2qatPZgw3v4OmFTSU2feCU1sHjAEqhHwEjV1KciDo1wRl1gjjyby4foQ==
 
-turbo-windows-64@1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/turbo-windows-64/-/turbo-windows-64-1.11.0.tgz#750f1cf49fa6e235c7a5fca17224aaad453131e7"
-  integrity sha512-7u/1GoMallGDOTg4fnKoJmvBkf2pUCOcA0Z7NbwFB6GOa7q1Su4AaPs6Iy6Tyqrmj3vDHKSXByHwfz+o0cng/g==
+turbo-windows-64@1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/turbo-windows-64/-/turbo-windows-64-1.11.1.tgz#b30bd6bd113fee6e455e96f99cf4cc069ef4964b"
+  integrity sha512-ytWy6+yEtBfv6nbgCKW6HsolgUFAC1PZGMPzbqRGnCm2eLVWhDuwO1Yk7uq4cvdrpXcXgOMcPEoJZxUCDbeJaQ==
 
-turbo-windows-arm64@1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/turbo-windows-arm64/-/turbo-windows-arm64-1.11.0.tgz#7e18c948cfabf695a089aa376e202e4241b2d897"
-  integrity sha512-39MNaZ7RnbINEnpeAfB++fmH6p99RhbeeC8n2IXqG61Zrck5AA59Jm8DXpfOGR6Im93iHXSDox8qF3bb8V4amQ==
+turbo-windows-arm64@1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/turbo-windows-arm64/-/turbo-windows-arm64-1.11.1.tgz#9e152b30232ada57144004f0ff7939933ae0d57d"
+  integrity sha512-O04DdJoRavOh/v9/MM5wWCEtOekO4aiLljNZc/fOh853sOhid61ZRSEYUmS9ecjmZ/OjKqedIfbkitaQ77c4xA==
 
-turbo@^1.10.14:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/turbo/-/turbo-1.11.0.tgz#8212cd50f89858ecbc69f3fee5d1b68e0b64a6bf"
-  integrity sha512-zIqJs/x1zzIIdwufhk80o7cQc9fIdHdweWRNXbK+Vjf9IaM2eSslcYyo40s+Kg/oiIOpdLM8hV7IUQst8KIyDA==
+turbo@^1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/turbo/-/turbo-1.11.1.tgz#1a779ee58382397e2f4c538bc0f15a820081ba8c"
+  integrity sha512-pmIsyTcyBJ5iJIaTjJyCxAq7YquDqyRai6FW2q0mFAkwK3k0p36wJ5yH85U2Ue6esrTKzeSEKskP4/fa7dv4+A==
   optionalDependencies:
-    turbo-darwin-64 "1.11.0"
-    turbo-darwin-arm64 "1.11.0"
-    turbo-linux-64 "1.11.0"
-    turbo-linux-arm64 "1.11.0"
-    turbo-windows-64 "1.11.0"
-    turbo-windows-arm64 "1.11.0"
+    turbo-darwin-64 "1.11.1"
+    turbo-darwin-arm64 "1.11.1"
+    turbo-linux-64 "1.11.1"
+    turbo-linux-arm64 "1.11.1"
+    turbo-windows-64 "1.11.1"
+    turbo-windows-arm64 "1.11.1"
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
