@@ -24,11 +24,9 @@ class Playables implements Iterable<Playable> {
 
 export class Measure implements Iterable<Playable> {
   protected playables: Playables;
-  private readonly timeSignature: TimeSignature;
 
-  constructor(timeSignature: TimeSignature) {
+  constructor(private readonly timeSignature: TimeSignature) {
     this.playables = new Playables();
-    this.timeSignature = timeSignature;
   }
 
   add(playable: Playable): Measure {
