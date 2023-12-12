@@ -26,22 +26,6 @@ export class Clef {
     private readonly type: ClefType
   ) {}
 
-  get Pitch() {
-    return this.pitch;
-  }
-
-  get Octava() {
-    return this.octave;
-  }
-
-  get Type() {
-    return ClefType[this.type];
-  }
-
-  get Line() {
-    return this.line.valueOf();
-  }
-
   get To(): ClefPrimitives {
     return {
       pitch: this.pitch.To,
