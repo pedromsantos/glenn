@@ -74,7 +74,7 @@
     "eslint-plugin-hexagonal-architecture": "^1.0.3",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jest": "^27.4.3",
-    "eslint-plugin-prettier": "5.1.1",
+    "eslint-plugin-prettier": "5.1.2",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-sonarjs": "^0.23.0",
     "fast-check": "^3.14.0",
