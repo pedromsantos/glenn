@@ -1,7 +1,7 @@
 import { ChordPrimitives } from './Chord';
 import { NotePrimitives, RestPrimitives } from './Note';
 
-export type PlayablePrimitives = {
+export type PlayablesPrimitives = {
   rest?: RestPrimitives;
   note?: NotePrimitives;
   chord?: ChordPrimitives;
@@ -12,7 +12,7 @@ type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T
     [K in Keys]-?: Required<Pick<T, K>> & Partial<Record<Exclude<Keys, K>, undefined>>;
   }[Keys];
 
-export type PlayablePrimitive = RequireOnlyOne<PlayablePrimitives>;
+export type PlayablePrimitives = RequireOnlyOne<PlayablesPrimitives>;
 
 // PlayablePrimitive USAGE:
 // const primitive: PlayablePrimitive = {

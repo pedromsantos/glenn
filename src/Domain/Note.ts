@@ -5,7 +5,7 @@ import {
   RestPrimitives,
 } from 'src/primitives/Note';
 
-import { PlayablePrimitive } from '../primitives/Playables';
+import { PlayablePrimitives } from '../primitives/Playables';
 import { Chord } from './Chord';
 import { Duration } from './Duration';
 import { Interval, IntervalDirection } from './Interval';
@@ -62,7 +62,7 @@ export interface Playable {
   get OctaveNames(): Iterable<string>;
   get MidiNumbers(): Iterable<number>;
   get Notes(): Iterable<Note>;
-  get ToPlayablePrimitives(): PlayablePrimitive;
+  get ToPlayablePrimitives(): PlayablePrimitives;
 }
 
 export class Note implements Playable {
@@ -154,7 +154,7 @@ export class Note implements Playable {
     };
   }
 
-  get ToPlayablePrimitives(): PlayablePrimitive {
+  get ToPlayablePrimitives(): PlayablePrimitives {
     return {
       note: this.To,
     };
@@ -202,7 +202,7 @@ export class Rest implements Playable {
     };
   }
 
-  get ToPlayablePrimitives(): PlayablePrimitive {
+  get ToPlayablePrimitives(): PlayablePrimitives {
     return {
       rest: this.To,
     };

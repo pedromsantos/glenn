@@ -1,5 +1,5 @@
 import { DurationPrimitives } from '../primitives/Duration';
-import { PlayablePrimitive } from '../primitives/Playables';
+import { PlayablePrimitives } from '../primitives/Playables';
 import { MeasurePrimitives } from '../primitives/Song';
 import { AbcChord } from './abcChord';
 import { AbcNote, AbcRest } from './abcNote';
@@ -14,7 +14,7 @@ export class AbcMeasure {
     return this.measure.playables.map((p) => this.map(p)).join('');
   }
 
-  private map(playable: PlayablePrimitive) {
+  private map(playable: PlayablePrimitives) {
     if (playable.chord) {
       return new AbcChord(playable.chord, this.defaultDuration).toString();
     }

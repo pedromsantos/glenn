@@ -1,9 +1,9 @@
 import { TimeSignaturePrimitives } from './Duration';
 import { KeyPrimitives } from './Key';
-import { PlayablePrimitive } from './Playables';
+import { PlayablePrimitives } from './Playables';
 
 export type MeasurePrimitives = {
-  playables: PlayablePrimitive[];
+  playables: PlayablePrimitives[];
   timeSignature: TimeSignaturePrimitives;
 };
 
