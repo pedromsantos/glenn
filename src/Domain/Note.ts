@@ -62,7 +62,6 @@ export interface Playable {
   get OctaveNames(): Iterable<string>;
   get MidiNumbers(): Iterable<number>;
   get Notes(): Iterable<Note>;
-  get HasPitch(): boolean;
   get ToPlayablePrimitives(): PlayablePrimitives;
 }
 
@@ -147,10 +146,6 @@ export class Note implements Playable {
     return [this];
   }
 
-  get HasPitch(): boolean {
-    return true;
-  }
-
   get To(): NotePrimitives {
     return {
       pitch: this.pitch.To,
@@ -168,10 +163,6 @@ export class Note implements Playable {
 
 export class Rest implements Playable {
   constructor(private readonly duration: Duration) {}
-
-  get HasPitch(): boolean {
-    return false;
-  }
 
   get Pitches(): Iterable<Pitch> {
     return [];
