@@ -1,5 +1,5 @@
 import { ChordPitchPrimitives, ChordPrimitives } from '../primitives/Chord';
-import { PlayablePrimitives } from '../primitives/Playables';
+import { PlayablePrimitive } from '../primitives/Playables';
 import { Duration } from './Duration';
 import ensure from './Ensure';
 import { Interval } from './Interval';
@@ -245,7 +245,7 @@ class BaseChord implements Chord, Iterable<Pitch> {
     };
   }
 
-  get ToPlayablePrimitives(): PlayablePrimitives {
+  get ToPlayablePrimitives(): PlayablePrimitive {
     return {
       chord: this.To,
     };
