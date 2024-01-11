@@ -529,7 +529,7 @@ export const enum PitchLineDirection {
 
 export class PitchLine implements Iterable<Pitch> {
   constructor(
-    private line: Pitch[] = [],
+    private readonly line: Pitch[] = [],
     private readonly direction: PitchLineDirection = PitchLineDirection.Ascending
   ) {}
 
