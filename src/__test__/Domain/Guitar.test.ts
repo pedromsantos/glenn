@@ -9,7 +9,7 @@ import {
   GuitarTuning,
   Position,
 } from '../../Domain/Guitar';
-import { MelodicLine, MelodicLineDirection, Pitch } from '../../Domain/Pitch';
+import { Pitch, PitchLine, PitchLineDirection } from '../../Domain/Pitch';
 
 describe('Fret should', () => {
   test('convert to primitive', () => {
@@ -237,7 +237,7 @@ describe('Position should', () => {
   test('map E to all positions', () => {
     fc.assert(
       fc.property(fc.constantFrom(...Position.guitarPositions), (position: Position) => {
-        const line = new MelodicLine([Pitch.E], MelodicLineDirection.Descending);
+        const line = new PitchLine([Pitch.E], PitchLineDirection.Descending);
         const guitarLine = new GuitarMelodicLine(line, position);
         const positionPrimitives = position.To;
 

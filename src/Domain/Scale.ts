@@ -3,7 +3,7 @@ import { Chord, ChordFunction, ChordPattern, ChordPitch, ChordPitches, ClosedCho
 import { Duration } from './Duration';
 import { Interval } from './Interval';
 import { Octave } from './Note';
-import { MelodicLine, MelodicLineDirection, Pitch } from './Pitch';
+import { Pitch, PitchLine, PitchLineDirection } from './Pitch';
 
 export const enum ScaleDegree {
   I,
@@ -285,11 +285,11 @@ export class ScalePattern {
     return this.pattern.map((interval) => root.transpose(interval));
   }
 
-  public createMelodicLineScale(root: Pitch): MelodicLine {
+  public createMelodicLineScale(root: Pitch): PitchLine {
     return this.createScale(root).MelodicLine;
   }
 
-  public createDescendingMelodicLineScale(root: Pitch): MelodicLine {
+  public createDescendingMelodicLineScale(root: Pitch): PitchLine {
     return this.createScale(root).DescendingMelodicLine;
   }
 
@@ -319,12 +319,12 @@ export class Scale implements Iterable<Pitch> {
     private readonly pitches: Pitch[] = scalePattern.createScalePitches(root)
   ) {}
 
-  get MelodicLine(): MelodicLine {
-    return new MelodicLine(this.pitches, MelodicLineDirection.Ascending);
+  get MelodicLine(): PitchLine {
+    return new PitchLine(this.pitches, PitchLineDirection.Ascending);
   }
 
-  get DescendingMelodicLine(): MelodicLine {
-    return new MelodicLine(this.pitches, MelodicLineDirection.Descending);
+  get DescendingMelodicLine(): PitchLine {
+    return new PitchLine(this.pitches, PitchLineDirection.Descending);
   }
 
   get To(): Readonly<ScalePrimitives> {

@@ -17,7 +17,7 @@ import {
 import { Interval } from './Domain/Interval';
 import { Key } from './Domain/Key';
 import { MelodicPhrase, Note, Octave, Rest } from './Domain/Note';
-import { MelodicLine, Pitch } from './Domain/Pitch';
+import { Pitch, PitchLine } from './Domain/Pitch';
 import {
   Scale,
   ScaleDegree,
@@ -48,7 +48,7 @@ export {
   Interval,
   Key,
   Measure,
-  MelodicLine,
+  PitchLine as MelodicLine,
   MelodicPhrase,
   Note,
   Octave,

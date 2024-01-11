@@ -522,18 +522,18 @@ class IntervalsToPitches {
   }
 }
 
-export const enum MelodicLineDirection {
+export const enum PitchLineDirection {
   Ascending,
   Descending,
 }
 
-export class MelodicLine implements Iterable<Pitch> {
+export class PitchLine implements Iterable<Pitch> {
   constructor(
     private readonly line: Pitch[] = [],
-    private readonly direction: MelodicLineDirection = MelodicLineDirection.Ascending
+    private readonly direction: PitchLineDirection = PitchLineDirection.Ascending
   ) {}
 
-  get Direction(): MelodicLineDirection {
+  get Direction(): PitchLineDirection {
     return this.direction;
   }
 

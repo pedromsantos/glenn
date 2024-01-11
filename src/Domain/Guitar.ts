@@ -1,6 +1,6 @@
 import { FretPrimitives, GuitarStringPrimitives, PositionPrimitives } from '../primitives/Guitar';
 import { Chord } from './Chord';
-import { MelodicLine, MelodicLineDirection, Pitch } from './Pitch';
+import { Pitch, PitchLine, PitchLineDirection } from './Pitch';
 
 export class TabColumn {
   private readonly maxRowLength: number = 0;
@@ -591,7 +591,7 @@ export class GuitarMelodicLine implements Iterable<Fret> {
   private readonly guitarStrings = new GuitarStrings();
 
   constructor(
-    melodicLine: MelodicLine,
+    melodicLine: PitchLine,
     position: Position,
     guitarStrings: GuitarStrings = new GuitarStrings()
   ) {
@@ -605,7 +605,7 @@ export class GuitarMelodicLine implements Iterable<Fret> {
     return new Tab(...column);
   }
 
-  private mapMelodicLine(melodicLine: MelodicLine, guitarStrings: GuitarStrings) {
+  private mapMelodicLine(melodicLine: PitchLine, guitarStrings: GuitarStrings) {
     const line: HorizontalFrets = new HorizontalFrets();
     const guitarStringsOrdered = this.guitarStringsFor(melodicLine.Direction, guitarStrings);
 
@@ -621,15 +621,15 @@ export class GuitarMelodicLine implements Iterable<Fret> {
       }
     }
 
-    if (melodicLine.Direction == MelodicLineDirection.Descending) {
+    if (melodicLine.Direction == PitchLineDirection.Descending) {
       line.reverse();
     }
 
     return line;
   }
 
-  private guitarStringsFor(lineDirection: MelodicLineDirection, guitarStrings: GuitarStrings) {
-    return lineDirection === MelodicLineDirection.Descending
+  private guitarStringsFor(lineDirection: PitchLineDirection, guitarStrings: GuitarStrings) {
+    return lineDirection === PitchLineDirection.Descending
       ? [...guitarStrings].reverse()
       : [...guitarStrings];
   }

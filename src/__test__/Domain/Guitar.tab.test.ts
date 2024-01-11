@@ -11,7 +11,7 @@ import {
   Tab,
   TabColumn,
 } from '../../Domain/Guitar';
-import { MelodicLine, MelodicLineDirection, Pitch } from '../../Domain/Pitch';
+import { Pitch, PitchLine, PitchLineDirection } from '../../Domain/Pitch';
 
 describe('Blank fret should', () => {
   test('render empty column', () => {
@@ -124,7 +124,7 @@ E|-10-|`;
 
     describe('melodic line', () => {
       test('C E G ascending on C position', () => {
-        const line = new MelodicLine([Pitch.C, Pitch.E, Pitch.G]);
+        const line = new PitchLine([Pitch.C, Pitch.E, Pitch.G]);
         const guitarLine = new GuitarMelodicLine(line, Position.C);
 
         expect(Array.from(guitarLine)[0]).toStrictEqual(new Fret(GuitarString.Fifth, 3));
@@ -144,7 +144,7 @@ E|-------|`;
       });
 
       test('C E G descending on C position', () => {
-        const line = new MelodicLine([Pitch.C, Pitch.E, Pitch.G], MelodicLineDirection.Descending);
+        const line = new PitchLine([Pitch.C, Pitch.E, Pitch.G], PitchLineDirection.Descending);
         expect(line).toBeTruthy();
 
         const guitarLine = new GuitarMelodicLine(line, Position.C);

@@ -1,5 +1,5 @@
 import { Fret, GuitarMelodicLine, GuitarString, Position } from '../../Domain/Guitar';
-import { MelodicLine, MelodicLineDirection, Pitch } from '../../Domain/Pitch';
+import { Pitch, PitchLine, PitchLineDirection } from '../../Domain/Pitch';
 import { ScalePattern } from '../../Domain/Scale';
 
 describe('Guitar melodic line should', () => {
@@ -24,7 +24,7 @@ describe('Guitar melodic line should', () => {
 
   describe('Map E to', () => {
     test('open string on sixth string for open position', () => {
-      const line = new MelodicLine([Pitch.E], MelodicLineDirection.Ascending);
+      const line = new PitchLine([Pitch.E], PitchLineDirection.Ascending);
       const guitarLine = new GuitarMelodicLine(line, Position.Open);
 
       const fret = Array.from(guitarLine)[0];
@@ -34,7 +34,7 @@ describe('Guitar melodic line should', () => {
     });
 
     test('2nd fret on fourth string for C Position', () => {
-      const line = new MelodicLine([Pitch.E]);
+      const line = new PitchLine([Pitch.E]);
       const guitarLine = new GuitarMelodicLine(line, Position.C);
 
       const fret = Array.from(guitarLine)[0];
@@ -42,7 +42,7 @@ describe('Guitar melodic line should', () => {
     });
 
     test('5th fret on fifth string for A Position', () => {
-      const line = new MelodicLine([Pitch.E]);
+      const line = new PitchLine([Pitch.E]);
       const guitarLine = new GuitarMelodicLine(line, Position.A);
 
       const fret = Array.from(guitarLine)[0];
@@ -50,7 +50,7 @@ describe('Guitar melodic line should', () => {
     });
 
     test('7th fret on fifth string for G Position', () => {
-      const line = new MelodicLine([Pitch.E]);
+      const line = new PitchLine([Pitch.E]);
       const guitarLine = new GuitarMelodicLine(line, Position.G);
 
       const fret = Array.from(guitarLine)[0];
@@ -58,7 +58,7 @@ describe('Guitar melodic line should', () => {
     });
 
     test('12th fret on sixth string for E Position', () => {
-      const line = new MelodicLine([Pitch.E]);
+      const line = new PitchLine([Pitch.E]);
       const guitarLine = new GuitarMelodicLine(line, Position.E);
 
       const fret = Array.from(guitarLine)[0];
@@ -66,7 +66,7 @@ describe('Guitar melodic line should', () => {
     });
 
     test('12th fret on first string for D Position', () => {
-      const line = new MelodicLine([Pitch.E], MelodicLineDirection.Descending);
+      const line = new PitchLine([Pitch.E], PitchLineDirection.Descending);
       const guitarLine = new GuitarMelodicLine(line, Position.D);
 
       const fret = Array.from(guitarLine)[0];
@@ -74,7 +74,7 @@ describe('Guitar melodic line should', () => {
     });
 
     test('14th fret on fourth string for C8 Position', () => {
-      const line = new MelodicLine([Pitch.E], MelodicLineDirection.Ascending);
+      const line = new PitchLine([Pitch.E], PitchLineDirection.Ascending);
       const guitarLine = new GuitarMelodicLine(line, Position.C8);
 
       const fret = Array.from(guitarLine)[0];
@@ -82,7 +82,7 @@ describe('Guitar melodic line should', () => {
     });
 
     test('19th fret on fifth string for A8 Position', () => {
-      const line = new MelodicLine([Pitch.E]);
+      const line = new PitchLine([Pitch.E]);
       const guitarLine = new GuitarMelodicLine(line, Position.A8);
 
       const fret = Array.from(guitarLine)[0];
@@ -90,7 +90,7 @@ describe('Guitar melodic line should', () => {
     });
 
     test('19th fret on fifth string for G8 Position', () => {
-      const line = new MelodicLine([Pitch.E]);
+      const line = new PitchLine([Pitch.E]);
       const guitarLine = new GuitarMelodicLine(line, Position.G8);
 
       const fret = Array.from(guitarLine)[0];
@@ -98,7 +98,7 @@ describe('Guitar melodic line should', () => {
     });
 
     test('21st fret on third string for E8 Position', () => {
-      const line = new MelodicLine([Pitch.E]);
+      const line = new PitchLine([Pitch.E]);
       const guitarLine = new GuitarMelodicLine(line, Position.E8);
 
       const fret = Array.from(guitarLine)[0];
