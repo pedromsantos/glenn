@@ -285,11 +285,11 @@ export class ScalePattern {
     return this.pattern.map((interval) => root.transpose(interval));
   }
 
-  public createMelodicLineScale(root: Pitch): PitchLine {
+  public createPitchLineScale(root: Pitch): PitchLine {
     return this.createScale(root).MelodicLine;
   }
 
-  public createDescendingMelodicLineScale(root: Pitch): PitchLine {
+  public createDescendingPitchLineScale(root: Pitch): PitchLine {
     return this.createScale(root).DescendingMelodicLine;
   }
 

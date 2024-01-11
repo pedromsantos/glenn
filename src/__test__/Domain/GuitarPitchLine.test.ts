@@ -2,10 +2,10 @@ import { Fret, GuitarPitchLine, GuitarString, Position } from '../../Domain/Guit
 import { Pitch, PitchLine, PitchLineDirection } from '../../Domain/Pitch';
 import { ScalePattern } from '../../Domain/Scale';
 
-describe('Guitar melodic line should', () => {
+describe('Guitar pitch line should', () => {
   describe('map C major scale to guitar frets on', () => {
     test('C position ascending', () => {
-      const line = ScalePattern.Ionian.createMelodicLineScale(Pitch.C);
+      const line = ScalePattern.Ionian.createPitchLineScale(Pitch.C);
       const guitarLine = new GuitarPitchLine(line, Position.C);
 
       const fret = Array.from(guitarLine)[0];
@@ -13,7 +13,7 @@ describe('Guitar melodic line should', () => {
     });
 
     test('C position descending', () => {
-      const line = ScalePattern.Ionian.createDescendingMelodicLineScale(Pitch.C);
+      const line = ScalePattern.Ionian.createDescendingPitchLineScale(Pitch.C);
       const guitarLine = new GuitarPitchLine(line, Position.C);
 
       const fret = Array.from(guitarLine)[0];
