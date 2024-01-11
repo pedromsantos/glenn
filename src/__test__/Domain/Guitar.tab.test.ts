@@ -155,68 +155,76 @@ E|-------|`;
         expect(renderedTab).toBe(expectedTab);
       });
 
-      test('C major scale ascending on C position', () => {
-        const line = ScalePattern.Ionian.createPitchLineScale(Pitch.C);
-        const guitarLine = new GuitarPitchLine(line, Position.C);
-
-        const renderedTab = Tab.render(guitarLine.toTab());
-
-        const expectedTab = `e|---------------|
+      describe('scales in C Position', () => {
+        test('C major scale ascending', () => {
+          const expectedTab = `e|---------------|
 B|---------------|
 G|-----------2-4-|
 D|-----2-3-5-----|
 A|-3-5-----------|
 E|---------------|`;
-        expect(renderedTab).toBe(expectedTab);
-      });
 
-      test('C mixolydian scale ascending on C position', () => {
-        const line = ScalePattern.Mixolydian.createPitchLineScale(Pitch.C);
-        const guitarLine = new GuitarPitchLine(line, Position.C);
+          const renderedTab = render(Position.C, Pitch.C, ScalePattern.Ionian);
 
-        const renderedTab = Tab.render(guitarLine.toTab());
+          expect(renderedTab).toBe(expectedTab);
+        });
 
-        const expectedTab = `e|---------------|
+        test('C mixolydian scale ascending', () => {
+          const expectedTab = `e|---------------|
 B|---------------|
 G|-----------2-3-|
 D|-----2-3-5-----|
 A|-3-5-----------|
 E|---------------|`;
-        expect(renderedTab).toBe(expectedTab);
-      });
 
-      test('C mixolydian scale ascending on C position 2 octaves', () => {
-        const line = ScalePattern.Mixolydian.createPitchLineScale(Pitch.C);
-        const guitarLine = new DoubleOctaveGuitarPitchLine(line, Position.C);
+          const renderedTab = render(Position.C, Pitch.C, ScalePattern.Mixolydian);
 
-        const renderedTab = Tab.render(guitarLine.toTab());
+          expect(renderedTab).toBe(expectedTab);
+        });
 
-        const expectedTab = `e|---------------------1-3-5-|
+        test('C mixolydian scale ascending 2 octaves', () => {
+          const expectedTab = `e|---------------------1-3-5-|
 B|-----------------3-5-------|
 G|-----------2-3-5-----------|
 D|-----2-3-5-----------------|
 A|-3-5-----------------------|
 E|---------------------------|`;
-        expect(renderedTab).toBe(expectedTab);
-      });
 
-      test('D mixolydian scale ascending on C position 2 octaves', () => {
-        const line = ScalePattern.Mixolydian.createPitchLineScale(Pitch.D);
-        const guitarLine = new DoubleOctaveGuitarPitchLine(line, Position.C);
+          const renderedTab = renderDoubleOctave(Position.C, Pitch.C, ScalePattern.Mixolydian);
 
-        const renderedTab = Tab.render(guitarLine.toTab());
+          expect(renderedTab).toBe(expectedTab);
+        });
 
-        const expectedTab = `e|-------------------2-3-5-|
+        test('D mixolydian scale ascending on C position 2 octaves', () => {
+          const expectedTab = `e|-------------------2-3-5-|
 B|---------------3-5-------|
 G|---------2-4-5-----------|
 D|---2-4-5-----------------|
 A|-5-----------------------|
 E|-------------------------|`;
-        expect(renderedTab).toBe(expectedTab);
+
+          const renderedTab = renderDoubleOctave(Position.C, Pitch.D, ScalePattern.Mixolydian);
+
+          expect(renderedTab).toBe(expectedTab);
+        });
+
+        function render(position: Position, pitch: Pitch, pattern: ScalePattern) {
+          const line = pattern.createPitchLineScale(pitch);
+          const guitarLine = new GuitarPitchLine(line, position);
+
+          return Tab.render(guitarLine.toTab());
+        }
+
+        function renderDoubleOctave(position: Position, pitch: Pitch, pattern: ScalePattern) {
+          const line = pattern.createPitchLineScale(pitch);
+          const guitarLine = new DoubleOctaveGuitarPitchLine(line, position);
+
+          return Tab.render(guitarLine.toTab());
+        }
       });
     });
 
-    describe('chord', () => {
+    describe('chords', () => {
       test('C Major triad on open position', () => {
         const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
         const guitarChord = GuitarChord.inPosition(chord, Position.Open);
