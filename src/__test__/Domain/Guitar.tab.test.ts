@@ -164,7 +164,7 @@ D|-----2-3-5-----|
 A|-3-5-----------|
 E|---------------|`;
 
-          const renderedTab = render(Position.C, Pitch.C, ScalePattern.Ionian);
+          const renderedTab = render(Pitch.C, ScalePattern.Ionian, Position.C);
 
           expect(renderedTab).toBe(expectedTab);
         });
@@ -177,7 +177,7 @@ D|-----2-3-5-----|
 A|-3-5-----------|
 E|---------------|`;
 
-          const renderedTab = render(Position.C, Pitch.C, ScalePattern.Mixolydian);
+          const renderedTab = render(Pitch.C, ScalePattern.Mixolydian, Position.C);
 
           expect(renderedTab).toBe(expectedTab);
         });
@@ -190,7 +190,7 @@ D|-----2-3-5-----------------|
 A|-3-5-----------------------|
 E|---------------------------|`;
 
-          const renderedTab = renderDoubleOctave(Position.C, Pitch.C, ScalePattern.Mixolydian);
+          const renderedTab = renderDoubleOctave(Pitch.C, ScalePattern.Mixolydian, Position.C);
 
           expect(renderedTab).toBe(expectedTab);
         });
@@ -203,19 +203,19 @@ D|---2-4-5-----------------|
 A|-5-----------------------|
 E|-------------------------|`;
 
-          const renderedTab = renderDoubleOctave(Position.C, Pitch.D, ScalePattern.Mixolydian);
+          const renderedTab = renderDoubleOctave(Pitch.D, ScalePattern.Mixolydian, Position.C);
 
           expect(renderedTab).toBe(expectedTab);
         });
 
-        function render(position: Position, pitch: Pitch, pattern: ScalePattern) {
+        function render(pitch: Pitch, pattern: ScalePattern, position: Position) {
           const line = pattern.createPitchLineScale(pitch);
           const guitarLine = new GuitarPitchLine(line, position);
 
           return Tab.render(guitarLine.toTab());
         }
 
-        function renderDoubleOctave(position: Position, pitch: Pitch, pattern: ScalePattern) {
+        function renderDoubleOctave(pitch: Pitch, pattern: ScalePattern, position: Position) {
           const line = pattern.createPitchLineScale(pitch);
           const guitarLine = new DoubleOctaveGuitarPitchLine(line, position);
 
