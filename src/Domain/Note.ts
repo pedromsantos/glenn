@@ -209,7 +209,7 @@ export class Rest implements Playable {
   }
 }
 
-export class MelodicPhrase implements Iterable<Note> {
+export class MelodicLine implements Iterable<Note> {
   private readonly phrase: Note[] = [];
 
   constructor(notes: Note[]) {

@@ -3,7 +3,7 @@ import * as fc from 'fast-check';
 import { ChordPattern, ClosedChord } from '../../Domain/Chord';
 import { Duration } from '../../Domain/Duration';
 import { Interval, IntervalDirection } from '../../Domain/Interval';
-import { MelodicPhrase, Note, Octave, Rest } from '../../Domain/Note';
+import { MelodicLine, Note, Octave, Rest } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
 
 describe('Rest', () => {
@@ -355,9 +355,9 @@ describe('Octave', () => {
   });
 });
 
-describe('Melodic phrase', () => {
+describe('Melodic line', () => {
   test('convert to primitive phrase', () => {
-    const phrase = new MelodicPhrase([new Note(Pitch.C, Duration.Quarter, Octave.C1)]);
+    const phrase = new MelodicLine([new Note(Pitch.C, Duration.Quarter, Octave.C1)]);
     const phrasePrimitive = phrase.To;
 
     expect(phrasePrimitive).toStrictEqual({

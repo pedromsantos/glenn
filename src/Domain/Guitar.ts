@@ -585,19 +585,19 @@ export class GuitarChord implements Iterable<Fret> {
   }
 }
 
-export class GuitarMelodicLine implements Iterable<Fret> {
+export class GuitarPitchLine implements Iterable<Fret> {
   private readonly line: HorizontalFrets = new HorizontalFrets();
   private readonly position: Position = Position.Open;
   private readonly guitarStrings = new GuitarStrings();
 
   constructor(
-    melodicLine: PitchLine,
+    pitchLine: PitchLine,
     position: Position,
     guitarStrings: GuitarStrings = new GuitarStrings()
   ) {
     this.position = position;
     this.guitarStrings = guitarStrings;
-    this.line = this.mapMelodicLine(melodicLine, guitarStrings);
+    this.line = this.mapPitchLine(pitchLine, guitarStrings);
   }
 
   toTab(): Tab {
@@ -605,11 +605,11 @@ export class GuitarMelodicLine implements Iterable<Fret> {
     return new Tab(...column);
   }
 
-  private mapMelodicLine(melodicLine: PitchLine, guitarStrings: GuitarStrings) {
+  private mapPitchLine(pitchLine: PitchLine, guitarStrings: GuitarStrings) {
     const line: HorizontalFrets = new HorizontalFrets();
-    const guitarStringsOrdered = this.guitarStringsFor(melodicLine.Direction, guitarStrings);
+    const guitarStringsOrdered = this.guitarStringsFor(pitchLine.Direction, guitarStrings);
 
-    for (const pitch of melodicLine) {
+    for (const pitch of pitchLine) {
       for (const guitarString of guitarStringsOrdered) {
         if (this.skipMappedString(line, guitarString)) {
           continue;
@@ -621,7 +621,7 @@ export class GuitarMelodicLine implements Iterable<Fret> {
       }
     }
 
-    if (melodicLine.Direction == PitchLineDirection.Descending) {
+    if (pitchLine.Direction == PitchLineDirection.Descending) {
       line.reverse();
     }
 

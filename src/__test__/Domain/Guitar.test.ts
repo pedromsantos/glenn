@@ -3,7 +3,7 @@ import * as fc from 'fast-check';
 import {
   BlankFret,
   Fret,
-  GuitarMelodicLine,
+  GuitarPitchLine,
   GuitarString,
   GuitarStrings,
   GuitarTuning,
@@ -238,7 +238,7 @@ describe('Position should', () => {
     fc.assert(
       fc.property(fc.constantFrom(...Position.guitarPositions), (position: Position) => {
         const line = new PitchLine([Pitch.E], PitchLineDirection.Descending);
-        const guitarLine = new GuitarMelodicLine(line, position);
+        const guitarLine = new GuitarPitchLine(line, position);
         const positionPrimitives = position.To;
 
         const fret = Array.from(guitarLine)[0];

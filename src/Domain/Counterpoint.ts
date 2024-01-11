@@ -1,7 +1,7 @@
 import { Duration } from './Duration';
 import { Voice } from './Instrument';
 import { Interval } from './Interval';
-import { MelodicPhrase, Note } from './Note';
+import { MelodicLine, Note } from './Note';
 import { Pitch } from './Pitch';
 import {
   Scale,
@@ -14,16 +14,16 @@ import {
 
 export interface CounterPointParts {
   counterPoint: {
-    phrase: MelodicPhrase;
+    phrase: MelodicLine;
     voice: Voice;
   };
-  cantusFirmus: MelodicPhrase;
+  cantusFirmus: MelodicLine;
   cantusFirmusHarmony: CounterPointHarmony;
 }
 
 export const createCounterpointParts = (
-  counterpoint: MelodicPhrase,
-  cantusFirmus: MelodicPhrase,
+  counterpoint: MelodicLine,
+  cantusFirmus: MelodicLine,
   harmony: ScaleDegree[],
   voice: Voice = Voice.MezzoSoprano
 ): CounterPointParts => {

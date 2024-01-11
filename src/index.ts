@@ -8,7 +8,7 @@ import { CompoundTimeSignature, Duration, SimpleTimeSignature } from './Domain/D
 import {
   GuitarChord,
   GuitarHarmonicLine,
-  GuitarMelodicLine,
+  GuitarPitchLine,
   GuitarString,
   Position,
   Tab,
@@ -16,7 +16,7 @@ import {
 } from './Domain/Guitar';
 import { Interval } from './Domain/Interval';
 import { Key } from './Domain/Key';
-import { MelodicPhrase, Note, Octave, Rest } from './Domain/Note';
+import { MelodicLine, Note, Octave, Rest } from './Domain/Note';
 import { Pitch, PitchLine } from './Domain/Pitch';
 import {
   Scale,
@@ -43,13 +43,13 @@ export {
   Duration,
   GuitarChord,
   GuitarHarmonicLine,
-  GuitarMelodicLine,
+  GuitarPitchLine as GuitarMelodicLine,
   GuitarString,
   Interval,
   Key,
   Measure,
   PitchLine as MelodicLine,
-  MelodicPhrase,
+  MelodicLine as MelodicPhrase,
   Note,
   Octave,
   Pitch,

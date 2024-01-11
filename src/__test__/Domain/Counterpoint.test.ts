@@ -1,14 +1,14 @@
 import { createCounterpointParts, FirstSpecies } from '../../Domain/Counterpoint';
 import { Duration } from '../../Domain/Duration';
 import { Voice } from '../../Domain/Instrument';
-import { MelodicPhrase, Note, Octave } from '../../Domain/Note';
+import { MelodicLine, Note, Octave } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
 import { Scale, ScaleDegree, ScalePattern } from '../../Domain/Scale';
 
 describe('First species counterpoint', () => {
   test('valid', () => {
-    const counterPoint = new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C4)]);
-    const cantusFirmus = new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C4)]);
+    const counterPoint = new MelodicLine([new Note(Pitch.C, Duration.Whole, Octave.C4)]);
+    const cantusFirmus = new MelodicLine([new Note(Pitch.C, Duration.Whole, Octave.C4)]);
     const parts = createCounterpointParts(counterPoint, cantusFirmus, [ScaleDegree.I]);
 
     const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
@@ -16,8 +16,8 @@ describe('First species counterpoint', () => {
   });
 
   test('invalid note (only whole notes)', () => {
-    const counterPoint = new MelodicPhrase([new Note(Pitch.C, Duration.Half, Octave.C5)]);
-    const cantusFirmus = new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C5)]);
+    const counterPoint = new MelodicLine([new Note(Pitch.C, Duration.Half, Octave.C5)]);
+    const cantusFirmus = new MelodicLine([new Note(Pitch.C, Duration.Whole, Octave.C5)]);
     const parts = createCounterpointParts(counterPoint, cantusFirmus, [ScaleDegree.I]);
 
     const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
@@ -30,8 +30,8 @@ describe('First species counterpoint', () => {
   });
 
   test('invalid note (not a chord tone)', () => {
-    const counterPoint = new MelodicPhrase([new Note(Pitch.D, Duration.Whole, Octave.C3)]);
-    const cantusFirmus = new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C3)]);
+    const counterPoint = new MelodicLine([new Note(Pitch.D, Duration.Whole, Octave.C3)]);
+    const cantusFirmus = new MelodicLine([new Note(Pitch.C, Duration.Whole, Octave.C3)]);
     const parts = createCounterpointParts(counterPoint, cantusFirmus, [ScaleDegree.I]);
 
     const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
@@ -44,8 +44,8 @@ describe('First species counterpoint', () => {
   });
 
   test('invalid note (not in range)', () => {
-    const counterPoint = new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C5)]);
-    const cantusFirmus = new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C4)]);
+    const counterPoint = new MelodicLine([new Note(Pitch.C, Duration.Whole, Octave.C5)]);
+    const cantusFirmus = new MelodicLine([new Note(Pitch.C, Duration.Whole, Octave.C4)]);
     const parts = createCounterpointParts(counterPoint, cantusFirmus, [ScaleDegree.I], Voice.Bass);
 
     const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
@@ -58,11 +58,11 @@ describe('First species counterpoint', () => {
   });
 
   test('invalid note (repeated)', () => {
-    const counterPoint = new MelodicPhrase([
+    const counterPoint = new MelodicLine([
       new Note(Pitch.C, Duration.Whole, Octave.C3),
       new Note(Pitch.C, Duration.Whole, Octave.C3),
     ]);
-    const cantusFirmus = new MelodicPhrase([
+    const cantusFirmus = new MelodicLine([
       new Note(Pitch.C, Duration.Whole, Octave.C3),
       new Note(Pitch.A, Duration.Whole, Octave.C3),
     ]);
@@ -83,11 +83,11 @@ describe('First species counterpoint', () => {
   });
 
   test('invalid note (leap to big)', () => {
-    const counterPoint = new MelodicPhrase([
+    const counterPoint = new MelodicLine([
       new Note(Pitch.B, Duration.Whole, Octave.C5),
       new Note(Pitch.C, Duration.Whole, Octave.C5),
     ]);
-    const cantusFirmus = new MelodicPhrase([
+    const cantusFirmus = new MelodicLine([
       new Note(Pitch.C, Duration.Whole, Octave.C5),
       new Note(Pitch.C, Duration.Whole, Octave.C5),
     ]);
@@ -108,8 +108,8 @@ describe('First species counterpoint', () => {
   });
 
   test('invalid interval (Major Second)', () => {
-    const counterPoint = new MelodicPhrase([new Note(Pitch.D, Duration.Whole, Octave.C4)]);
-    const cantusFirmus = new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C4)]);
+    const counterPoint = new MelodicLine([new Note(Pitch.D, Duration.Whole, Octave.C4)]);
+    const cantusFirmus = new MelodicLine([new Note(Pitch.C, Duration.Whole, Octave.C4)]);
     const parts = createCounterpointParts(counterPoint, cantusFirmus, [ScaleDegree.I], Voice.Bass);
 
     const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
@@ -122,8 +122,8 @@ describe('First species counterpoint', () => {
   });
 
   test('invalid interval (Perfect Fourth)', () => {
-    const counterPoint = new MelodicPhrase([new Note(Pitch.F, Duration.Whole, Octave.C5)]);
-    const cantusFirmus = new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C5)]);
+    const counterPoint = new MelodicLine([new Note(Pitch.F, Duration.Whole, Octave.C5)]);
+    const cantusFirmus = new MelodicLine([new Note(Pitch.C, Duration.Whole, Octave.C5)]);
     const parts = createCounterpointParts(counterPoint, cantusFirmus, [ScaleDegree.I], Voice.Tenor);
 
     const species = new FirstSpecies(parts, new Scale(ScalePattern.Ionian, Pitch.C));
@@ -136,8 +136,8 @@ describe('First species counterpoint', () => {
   });
 
   test('invalid interval (Major Seventh)', () => {
-    const counterPoint = new MelodicPhrase([new Note(Pitch.B, Duration.Whole, Octave.C2)]);
-    const cantusFirmus = new MelodicPhrase([new Note(Pitch.C, Duration.Whole, Octave.C2)]);
+    const counterPoint = new MelodicLine([new Note(Pitch.B, Duration.Whole, Octave.C2)]);
+    const cantusFirmus = new MelodicLine([new Note(Pitch.C, Duration.Whole, Octave.C2)]);
     const parts = createCounterpointParts(
       counterPoint,
       cantusFirmus,

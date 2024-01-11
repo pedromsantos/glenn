@@ -4,7 +4,7 @@ import {
   Fret,
   GuitarChord,
   GuitarHarmonicLine,
-  GuitarMelodicLine,
+  GuitarPitchLine,
   GuitarString,
   GuitarStrings,
   Position,
@@ -122,10 +122,10 @@ E|-10-|`;
       expect(renderedTab).toBe(expectedTab);
     });
 
-    describe('melodic line', () => {
+    describe('pitch line', () => {
       test('C E G ascending on C position', () => {
         const line = new PitchLine([Pitch.C, Pitch.E, Pitch.G]);
-        const guitarLine = new GuitarMelodicLine(line, Position.C);
+        const guitarLine = new GuitarPitchLine(line, Position.C);
 
         expect(Array.from(guitarLine)[0]).toStrictEqual(new Fret(GuitarString.Fifth, 3));
         expect(Array.from(guitarLine)[1]).toStrictEqual(new Fret(GuitarString.Fourth, 2));
@@ -147,7 +147,7 @@ E|-------|`;
         const line = new PitchLine([Pitch.C, Pitch.E, Pitch.G], PitchLineDirection.Descending);
         expect(line).toBeTruthy();
 
-        const guitarLine = new GuitarMelodicLine(line, Position.C);
+        const guitarLine = new GuitarPitchLine(line, Position.C);
 
         expect(Array.from(guitarLine)[0]).toStrictEqual(new Fret(GuitarString.First, 3));
         expect(Array.from(guitarLine)[1]).toStrictEqual(new Fret(GuitarString.Second, 5));
