@@ -286,11 +286,11 @@ export class ScalePattern {
   }
 
   public createPitchLineScale(root: Pitch): PitchLine {
-    return this.createScale(root).MelodicLine;
+    return this.createScale(root).PitchLine;
   }
 
   public createDescendingPitchLineScale(root: Pitch): PitchLine {
-    return this.createScale(root).DescendingMelodicLine;
+    return this.createScale(root).DescendingPitchLine;
   }
 
   public get Name(): string {
@@ -319,11 +319,11 @@ export class Scale implements Iterable<Pitch> {
     private readonly pitches: Pitch[] = scalePattern.createScalePitches(root)
   ) {}
 
-  get MelodicLine(): PitchLine {
+  get PitchLine(): PitchLine {
     return new PitchLine(this.pitches, PitchLineDirection.Ascending);
   }
 
-  get DescendingMelodicLine(): PitchLine {
+  get DescendingPitchLine(): PitchLine {
     return new PitchLine(this.pitches, PitchLineDirection.Descending);
   }
 

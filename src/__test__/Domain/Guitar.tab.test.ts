@@ -1,6 +1,7 @@
 import { Chord, ChordPattern, ClosedChord } from '../../Domain/Chord';
 import {
   BlankFret,
+  DoubleOctaveGuitarPitchLine,
   Fret,
   GuitarChord,
   GuitarHarmonicLine,
@@ -12,6 +13,7 @@ import {
   TabColumn,
 } from '../../Domain/Guitar';
 import { Pitch, PitchLine, PitchLineDirection } from '../../Domain/Pitch';
+import { ScalePattern } from '../../Domain/Scale';
 
 describe('Blank fret should', () => {
   test('render empty column', () => {
@@ -127,10 +129,6 @@ E|-10-|`;
         const line = new PitchLine([Pitch.C, Pitch.E, Pitch.G]);
         const guitarLine = new GuitarPitchLine(line, Position.C);
 
-        expect(Array.from(guitarLine)[0]).toStrictEqual(new Fret(GuitarString.Fifth, 3));
-        expect(Array.from(guitarLine)[1]).toStrictEqual(new Fret(GuitarString.Fourth, 2));
-        expect(Array.from(guitarLine)[2]).toStrictEqual(new Fret(GuitarString.Fourth, 5));
-
         const renderedTab = Tab.render(guitarLine.toTab());
 
         const expectedTab = `e|-------|
@@ -139,27 +137,81 @@ G|-------|
 D|---2-5-|
 A|-3-----|
 E|-------|`;
-
         expect(renderedTab).toBe(expectedTab);
       });
 
       test('C E G descending on C position', () => {
         const line = new PitchLine([Pitch.C, Pitch.E, Pitch.G], PitchLineDirection.Descending);
-        expect(line).toBeTruthy();
-
         const guitarLine = new GuitarPitchLine(line, Position.C);
 
-        expect(Array.from(guitarLine)[0]).toStrictEqual(new Fret(GuitarString.First, 3));
-        expect(Array.from(guitarLine)[1]).toStrictEqual(new Fret(GuitarString.Second, 5));
-        expect(Array.from(guitarLine)[2]).toStrictEqual(new Fret(GuitarString.Second, 1));
-
         const renderedTab = Tab.render(guitarLine.toTab());
+
         const expectedTab = `e|-3-----|
 B|---5-1-|
 G|-------|
 D|-------|
 A|-------|
 E|-------|`;
+        expect(renderedTab).toBe(expectedTab);
+      });
+
+      test('C major scale ascending on C position', () => {
+        const line = ScalePattern.Ionian.createPitchLineScale(Pitch.C);
+        const guitarLine = new GuitarPitchLine(line, Position.C);
+
+        const renderedTab = Tab.render(guitarLine.toTab());
+
+        const expectedTab = `e|---------------|
+B|---------------|
+G|-----------2-4-|
+D|-----2-3-5-----|
+A|-3-5-----------|
+E|---------------|`;
+        expect(renderedTab).toBe(expectedTab);
+      });
+
+      test('C mixolydian scale ascending on C position', () => {
+        const line = ScalePattern.Mixolydian.createPitchLineScale(Pitch.C);
+        const guitarLine = new GuitarPitchLine(line, Position.C);
+
+        const renderedTab = Tab.render(guitarLine.toTab());
+
+        const expectedTab = `e|---------------|
+B|---------------|
+G|-----------2-3-|
+D|-----2-3-5-----|
+A|-3-5-----------|
+E|---------------|`;
+        expect(renderedTab).toBe(expectedTab);
+      });
+
+      test('C mixolydian scale ascending on C position 2 octaves', () => {
+        const line = ScalePattern.Mixolydian.createPitchLineScale(Pitch.C);
+        const guitarLine = new DoubleOctaveGuitarPitchLine(line, Position.C);
+
+        const renderedTab = Tab.render(guitarLine.toTab());
+
+        const expectedTab = `e|---------------------1-3-5-|
+B|-----------------3-5-------|
+G|-----------2-3-5-----------|
+D|-----2-3-5-----------------|
+A|-3-5-----------------------|
+E|---------------------------|`;
+        expect(renderedTab).toBe(expectedTab);
+      });
+
+      test('D mixolydian scale ascending on C position 2 octaves', () => {
+        const line = ScalePattern.Mixolydian.createPitchLineScale(Pitch.D);
+        const guitarLine = new DoubleOctaveGuitarPitchLine(line, Position.C);
+
+        const renderedTab = Tab.render(guitarLine.toTab());
+
+        const expectedTab = `e|-------------------2-3-5-|
+B|---------------3-5-------|
+G|---------2-4-5-----------|
+D|---2-4-5-----------------|
+A|-5-----------------------|
+E|-------------------------|`;
         expect(renderedTab).toBe(expectedTab);
       });
     });

@@ -664,6 +664,16 @@ export class GuitarPitchLine implements Iterable<Fret> {
   }
 }
 
+export class DoubleOctaveGuitarPitchLine extends GuitarPitchLine {
+  constructor(
+    pitchLine: PitchLine,
+    position: Position,
+    guitarStrings: GuitarStrings = new GuitarStrings()
+  ) {
+    super(pitchLine.addOctave(), position, guitarStrings);
+  }
+}
+
 export class GuitarHarmonicLine implements Iterable<GuitarChord> {
   private readonly chords: GuitarChord[] = [];
   private readonly bassString: GuitarString = GuitarString.Sixth;
