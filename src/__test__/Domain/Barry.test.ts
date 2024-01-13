@@ -35,6 +35,8 @@ describe('Barry  Harrys lines', () => {
         [ScaleDegree.VI, ScaleDegree.III, [Pitch.A, Pitch.G, Pitch.F, Pitch.E]],
         [ScaleDegree.V, ScaleDegree.III, [Pitch.G, Pitch.F, Pitch.E]],
         [ScaleDegree.IV, ScaleDegree.I, [Pitch.F, Pitch.E, Pitch.D, Pitch.C]],
+        [ScaleDegree.III, ScaleDegree.I, [Pitch.E, Pitch.D, Pitch.C]],
+        [ScaleDegree.II, ScaleDegree.I, [Pitch.D, Pitch.C]],
       ])('From', (from, to, expected) => {
         const line = new Barry(scale);
 
