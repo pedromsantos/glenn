@@ -66,6 +66,15 @@ export class Barry {
         this.scale.pitchFor(ScaleDegree.I),
         this.scale.pitchFor(ScaleDegree.VII)
       );
+    } else {
+      rawLine = rawLine.insertHalfToneBetween(
+        this.scale.pitchFor(ScaleDegree.II),
+        this.scale.pitchFor(ScaleDegree.I)
+      );
+      rawLine = rawLine.insertHalfToneBetween(
+        this.scale.pitchFor(ScaleDegree.I),
+        this.scale.pitchFor(ScaleDegree.VII)
+      );
     }
 
     this.line.add(rawLine);

@@ -73,7 +73,15 @@ describe('Barry  Harrys lines', () => {
       type TestTuple = [ScaleDegree, ScaleDegree, Pitch[]];
       test.each<TestTuple>([
         [ScaleDegree.VII, ScaleDegree.III, [Pitch.BFlat, Pitch.A, Pitch.G, Pitch.F, Pitch.E]],
+        [ScaleDegree.VI, ScaleDegree.III, [Pitch.A, Pitch.G, Pitch.F, Pitch.E]],
         [ScaleDegree.V, ScaleDegree.III, [Pitch.G, Pitch.F, Pitch.E]],
+        [ScaleDegree.II, ScaleDegree.I, [Pitch.D, Pitch.DFlat, Pitch.C]],
+        [ScaleDegree.II, ScaleDegree.VII, [Pitch.D, Pitch.DFlat, Pitch.C, Pitch.B, Pitch.BFlat]],
+        [
+          ScaleDegree.II,
+          ScaleDegree.V,
+          [Pitch.D, Pitch.DFlat, Pitch.C, Pitch.B, Pitch.BFlat, Pitch.A, Pitch.G],
+        ],
         [ScaleDegree.III, ScaleDegree.I, [Pitch.E, Pitch.EFlat, Pitch.D, Pitch.DFlat, Pitch.C]],
         [
           ScaleDegree.III,
