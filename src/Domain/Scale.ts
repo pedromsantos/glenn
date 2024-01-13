@@ -336,9 +336,14 @@ export class Scale implements Iterable<Pitch> {
   }
 
   down(from: ScaleDegree, to: ScaleDegree) {
-    const rawLine = this.pitches;
-    const line = rawLine.slice(to, from + 1).reverse();
-    return new PitchLine(line, PitchLineDirection.Descending);
+    if (from > to) {
+      const line = this.pitches.slice(to, from + 1).reverse();
+      return new PitchLine(line, PitchLineDirection.Descending);
+    }
+
+    const line1 = this.pitches.slice(0, from + 1).reverse();
+    const line2 = this.pitches.slice(to).reverse();
+    return new PitchLine(line1.concat(line2), PitchLineDirection.Descending);
   }
 
   thirdsFrom(degree: ScaleDegree): Array<Pitch> {
