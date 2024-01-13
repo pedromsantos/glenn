@@ -6,7 +6,7 @@ import { Octave } from './Note';
 import { Pitch, PitchLine, PitchLineDirection } from './Pitch';
 
 export const enum ScaleDegree {
-  I,
+  I = 0,
   II,
   III,
   IV,
@@ -333,6 +333,12 @@ export class Scale implements Iterable<Pitch> {
       root: this.root.To,
       pitches: this.pitches.map((p) => p.To),
     };
+  }
+
+  down(from: ScaleDegree, to: ScaleDegree) {
+    const rawLine = this.pitches;
+    const line = rawLine.slice(to, from + 1).reverse();
+    return new PitchLine(line, PitchLineDirection.Descending);
   }
 
   thirdsFrom(degree: ScaleDegree): Array<Pitch> {

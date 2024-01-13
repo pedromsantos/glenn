@@ -537,6 +537,16 @@ export class PitchLine implements Iterable<Pitch> {
     return new PitchLine(this.line.concat(this.line), this.direction);
   }
 
+  upTo(pitch: Pitch): PitchLine {
+    const pitchIndex = this.line.findIndex((p) => p === pitch);
+    return new PitchLine(this.line.slice(0, pitchIndex), this.direction);
+  }
+
+  downTo(pitch: Pitch): PitchLine {
+    const pitchIndex = this.line.findIndex((p) => p === pitch);
+    return new PitchLine(this.line.slice(0, pitchIndex).reverse(), this.direction);
+  }
+
   get Direction(): PitchLineDirection {
     return this.direction;
   }
