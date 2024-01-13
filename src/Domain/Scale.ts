@@ -335,6 +335,10 @@ export class Scale implements Iterable<Pitch> {
     };
   }
 
+  pitchFor(degree: ScaleDegree) {
+    return this.pitches[degree]!;
+  }
+
   down(from: ScaleDegree, to: ScaleDegree) {
     if (from > to) {
       const line = this.pitches.slice(to, from + 1).reverse();

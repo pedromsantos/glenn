@@ -36,11 +36,53 @@ export class Barry {
   }
 
   scaleDown(from: ScaleDegree, to: ScaleDegree) {
-    this.line.add(this.scale.down(from, to));
+    let rawLine = this.scale.down(from, to);
+
+    if (this.lineStartAtChordTone(from)) {
+      rawLine = rawLine.insertHalfToneBetween(
+        this.scale.pitchFor(ScaleDegree.I),
+        this.scale.pitchFor(ScaleDegree.VII)
+      );
+    }
+
+    this.line.add(rawLine);
+
+    return this;
+  }
+
+  scaleDownExtra(from: ScaleDegree, to: ScaleDegree) {
+    let rawLine = this.scale.down(from, to);
+
+    if (this.lineStartAtChordTone(from)) {
+      rawLine = rawLine.insertHalfToneBetween(
+        this.scale.pitchFor(ScaleDegree.III),
+        this.scale.pitchFor(ScaleDegree.II)
+      );
+      rawLine = rawLine.insertHalfToneBetween(
+        this.scale.pitchFor(ScaleDegree.II),
+        this.scale.pitchFor(ScaleDegree.I)
+      );
+      rawLine = rawLine.insertHalfToneBetween(
+        this.scale.pitchFor(ScaleDegree.I),
+        this.scale.pitchFor(ScaleDegree.VII)
+      );
+    }
+
+    this.line.add(rawLine);
+
     return this;
   }
 
   build(): PitchLines {
     return this.line;
+  }
+
+  private lineStartAtChordTone(from: ScaleDegree) {
+    return !!(
+      from === ScaleDegree.I ||
+      from === ScaleDegree.III ||
+      from === ScaleDegree.V ||
+      from === ScaleDegree.VII
+    );
   }
 }

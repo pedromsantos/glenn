@@ -547,6 +547,20 @@ export class PitchLine implements Iterable<Pitch> {
     return new PitchLine(this.line.slice(0, pitchIndex).reverse(), this.direction);
   }
 
+  insertHalfToneBetween(first: Pitch, second: Pitch) {
+    const firstIndex = this.line.findIndex((p) => p === first);
+    const secondIndex = this.line.findIndex((p) => p === second);
+
+    if (firstIndex !== -1 && secondIndex !== -1) {
+      const newLine = this.line;
+      newLine.splice(secondIndex, 0, first.flat());
+
+      return new PitchLine(newLine, this.Direction);
+    }
+
+    return this;
+  }
+
   get Direction(): PitchLineDirection {
     return this.direction;
   }
