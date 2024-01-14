@@ -40,7 +40,7 @@ export class Barry {
   scaleDown(from: ScaleDegree, to: ScaleDegree) {
     let rawLine = this.scale.down(from, to);
 
-    if (this.lineStartAtChordTone(from)) {
+    if (this.lineStartsAtChordTone(from)) {
       rawLine = rawLine.insertHalfToneBetween(
         this.scale.pitchFor(ScaleDegree.I),
         this.scale.pitchFor(ScaleDegree.VII)
@@ -55,7 +55,7 @@ export class Barry {
   scaleDownExtra(from: ScaleDegree, to: ScaleDegree) {
     let rawLine = this.scale.down(from, to);
 
-    if (this.lineStartAtChordTone(from)) {
+    if (this.lineStartsAtChordTone(from)) {
       rawLine = rawLine.insertHalfToneBetween(
         this.scale.pitchFor(ScaleDegree.III),
         this.scale.pitchFor(ScaleDegree.II)
@@ -88,7 +88,7 @@ export class Barry {
     return this.line;
   }
 
-  private lineStartAtChordTone(from: ScaleDegree) {
+  private lineStartsAtChordTone(from: ScaleDegree) {
     return !!(
       from === ScaleDegree.I ||
       from === ScaleDegree.III ||
