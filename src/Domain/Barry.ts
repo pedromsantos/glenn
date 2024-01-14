@@ -33,6 +33,8 @@ export class Barry {
     if (resolveTo) {
       this.line.add(new PitchLine([resolveTo], PitchLineDirection.Ascending));
     }
+
+    return this;
   }
 
   scaleDown(from: ScaleDegree, to: ScaleDegree) {

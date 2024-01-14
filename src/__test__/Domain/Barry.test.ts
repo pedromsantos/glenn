@@ -18,10 +18,7 @@ describe('Barry  Harrys lines', () => {
         [ScaleDegree.VI, [Pitch.A, Pitch.C, Pitch.E, Pitch.G]],
         [ScaleDegree.VII, [Pitch.BFlat, Pitch.D, Pitch.F, Pitch.A]],
       ])('From', (degree, expected) => {
-        const line = new Barry(scale);
-
-        line.arpeggioUp(degree);
-        const lines = line.build();
+        const lines = new Barry(scale).arpeggioUp(degree).build();
         const flatLine = [...[...lines][0]!];
 
         expect(flatLine).toStrictEqual(expected);
@@ -62,8 +59,7 @@ describe('Barry  Harrys lines', () => {
         const line = new Barry(scale);
 
         line.scaleDown(from, to);
-        const lines = line.build();
-        const flatLine = [...[...lines][0]!];
+        const flatLine = [...[...line.build()][0]!];
 
         expect(flatLine).toStrictEqual(expected);
       });
@@ -145,8 +141,7 @@ describe('Barry  Harrys lines', () => {
         const line = new Barry(scale);
 
         line.scaleDownExtra(from, to);
-        const lines = line.build();
-        const flatLine = [...[...lines][0]!];
+        const flatLine = [...[...line.build()][0]!];
 
         expect(flatLine).toStrictEqual(expected);
       });
