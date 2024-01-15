@@ -2,6 +2,7 @@ import { AbcChord } from './abcNotation/abcChord';
 import { AbcClef } from './abcNotation/abcClef';
 import { AbcNote, AbcRest } from './abcNotation/abcNote';
 import { AbcTune } from './abcNotation/abcTune';
+import { BarryHarrisLine } from './Domain/Barry';
 import { ChordFunction, ChordPattern, ClosedChord, Drop2Chord, Drop3Chord } from './Domain/Chord';
 import { Clef } from './Domain/Clef';
 import { CompoundTimeSignature, Duration, SimpleTimeSignature } from './Domain/Duration';
@@ -9,6 +10,7 @@ import {
   GuitarChord,
   GuitarHarmonicLine,
   GuitarPitchLine,
+  GuitarPitchLines,
   GuitarString,
   Position,
   Tab,
@@ -33,6 +35,7 @@ export {
   AbcNote as abcNote,
   AbcRest as abcRest,
   AbcTune as abcTune,
+  BarryHarrisLine,
   ChordFunction,
   ChordPattern,
   Clef,
@@ -44,6 +47,7 @@ export {
   GuitarChord,
   GuitarHarmonicLine,
   GuitarPitchLine as GuitarMelodicLine,
+  GuitarPitchLines,
   GuitarString,
   Interval,
   Key,

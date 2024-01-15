@@ -47,6 +47,18 @@ export class BarryHarrisLine {
     return this;
   }
 
+  pivotArpeggioUpFrom(degree: ScaleDegree) {
+    const arpeggio = this.scale.thirdsTo(degree).slice(0, 4);
+
+    const arpeggioRoot = new PitchLine(arpeggio.slice(0, 1), PitchLineDirection.Descending);
+    this.line.add(arpeggioRoot);
+
+    const pivot = new PitchLine(arpeggio.slice(1), PitchLineDirection.Ascending);
+    this.line.add(pivot);
+
+    return this;
+  }
+
   resolveTo(pitch: Pitch) {
     this.line.pushLastLine(pitch);
     return this;

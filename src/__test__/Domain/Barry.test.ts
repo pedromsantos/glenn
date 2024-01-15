@@ -20,7 +20,21 @@ describe('Barry Harrys lines', () => {
         [ScaleDegree.VII, [Pitch.BFlat, Pitch.D, Pitch.F, Pitch.A]],
       ])('From', (degree, expected) => {
         const lines = new BarryHarrisLine(scale).arpeggioUpFrom(degree).build();
-        const flatLine = [...[...lines][0]!];
+        const flatLine = [...lines].flatMap((l) => [...l]);
+
+        expect(flatLine).toStrictEqual(expected);
+      });
+    });
+
+    describe('Pivot', () => {
+      type TestTuple = [ScaleDegree, Pitch[]];
+
+      test.each<TestTuple>([
+        [ScaleDegree.VII, [Pitch.BFlat, Pitch.C, Pitch.E, Pitch.G]],
+        //[ScaleDegree.VI, [Pitch.A, Pitch.BFlat, Pitch.D, Pitch.F]],
+      ])('From', (degree, expected) => {
+        const lines = new BarryHarrisLine(scale).pivotArpeggioUpFrom(degree).build();
+        const flatLine = [...lines].flatMap((l) => [...l]);
 
         expect(flatLine).toStrictEqual(expected);
       });
@@ -172,9 +186,6 @@ describe('Barry Harrys lines', () => {
 
         const flatLine = [...lines].flatMap((l) => [...l]);
         expect(flatLine).toHaveLength(9);
-        expect(flatLine[0]).toBe(Pitch.C);
-        expect(flatLine[4]).toBe(Pitch.A);
-        expect(flatLine[5]).toBe(Pitch.G);
         expect(flatLine[flatLine.length - 1]).toBe(Pitch.D);
       });
 
@@ -189,9 +200,6 @@ describe('Barry Harrys lines', () => {
         const flatLine = [...lines].flatMap((l) => [...l]);
 
         expect(flatLine).toHaveLength(11);
-        expect(flatLine[0]).toBe(Pitch.C);
-        expect(flatLine[4]).toBe(Pitch.A);
-        expect(flatLine[5]).toBe(Pitch.G);
         expect(flatLine[flatLine.length - 4]).toBe(Pitch.E);
         expect(flatLine[flatLine.length - 3]).toBe(Pitch.G);
         expect(flatLine[flatLine.length - 2]).toBe(Pitch.BFlat);

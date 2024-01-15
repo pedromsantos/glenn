@@ -368,6 +368,16 @@ export class Scale implements Iterable<Pitch> {
       .slice(0, 7);
   }
 
+  thirdsTo(degree: ScaleDegree): Array<Pitch> {
+    return this.pitches
+      .slice(degree)
+      .concat(this.pitchFor(degree))
+      .concat(this.pitches)
+      .concat(this.pitches)
+      .filter((_, i) => i % 2 === 0)
+      .slice(0, 7);
+  }
+
   *[Symbol.iterator](): Iterator<Pitch> {
     for (const pitch of this.pitches) {
       yield pitch;
