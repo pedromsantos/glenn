@@ -148,7 +148,7 @@ describe('Barry  Harrys lines', () => {
     });
 
     describe('combined lines', () => {
-      test('Arpeggio up scale down', () => {
+      test('Arpeggio up, scale down', () => {
         const lines = new Barry(scale)
           .arpeggioUpFrom(ScaleDegree.I)
           .scaleDownFromLastPitchTo(ScaleDegree.III)
