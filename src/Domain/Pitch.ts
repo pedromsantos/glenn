@@ -525,6 +525,7 @@ class IntervalsToPitches {
 export const enum PitchLineDirection {
   Ascending,
   Descending,
+  Neutral,
 }
 
 export class PitchLine implements Iterable<Pitch> {

@@ -179,6 +179,10 @@ class HorizontalFrets extends Frets {
   last() {
     return this.frets[this.frets.length - 1];
   }
+
+  allInSameString() {
+    return this.frets.every((v) => v.String === this.frets[0]?.String);
+  }
 }
 
 export class GuitarStrings implements Iterable<GuitarString> {
@@ -284,8 +288,12 @@ export class GuitarString {
     return this.index === other.index;
   }
 
-  isLowerThan(other: GuitarString): boolean {
-    return this.index > other.index;
+  isLowerIndexThan(other: GuitarString): boolean {
+    return other.index < this.index;
+  }
+
+  isHigherThan(other: GuitarString): boolean {
+    return other.index > this.index;
   }
 
   get Index() {
@@ -630,14 +638,14 @@ export class GuitarPitchLine implements Iterable<Fret> {
       }
     }
 
-    if (pitchLine.Direction == PitchLineDirection.Descending) {
+    if (pitchLine.Direction == PitchLineDirection.Descending && !line.allInSameString()) {
       line.reverse();
     }
 
     return line;
   }
 
-  private guitarStringsFor(lineDirection: PitchLineDirection, guitarStrings: GuitarStrings) {
+  protected guitarStringsFor(lineDirection: PitchLineDirection, guitarStrings: GuitarStrings) {
     return lineDirection === PitchLineDirection.Descending
       ? [...guitarStrings].reverse()
       : [...guitarStrings];
@@ -646,7 +654,7 @@ export class GuitarPitchLine implements Iterable<Fret> {
   private skipMappedString(line: HorizontalFrets, guitarString: GuitarString) {
     const lastFret = line.last();
 
-    return lastFret && guitarString.isLowerThan(lastFret.String);
+    return lastFret && guitarString.isLowerIndexThan(lastFret.String);
   }
 
   private mapPitch(pitch: Pitch, guitarString: GuitarString, line: HorizontalFrets): boolean {
@@ -684,6 +692,20 @@ export class GuitarPitchLines extends GuitarPitchLine {
     for (const pitchLine of pitchLines) {
       this.line.concat(this.mapPitchLine(pitchLine, guitarStrings));
     }
+  }
+
+  protected override guitarStringsFor(
+    lineDirection: PitchLineDirection,
+    guitarStrings: GuitarStrings
+  ) {
+    const lastString = this.line.last()?.String;
+    if (lastString) {
+      return lineDirection === PitchLineDirection.Descending
+        ? [...guitarStrings].filter((s) => !s.isHigherThan(lastString)).reverse()
+        : [...guitarStrings].filter((s) => !s.isLowerIndexThan(lastString));
+    }
+
+    return super.guitarStringsFor(lineDirection, guitarStrings);
   }
 }
 

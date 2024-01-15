@@ -100,7 +100,16 @@ export class Barry {
     const from = this.lastDegree();
 
     if (from) {
-      this.arpeggioUpFrom(from, resolveTo);
+      const arpeggio = new PitchLine(
+        this.scale.thirdsFrom(from).slice(1, 4),
+        PitchLineDirection.Ascending
+      );
+
+      if (resolveTo) {
+        arpeggio.push(resolveTo);
+      }
+
+      this.line.add(arpeggio);
     }
 
     return this;

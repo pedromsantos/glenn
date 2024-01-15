@@ -186,7 +186,7 @@ describe('Barry Harrys lines', () => {
 
         const flatLine = [...lines].flatMap((l) => [...l]);
 
-        expect(flatLine).toHaveLength(12);
+        expect(flatLine).toHaveLength(11);
         expect(flatLine[0]).toBe(Pitch.C);
         expect(flatLine[4]).toBe(Pitch.A);
         expect(flatLine[5]).toBe(Pitch.G);
@@ -206,7 +206,12 @@ describe('Barry Harrys lines', () => {
         const guitarLine = new GuitarPitchLines(lines, Position.C);
         const tab = Tab.render(guitarLine.toTab());
 
-        expect(tab).toContain('');
+        expect(tab).toBe(`e|-----------------------|
+B|---------------------3-|
+G|-------3-2---------3---|
+D|---2-5-----5-3-2-5-----|
+A|-3---------------------|
+E|-----------------------|`);
       });
     });
   });
