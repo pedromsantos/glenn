@@ -18,7 +18,7 @@ describe('Barry  Harrys lines', () => {
         [ScaleDegree.VI, [Pitch.A, Pitch.C, Pitch.E, Pitch.G]],
         [ScaleDegree.VII, [Pitch.BFlat, Pitch.D, Pitch.F, Pitch.A]],
       ])('From', (degree, expected) => {
-        const lines = new Barry(scale).arpeggioUp(degree).build();
+        const lines = new Barry(scale).arpeggioUpFrom(degree).build();
         const flatLine = [...[...lines][0]!];
 
         expect(flatLine).toStrictEqual(expected);
@@ -58,14 +58,14 @@ describe('Barry  Harrys lines', () => {
       ])('From', (from, to, expected) => {
         const line = new Barry(scale);
 
-        line.scaleDown(from, to);
+        line.scaleDown(to, from);
         const flatLine = [...[...line.build()][0]!];
 
         expect(flatLine).toStrictEqual(expected);
       });
     });
 
-    describe('Extra half steps scale down to', () => {
+    describe('scale down with extra half steps', () => {
       type TestTuple = [ScaleDegree, ScaleDegree, Pitch[]];
       test.each<TestTuple>([
         [ScaleDegree.VII, ScaleDegree.III, [Pitch.BFlat, Pitch.A, Pitch.G, Pitch.F, Pitch.E]],
@@ -140,10 +140,59 @@ describe('Barry  Harrys lines', () => {
       ])('From', (from, to, expected) => {
         const line = new Barry(scale);
 
-        line.scaleDownExtra(from, to);
+        line.scaleDownExtraHalfSteps(to, from);
         const flatLine = [...[...line.build()][0]!];
 
         expect(flatLine).toStrictEqual(expected);
+      });
+    });
+
+    describe('combined lines', () => {
+      test('Arpeggio up scale down', () => {
+        const lines = new Barry(scale)
+          .arpeggioUpFrom(ScaleDegree.I)
+          .scaleDownFromLastPitchTo(ScaleDegree.III)
+          .build();
+
+        const flatLine = [...lines].flatMap((l) => [...l]);
+        expect(flatLine).toHaveLength(8);
+        expect(flatLine[0]).toBe(Pitch.C);
+        expect(flatLine[3]).toBe(Pitch.BFlat);
+        expect(flatLine[4]).toBe(Pitch.A);
+        expect(flatLine[flatLine.length - 1]).toBe(Pitch.E);
+      });
+
+      test('Arpeggio up with resolution, scale down', () => {
+        const lines = new Barry(scale)
+          .arpeggioUpFrom(ScaleDegree.I, Pitch.A)
+          .scaleDownFromLastPitchTo(ScaleDegree.II)
+          .build();
+
+        const flatLine = [...lines].flatMap((l) => [...l]);
+        expect(flatLine).toHaveLength(9);
+        expect(flatLine[0]).toBe(Pitch.C);
+        expect(flatLine[4]).toBe(Pitch.A);
+        expect(flatLine[5]).toBe(Pitch.G);
+        expect(flatLine[flatLine.length - 1]).toBe(Pitch.D);
+      });
+
+      test('Arpeggio up with resolution, scale down, arpeggio up', () => {
+        const lines = new Barry(scale)
+          .arpeggioUpFrom(ScaleDegree.I, Pitch.A)
+          .scaleDownFromLastPitchTo(ScaleDegree.III)
+          .arpeggioUpFromLastPitch()
+          .build();
+
+        const flatLine = [...lines].flatMap((l) => [...l]);
+
+        expect(flatLine).toHaveLength(12);
+        expect(flatLine[0]).toBe(Pitch.C);
+        expect(flatLine[4]).toBe(Pitch.A);
+        expect(flatLine[5]).toBe(Pitch.G);
+        expect(flatLine[flatLine.length - 4]).toBe(Pitch.E);
+        expect(flatLine[flatLine.length - 3]).toBe(Pitch.G);
+        expect(flatLine[flatLine.length - 2]).toBe(Pitch.BFlat);
+        expect(flatLine[flatLine.length - 1]).toBe(Pitch.D);
       });
     });
   });

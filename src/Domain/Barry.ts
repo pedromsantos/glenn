@@ -8,6 +8,16 @@ export class PitchLines implements Iterable<PitchLine> {
     this.lines.push(line);
   }
 
+  lastPitch() {
+    const lastLine = this.lines[this.lines.length - 1];
+
+    if (lastLine) {
+      return lastLine.lastPitch();
+    }
+
+    return undefined;
+  }
+
   *[Symbol.iterator](): Iterator<PitchLine> {
     for (const line of this.lines) {
       yield line;
@@ -22,7 +32,7 @@ export class Barry {
     this.line = new PitchLines();
   }
 
-  arpeggioUp(degree: ScaleDegree, resolveTo?: Pitch) {
+  arpeggioUpFrom(degree: ScaleDegree, resolveTo?: Pitch) {
     const arpeggio = new PitchLine(
       this.scale.thirdsFrom(degree).slice(0, 4),
       PitchLineDirection.Ascending
@@ -37,8 +47,10 @@ export class Barry {
     return this;
   }
 
-  scaleDown(from: ScaleDegree, to: ScaleDegree) {
-    let rawLine = this.scale.down(from, to);
+  scaleDown(to: ScaleDegree, from: ScaleDegree) {
+    let rawLine = new PitchLine();
+
+    rawLine = this.scale.down(from, to);
 
     if (this.lineStartsAtChordTone(from)) {
       rawLine = rawLine.insertHalfToneBetween(
@@ -52,7 +64,7 @@ export class Barry {
     return this;
   }
 
-  scaleDownExtra(from: ScaleDegree, to: ScaleDegree) {
+  scaleDownExtraHalfSteps(to: ScaleDegree, from: ScaleDegree) {
     let rawLine = this.scale.down(from, to);
 
     if (this.lineStartsAtChordTone(from)) {
@@ -84,8 +96,47 @@ export class Barry {
     return this;
   }
 
+  arpeggioUpFromLastPitch(resolveTo?: Pitch) {
+    const from = this.lastDegree();
+
+    if (from) {
+      this.arpeggioUpFrom(from, resolveTo);
+    }
+
+    return this;
+  }
+
+  scaleDownFromLastPitchTo(to: ScaleDegree) {
+    const from = this.lastDegree();
+
+    if (from) {
+      this.scaleDown(to, from - 1);
+    }
+
+    return this;
+  }
+
+  scaleDownExtraHalfStepsFromLastPitch(to: ScaleDegree) {
+    const from = this.lastDegree();
+
+    if (from) {
+      this.scaleDownExtraHalfSteps(to, from - 1);
+    }
+
+    return this;
+  }
+
   build(): PitchLines {
     return this.line;
+  }
+
+  private lastDegree() {
+    const lastPitch = this.line.lastPitch();
+    let from: ScaleDegree | undefined = undefined;
+
+    if (lastPitch) from = this.scale.degreeFor(lastPitch);
+
+    return from;
   }
 
   private lineStartsAtChordTone(from: ScaleDegree) {
