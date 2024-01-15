@@ -1,4 +1,5 @@
 import { FretPrimitives, GuitarStringPrimitives, PositionPrimitives } from '../primitives/Guitar';
+import { PitchLines } from './Barry';
 import { Chord } from './Chord';
 import { Pitch, PitchLine, PitchLineDirection } from './Pitch';
 
@@ -169,6 +170,10 @@ class HorizontalFrets extends Frets {
 
   push(fret: Fret) {
     this.frets.push(fret);
+  }
+
+  concat(frets: HorizontalFrets) {
+    this.frets = this.frets.concat(frets.frets);
   }
 
   last() {
@@ -586,7 +591,7 @@ export class GuitarChord implements Iterable<Fret> {
 }
 
 export class GuitarPitchLine implements Iterable<Fret> {
-  private readonly line: HorizontalFrets = new HorizontalFrets();
+  protected readonly line: HorizontalFrets = new HorizontalFrets();
   private readonly position: Position = Position.Open;
   private readonly guitarStrings = new GuitarStrings();
 
@@ -605,7 +610,11 @@ export class GuitarPitchLine implements Iterable<Fret> {
     return new Tab(...column);
   }
 
-  private mapPitchLine(pitchLine: PitchLine, guitarStrings: GuitarStrings) {
+  toFrets() {
+    return this.line;
+  }
+
+  protected mapPitchLine(pitchLine: PitchLine, guitarStrings: GuitarStrings) {
     const line: HorizontalFrets = new HorizontalFrets();
     const guitarStringsOrdered = this.guitarStringsFor(pitchLine.Direction, guitarStrings);
 
@@ -660,6 +669,20 @@ export class GuitarPitchLine implements Iterable<Fret> {
   *[Symbol.iterator](): Iterator<Fret> {
     for (const fret of this.line) {
       yield fret;
+    }
+  }
+}
+
+export class GuitarPitchLines extends GuitarPitchLine {
+  constructor(
+    pitchLines: PitchLines,
+    position: Position,
+    guitarStrings: GuitarStrings = new GuitarStrings()
+  ) {
+    super(new PitchLine(), position, guitarStrings);
+
+    for (const pitchLine of pitchLines) {
+      this.line.concat(this.mapPitchLine(pitchLine, guitarStrings));
     }
   }
 }

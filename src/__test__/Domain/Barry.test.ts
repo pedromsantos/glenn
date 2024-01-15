@@ -1,4 +1,5 @@
 import { Barry } from '../../Domain/Barry';
+import { GuitarPitchLines, Position, Tab } from '../../Domain/Guitar';
 import { Pitch } from '../../Domain/Pitch';
 import { Scale, ScaleDegree, ScalePattern } from '../../Domain/Scale';
 
@@ -193,6 +194,19 @@ describe('Barry Harrys lines', () => {
         expect(flatLine[flatLine.length - 3]).toBe(Pitch.G);
         expect(flatLine[flatLine.length - 2]).toBe(Pitch.BFlat);
         expect(flatLine[flatLine.length - 1]).toBe(Pitch.D);
+      });
+
+      test('Guitar Tab for: Arpeggio up with resolution, scale down, arpeggio up', () => {
+        const lines = new Barry(scale)
+          .arpeggioUpFrom(ScaleDegree.I, Pitch.A)
+          .scaleDownFromLastPitchTo(ScaleDegree.III)
+          .arpeggioUpFromLastPitch()
+          .build();
+
+        const guitarLine = new GuitarPitchLines(lines, Position.C);
+        const tab = Tab.render(guitarLine.toTab());
+
+        expect(tab).toContain('');
       });
     });
   });

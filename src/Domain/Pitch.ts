@@ -547,6 +547,10 @@ export class PitchLine implements Iterable<Pitch> {
     return new PitchLine(this.line.slice(0, pitchIndex).reverse(), this.direction);
   }
 
+  push(pitch: Pitch) {
+    this.line.push(pitch);
+  }
+
   lastPitch() {
     const lastPitch = this.line[this.line.length - 1];
 

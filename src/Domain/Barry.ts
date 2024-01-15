@@ -38,11 +38,11 @@ export class Barry {
       PitchLineDirection.Ascending
     );
 
-    this.line.add(arpeggio);
-
     if (resolveTo) {
-      this.line.add(new PitchLine([resolveTo], PitchLineDirection.Ascending));
+      arpeggio.push(resolveTo);
     }
+
+    this.line.add(arpeggio);
 
     return this;
   }
