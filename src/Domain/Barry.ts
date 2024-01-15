@@ -29,7 +29,7 @@ export class PitchLines implements Iterable<PitchLine> {
   }
 }
 
-export class Barry {
+export class BarryHarrisLine {
   private readonly line: PitchLines;
 
   constructor(private readonly scale: Scale) {

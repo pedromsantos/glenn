@@ -1,4 +1,4 @@
-import { Barry } from '../../Domain/Barry';
+import { BarryHarrisLine } from '../../Domain/Barry';
 import { GuitarPitchLines, Position, Tab } from '../../Domain/Guitar';
 import { Pitch } from '../../Domain/Pitch';
 import { Scale, ScaleDegree, ScalePattern } from '../../Domain/Scale';
@@ -19,7 +19,7 @@ describe('Barry Harrys lines', () => {
         [ScaleDegree.VI, [Pitch.A, Pitch.C, Pitch.E, Pitch.G]],
         [ScaleDegree.VII, [Pitch.BFlat, Pitch.D, Pitch.F, Pitch.A]],
       ])('From', (degree, expected) => {
-        const lines = new Barry(scale).arpeggioUpFrom(degree).build();
+        const lines = new BarryHarrisLine(scale).arpeggioUpFrom(degree).build();
         const flatLine = [...[...lines][0]!];
 
         expect(flatLine).toStrictEqual(expected);
@@ -57,7 +57,7 @@ describe('Barry Harrys lines', () => {
           [Pitch.E, Pitch.D, Pitch.C, Pitch.B, Pitch.BFlat, Pitch.A, Pitch.G, Pitch.F, Pitch.E],
         ],
       ])('From', (from, to, expected) => {
-        const line = new Barry(scale);
+        const line = new BarryHarrisLine(scale);
 
         line.scaleDown(to, from);
         const flatLine = [...[...line.build()][0]!];
@@ -139,7 +139,7 @@ describe('Barry Harrys lines', () => {
           ],
         ],
       ])('From', (from, to, expected) => {
-        const line = new Barry(scale);
+        const line = new BarryHarrisLine(scale);
 
         line.scaleDownExtraHalfSteps(to, from);
         const flatLine = [...[...line.build()][0]!];
@@ -150,7 +150,7 @@ describe('Barry Harrys lines', () => {
 
     describe('combined lines', () => {
       test('Arpeggio up, scale down', () => {
-        const lines = new Barry(scale)
+        const lines = new BarryHarrisLine(scale)
           .arpeggioUpFrom(ScaleDegree.I)
           .scaleDownFromLastPitchTo(ScaleDegree.III)
           .build();
@@ -164,7 +164,7 @@ describe('Barry Harrys lines', () => {
       });
 
       test('Arpeggio up with resolution, scale down', () => {
-        const lines = new Barry(scale)
+        const lines = new BarryHarrisLine(scale)
           .arpeggioUpFrom(ScaleDegree.I)
           .resolveTo(Pitch.A)
           .scaleDownFromLastPitchTo(ScaleDegree.II)
@@ -179,7 +179,7 @@ describe('Barry Harrys lines', () => {
       });
 
       test('Arpeggio up with resolution, scale down, arpeggio up', () => {
-        const lines = new Barry(scale)
+        const lines = new BarryHarrisLine(scale)
           .arpeggioUpFrom(ScaleDegree.I)
           .resolveTo(Pitch.A)
           .scaleDownFromLastPitchTo(ScaleDegree.III)
@@ -198,15 +198,15 @@ describe('Barry Harrys lines', () => {
         expect(flatLine[flatLine.length - 1]).toBe(Pitch.D);
       });
 
-      test('Guitar Tab for: Arpeggio up with resolution, scale down, arpeggio up', () => {
-        const lines = new Barry(scale)
+      test('Guitar Tab for: Arpeggio up, resolve to, scale down, arpeggio up', () => {
+        const line = new BarryHarrisLine(scale)
           .arpeggioUpFrom(ScaleDegree.I)
           .resolveTo(Pitch.A)
           .scaleDownFromLastPitchTo(ScaleDegree.III)
           .arpeggioUpFromLastPitch()
           .build();
 
-        const guitarLine = new GuitarPitchLines(lines, Position.C);
+        const guitarLine = new GuitarPitchLines(line, Position.C);
         const tab = Tab.render(guitarLine.toTab());
 
         expect(tab).toBe(`e|-----------------------|
