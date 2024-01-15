@@ -2,7 +2,7 @@ import { Barry } from '../../Domain/Barry';
 import { Pitch } from '../../Domain/Pitch';
 import { Scale, ScaleDegree, ScalePattern } from '../../Domain/Scale';
 
-describe('Barry  Harrys lines', () => {
+describe('Barry Harrys lines', () => {
   describe('from C7 scale', () => {
     const scale = new Scale(ScalePattern.Mixolydian, Pitch.C);
 
