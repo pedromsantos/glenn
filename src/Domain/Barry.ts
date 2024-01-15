@@ -8,6 +8,10 @@ export class PitchLines implements Iterable<PitchLine> {
     this.lines.push(line);
   }
 
+  pushLastLine(pitch: Pitch) {
+    this.lines[this.lines.length - 1]?.push(pitch);
+  }
+
   lastPitch() {
     const lastLine = this.lines[this.lines.length - 1];
 
@@ -32,18 +36,19 @@ export class Barry {
     this.line = new PitchLines();
   }
 
-  arpeggioUpFrom(degree: ScaleDegree, resolveTo?: Pitch) {
+  arpeggioUpFrom(degree: ScaleDegree) {
     const arpeggio = new PitchLine(
       this.scale.thirdsFrom(degree).slice(0, 4),
       PitchLineDirection.Ascending
     );
 
-    if (resolveTo) {
-      arpeggio.push(resolveTo);
-    }
-
     this.line.add(arpeggio);
 
+    return this;
+  }
+
+  resolveTo(pitch: Pitch) {
+    this.line.pushLastLine(pitch);
     return this;
   }
 
@@ -96,7 +101,7 @@ export class Barry {
     return this;
   }
 
-  arpeggioUpFromLastPitch(resolveTo?: Pitch) {
+  arpeggioUpFromLastPitch() {
     const from = this.lastDegree();
 
     if (from) {
@@ -104,10 +109,6 @@ export class Barry {
         this.scale.thirdsFrom(from).slice(1, 4),
         PitchLineDirection.Ascending
       );
-
-      if (resolveTo) {
-        arpeggio.push(resolveTo);
-      }
 
       this.line.add(arpeggio);
     }

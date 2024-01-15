@@ -165,7 +165,8 @@ describe('Barry Harrys lines', () => {
 
       test('Arpeggio up with resolution, scale down', () => {
         const lines = new Barry(scale)
-          .arpeggioUpFrom(ScaleDegree.I, Pitch.A)
+          .arpeggioUpFrom(ScaleDegree.I)
+          .resolveTo(Pitch.A)
           .scaleDownFromLastPitchTo(ScaleDegree.II)
           .build();
 
@@ -179,7 +180,8 @@ describe('Barry Harrys lines', () => {
 
       test('Arpeggio up with resolution, scale down, arpeggio up', () => {
         const lines = new Barry(scale)
-          .arpeggioUpFrom(ScaleDegree.I, Pitch.A)
+          .arpeggioUpFrom(ScaleDegree.I)
+          .resolveTo(Pitch.A)
           .scaleDownFromLastPitchTo(ScaleDegree.III)
           .arpeggioUpFromLastPitch()
           .build();
@@ -198,7 +200,8 @@ describe('Barry Harrys lines', () => {
 
       test('Guitar Tab for: Arpeggio up with resolution, scale down, arpeggio up', () => {
         const lines = new Barry(scale)
-          .arpeggioUpFrom(ScaleDegree.I, Pitch.A)
+          .arpeggioUpFrom(ScaleDegree.I)
+          .resolveTo(Pitch.A)
           .scaleDownFromLastPitchTo(ScaleDegree.III)
           .arpeggioUpFromLastPitch()
           .build();
