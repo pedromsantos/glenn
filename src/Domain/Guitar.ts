@@ -671,6 +671,12 @@ export class GuitarPitchLine implements Iterable<Fret> {
     return line;
   }
 
+  protected guitarStringsFor(lineDirection: PitchLineDirection, guitarStrings: GuitarStrings) {
+    return lineDirection === PitchLineDirection.Descending
+      ? guitarStrings.lowerToHigher()
+      : guitarStrings.higherToLower();
+  }
+
   private mapLine(pitchLine: PitchLine, guitarStrings: GuitarStrings, line: HorizontalFrets) {
     for (const pitch of pitchLine) {
       for (const guitarString of guitarStrings) {
@@ -683,12 +689,6 @@ export class GuitarPitchLine implements Iterable<Fret> {
         }
       }
     }
-  }
-
-  protected guitarStringsFor(lineDirection: PitchLineDirection, guitarStrings: GuitarStrings) {
-    return lineDirection === PitchLineDirection.Descending
-      ? guitarStrings.lowerToHigher()
-      : guitarStrings.higherToLower();
   }
 
   private skipMappedString(line: HorizontalFrets, guitarString: GuitarString) {
