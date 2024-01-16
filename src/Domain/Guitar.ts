@@ -220,8 +220,8 @@ export class GuitarStrings implements Iterable<GuitarString> {
     );
   }
 
-  slice(index: number) {
-    return new GuitarStrings(this.guitarStrings.slice(index));
+  removeTopString() {
+    return new GuitarStrings(this.guitarStrings.slice(1));
   }
 
   get length() {
@@ -656,28 +656,24 @@ export class GuitarPitchLine implements Iterable<Fret> {
 
   protected mapPitchLine(pitchLine: PitchLine, guitarStrings: GuitarStrings) {
     const line: HorizontalFrets = new HorizontalFrets();
-    const guitarStringsOrdered = this.guitarStringsFor(pitchLine.Direction, guitarStrings);
+    const guitarStringsSet = this.guitarStringsFor(pitchLine.Direction, guitarStrings);
 
     if (guitarStrings.length === 0) {
       return new HorizontalFrets();
     }
 
-    this.mapLine(pitchLine, guitarStringsOrdered, line);
+    this.mapLine(pitchLine, guitarStringsSet, line);
 
     if (line.length !== pitchLine.length) {
-      this.mapPitchLine(pitchLine, guitarStringsOrdered.slice(1));
+      this.mapPitchLine(pitchLine, guitarStringsSet.removeTopString());
     }
 
     return line;
   }
 
-  private mapLine(
-    pitchLine: PitchLine,
-    guitarStringsOrdered: GuitarStrings,
-    line: HorizontalFrets
-  ) {
+  private mapLine(pitchLine: PitchLine, guitarStrings: GuitarStrings, line: HorizontalFrets) {
     for (const pitch of pitchLine) {
-      for (const guitarString of guitarStringsOrdered) {
+      for (const guitarString of guitarStrings) {
         if (this.skipMappedString(line, guitarString)) {
           continue;
         }
