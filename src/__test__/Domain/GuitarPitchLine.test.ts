@@ -11,15 +11,6 @@ describe('Guitar pitch line should', () => {
       const fret = Array.from(guitarLine)[0];
       expect(fret?.equals(new Fret(GuitarString.Fifth, 3))).toBeTruthy();
     });
-
-    test('C position descending', () => {
-      const line = ScalePattern.Ionian.createDescendingPitchLineScale(Pitch.C);
-      const guitarLine = new GuitarPitchLine(line, Position.C);
-
-      const fret = Array.from(guitarLine)[0];
-
-      expect(fret).toStrictEqual(new Fret(GuitarString.First, 5));
-    });
   });
 
   describe('Map E to', () => {

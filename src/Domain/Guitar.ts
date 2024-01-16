@@ -200,12 +200,20 @@ export class GuitarStrings implements Iterable<GuitarString> {
     return this.guitarStrings.find((gs) => gs.Index == guitarStringIndex)!;
   }
 
-  isHigherThan(guitarString: GuitarString) {
+  higherThan(guitarString: GuitarString) {
     return this.guitarStrings.filter((s) => !s.isLowerThan(guitarString));
   }
 
-  isLowerThan(guitarString: GuitarString) {
+  lowerThan(guitarString: GuitarString) {
     return this.guitarStrings.filter((s) => !s.isHigherThan(guitarString));
+  }
+
+  lowerToHigher() {
+    return this.guitarStrings.sort((s1: GuitarString, s2: GuitarString) => s1.Index - s2.Index);
+  }
+
+  higherToLower() {
+    return this.guitarStrings.sort((s1: GuitarString, s2: GuitarString) => s2.Index - s1.Index);
   }
 
   get length() {
@@ -652,10 +660,6 @@ export class GuitarPitchLine implements Iterable<Fret> {
       this.mapPitchLine(pitchLine, new GuitarStrings(guitarStringsOrdered.slice(1)));
     }
 
-    if (pitchLine.Direction == PitchLineDirection.Descending && !line.allInSameString()) {
-      line.reverse();
-    }
-
     return line;
   }
 
@@ -679,8 +683,8 @@ export class GuitarPitchLine implements Iterable<Fret> {
 
   protected guitarStringsFor(lineDirection: PitchLineDirection, guitarStrings: GuitarStrings) {
     return lineDirection === PitchLineDirection.Descending
-      ? [...guitarStrings].reverse()
-      : [...guitarStrings];
+      ? guitarStrings.lowerToHigher()
+      : guitarStrings.higherToLower();
   }
 
   private skipMappedString(line: HorizontalFrets, guitarString: GuitarString) {
@@ -733,8 +737,8 @@ export class GuitarPitchLines extends GuitarPitchLine {
     const lastString = this.line.last()?.String;
     if (lastString) {
       return lineDirection === PitchLineDirection.Descending
-        ? guitarStrings.isHigherThan(lastString).reverse()
-        : guitarStrings.isLowerThan(lastString);
+        ? guitarStrings.higherThan(lastString).reverse()
+        : guitarStrings.lowerThan(lastString);
     }
 
     return super.guitarStringsFor(lineDirection, guitarStrings);

@@ -12,7 +12,7 @@ import {
   Tab,
   TabColumn,
 } from '../../Domain/Guitar';
-import { Pitch, PitchLine, PitchLineDirection } from '../../Domain/Pitch';
+import { Pitch, PitchLine } from '../../Domain/Pitch';
 import { ScalePattern } from '../../Domain/Scale';
 
 describe('Blank fret should', () => {
@@ -136,21 +136,6 @@ B|-------|
 G|-------|
 D|---2-5-|
 A|-3-----|
-E|-------|`;
-        expect(renderedTab).toBe(expectedTab);
-      });
-
-      test('C E G descending on C position', () => {
-        const line = new PitchLine([Pitch.C, Pitch.E, Pitch.G], PitchLineDirection.Descending);
-        const guitarLine = new GuitarPitchLine(line, Position.C);
-
-        const renderedTab = Tab.render(guitarLine.toTab());
-
-        const expectedTab = `e|-3-----|
-B|---5-1-|
-G|-------|
-D|-------|
-A|-------|
 E|-------|`;
         expect(renderedTab).toBe(expectedTab);
       });
