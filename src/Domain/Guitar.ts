@@ -201,19 +201,27 @@ export class GuitarStrings implements Iterable<GuitarString> {
   }
 
   higherThan(guitarString: GuitarString) {
-    return this.guitarStrings.filter((s) => !s.isLowerThan(guitarString));
+    return new GuitarStrings(this.guitarStrings.filter((s) => !s.isLowerThan(guitarString)));
   }
 
   lowerThan(guitarString: GuitarString) {
-    return this.guitarStrings.filter((s) => !s.isHigherThan(guitarString));
+    return new GuitarStrings(this.guitarStrings.filter((s) => !s.isHigherThan(guitarString)));
   }
 
   lowerToHigher() {
-    return this.guitarStrings.sort((s1: GuitarString, s2: GuitarString) => s1.Index - s2.Index);
+    return new GuitarStrings(
+      this.guitarStrings.sort((s1: GuitarString, s2: GuitarString) => s1.Index - s2.Index)
+    );
   }
 
   higherToLower() {
-    return this.guitarStrings.sort((s1: GuitarString, s2: GuitarString) => s2.Index - s1.Index);
+    return new GuitarStrings(
+      this.guitarStrings.sort((s1: GuitarString, s2: GuitarString) => s2.Index - s1.Index)
+    );
+  }
+
+  slice(index: number) {
+    return new GuitarStrings(this.guitarStrings.slice(index));
   }
 
   get length() {
@@ -657,7 +665,7 @@ export class GuitarPitchLine implements Iterable<Fret> {
     this.mapLine(pitchLine, guitarStringsOrdered, line);
 
     if (line.length !== pitchLine.length) {
-      this.mapPitchLine(pitchLine, new GuitarStrings(guitarStringsOrdered.slice(1)));
+      this.mapPitchLine(pitchLine, guitarStringsOrdered.slice(1));
     }
 
     return line;
@@ -665,7 +673,7 @@ export class GuitarPitchLine implements Iterable<Fret> {
 
   private mapLine(
     pitchLine: PitchLine,
-    guitarStringsOrdered: GuitarString[],
+    guitarStringsOrdered: GuitarStrings,
     line: HorizontalFrets
   ) {
     for (const pitch of pitchLine) {
@@ -737,7 +745,7 @@ export class GuitarPitchLines extends GuitarPitchLine {
     const lastString = this.line.last()?.String;
     if (lastString) {
       return lineDirection === PitchLineDirection.Descending
-        ? guitarStrings.higherThan(lastString).reverse()
+        ? guitarStrings.higherThan(lastString).lowerToHigher()
         : guitarStrings.lowerThan(lastString);
     }
 
