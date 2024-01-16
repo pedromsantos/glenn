@@ -236,18 +236,19 @@ E|-----------------------|`);
           .resolveTo(Pitch.A)
           .scaleDownFromLastPitchTo(ScaleDegree.III)
           .arpeggioUpFromLastPitch()
+          .resolveTo(Pitch.E)
           .pivotArpeggioUpFromLastPitch()
           .build();
 
         const guitarLine = new GuitarPitchLines(line, Position.C);
         const tab = Tab.render(guitarLine.toTab());
 
-        expect(tab).toBe(`e|---------------------------3-|
-B|---------------------3-3-5---|
-G|-------3-2---------3---------|
-D|---2-5-----5-3-2-5-----------|
-A|-3---------------------------|
-E|-----------------------------|`);
+        expect(tab).toBe(`e|-------------------------------|
+B|---------------------3-5-------|
+G|-------3-2---------3-------2-5-|
+D|---2-5-----5-3-2-5-------3-----|
+A|-3-----------------------------|
+E|-------------------------------|`);
       });
     });
   });

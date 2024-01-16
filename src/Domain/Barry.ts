@@ -132,12 +132,12 @@ export class BarryHarrisLine {
     const from = this.lastDegree();
 
     if (from) {
-      const arpeggio = this.scale.thirdsTo(from).slice(0, 3);
+      const arpeggio = this.scale.thirdsTo(from).slice(0, 4);
 
-      const arpeggioThird = new PitchLine(arpeggio.slice(0, 1), PitchLineDirection.Descending);
+      const arpeggioThird = new PitchLine(arpeggio.slice(1, 2), PitchLineDirection.Descending);
       this.line.add(arpeggioThird);
 
-      const pivot = new PitchLine(arpeggio.slice(1), PitchLineDirection.Ascending);
+      const pivot = new PitchLine(arpeggio.slice(2), PitchLineDirection.Ascending);
       this.line.add(pivot);
     }
 
