@@ -250,6 +250,27 @@ D|---2-5-----5-3-2-5-------3-----|
 A|-3-----------------------------|
 E|-------------------------------|`);
       });
+
+      test('Guitar Tab for: Arpeggio up, resolve to, scale down, arpeggio up, resolve and pivot, alternate version', () => {
+        const line = new BarryHarrisLine(scale)
+          .arpeggioUpFrom(ScaleDegree.I)
+          .resolveTo(Pitch.D)
+          .scaleDownFromLastPitchTo(ScaleDegree.III)
+          .arpeggioUpFromLastPitch()
+          .resolveTo(Pitch.E)
+          .pivotArpeggioUpFromLastPitch()
+          .build();
+
+        const guitarLine = new GuitarPitchLines(line, Position.C);
+        const tab = Tab.render(guitarLine.toTab());
+
+        expect(tab).toBe(`e|---------------------------------------|
+B|---------3-1-----------------3-5-------|
+G|-------3-----4-3-2---------3-------2-5-|
+D|---2-5-------------5-3-2-5-------3-----|
+A|-3-------------------------------------|
+E|---------------------------------------|`);
+      });
     });
   });
 });

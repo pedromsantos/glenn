@@ -642,7 +642,8 @@ export class GuitarPitchLine implements Iterable<Fret> {
   ) {
     this.position = position;
     this.guitarStrings = guitarStrings;
-    this.line = this.mapPitchLine(pitchLine, guitarStrings);
+    if (pitchLine.length > 0) this.line = this.mapPitchLine(pitchLine, guitarStrings);
+    else this.line = new HorizontalFrets();
   }
 
   toTab(): Tab {
@@ -655,17 +656,11 @@ export class GuitarPitchLine implements Iterable<Fret> {
   }
 
   protected mapPitchLine(pitchLine: PitchLine, guitarStrings: GuitarStrings) {
-    const line: HorizontalFrets = new HorizontalFrets();
     const guitarStringsSet = this.guitarStringsFor(pitchLine.Direction, guitarStrings);
+    const line = this.mapLine(pitchLine, guitarStringsSet);
 
-    if (guitarStrings.length === 0) {
+    if (Math.abs(line.length - pitchLine.length) > 2) {
       return new HorizontalFrets();
-    }
-
-    this.mapLine(pitchLine, guitarStringsSet, line);
-
-    if (line.length !== pitchLine.length) {
-      this.mapPitchLine(pitchLine, guitarStringsSet.removeTopString());
     }
 
     return line;
@@ -677,10 +672,12 @@ export class GuitarPitchLine implements Iterable<Fret> {
       : guitarStrings.higherToLower();
   }
 
-  private mapLine(pitchLine: PitchLine, guitarStrings: GuitarStrings, line: HorizontalFrets) {
+  private mapLine(pitchLine: PitchLine, guitarStrings: GuitarStrings) {
+    const line = new HorizontalFrets();
+
     for (const pitch of pitchLine) {
       for (const guitarString of guitarStrings) {
-        if (this.skipMappedString(line, guitarString)) {
+        if (this.skipMappedString(line, guitarString, pitchLine.Direction)) {
           continue;
         }
 
@@ -689,12 +686,24 @@ export class GuitarPitchLine implements Iterable<Fret> {
         }
       }
     }
+
+    return line;
   }
 
-  private skipMappedString(line: HorizontalFrets, guitarString: GuitarString) {
+  private skipMappedString(
+    line: HorizontalFrets,
+    guitarString: GuitarString,
+    direction: PitchLineDirection
+  ) {
     const lastFret = line.last();
 
-    return lastFret && guitarString.isHigherThan(lastFret.String);
+    if (lastFret) {
+      return direction == PitchLineDirection.Ascending
+        ? guitarString.isHigherThan(lastFret.String)
+        : guitarString.isLowerThan(lastFret.String);
+    }
+
+    return false;
   }
 
   private mapPitch(pitch: Pitch, guitarString: GuitarString, line: HorizontalFrets): boolean {
@@ -738,11 +747,12 @@ export class GuitarPitchLines extends GuitarPitchLine {
     lineDirection: PitchLineDirection,
     guitarStrings: GuitarStrings
   ) {
-    const lastString = this.line.last()?.String;
-    if (lastString) {
+    const lastFret = this.line.last();
+
+    if (lastFret) {
       return lineDirection === PitchLineDirection.Descending
-        ? guitarStrings.higherThan(lastString).lowerToHigher()
-        : guitarStrings.lowerThan(lastString);
+        ? guitarStrings.higherThan(lastFret.String).lowerToHigher()
+        : guitarStrings.lowerThan(lastFret.String);
     }
 
     return super.guitarStringsFor(lineDirection, guitarStrings);
