@@ -128,6 +128,22 @@ export class BarryHarrisLine {
     return this;
   }
 
+  pivotArpeggioUpFromLastPitch() {
+    const from = this.lastDegree();
+
+    if (from) {
+      const arpeggio = this.scale.thirdsTo(from).slice(0, 3);
+
+      const arpeggioThird = new PitchLine(arpeggio.slice(0, 1), PitchLineDirection.Descending);
+      this.line.add(arpeggioThird);
+
+      const pivot = new PitchLine(arpeggio.slice(1), PitchLineDirection.Ascending);
+      this.line.add(pivot);
+    }
+
+    return this;
+  }
+
   scaleDownFromLastPitchTo(to: ScaleDegree) {
     const from = this.lastDegree();
 

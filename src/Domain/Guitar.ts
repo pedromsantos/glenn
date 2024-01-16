@@ -196,6 +196,14 @@ export class GuitarStrings implements Iterable<GuitarString> {
     return this.guitarStrings.find((gs) => gs.Index == guitarStringIndex)!;
   }
 
+  isHigherThan(guitarString: GuitarString) {
+    return this.guitarStrings.filter((s) => !s.isLowerThan(guitarString));
+  }
+
+  isLowerThan(guitarString: GuitarString) {
+    return this.guitarStrings.filter((s) => !s.isHigherThan(guitarString));
+  }
+
   *[Symbol.iterator](): Iterator<GuitarString> {
     for (const guitarString of this.guitarStrings) {
       yield guitarString;
@@ -288,11 +296,11 @@ export class GuitarString {
     return this.index === other.index;
   }
 
-  isLowerIndexThan(other: GuitarString): boolean {
+  isHigherThan(other: GuitarString): boolean {
     return other.index < this.index;
   }
 
-  isHigherThan(other: GuitarString): boolean {
+  isLowerThan(other: GuitarString): boolean {
     return other.index > this.index;
   }
 
@@ -654,7 +662,7 @@ export class GuitarPitchLine implements Iterable<Fret> {
   private skipMappedString(line: HorizontalFrets, guitarString: GuitarString) {
     const lastFret = line.last();
 
-    return lastFret && guitarString.isLowerIndexThan(lastFret.String);
+    return lastFret && guitarString.isHigherThan(lastFret.String);
   }
 
   private mapPitch(pitch: Pitch, guitarString: GuitarString, line: HorizontalFrets): boolean {
@@ -701,8 +709,8 @@ export class GuitarPitchLines extends GuitarPitchLine {
     const lastString = this.line.last()?.String;
     if (lastString) {
       return lineDirection === PitchLineDirection.Descending
-        ? [...guitarStrings].filter((s) => !s.isHigherThan(lastString)).reverse()
-        : [...guitarStrings].filter((s) => !s.isLowerIndexThan(lastString));
+        ? guitarStrings.isHigherThan(lastString).reverse()
+        : guitarStrings.isLowerThan(lastString);
     }
 
     return super.guitarStringsFor(lineDirection, guitarStrings);

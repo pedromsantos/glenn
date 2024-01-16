@@ -371,10 +371,9 @@ export class Scale implements Iterable<Pitch> {
   thirdsTo(degree: ScaleDegree): Array<Pitch> {
     return this.pitches
       .slice(degree)
-      .concat(this.pitchFor(degree))
       .concat(this.pitches)
       .concat(this.pitches)
-      .filter((_, i) => i % 2 === 0)
+      .filter((_, i) => i % 2 != 0 || i == 0)
       .slice(0, 7);
   }
 

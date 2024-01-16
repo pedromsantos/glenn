@@ -31,7 +31,12 @@ describe('Barry Harrys lines', () => {
 
       test.each<TestTuple>([
         [ScaleDegree.VII, [Pitch.BFlat, Pitch.C, Pitch.E, Pitch.G]],
-        //[ScaleDegree.VI, [Pitch.A, Pitch.BFlat, Pitch.D, Pitch.F]],
+        [ScaleDegree.VI, [Pitch.A, Pitch.BFlat, Pitch.D, Pitch.F]],
+        [ScaleDegree.V, [Pitch.G, Pitch.A, Pitch.C, Pitch.E]],
+        [ScaleDegree.IV, [Pitch.F, Pitch.G, Pitch.BFlat, Pitch.D]],
+        [ScaleDegree.III, [Pitch.E, Pitch.F, Pitch.A, Pitch.C]],
+        [ScaleDegree.II, [Pitch.D, Pitch.E, Pitch.G, Pitch.BFlat]],
+        [ScaleDegree.I, [Pitch.C, Pitch.D, Pitch.F, Pitch.A]],
       ])('From', (degree, expected) => {
         const lines = new BarryHarrisLine(scale).pivotArpeggioUpFrom(degree).build();
         const flatLine = [...lines].flatMap((l) => [...l]);
@@ -223,6 +228,26 @@ G|-------3-2---------3---|
 D|---2-5-----5-3-2-5-----|
 A|-3---------------------|
 E|-----------------------|`);
+      });
+
+      test('Guitar Tab for: Arpeggio up, resolve to, scale down, arpeggio up, pivot', () => {
+        const line = new BarryHarrisLine(scale)
+          .arpeggioUpFrom(ScaleDegree.I)
+          .resolveTo(Pitch.A)
+          .scaleDownFromLastPitchTo(ScaleDegree.III)
+          .arpeggioUpFromLastPitch()
+          .pivotArpeggioUpFromLastPitch()
+          .build();
+
+        const guitarLine = new GuitarPitchLines(line, Position.C);
+        const tab = Tab.render(guitarLine.toTab());
+
+        expect(tab).toBe(`e|---------------------------3-|
+B|---------------------3-3-5---|
+G|-------3-2---------3---------|
+D|---2-5-----5-3-2-5-----------|
+A|-3---------------------------|
+E|-----------------------------|`);
       });
     });
   });
