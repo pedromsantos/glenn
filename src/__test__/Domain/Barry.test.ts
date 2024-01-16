@@ -230,7 +230,7 @@ A|-3---------------------|
 E|-----------------------|`);
       });
 
-      test('Guitar Tab for: Arpeggio up, resolve to, scale down, arpeggio up, pivot', () => {
+      test('Guitar Tab for: Arpeggio up, resolve to, scale down, arpeggio up, resolve and pivot', () => {
         const line = new BarryHarrisLine(scale)
           .arpeggioUpFrom(ScaleDegree.I)
           .resolveTo(Pitch.A)

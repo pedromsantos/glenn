@@ -183,6 +183,10 @@ class HorizontalFrets extends Frets {
   allInSameString() {
     return this.frets.every((v) => v.String === this.frets[0]?.String);
   }
+
+  get length() {
+    return this.frets.length;
+  }
 }
 
 export class GuitarStrings implements Iterable<GuitarString> {
@@ -202,6 +206,10 @@ export class GuitarStrings implements Iterable<GuitarString> {
 
   isLowerThan(guitarString: GuitarString) {
     return this.guitarStrings.filter((s) => !s.isHigherThan(guitarString));
+  }
+
+  get length() {
+    return this.guitarStrings.length;
   }
 
   *[Symbol.iterator](): Iterator<GuitarString> {
@@ -634,6 +642,28 @@ export class GuitarPitchLine implements Iterable<Fret> {
     const line: HorizontalFrets = new HorizontalFrets();
     const guitarStringsOrdered = this.guitarStringsFor(pitchLine.Direction, guitarStrings);
 
+    if (guitarStrings.length === 0) {
+      return new HorizontalFrets();
+    }
+
+    this.mapLine(pitchLine, guitarStringsOrdered, line);
+
+    if (line.length !== pitchLine.length) {
+      this.mapPitchLine(pitchLine, new GuitarStrings(guitarStringsOrdered.slice(1)));
+    }
+
+    if (pitchLine.Direction == PitchLineDirection.Descending && !line.allInSameString()) {
+      line.reverse();
+    }
+
+    return line;
+  }
+
+  private mapLine(
+    pitchLine: PitchLine,
+    guitarStringsOrdered: GuitarString[],
+    line: HorizontalFrets
+  ) {
     for (const pitch of pitchLine) {
       for (const guitarString of guitarStringsOrdered) {
         if (this.skipMappedString(line, guitarString)) {
@@ -645,12 +675,6 @@ export class GuitarPitchLine implements Iterable<Fret> {
         }
       }
     }
-
-    if (pitchLine.Direction == PitchLineDirection.Descending && !line.allInSameString()) {
-      line.reverse();
-    }
-
-    return line;
   }
 
   protected guitarStringsFor(lineDirection: PitchLineDirection, guitarStrings: GuitarStrings) {
