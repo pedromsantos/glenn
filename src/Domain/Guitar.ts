@@ -200,14 +200,6 @@ export class GuitarStrings implements Iterable<GuitarString> {
     return this.guitarStrings.find((gs) => gs.Index == guitarStringIndex)!;
   }
 
-  higherThan(guitarString: GuitarString) {
-    return new GuitarStrings(this.guitarStrings.filter((s) => !s.isLowerThan(guitarString)));
-  }
-
-  lowerThan(guitarString: GuitarString) {
-    return new GuitarStrings(this.guitarStrings.filter((s) => !s.isHigherThan(guitarString)));
-  }
-
   lowerToHigher() {
     return new GuitarStrings(
       this.guitarStrings.sort((s1: GuitarString, s2: GuitarString) => s1.Index - s2.Index)
@@ -218,6 +210,15 @@ export class GuitarStrings implements Iterable<GuitarString> {
     return new GuitarStrings(
       this.guitarStrings.sort((s1: GuitarString, s2: GuitarString) => s2.Index - s1.Index)
     );
+  }
+
+  filterStringsByDirectionAndPreviousString(
+    lineDirection: PitchLineDirection,
+    previousString: GuitarString
+  ) {
+    return lineDirection === PitchLineDirection.Descending
+      ? this.higherThan(previousString).lowerToHigher()
+      : this.lowerThan(previousString);
   }
 
   removeTopString() {
@@ -232,6 +233,14 @@ export class GuitarStrings implements Iterable<GuitarString> {
     for (const guitarString of this.guitarStrings) {
       yield guitarString;
     }
+  }
+
+  private higherThan(guitarString: GuitarString) {
+    return new GuitarStrings(this.guitarStrings.filter((s) => !s.isLowerThan(guitarString)));
+  }
+
+  private lowerThan(guitarString: GuitarString) {
+    return new GuitarStrings(this.guitarStrings.filter((s) => !s.isHigherThan(guitarString)));
   }
 }
 
@@ -671,9 +680,10 @@ export class GuitarPitchLine implements Iterable<Fret> {
     const lastFret = this.line.last();
 
     if (lastFret) {
-      return lineDirection === PitchLineDirection.Descending
-        ? guitarStrings.higherThan(lastFret.String).lowerToHigher()
-        : guitarStrings.lowerThan(lastFret.String);
+      return guitarStrings.filterStringsByDirectionAndPreviousString(
+        lineDirection,
+        lastFret.String
+      );
     }
 
     return guitarStrings;
