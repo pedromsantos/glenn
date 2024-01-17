@@ -683,7 +683,8 @@ export class GuitarPitchLine implements Iterable<Fret> {
 
     for (const pitch of pitchLine) {
       for (const guitarString of guitarStrings) {
-        if (this.skipMappedString(line, guitarString, pitchLine.Direction)) {
+        const lastFret = line.last();
+        if (lastFret && this.skipString(lastFret, guitarString, pitchLine.Direction)) {
           continue;
         }
 
@@ -696,20 +697,14 @@ export class GuitarPitchLine implements Iterable<Fret> {
     return line;
   }
 
-  private skipMappedString(
-    line: HorizontalFrets,
+  private skipString(
+    lastFretOnLine: Fret,
     guitarString: GuitarString,
     direction: PitchLineDirection
   ) {
-    const lastFret = line.last();
-
-    if (lastFret) {
-      return direction == PitchLineDirection.Ascending
-        ? guitarString.isHigherThan(lastFret.String)
-        : guitarString.isLowerThan(lastFret.String);
-    }
-
-    return false;
+    return direction == PitchLineDirection.Ascending
+      ? guitarString.isHigherThan(lastFretOnLine.String)
+      : guitarString.isLowerThan(lastFretOnLine.String);
   }
 
   private mapPitch(pitch: Pitch, guitarString: GuitarString, line: HorizontalFrets): boolean {
