@@ -47,14 +47,34 @@ export class BarryHarrisLine {
     return this;
   }
 
+  arpeggioUpFromLastPitch() {
+    const from = this.lastDegree();
+
+    if (from) {
+      const arpeggio = new PitchLine(
+        this.scale.thirdsFrom(from).slice(1, 4),
+        PitchLineDirection.Ascending
+      );
+
+      this.line.add(arpeggio);
+    }
+
+    return this;
+  }
+
   pivotArpeggioUpFrom(degree: ScaleDegree) {
     const arpeggio = this.scale.thirdsTo(degree).slice(0, 4);
+    this.createArpeggioLine(arpeggio, 0, 1);
+    return this;
+  }
 
-    const arpeggioRoot = new PitchLine(arpeggio.slice(0, 1), PitchLineDirection.Descending);
-    this.line.add(arpeggioRoot);
+  pivotArpeggioUpFromLastPitch() {
+    const from = this.lastDegree();
 
-    const pivot = new PitchLine(arpeggio.slice(1), PitchLineDirection.Ascending);
-    this.line.add(pivot);
+    if (from) {
+      const arpeggio = this.scale.thirdsTo(from).slice(0, 4);
+      this.createArpeggioLine(arpeggio, 1, 2);
+    }
 
     return this;
   }
@@ -113,37 +133,6 @@ export class BarryHarrisLine {
     return this;
   }
 
-  arpeggioUpFromLastPitch() {
-    const from = this.lastDegree();
-
-    if (from) {
-      const arpeggio = new PitchLine(
-        this.scale.thirdsFrom(from).slice(1, 4),
-        PitchLineDirection.Ascending
-      );
-
-      this.line.add(arpeggio);
-    }
-
-    return this;
-  }
-
-  pivotArpeggioUpFromLastPitch() {
-    const from = this.lastDegree();
-
-    if (from) {
-      const arpeggio = this.scale.thirdsTo(from).slice(0, 4);
-
-      const arpeggioThird = new PitchLine(arpeggio.slice(1, 2), PitchLineDirection.Descending);
-      this.line.add(arpeggioThird);
-
-      const pivot = new PitchLine(arpeggio.slice(2), PitchLineDirection.Ascending);
-      this.line.add(pivot);
-    }
-
-    return this;
-  }
-
   scaleDownFromLastPitchTo(to: ScaleDegree) {
     const from = this.lastDegree();
 
@@ -166,6 +155,13 @@ export class BarryHarrisLine {
 
   build(): PitchLines {
     return this.line;
+  }
+
+  private createArpeggioLine(line: Pitch[], lowCut: number, highCut: number) {
+    const arpeggioRoot = new PitchLine(line.slice(lowCut, highCut), PitchLineDirection.Descending);
+    this.line.add(arpeggioRoot);
+    const pivot = new PitchLine(line.slice(highCut), PitchLineDirection.Ascending);
+    this.line.add(pivot);
   }
 
   private lastDegree() {
