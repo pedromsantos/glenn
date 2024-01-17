@@ -46,10 +46,6 @@ export class Pitch {
     return this.name;
   }
 
-  get Accidental() {
-    return this.accidental;
-  }
-
   get To(): PitchPrimitives {
     return {
       name: this.name,
