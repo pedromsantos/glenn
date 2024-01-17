@@ -173,12 +173,12 @@ export class BarryHarrisLine {
     return from;
   }
 
-  private lineStartsAtChordTone(from: ScaleDegree) {
+  private lineStartsAtChordTone(degree: ScaleDegree) {
     return !!(
-      from === ScaleDegree.I ||
-      from === ScaleDegree.III ||
-      from === ScaleDegree.V ||
-      from === ScaleDegree.VII
+      degree === ScaleDegree.I ||
+      degree === ScaleDegree.III ||
+      degree === ScaleDegree.V ||
+      degree === ScaleDegree.VII
     );
   }
 }
