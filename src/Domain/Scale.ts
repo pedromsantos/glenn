@@ -289,10 +289,6 @@ export class ScalePattern {
     return this.createScale(root).PitchLine;
   }
 
-  public createDescendingPitchLineScale(root: Pitch): PitchLine {
-    return this.createScale(root).DescendingPitchLine;
-  }
-
   public get Name(): string {
     return this.name;
   }
@@ -321,10 +317,6 @@ export class Scale implements Iterable<Pitch> {
 
   get PitchLine(): PitchLine {
     return new PitchLine(this.pitches, PitchLineDirection.Ascending);
-  }
-
-  get DescendingPitchLine(): PitchLine {
-    return new PitchLine(this.pitches, PitchLineDirection.Descending);
   }
 
   get To(): Readonly<ScalePrimitives> {
