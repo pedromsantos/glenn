@@ -61,7 +61,7 @@ describe('Guitar pitch line should', () => {
       const guitarLine = new GuitarPitchLine(line, Position.D);
 
       const fret = Array.from(guitarLine)[0];
-      expect(fret).toStrictEqual(new Fret(GuitarString.First, 12));
+      expect(fret).toStrictEqual(new Fret(GuitarString.Sixth, 12));
     });
 
     test('14th fret on fourth string for C8 Position', () => {
