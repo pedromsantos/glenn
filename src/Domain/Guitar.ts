@@ -180,10 +180,6 @@ class HorizontalFrets extends Frets {
     return this.frets[this.frets.length - 1];
   }
 
-  allInSameString() {
-    return this.frets.every((v) => v.String === this.frets[0]?.String);
-  }
-
   get length() {
     return this.frets.length;
   }
@@ -219,10 +215,6 @@ export class GuitarStrings implements Iterable<GuitarString> {
     return lineDirection === PitchLineDirection.Descending
       ? this.higherThan(previousString).lowerToHigher()
       : this.lowerThan(previousString);
-  }
-
-  removeTopString() {
-    return new GuitarStrings(this.guitarStrings.slice(1));
   }
 
   get length() {
