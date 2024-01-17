@@ -236,11 +236,11 @@ export class GuitarStrings implements Iterable<GuitarString> {
   }
 
   private higherThan(guitarString: GuitarString) {
-    return new GuitarStrings(this.guitarStrings.filter((s) => !s.isLowerThan(guitarString)));
+    return new GuitarStrings(this.guitarStrings.filter((s) => !s.isLowerIndexThan(guitarString)));
   }
 
   private lowerThan(guitarString: GuitarString) {
-    return new GuitarStrings(this.guitarStrings.filter((s) => !s.isHigherThan(guitarString)));
+    return new GuitarStrings(this.guitarStrings.filter((s) => !s.isHigherIndexThan(guitarString)));
   }
 }
 
@@ -329,11 +329,11 @@ export class GuitarString {
     return this.index === other.index;
   }
 
-  isHigherThan(other: GuitarString): boolean {
+  isHigherIndexThan(other: GuitarString): boolean {
     return other.index < this.index;
   }
 
-  isLowerThan(other: GuitarString): boolean {
+  isLowerIndexThan(other: GuitarString): boolean {
     return other.index > this.index;
   }
 
@@ -714,13 +714,12 @@ export class GuitarPitchLine implements Iterable<Fret> {
     direction: PitchLineDirection
   ) {
     return direction == PitchLineDirection.Ascending
-      ? guitarString.isHigherThan(lastFretOnLine.String)
-      : guitarString.isLowerThan(lastFretOnLine.String);
+      ? guitarString.isHigherIndexThan(lastFretOnLine.String)
+      : guitarString.isLowerIndexThan(lastFretOnLine.String);
   }
 
   private mapPitch(pitch: Pitch, guitarString: GuitarString, line: HorizontalFrets): boolean {
     let fret = guitarString.fretFor(pitch);
-
     if (this.position.contains(fret)) {
       line.push(fret);
       return true;
