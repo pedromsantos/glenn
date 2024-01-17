@@ -745,7 +745,9 @@ export class GuitarPitchLines extends GuitarPitchLine {
     super(new PitchLine(), position, guitarStrings);
 
     for (const pitchLine of pitchLines) {
-      this.line.concat(this.mapPitchLine(pitchLine, guitarStrings));
+      if (pitchLine.length > 0) {
+        this.line.concat(this.mapPitchLine(pitchLine, guitarStrings));
+      }
     }
   }
 }
