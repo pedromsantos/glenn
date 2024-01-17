@@ -202,12 +202,6 @@ export class GuitarStrings implements Iterable<GuitarString> {
     );
   }
 
-  higherToLower() {
-    return new GuitarStrings(
-      this.guitarStrings.sort((s1: GuitarString, s2: GuitarString) => s2.Index - s1.Index)
-    );
-  }
-
   filterStringsByDirectionAndPreviousString(
     lineDirection: PitchLineDirection,
     previousString: GuitarString
@@ -215,10 +209,6 @@ export class GuitarStrings implements Iterable<GuitarString> {
     return lineDirection === PitchLineDirection.Descending
       ? this.higherThan(previousString).lowerToHigher()
       : this.lowerThan(previousString);
-  }
-
-  get length() {
-    return this.guitarStrings.length;
   }
 
   *[Symbol.iterator](): Iterator<GuitarString> {
