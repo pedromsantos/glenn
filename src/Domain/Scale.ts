@@ -1,4 +1,4 @@
-import { ScalePrimitives } from '../primitives/Scale';
+import { ScalePatternPrimitives, ScalePrimitives } from '../primitives/Scale';
 import { Chord, ChordFunction, ChordPattern, ChordPitch, ChordPitches, ClosedChord } from './Chord';
 import { Duration } from './Duration';
 import { Interval } from './Interval';
@@ -297,6 +297,20 @@ export class ScalePattern {
     return ScalePattern.all;
   }
 
+  public get To(): ScalePatternPrimitives {
+    return {
+      name: this.Name,
+      pattern: this.pattern.map((i) => i.To),
+    };
+  }
+
+  public static From(primitive: ScalePatternPrimitives) {
+    return new ScalePattern(
+      primitive.name,
+      primitive.pattern.map((i) => Interval.From(i))
+    );
+  }
+
   public static readonly MajorScaleModePatterns = [
     ScalePattern.Ionian,
     ScalePattern.Dorian,
@@ -321,10 +335,18 @@ export class Scale implements Iterable<Pitch> {
 
   get To(): Readonly<ScalePrimitives> {
     return {
-      pattern: this.scalePattern.Name,
+      pattern: this.scalePattern.To,
       root: this.root.To,
       pitches: this.pitches.map((p) => p.To),
     };
+  }
+
+  static From(primitive: ScalePrimitives) {
+    return new Scale(
+      ScalePattern.From(primitive.pattern),
+      Pitch.From(primitive.root),
+      primitive.pitches.map((p) => Pitch.From(p))
+    );
   }
 
   pitchFor(degree: ScaleDegree) {

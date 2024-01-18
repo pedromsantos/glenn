@@ -66,7 +66,7 @@ describe('Scale properties', () => {
         (pitch, pattern) => {
           const scale = pattern.createScale(pitch);
 
-          expect(scale.To.pattern).toStrictEqual(pattern.Name);
+          expect(scale.To.pattern.name).toStrictEqual(pattern.Name);
         }
       ),
       { verbose: true }

@@ -55,8 +55,14 @@ export class Pitch {
     };
   }
 
-  static From(state: PitchPrimitives): Pitch | undefined {
-    return Pitch.pitches.find((p) => p.value === state.value && p.name === state.name);
+  static From(state: PitchPrimitives): Pitch {
+    const pitch = Pitch.pitches.find((p) => p.value === state.value && p.name === state.name);
+
+    if (!pitch) {
+      throw 'Invalid pitch value';
+    }
+
+    return pitch;
   }
 
   public static readonly C: Pitch = new Pitch(

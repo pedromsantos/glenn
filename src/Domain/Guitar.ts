@@ -438,6 +438,21 @@ export class Position {
     };
   }
 
+  public static From(primitive: PositionPrimitives) {
+    const position = Position.all.find(
+      (p) =>
+        p.name === primitive.name &&
+        p.lowFret.Number === primitive.lowestFret.fret &&
+        p.highFret.Number === primitive.highestFret.fret
+    );
+
+    if (!position) {
+      throw 'Invalid position';
+    }
+
+    return position;
+  }
+
   public static readonly Open: Position = new Position(
     'Open',
     new Fret(GuitarString.Sixth, 0),

@@ -16,6 +16,23 @@ export class IntervalQuality {
   public static readonly Augmented: IntervalQuality = new IntervalQuality('Augmented');
   public static readonly Diminished: IntervalQuality = new IntervalQuality('Diminished');
   public static readonly Perfect: IntervalQuality = new IntervalQuality('Perfect');
+
+  public static From(name: string) {
+    switch (name) {
+      case 'Minor':
+        return IntervalQuality.Minor;
+      case 'Major':
+        return IntervalQuality.Major;
+      case 'Augmented':
+        return IntervalQuality.Augmented;
+      case 'Diminished':
+        return IntervalQuality.Diminished;
+      case 'Perfect':
+        return IntervalQuality.Perfect;
+      default:
+        throw 'Invalid interval quality';
+    }
+  }
 }
 
 export class Interval {
@@ -43,6 +60,22 @@ export class Interval {
       distance: this.distance,
       quality: this.quality.Name,
     };
+  }
+
+  public static From(primitive: IntervalPrimitives) {
+    const interval = Interval.intervals.find(
+      (i) =>
+        i.name == primitive.name &&
+        i.distance == primitive.distance &&
+        i.abreviature == primitive.abreviature &&
+        i.quality == IntervalQuality.From(primitive.quality)
+    );
+
+    if (!interval) {
+      throw 'Invalid interval primitive';
+    }
+
+    return interval;
   }
 
   public static readonly Unison: Interval = new Interval(
