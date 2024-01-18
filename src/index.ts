@@ -28,6 +28,7 @@ import {
   TriadHarmonizer,
 } from './Domain/Scale';
 import { Measure, Song } from './Domain/Song';
+import { BarryHarrisLineBuilder, BarryHarrisLineUseCase } from './UseCases/Barry';
 
 export {
   AbcChord as abcChord,
@@ -36,6 +37,8 @@ export {
   AbcRest as abcRest,
   AbcTune as abcTune,
   BarryHarrisLine,
+  BarryHarrisLineBuilder,
+  BarryHarrisLineUseCase,
   ChordFunction,
   ChordPattern,
   Clef,
