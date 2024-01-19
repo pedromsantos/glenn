@@ -26,7 +26,7 @@ export class BarryHarrisLineUseCase {
 
   private executeCommands(commands: BarryHarrisCommand[], builder: BarryHarrisLineBuilder) {
     for (const command of commands) {
-      switch (command.kind) {
+      switch (command.command) {
         case 'ArpeggioUpFrom':
           builder.arpeggioUpFrom(command.degree);
           break;

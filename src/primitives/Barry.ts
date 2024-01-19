@@ -1,15 +1,19 @@
 import { PitchPrimitives } from './Pitch';
 
-export type ArpeggioUpFrom = { kind: 'ArpeggioUpFrom'; degree: number };
-export type ArpeggioUpFromLastPitch = { kind: 'ArpeggioUpFromLastPitch' };
-export type PivotArpeggioUpFrom = { kind: 'PivotArpeggioUpFrom'; degree: number };
-export type PivotArpeggioUpFromLastPitch = { kind: 'PivotArpeggioUpFromLastPitch' };
-export type ResolveTo = { kind: 'ResolveTo'; pitch: PitchPrimitives };
-export type ScaleDown = { kind: 'ScaleDown'; from: number; to: number };
-export type ScaleDownExtraHalfSteps = { kind: 'ScaleDownExtraHalfSteps'; from: number; to: number };
-export type ScaleDownFromLastPitchTo = { kind: 'ScaleDownFromLastPitchTo'; to: number };
+export type ArpeggioUpFrom = { command: 'ArpeggioUpFrom'; degree: number };
+export type ArpeggioUpFromLastPitch = { command: 'ArpeggioUpFromLastPitch' };
+export type PivotArpeggioUpFrom = { command: 'PivotArpeggioUpFrom'; degree: number };
+export type PivotArpeggioUpFromLastPitch = { command: 'PivotArpeggioUpFromLastPitch' };
+export type ResolveTo = { command: 'ResolveTo'; pitch: PitchPrimitives };
+export type ScaleDown = { command: 'ScaleDown'; from: number; to: number };
+export type ScaleDownExtraHalfSteps = {
+  command: 'ScaleDownExtraHalfSteps';
+  from: number;
+  to: number;
+};
+export type ScaleDownFromLastPitchTo = { command: 'ScaleDownFromLastPitchTo'; to: number };
 export type ScaleDownExtraHalfStepsFromLastPitch = {
-  kind: 'ScaleDownExtraHalfStepsFromLastPitch';
+  command: 'ScaleDownExtraHalfStepsFromLastPitch';
   to: number;
 };
 

@@ -35,13 +35,13 @@ describe('Barry Harrys use case', () => {
   describe('from C7 scale', () => {
     test('Guitar Tab for: commands', () => {
       const commands: BarryHarrisCommand[] = [
-        { kind: 'ArpeggioUpFrom', degree: 0 },
-        { kind: 'ResolveTo', pitch: Pitch.D.To },
-        { kind: 'ScaleDownFromLastPitchTo', to: 2 },
-        { kind: 'ArpeggioUpFromLastPitch' },
-        { kind: 'ResolveTo', pitch: Pitch.E.To },
-        { kind: 'PivotArpeggioUpFromLastPitch' },
-        { kind: 'ResolveTo', pitch: Pitch.BFlat.To },
+        { command: 'ArpeggioUpFrom', degree: 0 },
+        { command: 'ResolveTo', pitch: Pitch.D.To },
+        { command: 'ScaleDownFromLastPitchTo', to: 2 },
+        { command: 'ArpeggioUpFromLastPitch' },
+        { command: 'ResolveTo', pitch: Pitch.E.To },
+        { command: 'PivotArpeggioUpFromLastPitch' },
+        { command: 'ResolveTo', pitch: Pitch.BFlat.To },
       ];
 
       const scale = new Scale(ScalePattern.Mixolydian, Pitch.C).To;
