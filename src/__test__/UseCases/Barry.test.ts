@@ -61,11 +61,11 @@ E|-----------------------------------------|`);
     });
   });
 
-  describe('Each command', () => {
+  describe('Guitar Tab for command:', () => {
     const scale = new Scale(ScalePattern.Mixolydian, Pitch.C).To;
     const useCase = new BarryHarrisLineUseCase();
 
-    test('Guitar Tab for ArpeggioUpFrom command', () => {
+    test('Arpeggio Up From', () => {
       const commands: BarryHarrisCommand[] = [{ command: 'ArpeggioUpFrom', degree: 0 }];
 
       const { line, tab } = execute(useCase, scale, commands);
@@ -79,7 +79,7 @@ A|-3-------|
 E|---------|`);
     });
 
-    test('Guitar Tab for ResolveTo command', () => {
+    test('Resolve To', () => {
       const commands: BarryHarrisCommand[] = [
         { command: 'ArpeggioUpFrom', degree: 0 },
         { command: 'ResolveTo', pitch: Pitch.D.To },
@@ -96,7 +96,7 @@ A|-3---------|
 E|-----------|`);
     });
 
-    test('Guitar Tab for PivotArpeggioUpFrom command', () => {
+    test('Pivot Arpeggio Up From', () => {
       const commands: BarryHarrisCommand[] = [{ command: 'PivotArpeggioUpFrom', degree: 6 }];
 
       const { line, tab } = execute(useCase, scale, commands);
@@ -109,7 +109,7 @@ D|-----2-5-|
 A|-1-3-----|
 E|---------|`);
     });
-    test('Guitar Tab for PivotArpeggioUpFromLastPitch command', () => {
+    test('Pivot Arpeggio Up From Last Pitch', () => {
       const commands: BarryHarrisCommand[] = [
         { command: 'ArpeggioUpFrom', degree: 0 },
         { command: 'PivotArpeggioUpFromLastPitch' },
@@ -125,7 +125,7 @@ D|---2-5---------|
 A|-3-------------|
 E|---------------|`);
     });
-    test('Guitar Tab for ScaleDown command', () => {
+    test('Scale Down', () => {
       const commands: BarryHarrisCommand[] = [
         { command: 'ArpeggioUpFrom', degree: 0 },
         { command: 'ScaleDown', from: 7, to: 2 },
@@ -142,7 +142,7 @@ A|-3-----------------|
 E|-------------------|`);
     });
 
-    test('Guitar Tab for ScaleDownExtraHalfSteps command', () => {
+    test('Scale Down Extra Half Steps', () => {
       const commands: BarryHarrisCommand[] = [
         { command: 'ArpeggioUpFrom', degree: 0 },
         { command: 'ScaleDownExtraHalfSteps', from: 7, to: 0 },
@@ -159,7 +159,7 @@ A|-3-------------------5-4-3-|
 E|---------------------------|`);
     });
 
-    test('Guitar Tab for ScaleDownExtraHalfStepsFromLastPitch command', () => {
+    test('Scale Down Extra Half Steps From Last Pitch', () => {
       const commands: BarryHarrisCommand[] = [
         { command: 'ArpeggioUpFrom', degree: 0 },
         { command: 'ScaleDownExtraHalfStepsFromLastPitch', to: 0 },
