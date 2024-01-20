@@ -33,26 +33,26 @@ export class BarryHarrisLineUseCase {
         case 'ArpeggioUpFromLastPitch':
           builder.arpeggioUpFromLastPitch();
           break;
-        // case 'PivotArpeggioUpFrom':
-        //   builder.pivotArpeggioUpFrom(command.degree);
-        //   break;
+        case 'PivotArpeggioUpFrom':
+          builder.pivotArpeggioUpFrom(command.degree);
+          break;
         case 'PivotArpeggioUpFromLastPitch':
           builder.pivotArpeggioUpFromLastPitch();
           break;
         case 'ResolveTo':
           builder.resolveTo(command.pitch);
           break;
-        // case 'ScaleDown':
-        //   builder.scaleDown(command.to, command.from);
-        //   break;
-        // case 'ScaleDownExtraHalfSteps':
-        //   builder.scaleDownExtraHalfSteps(command.to, command.from);
-        //   break;
+        case 'ScaleDown':
+          builder.scaleDown(command.to, command.from);
+          break;
+        case 'ScaleDownExtraHalfSteps':
+          builder.scaleDownExtraHalfSteps(command.to, command.from);
+          break;
         case 'ScaleDownFromLastPitchTo':
           builder.scaleDownFromLastPitchTo(command.to);
           break;
-        // case 'ScaleDownExtraHalfStepsFromLastPitch':
-        //   builder.scaleDownExtraHalfStepsFromLastPitch(command.to);
+        case 'ScaleDownExtraHalfStepsFromLastPitch':
+          builder.scaleDownExtraHalfStepsFromLastPitch(command.to);
       }
     }
   }
