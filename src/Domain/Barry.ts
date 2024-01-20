@@ -64,7 +64,7 @@ export class BarryHarrisLine {
 
   pivotArpeggioUpFrom(degree: ScaleDegree) {
     const arpeggio = this.scale.thirdsTo(degree).slice(0, 4);
-    this.createArpeggioLine(arpeggio, 0, 1);
+    this.createPivotArpeggioLine(arpeggio, 0, 1);
     return this;
   }
 
@@ -73,7 +73,7 @@ export class BarryHarrisLine {
 
     if (from) {
       const arpeggio = this.scale.thirdsTo(from).slice(0, 4);
-      this.createArpeggioLine(arpeggio, 1, 2);
+      this.createPivotArpeggioLine(arpeggio, 1, 2);
     }
 
     return this;
@@ -157,7 +157,7 @@ export class BarryHarrisLine {
     return this.line;
   }
 
-  private createArpeggioLine(line: Pitch[], lowCut: number, highCut: number) {
+  private createPivotArpeggioLine(line: Pitch[], lowCut: number, highCut: number) {
     const arpeggioRoot = new PitchLine(line.slice(lowCut, highCut), PitchLineDirection.Descending);
     this.line.add(arpeggioRoot);
     const pivot = new PitchLine(line.slice(highCut), PitchLineDirection.Ascending);
