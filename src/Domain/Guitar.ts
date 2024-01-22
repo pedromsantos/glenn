@@ -696,6 +696,13 @@ export class GuitarPitchLine implements Iterable<Fret> {
           continue;
         }
 
+        if (
+          pitchLine.Direction == PitchLineDirection.OctaveDown &&
+          this.mapPitch(pitch, guitarString.NextDescending.NextDescending, line)
+        ) {
+          break;
+        }
+
         if (this.mapPitch(pitch, guitarString, line)) {
           break;
         }

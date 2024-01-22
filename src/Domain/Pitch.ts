@@ -527,6 +527,7 @@ class IntervalsToPitches {
 export const enum PitchLineDirection {
   Ascending,
   Descending,
+  OctaveDown,
   Neutral,
 }
 

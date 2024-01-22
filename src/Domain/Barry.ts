@@ -158,7 +158,7 @@ export class BarryHarrisLine {
   }
 
   private createPivotArpeggioLine(line: Pitch[], lowCut: number, highCut: number) {
-    const arpeggioRoot = new PitchLine(line.slice(lowCut, highCut), PitchLineDirection.Descending);
+    const arpeggioRoot = new PitchLine(line.slice(lowCut, highCut), PitchLineDirection.OctaveDown);
     this.line.add(arpeggioRoot);
     const pivot = new PitchLine(line.slice(highCut), PitchLineDirection.Ascending);
     this.line.add(pivot);

@@ -97,7 +97,7 @@ E|-----------|`);
     });
 
     test('Pivot Arpeggio Up From', () => {
-      const commands: BarryHarrisCommand[] = [{ command: 'PivotArpeggioUpFrom', degree: 6 }];
+      const commands: BarryHarrisCommand[] = [{ command: 'PivotArpeggioUpFrom', degree: 5 }];
 
       const { line, tab } = execute(useCase, scale, commands);
 
@@ -105,9 +105,9 @@ E|-----------|`);
       expect(tab).toBe(`e|---------|
 B|---------|
 G|---------|
-D|-----2-5-|
-A|-1-3-----|
-E|---------|`);
+D|-------3-|
+A|---1-5---|
+E|-5-------|`);
     });
     test('Pivot Arpeggio Up From Last Pitch', () => {
       const commands: BarryHarrisCommand[] = [
@@ -118,13 +118,32 @@ E|---------|`);
       const { line, tab } = execute(useCase, scale, commands);
 
       expect(line).toHaveLength(7);
-      expect(tab).toBe(`e|-------------3-|
-B|-----------5---|
-G|-------3-5-----|
-D|---2-5---------|
-A|-3-------------|
+      expect(tab).toBe(`e|---------------|
+B|---------------|
+G|-------3-------|
+D|---2-5-----2-5-|
+A|-3-------3-----|
 E|---------------|`);
     });
+
+    test('Pivot Arpeggio Up From Last Pitch with resolve', () => {
+      const commands: BarryHarrisCommand[] = [
+        { command: 'ArpeggioUpFrom', degree: 0 },
+        { command: 'ResolveTo', pitch: Pitch.D.To },
+        { command: 'PivotArpeggioUpFromLastPitch' },
+      ];
+
+      const { line, tab } = execute(useCase, scale, commands);
+
+      expect(line).toHaveLength(8);
+      expect(tab).toBe(`e|-----------------|
+B|---------3-------|
+G|-------3-------3-|
+D|---2-5-----2-5---|
+A|-3---------------|
+E|-----------------|`);
+    });
+
     test('Scale Down', () => {
       const commands: BarryHarrisCommand[] = [
         { command: 'ArpeggioUpFrom', degree: 0 },
