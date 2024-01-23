@@ -46,8 +46,8 @@ jobs:
       - name: Coveralls GitHub Action
         uses: coverallsapp/github-action@v2
 
-      - name: codeclimate coverage runner
-        uses: paambaati/codeclimate-action@v2.2.4
+      - name: Code Climate Coverage Action
+        uses: paambaati/codeclimate-action@v5.0.0
         env:
           CC_TEST_REPORTER_ID: 8413ee0825958297044236ac7f922553fb7bc1f6c075ebaab1aaa52c8a6142c0
         with:
