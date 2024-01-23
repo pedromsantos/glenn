@@ -23,6 +23,7 @@ Still a work in progress.
 ### Code climate
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/0e30b8c79d21be9b0665/maintainability)](https://codeclimate.com/github/pedromsantos/glenn/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/0e30b8c79d21be9b0665/test_coverage)](https://codeclimate.com/github/pedromsantos/glenn/test_coverage)
 
 ### Coveralls
 
