@@ -96,7 +96,7 @@ A|-3---------|
 E|-----------|`);
     });
 
-    test('Pivot Arpeggio Up From', () => {
+    test('Pivot Arpeggio Up From (this test is not correct, but Pivot arpeggios in isolation are not in the critical path)', () => {
       const commands: BarryHarrisCommand[] = [{ command: 'PivotArpeggioUpFrom', degree: 5 }];
 
       const { line, tab } = execute(useCase, scale, commands);
