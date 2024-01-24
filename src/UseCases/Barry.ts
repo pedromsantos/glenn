@@ -2,7 +2,7 @@ import { BarryHarrisLine } from '../Domain/Barry';
 import { GuitarPitchLines, Position, Tab } from '../Domain/Guitar';
 import { Pitch } from '../Domain/Pitch';
 import { Scale } from '../Domain/Scale';
-import { ArpeggioUpFrom, BarryHarrisCommand } from '../primitives/Barry';
+import { BarryHarrisCommand } from '../primitives/Barry';
 import { PositionPrimitives } from '../primitives/Guitar';
 import { PitchPrimitives } from '../primitives/Pitch';
 import { ScalePrimitives } from '../primitives/Scale';
