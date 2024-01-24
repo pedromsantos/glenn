@@ -3,34 +3,7 @@ import { Pitch } from '../../Domain/Pitch';
 import { Scale, ScalePattern } from '../../Domain/Scale';
 import { BarryHarrisCommand } from '../../primitives/Barry';
 import { ScalePrimitives } from '../../primitives/Scale';
-import { BarryHarrisLineBuilder, BarryHarrisLineUseCase } from '../../UseCases/Barry';
-
-describe('Barry Harrys builder', () => {
-  describe('from C7 scale', () => {
-    test('Guitar Tab for: Arpeggio up, resolve to, scale down, arpeggio', () => {
-      const scale = new Scale(ScalePattern.Mixolydian, Pitch.C).To;
-      const builder = new BarryHarrisLineBuilder(scale, Position.C.To)
-        .arpeggioUpFrom(0)
-        .resolveTo(Pitch.D.To)
-        .scaleDownFromLastPitchTo(2)
-        .arpeggioUpFromLastPitch()
-        .resolveTo(Pitch.E.To)
-        .pivotArpeggioUpFromLastPitch()
-        .resolveTo(Pitch.BFlat.To);
-
-      const line = builder.buildPitches();
-      expect(line).toHaveLength(20);
-
-      const tab = builder.buildTab();
-      expect(tab).toBe(`e|-----------------------------------------|
-B|---------3-1-----------------3-5---------|
-G|-------3-----4-3-2---------3-------2-5-3-|
-D|---2-5-------------5-3-2-5-------3-------|
-A|-3---------------------------------------|
-E|-----------------------------------------|`);
-    });
-  });
-});
+import { BarryHarrisLineUseCase } from '../../UseCases/Barry';
 
 describe('Barry Harrys use case', () => {
   describe('from C7 scale', () => {

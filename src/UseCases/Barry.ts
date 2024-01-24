@@ -4,14 +4,15 @@ import { Pitch } from '../Domain/Pitch';
 import { Scale } from '../Domain/Scale';
 import { BarryHarrisCommand } from '../primitives/Barry';
 import { PositionPrimitives } from '../primitives/Guitar';
-import { PitchPrimitives } from '../primitives/Pitch';
 import { ScalePrimitives } from '../primitives/Scale';
 
 export class BarryHarrisLineUseCase {
   tabFor(scale: ScalePrimitives, position: PositionPrimitives, commands: BarryHarrisCommand[]) {
     const builder = new BarryHarrisLineBuilder(scale, position);
 
-    this.executeCommands(commands, builder);
+    for (const command of commands) {
+      builder.executeCommand(command);
+    }
 
     return builder.buildTab();
   }
@@ -19,50 +20,15 @@ export class BarryHarrisLineUseCase {
   pichesFor(scale: ScalePrimitives, commands: BarryHarrisCommand[]) {
     const builder = new BarryHarrisLineBuilder(scale);
 
-    this.executeCommands(commands, builder);
+    for (const command of commands) {
+      builder.executeCommand(command);
+    }
 
     return builder.buildPitches();
   }
-
-  private executeCommands(commands: BarryHarrisCommand[], builder: BarryHarrisLineBuilder) {
-    for (const command of commands) {
-      this.executeCommand(command, builder);
-    }
-  }
-
-  private executeCommand(command: BarryHarrisCommand, builder: BarryHarrisLineBuilder) {
-    switch (command.command) {
-      case 'ArpeggioUpFrom':
-        builder.arpeggioUpFrom(command.degree);
-        break;
-      case 'ArpeggioUpFromLastPitch':
-        builder.arpeggioUpFromLastPitch();
-        break;
-      case 'PivotArpeggioUpFrom':
-        builder.pivotArpeggioUpFrom(command.degree);
-        break;
-      case 'PivotArpeggioUpFromLastPitch':
-        builder.pivotArpeggioUpFromLastPitch();
-        break;
-      case 'ResolveTo':
-        builder.resolveTo(command.pitch);
-        break;
-      case 'ScaleDown':
-        builder.scaleDown(command.to, command.from);
-        break;
-      case 'ScaleDownExtraHalfSteps':
-        builder.scaleDownExtraHalfSteps(command.to, command.from);
-        break;
-      case 'ScaleDownFromLastPitchTo':
-        builder.scaleDownFromLastPitchTo(command.to);
-        break;
-      case 'ScaleDownExtraHalfStepsFromLastPitch':
-        builder.scaleDownExtraHalfStepsFromLastPitch(command.to);
-    }
-  }
 }
 
-export class BarryHarrisLineBuilder {
+class BarryHarrisLineBuilder {
   private readonly line: BarryHarrisLine;
   private readonly position?: Position;
 
@@ -73,48 +39,35 @@ export class BarryHarrisLineBuilder {
     }
   }
 
-  arpeggioUpFrom(degree: number) {
-    this.line.arpeggioUpFrom(degree);
-    return this;
-  }
-
-  arpeggioUpFromLastPitch() {
-    this.line.arpeggioUpFromLastPitch();
-    return this;
-  }
-
-  pivotArpeggioUpFrom(degree: number) {
-    this.line.pivotArpeggioUpFrom(degree);
-    return this;
-  }
-
-  pivotArpeggioUpFromLastPitch() {
-    this.line.pivotArpeggioUpFromLastPitch();
-    return this;
-  }
-
-  resolveTo(pitch: PitchPrimitives) {
-    this.line.resolveTo(Pitch.From(pitch));
-    return this;
-  }
-
-  scaleDown(to: number, from: number) {
-    this.line.scaleDown(to, from);
-    return this;
-  }
-
-  scaleDownExtraHalfSteps(to: number, from: number) {
-    this.line.scaleDownExtraHalfSteps(to, from);
-    return this;
-  }
-
-  scaleDownFromLastPitchTo(to: number) {
-    this.line.scaleDownFromLastPitchTo(to);
-    return this;
-  }
-
-  scaleDownExtraHalfStepsFromLastPitch(to: number) {
-    this.line.scaleDownExtraHalfStepsFromLastPitch(to);
+  executeCommand(command: BarryHarrisCommand) {
+    switch (command.command) {
+      case 'ArpeggioUpFrom':
+        this.line.arpeggioUpFrom(command.degree);
+        break;
+      case 'ArpeggioUpFromLastPitch':
+        this.line.arpeggioUpFromLastPitch();
+        break;
+      case 'PivotArpeggioUpFrom':
+        this.line.pivotArpeggioUpFrom(command.degree);
+        break;
+      case 'PivotArpeggioUpFromLastPitch':
+        this.line.pivotArpeggioUpFromLastPitch();
+        break;
+      case 'ResolveTo':
+        this.line.resolveTo(Pitch.From(command.pitch));
+        break;
+      case 'ScaleDown':
+        this.line.scaleDown(command.to, command.from);
+        break;
+      case 'ScaleDownExtraHalfSteps':
+        this.line.scaleDownExtraHalfSteps(command.to, command.from);
+        break;
+      case 'ScaleDownFromLastPitchTo':
+        this.line.scaleDownFromLastPitchTo(command.to);
+        break;
+      case 'ScaleDownExtraHalfStepsFromLastPitch':
+        this.line.scaleDownExtraHalfStepsFromLastPitch(command.to);
+    }
   }
 
   buildTab() {
