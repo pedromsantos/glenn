@@ -2,7 +2,7 @@ import { BarryHarrisLine } from '../Domain/Barry';
 import { GuitarPitchLines, Position, Tab } from '../Domain/Guitar';
 import { Pitch } from '../Domain/Pitch';
 import { Scale } from '../Domain/Scale';
-import { BarryHarrisCommand } from '../primitives/Barry';
+import { ArpeggioUpFrom, BarryHarrisCommand } from '../primitives/Barry';
 import { PositionPrimitives } from '../primitives/Guitar';
 import { PitchPrimitives } from '../primitives/Pitch';
 import { ScalePrimitives } from '../primitives/Scale';
@@ -26,34 +26,38 @@ export class BarryHarrisLineUseCase {
 
   private executeCommands(commands: BarryHarrisCommand[], builder: BarryHarrisLineBuilder) {
     for (const command of commands) {
-      switch (command.command) {
-        case 'ArpeggioUpFrom':
-          builder.arpeggioUpFrom(command.degree);
-          break;
-        case 'ArpeggioUpFromLastPitch':
-          builder.arpeggioUpFromLastPitch();
-          break;
-        case 'PivotArpeggioUpFrom':
-          builder.pivotArpeggioUpFrom(command.degree);
-          break;
-        case 'PivotArpeggioUpFromLastPitch':
-          builder.pivotArpeggioUpFromLastPitch();
-          break;
-        case 'ResolveTo':
-          builder.resolveTo(command.pitch);
-          break;
-        case 'ScaleDown':
-          builder.scaleDown(command.to, command.from);
-          break;
-        case 'ScaleDownExtraHalfSteps':
-          builder.scaleDownExtraHalfSteps(command.to, command.from);
-          break;
-        case 'ScaleDownFromLastPitchTo':
-          builder.scaleDownFromLastPitchTo(command.to);
-          break;
-        case 'ScaleDownExtraHalfStepsFromLastPitch':
-          builder.scaleDownExtraHalfStepsFromLastPitch(command.to);
-      }
+      this.executeCommand(command, builder);
+    }
+  }
+
+  private executeCommand(command: BarryHarrisCommand, builder: BarryHarrisLineBuilder) {
+    switch (command.command) {
+      case 'ArpeggioUpFrom':
+        builder.arpeggioUpFrom(command.degree);
+        break;
+      case 'ArpeggioUpFromLastPitch':
+        builder.arpeggioUpFromLastPitch();
+        break;
+      case 'PivotArpeggioUpFrom':
+        builder.pivotArpeggioUpFrom(command.degree);
+        break;
+      case 'PivotArpeggioUpFromLastPitch':
+        builder.pivotArpeggioUpFromLastPitch();
+        break;
+      case 'ResolveTo':
+        builder.resolveTo(command.pitch);
+        break;
+      case 'ScaleDown':
+        builder.scaleDown(command.to, command.from);
+        break;
+      case 'ScaleDownExtraHalfSteps':
+        builder.scaleDownExtraHalfSteps(command.to, command.from);
+        break;
+      case 'ScaleDownFromLastPitchTo':
+        builder.scaleDownFromLastPitchTo(command.to);
+        break;
+      case 'ScaleDownExtraHalfStepsFromLastPitch':
+        builder.scaleDownExtraHalfStepsFromLastPitch(command.to);
     }
   }
 }
