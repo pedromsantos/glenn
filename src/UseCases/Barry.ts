@@ -8,13 +8,13 @@ import { ScalePrimitives } from '../primitives/Scale';
 
 export class BarryHarrisLineUseCase {
   tabFor(scale: ScalePrimitives, position: PositionPrimitives, commands: BarryHarrisCommand[]) {
-    const builder = new BarryHarrisLineBuilder(scale, position);
+    const builder = new BarryHarrisLineBuilder(scale);
 
     for (const command of commands) {
       builder.executeCommand(command);
     }
 
-    return builder.buildTab();
+    return builder.buildTab(position);
   }
 
   pichesFor(scale: ScalePrimitives, commands: BarryHarrisCommand[]) {
@@ -30,13 +30,9 @@ export class BarryHarrisLineUseCase {
 
 class BarryHarrisLineBuilder {
   private readonly line: BarryHarrisLine;
-  private readonly position?: Position;
 
-  constructor(scalePrimitives: ScalePrimitives, positionPrimitives?: PositionPrimitives) {
+  constructor(scalePrimitives: ScalePrimitives) {
     this.line = new BarryHarrisLine(Scale.From(scalePrimitives));
-    if (positionPrimitives) {
-      this.position = Position.From(positionPrimitives);
-    }
   }
 
   executeCommand(command: BarryHarrisCommand) {
@@ -70,14 +66,12 @@ class BarryHarrisLineBuilder {
     }
   }
 
-  buildTab() {
-    if (this.position) {
-      const line = this.line.build();
-      const guitarLine = new GuitarPitchLines(line, this.position);
-      return Tab.render(guitarLine.toTab());
-    }
+  buildTab(positionPrimitives: PositionPrimitives) {
+    const position = Position.From(positionPrimitives);
 
-    return '';
+    const line = this.line.build();
+    const guitarLine = new GuitarPitchLines(line, position);
+    return Tab.render(guitarLine.toTab());
   }
 
   buildPitches() {
