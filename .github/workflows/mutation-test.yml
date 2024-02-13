@@ -1,4 +1,4 @@
-name: "Mutation-Test"
+name: 'Mutation-Test'
 
 on:
   schedule:
@@ -26,10 +26,9 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install Dependencies
-        run: npm install
+        run: yarn install
 
       - name: Mutation
         run: yarn mutants
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-
