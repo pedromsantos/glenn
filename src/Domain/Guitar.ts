@@ -640,7 +640,6 @@ export class GuitarPitchLine implements Iterable<Fret> {
   protected readonly line: HorizontalFrets = new HorizontalFrets();
   private readonly position: Position = Position.Open;
   private readonly guitarStrings = new GuitarStrings();
-  private readonly pitchLineToTabTolerance = 2;
 
   constructor(
     pitchLine: PitchLine,
@@ -739,7 +738,9 @@ export class GuitarPitchLine implements Iterable<Fret> {
   }
 
   private lineIsNotMappedWithinTolerance(line: HorizontalFrets, pitchLine: PitchLine) {
-    return Math.abs(line.length - pitchLine.length) > this.pitchLineToTabTolerance;
+    const pitchLineToTabTolerance = 2;
+
+    return Math.abs(line.length - pitchLine.length) > pitchLineToTabTolerance;
   }
 
   *[Symbol.iterator](): Iterator<Fret> {

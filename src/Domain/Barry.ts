@@ -8,7 +8,7 @@ export class PitchLines implements Iterable<PitchLine> {
     this.lines.push(line);
   }
 
-  pushLastLine(pitch: Pitch) {
+  addPitch(pitch: Pitch) {
     this.lines[this.lines.length - 1]?.push(pitch);
   }
 
@@ -80,7 +80,7 @@ export class BarryHarrisLine {
   }
 
   resolveTo(pitch: Pitch) {
-    this.line.pushLastLine(pitch);
+    this.line.addPitch(pitch);
     return this;
   }
 
