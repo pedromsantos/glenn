@@ -648,8 +648,8 @@ export class GuitarPitchLine implements Iterable<Fret> {
   ) {
     this.position = position;
     this.guitarStrings = guitarStrings;
-    if (pitchLine.length > 0) this.line = this.mapPitchLine(pitchLine, guitarStrings);
-    else this.line = new HorizontalFrets();
+    this.line =
+      pitchLine.length == 0 ? new HorizontalFrets() : this.mapPitchLine(pitchLine, guitarStrings);
   }
 
   toTab(): Tab {
