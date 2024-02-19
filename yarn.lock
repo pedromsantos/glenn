@@ -1402,13 +1402,13 @@
     weapon-regex "~1.3.0"
 
 "@stryker-mutator/jest-runner@^8.2.3":
-  version "8.2.3"
-  resolved "https://registry.yarnpkg.com/@stryker-mutator/jest-runner/-/jest-runner-8.2.3.tgz#dd54b752c74d087bafcb348336cc341255b64a99"
-  integrity sha512-gYxjL/erxJ70RjE7Sn4uVSpAKW6af0Qww8ocYKcvnxnj38htxZ1m+lhb46TBdCTV8BNGAiAodxn+lm4HlTSKgg==
+  version "8.2.4"
+  resolved "https://registry.yarnpkg.com/@stryker-mutator/jest-runner/-/jest-runner-8.2.4.tgz#384b068688fc2eaf921b7ee5fc3bcb639c2c8e1b"
+  integrity sha512-t5CS+dLe6SNVuUrUymwbMlfwsi8BM3QmBjP/rsBr13yYxh/eCi3qlwSXBxoew7qrgdWr3NnQ/5XLxUbA3BKOLA==
   dependencies:
-    "@stryker-mutator/api" "8.2.3"
-    "@stryker-mutator/util" "8.2.3"
-    semver "~7.5.4"
+    "@stryker-mutator/api" "8.2.4"
+    "@stryker-mutator/util" "8.2.4"
+    semver "~7.6.0"
     tslib "~2.6.2"
 
 "@stryker-mutator/typescript-checker@^8.2.3":
