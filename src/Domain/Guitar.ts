@@ -668,7 +668,7 @@ export class GuitarPitchLine implements Iterable<Fret> {
   protected mapPitchLine(pitchLine: PitchLine, guitarStrings: GuitarStrings) {
     const line = this.mapLine(pitchLine, this.guitarStringsFor(pitchLine.Direction, guitarStrings));
 
-    if (this.lineIsNotMappedWithinTolerance(line, pitchLine)) {
+    if (this.lineHasMinimumLength(line, pitchLine)) {
       return new HorizontalFrets();
     }
 
@@ -740,7 +740,7 @@ export class GuitarPitchLine implements Iterable<Fret> {
     return false;
   }
 
-  private lineIsNotMappedWithinTolerance(line: HorizontalFrets, pitchLine: PitchLine) {
+  private lineHasMinimumLength(line: HorizontalFrets, pitchLine: PitchLine) {
     const pitchLineToTabTolerance = 2;
 
     return Math.abs(line.length - pitchLine.length) > pitchLineToTabTolerance;
