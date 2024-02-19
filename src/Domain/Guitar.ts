@@ -180,6 +180,11 @@ class HorizontalFrets extends Frets {
     return this.frets[this.frets.length - 1];
   }
 
+  toTab(guitarStrings: GuitarStrings): Tab {
+    const column = this.frets.map((fret) => fret.toTab(guitarStrings));
+    return new Tab(...column);
+  }
+
   get length() {
     return this.frets.length;
   }
@@ -653,8 +658,7 @@ export class GuitarPitchLine implements Iterable<Fret> {
   }
 
   toTab(): Tab {
-    const column = [...this.line].map((fret) => fret.toTab(this.guitarStrings));
-    return new Tab(...column);
+    return this.line.toTab(this.guitarStrings);
   }
 
   toFrets() {
