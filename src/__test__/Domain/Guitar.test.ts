@@ -133,27 +133,33 @@ describe('Guitar String should', () => {
 
   describe('Map pitches to frets on Sixth string', () => {
     test('map E to open string', () => {
-      expect(GuitarString.Sixth.fretFor(Pitch.E)).toStrictEqual(new Fret(GuitarString.Sixth, 0));
+      expect(GuitarString.Sixth.fretFor(Pitch.E)).toStrictEqual(
+        new Fret(GuitarString.Sixth, 0, Pitch.E)
+      );
     });
 
     test('map F to first fret', () => {
-      expect(GuitarString.Sixth.fretFor(Pitch.F)).toStrictEqual(new Fret(GuitarString.Sixth, 1));
+      expect(GuitarString.Sixth.fretFor(Pitch.F)).toStrictEqual(
+        new Fret(GuitarString.Sixth, 1, Pitch.F)
+      );
     });
 
     test('map F# to second fret', () => {
       expect(GuitarString.Sixth.fretFor(Pitch.FSharp)).toStrictEqual(
-        new Fret(GuitarString.Sixth, 2)
+        new Fret(GuitarString.Sixth, 2, Pitch.FSharp)
       );
     });
 
     test('map Gb to second fret', () => {
       expect(GuitarString.Sixth.fretFor(Pitch.GFlat)).toStrictEqual(
-        new Fret(GuitarString.Sixth, 2)
+        new Fret(GuitarString.Sixth, 2, Pitch.GFlat)
       );
     });
 
     test('map G to third fret', () => {
-      expect(GuitarString.Sixth.fretFor(Pitch.G)).toStrictEqual(new Fret(GuitarString.Sixth, 3));
+      expect(GuitarString.Sixth.fretFor(Pitch.G)).toStrictEqual(
+        new Fret(GuitarString.Sixth, 3, Pitch.G)
+      );
     });
 
     test('convert to primitive', () => {
@@ -185,12 +191,12 @@ describe('Guitar String should', () => {
         GuitarTuning.OpenA
       );
 
-      expect(sixth.fretFor(Pitch.E)).toStrictEqual(new Fret(sixth, 0));
-      expect(fifth.fretFor(Pitch.A)).toStrictEqual(new Fret(fifth, 0));
-      expect(fourth.fretFor(Pitch.CSharp)).toStrictEqual(new Fret(fourth, 0));
-      expect(third.fretFor(Pitch.E)).toStrictEqual(new Fret(third, 0));
-      expect(second.fretFor(Pitch.A)).toStrictEqual(new Fret(second, 0));
-      expect(first.fretFor(Pitch.E)).toStrictEqual(new Fret(first, 0));
+      expect(sixth.fretFor(Pitch.E)).toStrictEqual(new Fret(sixth, 0, Pitch.E));
+      expect(fifth.fretFor(Pitch.A)).toStrictEqual(new Fret(fifth, 0, Pitch.A));
+      expect(fourth.fretFor(Pitch.CSharp)).toStrictEqual(new Fret(fourth, 0, Pitch.CSharp));
+      expect(third.fretFor(Pitch.E)).toStrictEqual(new Fret(third, 0, Pitch.E));
+      expect(second.fretFor(Pitch.A)).toStrictEqual(new Fret(second, 0, Pitch.A));
+      expect(first.fretFor(Pitch.E)).toStrictEqual(new Fret(first, 0, Pitch.E));
     });
 
     test('Open B', () => {
@@ -198,12 +204,12 @@ describe('Guitar String should', () => {
         GuitarTuning.OpenB
       );
 
-      expect(sixth.fretFor(Pitch.B)).toStrictEqual(new Fret(sixth, 0));
-      expect(fifth.fretFor(Pitch.FSharp)).toStrictEqual(new Fret(fifth, 0));
-      expect(fourth.fretFor(Pitch.B)).toStrictEqual(new Fret(fourth, 0));
-      expect(third.fretFor(Pitch.FSharp)).toStrictEqual(new Fret(third, 0));
-      expect(second.fretFor(Pitch.B)).toStrictEqual(new Fret(second, 0));
-      expect(first.fretFor(Pitch.DSharp)).toStrictEqual(new Fret(first, 0));
+      expect(sixth.fretFor(Pitch.B)).toStrictEqual(new Fret(sixth, 0, Pitch.B));
+      expect(fifth.fretFor(Pitch.FSharp)).toStrictEqual(new Fret(fifth, 0, Pitch.FSharp));
+      expect(fourth.fretFor(Pitch.B)).toStrictEqual(new Fret(fourth, 0, Pitch.B));
+      expect(third.fretFor(Pitch.FSharp)).toStrictEqual(new Fret(third, 0, Pitch.FSharp));
+      expect(second.fretFor(Pitch.B)).toStrictEqual(new Fret(second, 0, Pitch.B));
+      expect(first.fretFor(Pitch.DSharp)).toStrictEqual(new Fret(first, 0, Pitch.DSharp));
     });
 
     test('Eb', () => {
@@ -211,12 +217,12 @@ describe('Guitar String should', () => {
         GuitarTuning.EFlat
       );
 
-      expect(sixth.fretFor(Pitch.EFlat)).toStrictEqual(new Fret(sixth, 0));
-      expect(fifth.fretFor(Pitch.AFlat)).toStrictEqual(new Fret(fifth, 0));
-      expect(fourth.fretFor(Pitch.DFlat)).toStrictEqual(new Fret(fourth, 0));
-      expect(third.fretFor(Pitch.GFlat)).toStrictEqual(new Fret(third, 0));
-      expect(second.fretFor(Pitch.BFlat)).toStrictEqual(new Fret(second, 0));
-      expect(first.fretFor(Pitch.EFlat)).toStrictEqual(new Fret(first, 0));
+      expect(sixth.fretFor(Pitch.EFlat)).toStrictEqual(new Fret(sixth, 0, Pitch.EFlat));
+      expect(fifth.fretFor(Pitch.AFlat)).toStrictEqual(new Fret(fifth, 0, Pitch.AFlat));
+      expect(fourth.fretFor(Pitch.DFlat)).toStrictEqual(new Fret(fourth, 0, Pitch.DFlat));
+      expect(third.fretFor(Pitch.GFlat)).toStrictEqual(new Fret(third, 0, Pitch.GFlat));
+      expect(second.fretFor(Pitch.BFlat)).toStrictEqual(new Fret(second, 0, Pitch.BFlat));
+      expect(first.fretFor(Pitch.EFlat)).toStrictEqual(new Fret(first, 0, Pitch.EFlat));
     });
   });
 

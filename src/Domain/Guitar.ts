@@ -29,7 +29,8 @@ export class TabColumn {
 export class Fret {
   constructor(
     protected readonly string: GuitarString,
-    private readonly fret: number
+    private readonly fret: number,
+    private readonly pitch?: Pitch
   ) {}
 
   get Number(): number {
@@ -38,6 +39,10 @@ export class Fret {
 
   get String(): GuitarString {
     return this.string;
+  }
+
+  get Pitch() {
+    return this.pitch;
   }
 
   get To(): FretPrimitives {
@@ -309,7 +314,19 @@ export class GuitarString {
   }
 
   fretFor(pitch: Pitch): Fret {
-    return new Fret(this, this.openStringPitch.absoluteDistance(pitch));
+    return new Fret(this, this.openStringPitch.absoluteDistance(pitch), pitch);
+  }
+
+  frets(from: number, to: number) {
+    const frets: Fret[] = [];
+    let lastPitch = this.openStringPitch;
+
+    for (let i = from; i <= to; i++) {
+      frets.push(new Fret(this, i, lastPitch));
+      lastPitch = lastPitch.sharp();
+    }
+
+    return new HorizontalFrets(frets);
   }
 
   equals(other: GuitarString): boolean {

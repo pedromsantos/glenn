@@ -19,7 +19,7 @@ describe('Guitar pitch line should', () => {
       const guitarLine = new GuitarPitchLine(line, Position.Open);
 
       const fret = Array.from(guitarLine)[0];
-      const expectedFret = new Fret(GuitarString.Sixth, 0);
+      const expectedFret = new Fret(GuitarString.Sixth, 0, Pitch.E);
 
       expect(fret).toStrictEqual(expectedFret);
     });
@@ -29,7 +29,7 @@ describe('Guitar pitch line should', () => {
       const guitarLine = new GuitarPitchLine(line, Position.C);
 
       const fret = Array.from(guitarLine)[0];
-      expect(fret).toStrictEqual(new Fret(GuitarString.Fourth, 2));
+      expect(fret).toStrictEqual(new Fret(GuitarString.Fourth, 2, Pitch.E));
     });
 
     test('5th fret on fifth string for A Position', () => {
@@ -37,7 +37,7 @@ describe('Guitar pitch line should', () => {
       const guitarLine = new GuitarPitchLine(line, Position.A);
 
       const fret = Array.from(guitarLine)[0];
-      expect(fret).toStrictEqual(new Fret(GuitarString.Fifth, 7));
+      expect(fret).toStrictEqual(new Fret(GuitarString.Fifth, 7, Pitch.E));
     });
 
     test('7th fret on fifth string for G Position', () => {
@@ -45,7 +45,7 @@ describe('Guitar pitch line should', () => {
       const guitarLine = new GuitarPitchLine(line, Position.G);
 
       const fret = Array.from(guitarLine)[0];
-      expect(fret).toStrictEqual(new Fret(GuitarString.Fifth, 7));
+      expect(fret).toStrictEqual(new Fret(GuitarString.Fifth, 7, Pitch.E));
     });
 
     test('12th fret on sixth string for E Position', () => {
