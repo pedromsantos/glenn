@@ -317,16 +317,24 @@ export class GuitarString {
     return new Fret(this, this.openStringPitch.absoluteDistance(pitch), pitch);
   }
 
-  frets(from: number, to: number) {
-    const frets: Fret[] = [];
-    let lastPitch = this.openStringPitch;
+  fretsFor(position: Position) {
+    return new HorizontalFrets(this.fretsFromTo(position.Low, position.High));
+  }
 
-    for (let i = from; i <= to; i++) {
-      frets.push(new Fret(this, i, lastPitch));
-      lastPitch = lastPitch.sharp();
+  fretsFromTo(from: number, to: number) {
+    const frets: Fret[] = [];
+    let pitch = this.openStringPitch;
+
+    for (let i = from; i--; ) {
+      pitch = pitch.sharp();
     }
 
-    return new HorizontalFrets(frets);
+    for (let i = from; i <= to; i++) {
+      frets.push(new Fret(this, i, pitch));
+      pitch = pitch.sharp();
+    }
+
+    return frets;
   }
 
   equals(other: GuitarString): boolean {

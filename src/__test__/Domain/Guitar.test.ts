@@ -162,6 +162,65 @@ describe('Guitar String should', () => {
       );
     });
 
+    test('map frets on C position', () => {
+      const frets = GuitarString.Sixth.fretsFor(Position.C);
+
+      expect([...frets]).toStrictEqual([
+        new Fret(GuitarString.Sixth, 1, Pitch.F),
+        new Fret(GuitarString.Sixth, 2, Pitch.FSharp),
+        new Fret(GuitarString.Sixth, 3, Pitch.G),
+        new Fret(GuitarString.Sixth, 4, Pitch.GSharp),
+        new Fret(GuitarString.Sixth, 5, Pitch.A),
+      ]);
+    });
+
+    test('map frets on A position', () => {
+      const frets = GuitarString.Sixth.fretsFor(Position.A);
+
+      expect([...frets]).toStrictEqual([
+        new Fret(GuitarString.Sixth, 4, Pitch.GSharp),
+        new Fret(GuitarString.Sixth, 5, Pitch.A),
+        new Fret(GuitarString.Sixth, 6, Pitch.ASharp),
+        new Fret(GuitarString.Sixth, 7, Pitch.B),
+        new Fret(GuitarString.Sixth, 8, Pitch.C),
+      ]);
+    });
+
+    test('map frets on G position', () => {
+      const frets = GuitarString.Sixth.fretsFor(Position.G);
+
+      expect([...frets]).toStrictEqual([
+        new Fret(GuitarString.Sixth, 6, Pitch.ASharp),
+        new Fret(GuitarString.Sixth, 7, Pitch.B),
+        new Fret(GuitarString.Sixth, 8, Pitch.C),
+        new Fret(GuitarString.Sixth, 9, Pitch.CSharp),
+        new Fret(GuitarString.Sixth, 10, Pitch.D),
+      ]);
+    });
+
+    test('map frets on E position', () => {
+      const frets = GuitarString.Sixth.fretsFor(Position.E);
+
+      expect([...frets]).toStrictEqual([
+        new Fret(GuitarString.Sixth, 9, Pitch.CSharp),
+        new Fret(GuitarString.Sixth, 10, Pitch.D),
+        new Fret(GuitarString.Sixth, 11, Pitch.DSharp),
+        new Fret(GuitarString.Sixth, 12, Pitch.E),
+      ]);
+    });
+
+    test('map frets on D position', () => {
+      const frets = GuitarString.Sixth.fretsFor(Position.D);
+
+      expect([...frets]).toStrictEqual([
+        new Fret(GuitarString.Sixth, 11, Pitch.DSharp),
+        new Fret(GuitarString.Sixth, 12, Pitch.E),
+        new Fret(GuitarString.Sixth, 13, Pitch.F),
+        new Fret(GuitarString.Sixth, 14, Pitch.FSharp),
+        new Fret(GuitarString.Sixth, 15, Pitch.G),
+      ]);
+    });
+
     test('convert to primitive', () => {
       expect(GuitarString.Sixth.To).toStrictEqual({
         index: 6,
