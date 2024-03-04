@@ -9,6 +9,7 @@ import {
   GuitarString,
   GuitarStrings,
   Position,
+  PositionFrets,
   Tab,
   TabColumn,
 } from '../../Domain/Guitar';
@@ -39,6 +40,39 @@ describe('Guitar matrix should', () => {
 
       expect(new Tab(tabColumn).render()).toStrictEqual([['-', '-', '-', '-', '-', '1']]);
     });
+  });
+});
+
+describe('Position should', () => {
+  test('map vertical frets for fret number', () => {
+    const positionFrets = new PositionFrets(Position.C, new GuitarStrings());
+    const verticalFrets = positionFrets.verticalFretsAt(3);
+    const renderedTab = Tab.render(new Tab(verticalFrets.toTab()));
+
+    const expectedTab = `e|-3-|
+B|-3-|
+G|-3-|
+D|-3-|
+A|-3-|
+E|-3-|`;
+
+    expect(renderedTab).toBe(expectedTab);
+  });
+
+  test('map horizontal frets for guitar string', () => {
+    const guitarStrings = new GuitarStrings();
+    const positionFrets = new PositionFrets(Position.C, guitarStrings);
+    const horizontalFrets = positionFrets.horizontalFretsFor(GuitarString.Fourth);
+    const renderedTab = Tab.render(horizontalFrets.toTab(guitarStrings));
+
+    const expectedTab = `e|-----------|
+B|-----------|
+G|-----------|
+D|-1-2-3-4-5-|
+A|-----------|
+E|-----------|`;
+
+    expect(renderedTab).toBe(expectedTab);
   });
 });
 

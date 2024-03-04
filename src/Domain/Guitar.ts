@@ -166,6 +166,10 @@ class VerticalFrets extends Frets {
   override toString(): string {
     return this.frets.map((f) => f.toString()).join('\n');
   }
+
+  toTab(): TabColumn {
+    return TabColumn.fromFrets([...this.frets].reverse());
+  }
 }
 
 class HorizontalFrets extends Frets {
@@ -549,6 +553,37 @@ export class Position {
 
   public static get guitarPositions() {
     return Position.all;
+  }
+}
+
+export class PositionFrets {
+  private readonly frets: Fret[][] = [];
+
+  constructor(position: Position, guitarStrings: GuitarStrings) {
+    for (const guitarString of guitarStrings) {
+      this.frets.push([...guitarString.fretsFromTo(position.Low, position.High)]);
+    }
+  }
+
+  horizontalFretsFor(guitarString: GuitarString) {
+    for (const fs of this.frets) {
+      if (fs.every((f) => f.String == guitarString)) {
+        return new HorizontalFrets(fs);
+      }
+    }
+    return new HorizontalFrets();
+  }
+
+  verticalFretsAt(fretNumber: number) {
+    const vFrets: Fret[] = [];
+    for (const fs of this.frets) {
+      const fret = fs.find((f) => f.Number == fretNumber);
+      if (fret) {
+        vFrets.push(fret);
+      }
+    }
+
+    return new VerticalFrets(vFrets);
   }
 }
 
