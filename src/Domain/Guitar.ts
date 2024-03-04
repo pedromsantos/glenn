@@ -640,12 +640,11 @@ export class GuitarChord implements Iterable<Fret> {
   }
 
   private mapNonOpenePositionChord(chord: Chord, guitarStrings: GuitarStrings): Fret[] {
-    const mappedPitches: Pitch[] = [];
     const mappedeFrets: Fret[] = [];
 
     for (const guitarString of guitarStrings) {
       for (const pitch of chord) {
-        if (mappedPitches.find((p) => p === pitch)) {
+        if (mappedeFrets.find((f) => f.Pitch === pitch)) {
           continue;
         }
 
@@ -653,7 +652,6 @@ export class GuitarChord implements Iterable<Fret> {
 
         if (this.position.contains(fret, 1, 1)) {
           mappedeFrets.push(fret);
-          mappedPitches.push(pitch);
         }
       }
 
