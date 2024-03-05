@@ -566,9 +566,9 @@ export class PositionFrets {
   }
 
   horizontalFretsFor(guitarString: GuitarString) {
-    for (const fs of this.frets) {
-      if (fs.every((f) => f.String == guitarString)) {
-        return new HorizontalFrets(fs);
+    for (const fretsOnString of this.frets) {
+      if (fretsOnString.every((f) => f.String == guitarString)) {
+        return new HorizontalFrets(fretsOnString);
       }
     }
     return new HorizontalFrets();
@@ -576,14 +576,38 @@ export class PositionFrets {
 
   verticalFretsAt(fretNumber: number) {
     const vFrets: Fret[] = [];
-    for (const fs of this.frets) {
-      const fret = fs.find((f) => f.Number == fretNumber);
+    for (const fretsOnString of this.frets) {
+      const fret = fretsOnString.find((f) => f.Number == fretNumber);
       if (fret) {
         vFrets.push(fret);
       }
     }
 
     return new VerticalFrets(vFrets);
+  }
+
+  map(line: PitchLine) {
+    const fretsForLine: HorizontalFrets = new HorizontalFrets();
+    const fretsOnStrings =
+      line.Direction == PitchLineDirection.Descending ? [...this.frets.reverse()] : [...this.frets];
+
+    const mappingLine = [...line];
+    let pitchIndex = 0;
+
+    for (const fretsOnString of fretsOnStrings) {
+      for (const fret of fretsOnString) {
+        if (mappingLine[pitchIndex] == fret.Pitch!) {
+          fretsForLine.push(fret);
+          pitchIndex++;
+        }
+
+        if (pitchIndex > mappingLine.length) {
+          break;
+        }
+      }
+    }
+
+    return fretsForLine;
   }
 }
 

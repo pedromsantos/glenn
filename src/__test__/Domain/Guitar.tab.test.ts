@@ -13,7 +13,7 @@ import {
   Tab,
   TabColumn,
 } from '../../Domain/Guitar';
-import { Pitch, PitchLine } from '../../Domain/Pitch';
+import { Pitch, PitchLine, PitchLineDirection } from '../../Domain/Pitch';
 import { ScalePattern } from '../../Domain/Scale';
 
 describe('Blank fret should', () => {
@@ -72,6 +72,36 @@ D|-1-2-3-4-5-|
 A|-----------|
 E|-----------|`;
 
+    expect(renderedTab).toBe(expectedTab);
+  });
+
+  test('C E G ascending on C position', () => {
+    const line = new PitchLine([Pitch.C, Pitch.E, Pitch.G]);
+    const guitarStrings = new GuitarStrings();
+    const fretLine = new PositionFrets(Position.C, guitarStrings).map(line);
+    const renderedTab = Tab.render(fretLine.toTab(guitarStrings));
+
+    const expectedTab = `e|-------|
+B|-------|
+G|-------|
+D|---2-5-|
+A|-3-----|
+E|-------|`;
+    expect(renderedTab).toBe(expectedTab);
+  });
+
+  test('G E C descending on C position', () => {
+    const line = new PitchLine([Pitch.G, Pitch.E, Pitch.C], PitchLineDirection.Descending);
+    const guitarStrings = new GuitarStrings();
+    const fretLine = new PositionFrets(Position.C, guitarStrings).map(line);
+    const renderedTab = Tab.render(fretLine.toTab(guitarStrings));
+
+    const expectedTab = `e|-3-----|
+B|---5---|
+G|-----5-|
+D|-------|
+A|-------|
+E|-------|`;
     expect(renderedTab).toBe(expectedTab);
   });
 });
