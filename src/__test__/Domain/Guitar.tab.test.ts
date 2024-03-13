@@ -44,8 +44,10 @@ describe('Guitar matrix should', () => {
 });
 
 describe('Position should', () => {
+  const guitarStrings = new GuitarStrings();
+  const positionFrets = new PositionFrets(Position.C, guitarStrings);
+
   test('map vertical frets for fret number', () => {
-    const positionFrets = new PositionFrets(Position.C, new GuitarStrings());
     const verticalFrets = positionFrets.verticalFretsAt(3);
     const renderedTab = Tab.render(new Tab(verticalFrets.toTab()));
 
@@ -60,8 +62,6 @@ E|-3-|`;
   });
 
   test('map horizontal frets for guitar string', () => {
-    const guitarStrings = new GuitarStrings();
-    const positionFrets = new PositionFrets(Position.C, guitarStrings);
     const horizontalFrets = positionFrets.horizontalFretsFor(GuitarString.Fourth);
     const renderedTab = Tab.render(horizontalFrets.toTab(guitarStrings));
 
@@ -77,8 +77,7 @@ E|-----------|`;
 
   test('map C E G ascending on C position', () => {
     const line = new PitchLine([Pitch.C, Pitch.E, Pitch.G]);
-    const guitarStrings = new GuitarStrings();
-    const fretLine = new PositionFrets(Position.C, guitarStrings).map(line);
+    const fretLine = positionFrets.map(line);
     const renderedTab = Tab.render(fretLine?.toTab(guitarStrings));
 
     const expectedTab = `e|-------|
@@ -92,8 +91,7 @@ E|-------|`;
 
   test('map G E C descending on C position', () => {
     const line = new PitchLine([Pitch.G, Pitch.E, Pitch.C], PitchLineDirection.Descending);
-    const guitarStrings = new GuitarStrings();
-    const fretLine = new PositionFrets(Position.C, guitarStrings).map(line);
+    const fretLine = positionFrets.map(line);
     const renderedTab = Tab.render(fretLine?.toTab(guitarStrings));
 
     const expectedTab = `e|-3-----|
@@ -107,8 +105,7 @@ E|-------|`;
 
   test('map C G E descending on C position', () => {
     const line = new PitchLine([Pitch.C, Pitch.G, Pitch.E], PitchLineDirection.Descending);
-    const guitarStrings = new GuitarStrings();
-    const fretLine = new PositionFrets(Position.C, guitarStrings).map(line);
+    const fretLine = positionFrets.map(line);
     const renderedTab = Tab.render(fretLine?.toTab(guitarStrings));
 
     const expectedTab = `e|-------|
