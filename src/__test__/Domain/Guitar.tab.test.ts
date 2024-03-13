@@ -75,7 +75,7 @@ E|-----------|`;
     expect(renderedTab).toBe(expectedTab);
   });
 
-  test('C E G ascending on C position', () => {
+  test('map C E G ascending on C position', () => {
     const line = new PitchLine([Pitch.C, Pitch.E, Pitch.G]);
     const guitarStrings = new GuitarStrings();
     const fretLine = new PositionFrets(Position.C, guitarStrings).map(line);
@@ -90,7 +90,7 @@ E|-------|`;
     expect(renderedTab).toBe(expectedTab);
   });
 
-  test('G E C descending on C position', () => {
+  test('map G E C descending on C position', () => {
     const line = new PitchLine([Pitch.G, Pitch.E, Pitch.C], PitchLineDirection.Descending);
     const guitarStrings = new GuitarStrings();
     const fretLine = new PositionFrets(Position.C, guitarStrings).map(line);
@@ -105,7 +105,7 @@ E|-------|`;
     expect(renderedTab).toBe(expectedTab);
   });
 
-  test('C G E descending on C position', () => {
+  test('map C G E descending on C position', () => {
     const line = new PitchLine([Pitch.C, Pitch.G, Pitch.E], PitchLineDirection.Descending);
     const guitarStrings = new GuitarStrings();
     const fretLine = new PositionFrets(Position.C, guitarStrings).map(line);
