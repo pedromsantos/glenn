@@ -577,6 +577,10 @@ export class PitchLine implements Iterable<Pitch> {
     return this.direction;
   }
 
+  pitchAt(index: number) {
+    return this.line[index];
+  }
+
   *[Symbol.iterator](): Iterator<Pitch> {
     for (const pitch of this.line) {
       yield pitch;

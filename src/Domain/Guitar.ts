@@ -657,7 +657,6 @@ export class PositionFrets {
 
   private lineToFrets(fretsOnStrings: Fret[][], line: PitchLine) {
     const fretsForLine: HorizontalFrets = new HorizontalFrets();
-    const lineToMap = [...line];
     let pitchIndex = 0;
 
     for (const fretsOnString of fretsOnStrings) {
@@ -665,15 +664,15 @@ export class PositionFrets {
         fretsOnString.reverse();
       }
 
-      for (const fret of fretsOnString) {
-        if (lineToMap[pitchIndex] == fret.Pitch!) {
-          fretsForLine.push(fret);
+      fretsOnString.forEach((f) => {
+        if (line.pitchAt(pitchIndex) == f.Pitch) {
+          fretsForLine.push(f);
           pitchIndex++;
         }
+      });
 
-        if (pitchIndex > line.length) {
-          break;
-        }
+      if (pitchIndex > line.length) {
+        break;
       }
     }
 
