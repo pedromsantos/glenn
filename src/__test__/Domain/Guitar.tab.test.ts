@@ -45,7 +45,11 @@ describe('Guitar matrix should', () => {
 
 describe('Position should', () => {
   const guitarStrings = new GuitarStrings();
-  const positionFrets = new PositionFrets(Position.C, guitarStrings);
+  let positionFrets = new PositionFrets(Position.C, guitarStrings);
+
+  beforeEach(() => {
+    positionFrets = new PositionFrets(Position.C, guitarStrings);
+  });
 
   test('map vertical frets for fret number', () => {
     const verticalFrets = positionFrets.verticalFretsAt(3);

@@ -637,7 +637,7 @@ export class PositionFrets {
 
   map(line: PitchLine): HorizontalFrets | undefined {
     const fretsOnStrings =
-      line.Direction == PitchLineDirection.Descending ? this.frets.reverse() : this.frets;
+      line.Direction == PitchLineDirection.Descending ? this.frets.slice().reverse() : this.frets;
     const fretLines = [];
 
     while (fretsOnStrings.length != 0) {
