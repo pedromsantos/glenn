@@ -91,7 +91,7 @@ E|-------|`;
 
   test('map G E C descending on C position', () => {
     const line = new PitchLine([Pitch.G, Pitch.E, Pitch.C], PitchLineDirection.Descending);
-    const fretLine = positionFrets.map(line);
+    const fretLine = new PositionFrets(Position.C, guitarStrings).map(line);
     const renderedTab = Tab.render(fretLine?.toTab(guitarStrings));
 
     const expectedTab = `e|-3-----|
@@ -105,7 +105,7 @@ E|-------|`;
 
   test('map C G E descending on C position', () => {
     const line = new PitchLine([Pitch.C, Pitch.G, Pitch.E], PitchLineDirection.Descending);
-    const fretLine = positionFrets.map(line);
+    const fretLine = new PositionFrets(Position.C, guitarStrings).map(line);
     const renderedTab = Tab.render(fretLine?.toTab(guitarStrings));
 
     const expectedTab = `e|-------|
