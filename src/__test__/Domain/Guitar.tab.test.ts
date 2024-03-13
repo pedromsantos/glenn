@@ -97,9 +97,24 @@ E|-------|`;
     const renderedTab = Tab.render(fretLine.toTab(guitarStrings));
 
     const expectedTab = `e|-3-----|
-B|---5---|
-G|-----5-|
+B|---5-1-|
+G|-------|
 D|-------|
+A|-------|
+E|-------|`;
+    expect(renderedTab).toBe(expectedTab);
+  });
+
+  test('C G E descending on C position', () => {
+    const line = new PitchLine([Pitch.C, Pitch.G, Pitch.E], PitchLineDirection.Descending);
+    const guitarStrings = new GuitarStrings();
+    const fretLine = new PositionFrets(Position.C, guitarStrings).map(line);
+    const renderedTab = Tab.render(fretLine.toTab(guitarStrings));
+
+    const expectedTab = `e|-------|
+B|-------|
+G|-5-----|
+D|---5-2-|
 A|-------|
 E|-------|`;
     expect(renderedTab).toBe(expectedTab);

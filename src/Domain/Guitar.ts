@@ -79,6 +79,20 @@ export class Fret {
     return this.Number.toString();
   }
 
+  isOnSameStringAs(other: Fret) {
+    return this.String == other.String;
+  }
+
+  isOnAdjacentStringAs(other: Fret) {
+    return this.String == other.String.NextAscending || this.String == other.String.NextDescending;
+  }
+
+  isOnAdjacentOfAdjacentStringAs(other: Fret) {
+    const nextNextAscending = other.String.NextAscending.NextAscending;
+    const nextNextDescending = other.String.NextDescending.NextDescending;
+    return this.String == nextNextAscending || this.String == nextNextDescending;
+  }
+
   private isHigher(other: Fret, margin: number) {
     return this.fret + margin > other.fret;
   }
@@ -137,6 +151,25 @@ abstract class Frets implements Iterable<Fret> {
   toString(): string {
     return this.frets.map((f) => f.toString()).join(',');
   }
+
+  protected areAllFretsOnSameGuitarString() {
+    return this.frets.every((f) => f.isOnSameStringAs(this.frets[0]!));
+  }
+
+  protected areAllFretsWithinAdjacentGuitarStrings() {
+    return this.frets.every(
+      (f) => f.isOnSameStringAs(this.frets[0]!) || f.isOnAdjacentStringAs(this.frets[0]!)
+    );
+  }
+
+  protected areAllFretsWithinAdjacentOfAdjacentGuitarStrings() {
+    return this.frets.every(
+      (f) =>
+        f.isOnSameStringAs(this.frets[0]!) ||
+        f.isOnAdjacentStringAs(this.frets[0]!) ||
+        f.isOnAdjacentOfAdjacentStringAs(this.frets[0]!)
+    );
+  }
 }
 
 class VerticalFrets extends Frets {
@@ -172,7 +205,7 @@ class VerticalFrets extends Frets {
   }
 }
 
-class HorizontalFrets extends Frets {
+export class HorizontalFrets extends Frets {
   constructor(frets: Fret[] = []) {
     super(frets);
   }
@@ -192,6 +225,22 @@ class HorizontalFrets extends Frets {
   toTab(guitarStrings: GuitarStrings): Tab {
     const column = this.frets.map((fret) => fret.toTab(guitarStrings));
     return new Tab(...column);
+  }
+
+  smoothness() {
+    if (this.areAllFretsOnSameGuitarString()) {
+      return 0;
+    }
+
+    if (this.areAllFretsWithinAdjacentGuitarStrings()) {
+      return 1;
+    }
+
+    if (this.areAllFretsWithinAdjacentOfAdjacentGuitarStrings()) {
+      return 2;
+    }
+
+    return 3;
   }
 
   get length() {
@@ -587,21 +636,42 @@ export class PositionFrets {
   }
 
   map(line: PitchLine) {
-    const fretsForLine: HorizontalFrets = new HorizontalFrets();
     const fretsOnStrings =
       line.Direction == PitchLineDirection.Descending ? [...this.frets.reverse()] : [...this.frets];
+    const fretLines = [];
 
-    const mappingLine = [...line];
+    while (fretsOnStrings.length != 0) {
+      const fretLine = this.lineToFrets(fretsOnStrings, line);
+
+      if (fretLine.length == line.length) {
+        fretLines.push(fretLine);
+      }
+
+      fretsOnStrings.shift();
+    }
+
+    fretLines.sort((fl1, fl2) => fl1.smoothness() - fl2.smoothness());
+
+    return fretLines[0]!;
+  }
+
+  private lineToFrets(fretsOnStrings: Fret[][], line: PitchLine) {
+    const fretsForLine: HorizontalFrets = new HorizontalFrets();
+    const lineToMap = [...line];
     let pitchIndex = 0;
 
     for (const fretsOnString of fretsOnStrings) {
+      if (PitchLineDirection.Descending) {
+        fretsOnString.reverse();
+      }
+
       for (const fret of fretsOnString) {
-        if (mappingLine[pitchIndex] == fret.Pitch!) {
+        if (lineToMap[pitchIndex] == fret.Pitch!) {
           fretsForLine.push(fret);
           pitchIndex++;
         }
 
-        if (pitchIndex > mappingLine.length) {
+        if (pitchIndex > line.length) {
           break;
         }
       }
