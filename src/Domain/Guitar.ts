@@ -637,7 +637,7 @@ export class PositionFrets {
 
   map(line: PitchLine) {
     const fretsOnStrings =
-      line.Direction == PitchLineDirection.Descending ? [...this.frets.reverse()] : [...this.frets];
+      line.Direction == PitchLineDirection.Descending ? this.frets.reverse() : this.frets;
     const fretLines = [];
 
     while (fretsOnStrings.length != 0) {
@@ -652,7 +652,7 @@ export class PositionFrets {
 
     fretLines.sort((fl1, fl2) => fl1.smoothness() - fl2.smoothness());
 
-    return fretLines[0]!;
+    return fretLines[0];
   }
 
   private lineToFrets(fretsOnStrings: Fret[][], line: PitchLine) {

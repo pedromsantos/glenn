@@ -79,7 +79,7 @@ E|-----------|`;
     const line = new PitchLine([Pitch.C, Pitch.E, Pitch.G]);
     const guitarStrings = new GuitarStrings();
     const fretLine = new PositionFrets(Position.C, guitarStrings).map(line);
-    const renderedTab = Tab.render(fretLine.toTab(guitarStrings));
+    const renderedTab = Tab.render(fretLine?.toTab(guitarStrings));
 
     const expectedTab = `e|-------|
 B|-------|
@@ -94,7 +94,7 @@ E|-------|`;
     const line = new PitchLine([Pitch.G, Pitch.E, Pitch.C], PitchLineDirection.Descending);
     const guitarStrings = new GuitarStrings();
     const fretLine = new PositionFrets(Position.C, guitarStrings).map(line);
-    const renderedTab = Tab.render(fretLine.toTab(guitarStrings));
+    const renderedTab = Tab.render(fretLine?.toTab(guitarStrings));
 
     const expectedTab = `e|-3-----|
 B|---5-1-|
@@ -109,7 +109,7 @@ E|-------|`;
     const line = new PitchLine([Pitch.C, Pitch.G, Pitch.E], PitchLineDirection.Descending);
     const guitarStrings = new GuitarStrings();
     const fretLine = new PositionFrets(Position.C, guitarStrings).map(line);
-    const renderedTab = Tab.render(fretLine.toTab(guitarStrings));
+    const renderedTab = Tab.render(fretLine?.toTab(guitarStrings));
 
     const expectedTab = `e|-------|
 B|-------|
