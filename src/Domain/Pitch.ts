@@ -38,6 +38,10 @@ export class Pitch {
     return intervalTo ?? Interval.Unison;
   }
 
+  equal(other?: Pitch) {
+    return this.NumericValue == other?.NumericValue;
+  }
+
   get NumericValue(): number {
     return this.value;
   }

@@ -148,10 +148,6 @@ abstract class Frets implements Iterable<Fret> {
     this.frets.reverse();
   }
 
-  toString(): string {
-    return this.frets.map((f) => f.toString()).join(',');
-  }
-
   protected areAllFretsOnSameGuitarString() {
     return this.frets.every((f) => f.isOnSameStringAs(this.frets[0]!));
   }
@@ -643,14 +639,17 @@ export class PositionFrets {
     while (fretsOnStrings.length != 0) {
       const fretLine = this.lineToFrets(fretsOnStrings, line);
 
-      if (fretLine.length == line.length) {
-        fretLines.push(fretLine);
-      }
+      fretLines.push(fretLine);
 
       fretsOnStrings.shift();
     }
 
-    fretLines.sort((fl1, fl2) => fl1.smoothness() - fl2.smoothness());
+    fretLines.sort((fl1, fl2) => {
+      const d1 = Math.abs(fl1.length - line.length);
+      const d2 = Math.abs(fl2.length - line.length);
+
+      return fl1.smoothness() + d1 - (fl2.smoothness() + d2);
+    });
 
     return fretLines[0];
   }
@@ -665,15 +664,11 @@ export class PositionFrets {
       }
 
       fretsOnString.forEach((f) => {
-        if (line.pitchAt(pitchIndex) == f.Pitch) {
+        if (line.pitchAt(pitchIndex)?.equal(f.Pitch)) {
           fretsForLine.push(f);
           pitchIndex++;
         }
       });
-
-      if (pitchIndex > line.length) {
-        break;
-      }
     }
 
     return fretsForLine;
@@ -792,7 +787,7 @@ export class GuitarChord implements Iterable<Fret> {
   }
 }
 
-export class GuitarPitchLine implements Iterable<Fret> {
+class GuitarPitchLine implements Iterable<Fret> {
   protected readonly line: HorizontalFrets = new HorizontalFrets();
   private readonly position: Position = Position.Open;
   private readonly guitarStrings = new GuitarStrings();
