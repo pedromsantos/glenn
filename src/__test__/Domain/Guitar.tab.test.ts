@@ -1,9 +1,11 @@
 import { Chord, ChordPattern, ClosedChord } from '../../Domain/Chord';
 import {
   BlankFret,
+  DoubleOctaveGuitarPitchLine,
   Fret,
   GuitarChord,
   GuitarHarmonicLine,
+  GuitarPitchLine,
   GuitarString,
   GuitarStrings,
   Position,
@@ -203,6 +205,21 @@ E|-10-|`;
     });
 
     describe('pitch line', () => {
+      test('C E G ascending on C position', () => {
+        const line = new PitchLine([Pitch.C, Pitch.E, Pitch.G]);
+        const guitarLine = new GuitarPitchLine(line, Position.C);
+
+        const renderedTab = Tab.render(guitarLine.toTab());
+
+        const expectedTab = `e|-------|
+B|-------|
+G|-------|
+D|---2-5-|
+A|-3-----|
+E|-------|`;
+        expect(renderedTab).toBe(expectedTab);
+      });
+
       describe('scales in C Position', () => {
         test('C major scale ascending', () => {
           const expectedTab = `e|---------------|
@@ -258,18 +275,16 @@ E|-------------------------|`;
 
         function render(pitch: Pitch, pattern: ScalePattern, position: Position) {
           const line = pattern.createPitchLineScale(pitch);
-          const guitarStrings = new GuitarStrings();
-          const positionFrets = new PositionFrets(position, guitarStrings);
-          const fretLine = positionFrets.map(line);
-          return Tab.render(fretLine?.toTab(guitarStrings));
+          const guitarLine = new GuitarPitchLine(line, position);
+
+          return Tab.render(guitarLine.toTab());
         }
 
         function renderDoubleOctave(pitch: Pitch, pattern: ScalePattern, position: Position) {
-          const line = pattern.createPitchLineScale(pitch).addOctave();
-          const guitarStrings = new GuitarStrings();
-          const positionFrets = new PositionFrets(position, guitarStrings);
-          const fretLine = positionFrets.map(line);
-          return Tab.render(fretLine?.toTab(guitarStrings));
+          const line = pattern.createPitchLineScale(pitch);
+          const guitarLine = new DoubleOctaveGuitarPitchLine(line, position);
+
+          return Tab.render(guitarLine.toTab());
         }
       });
     });

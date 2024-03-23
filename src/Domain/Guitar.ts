@@ -664,11 +664,15 @@ export class PositionFrets {
       }
 
       fretsOnString.forEach((f) => {
-        if (line.pitchAt(pitchIndex)?.equal(f.Pitch)) {
+        if (line.pitchAt(pitchIndex) == f.Pitch) {
           fretsForLine.push(f);
           pitchIndex++;
         }
       });
+
+      if (pitchIndex > line.length) {
+        break;
+      }
     }
 
     return fretsForLine;
@@ -787,7 +791,7 @@ export class GuitarChord implements Iterable<Fret> {
   }
 }
 
-class GuitarPitchLine implements Iterable<Fret> {
+export class GuitarPitchLine implements Iterable<Fret> {
   protected readonly line: HorizontalFrets = new HorizontalFrets();
   private readonly position: Position = Position.Open;
   private readonly guitarStrings = new GuitarStrings();

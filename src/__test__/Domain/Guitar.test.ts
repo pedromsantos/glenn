@@ -3,6 +3,7 @@ import * as fc from 'fast-check';
 import {
   BlankFret,
   Fret,
+  GuitarPitchLine,
   GuitarString,
   GuitarStrings,
   GuitarTuning,
@@ -10,7 +11,7 @@ import {
   Position,
   PositionFrets,
 } from '../../Domain/Guitar';
-import { Pitch } from '../../Domain/Pitch';
+import { Pitch, PitchLine, PitchLineDirection } from '../../Domain/Pitch';
 
 describe('Fret should', () => {
   test('convert to primitive', () => {
@@ -329,20 +330,20 @@ describe('Guitar String should', () => {
   }
 });
 
-// describe('Position should', () => {
-//   test('map E to all positions', () => {
-//     fc.assert(
-//       fc.property(fc.constantFrom(...Position.guitarPositions), (position: Position) => {
-//         const line = new PitchLine([Pitch.E], PitchLineDirection.Descending);
-//         const guitarLine = new GuitarPitchLine(line, position);
-//         const positionPrimitives = position.To;
+describe('Position should', () => {
+  test('map E to all positions', () => {
+    fc.assert(
+      fc.property(fc.constantFrom(...Position.guitarPositions), (position: Position) => {
+        const line = new PitchLine([Pitch.E], PitchLineDirection.Descending);
+        const guitarLine = new GuitarPitchLine(line, position);
+        const positionPrimitives = position.To;
 
-//         const fret = Array.from(guitarLine)[0];
+        const fret = Array.from(guitarLine)[0];
 
-//         expect(fret?.Number).toBeGreaterThanOrEqual(positionPrimitives.lowestFret.fret);
-//         expect(fret?.Number).toBeLessThanOrEqual(positionPrimitives.highestFret.fret);
-//       }),
-//       { verbose: true }
-//     );
-//   });
-// });
+        expect(fret?.Number).toBeGreaterThanOrEqual(positionPrimitives.lowestFret.fret);
+        expect(fret?.Number).toBeLessThanOrEqual(positionPrimitives.highestFret.fret);
+      }),
+      { verbose: true }
+    );
+  });
+});
