@@ -783,7 +783,7 @@ export class GuitarChord implements Iterable<Fret> {
   }
 }
 
-class GuitarPitchLine {
+export class GuitarPitchLine {
   protected readonly line: HorizontalFrets = new HorizontalFrets();
   private readonly position: Position = Position.Open;
   private readonly guitarStrings = new GuitarStrings();
@@ -886,16 +886,6 @@ export class GuitarPitchLines extends GuitarPitchLine {
         this.line.concat(this.mapPitchLine(pitchLine, guitarStrings));
       }
     }
-  }
-}
-
-export class DoubleOctaveGuitarPitchLine extends GuitarPitchLine {
-  constructor(
-    pitchLine: PitchLine,
-    position: Position,
-    guitarStrings: GuitarStrings = new GuitarStrings()
-  ) {
-    super(pitchLine.addOctave(), position, guitarStrings);
   }
 }
 
