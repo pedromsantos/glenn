@@ -272,7 +272,7 @@ describe('Note', () => {
     );
   });
 
-  test('Has a single pitch and octave and single note', () => {
+  test('Has a single pitch, octave and note', () => {
     const note = new Note(Pitch.C, Duration.Quarter, Octave.C1);
 
     expect(note.Pitch).toBe(Pitch.C);
