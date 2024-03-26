@@ -366,6 +366,26 @@ describe('Octave', () => {
       value: -8,
     });
   });
+
+  test('convert from primitive octave', () => {
+    expect(
+      Octave.From({
+        midi: 12,
+        name: 'Contra',
+        value: -8,
+      })
+    ).toBe(Octave.C1);
+  });
+
+  test('not convert from invalid primitive octave', () => {
+    expect(() =>
+      Octave.From({
+        midi: 12,
+        name: 'Contra',
+        value: -99,
+      })
+    ).toThrow();
+  });
 });
 
 describe('Melodic line', () => {
