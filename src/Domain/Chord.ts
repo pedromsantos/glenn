@@ -339,7 +339,7 @@ export class Drop2Chord extends BaseChord implements Iterable<Pitch> {
     root: Pitch,
     pattern: ChordPattern,
     duration: Duration,
-    octave: Octave = Octave.C4,
+    octave: Octave,
     overridePitches?: ChordPitches
   ) {
     super(root, pattern, duration, octave, overridePitches);
@@ -374,8 +374,8 @@ export class Drop3Chord extends BaseChord implements Iterable<Pitch> {
   constructor(
     root: Pitch,
     pattern: ChordPattern,
-    duration: Duration = Duration.Whole,
-    octave: Octave = Octave.C4,
+    duration: Duration,
+    octave: Octave,
     overridePitches?: ChordPitches
   ) {
     super(root, pattern, duration, octave, overridePitches);
