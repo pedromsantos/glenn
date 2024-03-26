@@ -8,8 +8,8 @@ import { Pitch } from './Pitch';
 
 export class ChordPitch {
   constructor(
-    private readonly _pitch: Pitch = Pitch.C,
-    private readonly _func: ChordFunction = ChordFunction.Root
+    private readonly _pitch: Pitch,
+    private readonly _func: ChordFunction
   ) {}
 
   get Pitch() {
@@ -156,7 +156,7 @@ class BaseChord implements Chord, Iterable<Pitch> {
   protected constructor(
     root: Pitch,
     pattern: ChordPattern,
-    duration: Duration = Duration.Whole,
+    duration: Duration,
     octave: Octave = Octave.C4,
     overridePitches?: ChordPitches
   ) {
@@ -314,7 +314,7 @@ class BaseChord implements Chord, Iterable<Pitch> {
     if (root === undefined || pattern === undefined) {
       throw new TypeError('Cannot create instance from state');
     }
-    return new BaseChord(root, pattern, Duration.From(state.duration.value));
+    return new BaseChord(root, pattern, Duration.From(state.duration.value)!);
   }
 }
 
@@ -338,7 +338,7 @@ export class Drop2Chord extends BaseChord implements Iterable<Pitch> {
   constructor(
     root: Pitch,
     pattern: ChordPattern,
-    duration: Duration = Duration.Whole,
+    duration: Duration,
     octave: Octave = Octave.C4,
     overridePitches?: ChordPitches
   ) {
