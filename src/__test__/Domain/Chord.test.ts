@@ -478,6 +478,22 @@ describe('Chords should', () => {
     expect(chord.Name).toBe(from?.Name);
   });
 
+  test('not be able to create chord from invalid primitive types', () => {
+    const chordPrimitives = {
+      name: 'invalid',
+      abbreviation: 'invalid',
+      root: Pitch.C.To,
+      pitches: [{ pitch: Pitch.C.To, function: ChordFunction.Root.To }],
+      pattern: 'invalid',
+      bass: Pitch.C.To,
+      lead: Pitch.C.To,
+      duration: Duration.Whole.To,
+      octave: Octave.C0.To,
+    };
+
+    expect(() => ClosedChord.From(chordPrimitives)).toThrow();
+  });
+
   test('Converting a drop 2 chord to drop 2 returns same chord', () => {
     const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
     const drop = chord.drop2();
