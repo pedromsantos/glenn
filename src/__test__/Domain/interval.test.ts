@@ -37,7 +37,12 @@ describe('Interval', () => {
   });
 
   test('not create from invalid primitive', () => {
-    const primitive = { name: 'invalid', abreviature: 'invalid', distance: 0, quality: 'invalid' };
+    const primitive = {
+      abreviature: 'A4',
+      distance: 6,
+      name: 'Augmented Fourth',
+      quality: 'Invalid',
+    };
 
     expect(() => Interval.From(primitive)).toThrow();
   });
