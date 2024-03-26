@@ -167,10 +167,6 @@ class BaseChord implements Chord, Iterable<Pitch> {
     this._pitches = overridePitches ?? ChordPitches.createFromRootAndPattern(root, pattern);
   }
 
-  get HasPitch(): boolean {
-    return true;
-  }
-
   get Pitches(): Iterable<Pitch> {
     return [...this._pitches];
   }
