@@ -804,13 +804,7 @@ export class GuitarPitchLine {
   }
 
   protected mapPitchLine(pitchLine: PitchLine, guitarStrings: GuitarStrings) {
-    const line = this.mapLine(pitchLine, this.guitarStringsFor(pitchLine.Direction, guitarStrings));
-
-    if (line.smoothness() > 3) {
-      return new HorizontalFrets();
-    }
-
-    return line;
+    return this.mapLine(pitchLine, this.guitarStringsFor(pitchLine.Direction, guitarStrings));
   }
 
   private guitarStringsFor(lineDirection: PitchLineDirection, guitarStrings: GuitarStrings) {

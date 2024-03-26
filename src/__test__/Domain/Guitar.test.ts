@@ -329,20 +329,21 @@ describe('Guitar String should', () => {
   }
 });
 
-// describe('Position should', () => {
-//   test('map E to all positions', () => {
-//     fc.assert(
-//       fc.property(fc.constantFrom(...Position.guitarPositions), (position: Position) => {
-//         const line = new PitchLine([Pitch.E], PitchLineDirection.Descending);
-//         const guitarLine = new GuitarPitchLine(line, position);
-//         const positionPrimitives = position.To;
+describe('Position should', () => {
+  test('be created from primitives', () => {
+    const position = Position.From(Position.C.To);
 
-//         const fret = Array.from(guitarLine)[0];
+    expect(position.High).toBe(Position.C.High);
+    expect(position.Low).toBe(Position.C.Low);
+  });
 
-//         expect(fret?.Number).toBeGreaterThanOrEqual(positionPrimitives.lowestFret.fret);
-//         expect(fret?.Number).toBeLessThanOrEqual(positionPrimitives.highestFret.fret);
-//       }),
-//       { verbose: true }
-//     );
-//   });
-// });
+  test('not be created from primitives when primitives are invalid', () => {
+    expect(() =>
+      Position.From({
+        name: 'invalid',
+        lowestFret: { string: { name: 'first', index: 0 }, fret: 0 },
+        highestFret: { string: { name: 'first', index: 0 }, fret: 0 },
+      })
+    ).toThrow();
+  });
+});
