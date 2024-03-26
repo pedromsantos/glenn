@@ -22,6 +22,26 @@ describe('Interval', () => {
     ]);
   });
 
+  test.each([
+    [Interval.AugmentedFourth],
+    [Interval.DiminishedFifth],
+    [Interval.MajorNinth],
+    [Interval.MinorNinth],
+    [Interval.PerfectEleventh],
+  ])('create from primitive', (interval: Interval) => {
+    const primitive = interval.To;
+
+    const from = Interval.From(primitive);
+
+    expect(from.Name).toBe(interval.Name);
+  });
+
+  test('not create from invalid primitive', () => {
+    const primitive = { name: 'invalid', abreviature: 'invalid', distance: 0, quality: 'invalid' };
+
+    expect(() => Interval.From(primitive)).toThrow();
+  });
+
   test('inversion of augmented fourth is diminished fifth', () => {
     expect(Interval.AugmentedFourth.invert()).toStrictEqual(Interval.DiminishedFifth);
   });
