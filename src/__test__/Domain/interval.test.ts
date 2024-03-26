@@ -36,12 +36,23 @@ describe('Interval', () => {
     expect(from.Name).toBe(interval.Name);
   });
 
-  test('not create from invalid primitive', () => {
+  test('not create from invalid quality primitive', () => {
     const primitive = {
       abreviature: 'A4',
       distance: 6,
       name: 'Augmented Fourth',
       quality: 'Invalid',
+    };
+
+    expect(() => Interval.From(primitive)).toThrow();
+  });
+
+  test('not create from invalid name primitive', () => {
+    const primitive = {
+      abreviature: 'invalid',
+      distance: 6,
+      name: 'invalid',
+      quality: 'Augmented',
     };
 
     expect(() => Interval.From(primitive)).toThrow();
