@@ -295,14 +295,6 @@ export class Duration {
     return ticksPerQuarterNote;
   }
 
-  equivalentTo(other: Duration) {
-    if (this.value > other.value) {
-      return this.value / other.value;
-    }
-
-    return other.value / this.value;
-  }
-
   static From(value: number): Duration | undefined {
     return Duration.durations.find((d) => d.value === value);
   }
