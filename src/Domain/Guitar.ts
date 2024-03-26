@@ -595,10 +595,6 @@ export class Position {
   contains(fret: Fret, lowerMargin = 0, higherMargin = 0): boolean {
     return fret.isWithin(this.lowFret, this.highFret, lowerMargin, higherMargin);
   }
-
-  public static get guitarPositions() {
-    return Position.all;
-  }
 }
 
 export class PositionFrets {
@@ -787,7 +783,7 @@ export class GuitarChord implements Iterable<Fret> {
   }
 }
 
-class GuitarPitchLine implements Iterable<Fret> {
+class GuitarPitchLine {
   protected readonly line: HorizontalFrets = new HorizontalFrets();
   private readonly position: Position = Position.Open;
   private readonly guitarStrings = new GuitarStrings();
@@ -807,15 +803,10 @@ class GuitarPitchLine implements Iterable<Fret> {
     return this.line.toTab(this.guitarStrings);
   }
 
-  toFrets() {
-    return this.line;
-  }
-
   protected mapPitchLine(pitchLine: PitchLine, guitarStrings: GuitarStrings) {
     const line = this.mapLine(pitchLine, this.guitarStringsFor(pitchLine.Direction, guitarStrings));
-    const pitchLineTabLineMinimumDiference = 2;
 
-    if (Math.abs(line.length - pitchLine.length) > pitchLineTabLineMinimumDiference) {
+    if (line.smoothness() > 3) {
       return new HorizontalFrets();
     }
 
@@ -872,25 +863,13 @@ class GuitarPitchLine implements Iterable<Fret> {
   }
 
   private mapPitch(pitch: Pitch, guitarString: GuitarString, line: HorizontalFrets): boolean {
-    let fret = guitarString.fretFor(pitch);
-    if (this.position.contains(fret)) {
-      line.push(fret);
-      return true;
-    }
-
-    fret = fret.raiseOctave();
+    const fret = guitarString.fretFor(pitch);
     if (this.position.contains(fret)) {
       line.push(fret);
       return true;
     }
 
     return false;
-  }
-
-  *[Symbol.iterator](): Iterator<Fret> {
-    for (const fret of this.line) {
-      yield fret;
-    }
   }
 }
 
@@ -920,7 +899,7 @@ export class DoubleOctaveGuitarPitchLine extends GuitarPitchLine {
   }
 }
 
-export class GuitarHarmonicLine implements Iterable<GuitarChord> {
+export class GuitarHarmonicLine {
   private readonly chords: GuitarChord[] = [];
   private readonly bassString: GuitarString = GuitarString.Sixth;
 
@@ -936,12 +915,6 @@ export class GuitarHarmonicLine implements Iterable<GuitarChord> {
   toTab() {
     const column = [...this.chords].map((c) => c.toTab());
     return new Tab(...column);
-  }
-
-  *[Symbol.iterator](): Iterator<GuitarChord> {
-    for (const fret of this.chords) {
-      yield fret;
-    }
   }
 }
 
