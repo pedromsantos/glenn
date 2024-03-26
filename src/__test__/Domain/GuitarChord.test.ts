@@ -1,11 +1,13 @@
 import { ChordPattern, ClosedChord } from '../../Domain/Chord';
+import { Duration } from '../../Domain/Duration';
 import { GuitarChord, Position } from '../../Domain/Guitar';
+import { Octave } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
 
 describe('Guitar chord', function () {
   describe('chord', () => {
     test('C Major triad on open position', () => {
-      const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+      const chord = new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4);
       const guitarChord = GuitarChord.inPosition(chord, Position.Open);
       const frets = Array.from(guitarChord);
 
@@ -15,7 +17,7 @@ describe('Guitar chord', function () {
     });
 
     test('G Major triad on open position', () => {
-      const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+      const chord = new ClosedChord(Pitch.G, ChordPattern.Major, Duration.Quarter, Octave.C4);
       const guitarChord = GuitarChord.inPosition(chord, Position.Open);
       const stringifiedChord = guitarChord.toString();
 
@@ -25,7 +27,7 @@ describe('Guitar chord', function () {
     });
 
     test('A Major triad on open position', () => {
-      const chord = new ClosedChord(Pitch.A, ChordPattern.Major);
+      const chord = new ClosedChord(Pitch.A, ChordPattern.Major, Duration.Quarter, Octave.C4);
       const guitarChord = GuitarChord.inPosition(chord, Position.Open);
       const stringifiedChord = guitarChord.toString();
 
@@ -35,7 +37,7 @@ describe('Guitar chord', function () {
     });
 
     test('A minor triad on open position', () => {
-      const chord = new ClosedChord(Pitch.A, ChordPattern.Minor);
+      const chord = new ClosedChord(Pitch.A, ChordPattern.Minor, Duration.Quarter, Octave.C4);
       const guitarChord = GuitarChord.inPosition(chord, Position.Open);
       const stringifiedChord = guitarChord.toString();
 
@@ -45,7 +47,7 @@ describe('Guitar chord', function () {
     });
 
     test('E Major triad on open position', () => {
-      const chord = new ClosedChord(Pitch.E, ChordPattern.Major);
+      const chord = new ClosedChord(Pitch.E, ChordPattern.Major, Duration.Quarter, Octave.C4);
       const guitarChord = GuitarChord.inPosition(chord, Position.Open);
       const stringifiedChord = guitarChord.toString();
 
@@ -55,7 +57,7 @@ describe('Guitar chord', function () {
     });
 
     test('E minor triad on open position', () => {
-      const chord = new ClosedChord(Pitch.E, ChordPattern.Minor);
+      const chord = new ClosedChord(Pitch.E, ChordPattern.Minor, Duration.Quarter, Octave.C4);
       const guitarChord = GuitarChord.inPosition(chord, Position.Open);
       const stringifiedChord = guitarChord.toString();
 
@@ -65,7 +67,7 @@ describe('Guitar chord', function () {
     });
 
     test('C Major triad on A position', () => {
-      const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+      const chord = new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4);
       const guitarChord = GuitarChord.inPosition(chord, Position.A);
       const stringifiedChord = guitarChord.toString();
 

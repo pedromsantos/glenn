@@ -17,7 +17,7 @@ describe('abc Tune should', () => {
     .add(new Rest(Duration.Eighth))
     .add(new Note(Pitch.B, Duration.Eighth, Octave.C4))
     .add(new Note(Pitch.C, Duration.Eighth, Octave.C5))
-    .add(new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Whole));
+    .add(new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Whole, Octave.C4));
 
   test('create abc notation with eighth note default duration', () => {
     const tune = new AbcTune(song.To, Duration.Eighth.To);

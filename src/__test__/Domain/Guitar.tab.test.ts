@@ -1,4 +1,5 @@
 import { Chord, ChordPattern, ClosedChord } from '../../Domain/Chord';
+import { Duration } from '../../Domain/Duration';
 import {
   BlankFret,
   Fret,
@@ -11,6 +12,7 @@ import {
   Tab,
   TabColumn,
 } from '../../Domain/Guitar';
+import { Octave } from '../../Domain/Note';
 import { Pitch, PitchLine, PitchLineDirection } from '../../Domain/Pitch';
 import { ScalePattern } from '../../Domain/Scale';
 
@@ -276,7 +278,7 @@ E|-------------------------|`;
 
     describe('chords', () => {
       test('C Major triad on open position', () => {
-        const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+        const chord = new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4);
         const guitarChord = GuitarChord.inPosition(chord, Position.Open);
         const renderedTab = Tab.render(new Tab(guitarChord.toTab()));
 
@@ -292,7 +294,7 @@ E|-0-|`;
 
       describe('G Major triad', () => {
         test('on C position', () => {
-          const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+          const chord = new ClosedChord(Pitch.G, ChordPattern.Major, Duration.Quarter, Octave.C4);
           const guitarChord = GuitarChord.inPosition(chord, Position.Open);
           const renderedTab = Tab.render(new Tab(guitarChord.toTab()));
 
@@ -307,7 +309,7 @@ E|-3-|`;
         });
 
         test('from sixth string', () => {
-          const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+          const chord = new ClosedChord(Pitch.G, ChordPattern.Major, Duration.Quarter, Octave.C4);
           const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Sixth);
           const renderedTab = Tab.render(new Tab(guitarChord.toTab()));
 
@@ -322,7 +324,7 @@ E|-3-|`;
         });
 
         test('triad from fifth string', () => {
-          const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+          const chord = new ClosedChord(Pitch.G, ChordPattern.Major, Duration.Quarter, Octave.C4);
           const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Fifth);
           const renderedTab = Tab.render(new Tab(guitarChord.toTab()));
 
@@ -337,7 +339,7 @@ E|----|`;
         });
 
         test('triad from fourth string', () => {
-          const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+          const chord = new ClosedChord(Pitch.G, ChordPattern.Major, Duration.Quarter, Octave.C4);
           const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Fourth);
           const renderedTab = Tab.render(new Tab(guitarChord.toTab()));
 
@@ -352,7 +354,7 @@ E|---|`;
         });
 
         test('triad from third string', () => {
-          const chord = new ClosedChord(Pitch.G, ChordPattern.Major);
+          const chord = new ClosedChord(Pitch.G, ChordPattern.Major, Duration.Quarter, Octave.C4);
           const guitarChord = GuitarChord.fromBassString(chord, GuitarString.Third);
           const renderedTab = Tab.render(new Tab(guitarChord.toTab()));
 
@@ -370,8 +372,14 @@ E|----|`;
 
     test('Major triads on open position', () => {
       const chords = [
-        GuitarChord.inPosition(new ClosedChord(Pitch.G, ChordPattern.Major), Position.Open),
-        GuitarChord.inPosition(new ClosedChord(Pitch.C, ChordPattern.Major), Position.Open),
+        GuitarChord.inPosition(
+          new ClosedChord(Pitch.G, ChordPattern.Major, Duration.Quarter, Octave.C4),
+          Position.Open
+        ),
+        GuitarChord.inPosition(
+          new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4),
+          Position.Open
+        ),
       ];
 
       const matrix = new Tab(...chords.map((c) => c.toTab()));
@@ -401,12 +409,12 @@ E|-3-0-|`;
     let aMin7: Chord;
 
     beforeEach(() => {
-      cMaj7 = new ClosedChord(Pitch.C, ChordPattern.Major7);
-      dMin7 = new ClosedChord(Pitch.D, ChordPattern.Minor7);
-      eMin7 = new ClosedChord(Pitch.E, ChordPattern.Minor7);
-      fMaj7 = new ClosedChord(Pitch.F, ChordPattern.Major7);
-      g7 = new ClosedChord(Pitch.G, ChordPattern.Dominant7);
-      aMin7 = new ClosedChord(Pitch.A, ChordPattern.Minor7);
+      cMaj7 = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
+      dMin7 = new ClosedChord(Pitch.D, ChordPattern.Minor7, Duration.Quarter, Octave.C4);
+      eMin7 = new ClosedChord(Pitch.E, ChordPattern.Minor7, Duration.Quarter, Octave.C4);
+      fMaj7 = new ClosedChord(Pitch.F, ChordPattern.Major7, Duration.Quarter, Octave.C4);
+      g7 = new ClosedChord(Pitch.G, ChordPattern.Dominant7, Duration.Quarter, Octave.C4);
+      aMin7 = new ClosedChord(Pitch.A, ChordPattern.Minor7, Duration.Quarter, Octave.C4);
     });
 
     describe('Drop 2 chords', () => {

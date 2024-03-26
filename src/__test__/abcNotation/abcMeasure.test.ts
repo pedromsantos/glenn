@@ -52,7 +52,7 @@ describe('abc Measure should', () => {
       .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
       .add(new Rest(Duration.Quarter))
       .add(new Note(Pitch.G, Duration.Quarter, Octave.C4))
-      .add(new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter));
+      .add(new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4));
 
     const abc = new AbcMeasure(measure.To, Duration.Quarter.To);
 

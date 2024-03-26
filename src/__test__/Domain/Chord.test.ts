@@ -7,102 +7,122 @@ import { Accidental, Pitch } from '../../Domain/Pitch';
 
 describe('Major Chords should', () => {
   test('have a name', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4);
     expect(chord.Name).toBe('CMajor');
   });
 
   test('have a root', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4);
     expect(chord.pitchForFunction(ChordFunction.Root)).toBe(Pitch.C);
   });
 
   test('have a third', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4);
     expect(chord.pitchForFunction(ChordFunction.Third)).toBe(Pitch.E);
   });
 
   test('have a fifth', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4);
     expect(chord.pitchForFunction(ChordFunction.Fifth)).toBe(Pitch.G);
   });
 
   test('have a seventh', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
     expect(chord.pitchForFunction(ChordFunction.Seventh)).toBe(Pitch.B);
   });
 
   test('have a ninth', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major9);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major9, Duration.Quarter, Octave.C4);
     expect(chord.pitchForFunction(ChordFunction.Ninth)).toBe(Pitch.D);
   });
 
   test('have an eleventh', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major11);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major11, Duration.Quarter, Octave.C4);
     expect(chord.pitchForFunction(ChordFunction.Eleventh)).toBe(Pitch.F);
   });
 
   test('have a thirteenth', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major13);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major13, Duration.Quarter, Octave.C4);
     expect(chord.pitchForFunction(ChordFunction.Thirteenth)).toBe(Pitch.A);
   });
 
   test('Have expected pitches for C Major chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Major));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for C Major 6 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.A];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Major6));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Major6, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for C Major 6 add 9 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.A, Pitch.D];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Major6Add9));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Major6Add9, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for C Major 7 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Major7));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for C Major 9 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B, Pitch.D];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Major9));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Major9, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for C Major 11 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B, Pitch.F];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Major11));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Major11, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for C Major 13#11 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B, Pitch.FSharp, Pitch.A];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Major13Sharp11));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Major13Sharp11, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for C Major 9#11 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B, Pitch.D, Pitch.FSharp];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Major9Sharp11));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Major9Sharp11, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for CMaj7#5 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.GSharp, Pitch.B];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Augmented7));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Augmented7, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for CAug chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.GSharp];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Augmented));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Augmented, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 });
@@ -110,92 +130,122 @@ describe('Major Chords should', () => {
 describe('Dominant Chords should', () => {
   test('Have expected pitches for C7 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.BFlat];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Dominant7));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Dominant7, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for C9 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.BFlat, Pitch.D];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Dominant9));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Dominant9, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for C7b5b9 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.GFlat, Pitch.BFlat, Pitch.DFlat];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Dominant7Flat5Flat9));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Dominant7Flat5Flat9, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for C7b5#9 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.GFlat, Pitch.BFlat, Pitch.DSharp];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Dominant7Flat5Sharp9));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Dominant7Flat5Sharp9, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for C11 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.BFlat, Pitch.D, Pitch.F];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Dominant11));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Dominant11, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for C13 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.BFlat, Pitch.D, Pitch.F, Pitch.A];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Dominant13));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Dominant13, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   test('Have expected pitches for C7#9 chord', () => {
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.BFlat, Pitch.DSharp];
-    const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Dominant7Sharp9));
+    const chordPitches = Array.from(
+      new ClosedChord(Pitch.C, ChordPattern.Dominant7Sharp9, Duration.Quarter, Octave.C4)
+    );
     expect(chordPitches).toStrictEqual(expectedPitches);
   });
 
   describe('Minor Chords should', () => {
     test('Have expected pitches for C- chord', () => {
       const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.G];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Minor));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.Minor, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
 
     test('Have expected pitches for C-6 chord', () => {
       const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.G, Pitch.A];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Minor6));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.Minor6, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
 
     test('Have expected pitches for C-6add9 chord', () => {
       const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.G, Pitch.A, Pitch.D];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Minor6Add9));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.Minor6Add9, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
 
     test('Have expected pitches for C-7 chord', () => {
       const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.G, Pitch.BFlat];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Minor7));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.Minor7, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
 
     test('Have expected pitches for C-Maj7 chord', () => {
       const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.G, Pitch.B];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.MinorMaj7));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.MinorMaj7, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
 
     test('Have expected pitches for C-9 chord', () => {
       const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.G, Pitch.BFlat, Pitch.D];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Minor9));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.Minor9, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
 
     test('Have expected pitches for C-Maj9 chord', () => {
       const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.G, Pitch.B, Pitch.D];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.MinorMaj9));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.MinorMaj9, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
 
     test('Have expected pitches for C-7b5 chord', () => {
       const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.GFlat, Pitch.BFlat];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Minor7b5));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.Minor7b5, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
   });
@@ -203,13 +253,17 @@ describe('Dominant Chords should', () => {
   describe('Diminished Chords should', () => {
     test('Have expected pitches for Cdim chord', () => {
       const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.GFlat];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Diminished));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.Diminished, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
 
     test('Have expected pitches for Cdim7 chord', () => {
       const expectedPitches = [Pitch.C, Pitch.EFlat, Pitch.GFlat, Pitch.A];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Diminished7));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.Diminished7, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
   });
@@ -217,37 +271,52 @@ describe('Dominant Chords should', () => {
   describe('Sus Chords should', () => {
     test('Have expected pitches for CSus2 chord', () => {
       const expectedPitches = [Pitch.C, Pitch.D, Pitch.G];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Sus2));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.Sus2, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
 
     test('Have expected pitches for CSus2dim chord', () => {
       const expectedPitches = [Pitch.C, Pitch.D, Pitch.GFlat];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Sus2Diminished));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.Sus2Diminished, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
 
     test('Have expected pitches for CSus2aug chord', () => {
       const expectedPitches = [Pitch.C, Pitch.D, Pitch.GSharp];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Sus2Augmented));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.Sus2Augmented, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
 
     test('Have expected pitches for CSus4 chord', () => {
       const expectedPitches = [Pitch.C, Pitch.F, Pitch.G];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Sus4));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.Sus4, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
 
     test('Have expected pitches for CSus4dim chord', () => {
       const expectedPitches = [Pitch.C, Pitch.F, Pitch.GFlat];
-      const chordPitches = Array.from(new ClosedChord(Pitch.C, ChordPattern.Sus4Diminished));
+      const chordPitches = Array.from(
+        new ClosedChord(Pitch.C, ChordPattern.Sus4Diminished, Duration.Quarter, Octave.C4)
+      );
       expect(chordPitches).toStrictEqual(expectedPitches);
     });
 
     test('Have expected pitches for CSus4aug chord', () => {
       const expectedPitches = [Pitch.C, Pitch.F, Pitch.GSharp];
-      const chord = new ClosedChord(Pitch.C, ChordPattern.Sus4Augmented);
+      const chord = new ClosedChord(
+        Pitch.C,
+        ChordPattern.Sus4Augmented,
+        Duration.Quarter,
+        Octave.C4
+      );
 
       expect(Array.from(chord)).toStrictEqual(expectedPitches);
     });
@@ -256,70 +325,98 @@ describe('Dominant Chords should', () => {
 
 describe('Chords should', () => {
   test('be named after the root note', () => {
-    const name = new ClosedChord(Pitch.C, ChordPattern.Diminished).Name;
+    const name = new ClosedChord(Pitch.C, ChordPattern.Diminished, Duration.Quarter, Octave.C4)
+      .Name;
     expect(name[0]).toBe('C');
   });
 
   test('be named after the root note and the quality', () => {
-    const name = new ClosedChord(Pitch.C, ChordPattern.Minor7b5).Name;
+    const name = new ClosedChord(Pitch.C, ChordPattern.Minor7b5, Duration.Quarter, Octave.C4).Name;
     expect(name).toBe('CMinor 7 b5');
   });
 
   test('be named after the root note and the abbreviated quality', () => {
-    const name = new ClosedChord(Pitch.C, ChordPattern.Diminished7).Abbreviation;
+    const name = new ClosedChord(Pitch.C, ChordPattern.Diminished7, Duration.Quarter, Octave.C4)
+      .Abbreviation;
     expect(name).toBe('Cdim7');
   });
 
   test('have bass note equal to root when not inverted', () => {
     const expectedPitch = Pitch.C;
-    const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished).Bass;
+    const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished, Duration.Quarter, Octave.C4)
+      .Bass;
     expect(pitch).toStrictEqual(expectedPitch);
   });
 
   test('Have lead note equal to fifth for triads when not inverted', () => {
     const expectedPitch = Pitch.GFlat;
-    const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished).Lead;
+    const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished, Duration.Quarter, Octave.C4)
+      .Lead;
     expect(pitch).toStrictEqual(expectedPitch);
   });
 
   test('be able to identify Pitch for root', () => {
     const expectedPitch = Pitch.C;
-    const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished).pitchForFunction(
-      ChordFunction.Root
-    );
+    const pitch = new ClosedChord(
+      Pitch.C,
+      ChordPattern.Diminished,
+      Duration.Quarter,
+      Octave.C4
+    ).pitchForFunction(ChordFunction.Root);
     expect(pitch).toStrictEqual(expectedPitch);
   });
 
   test('be able to identify Pitch for third', () => {
     const expectedPitch = Pitch.EFlat;
-    const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished).pitchForFunction(
-      ChordFunction.Third
-    );
+    const pitch = new ClosedChord(
+      Pitch.C,
+      ChordPattern.Diminished,
+      Duration.Quarter,
+      Octave.C4
+    ).pitchForFunction(ChordFunction.Third);
     expect(pitch).toStrictEqual(expectedPitch);
   });
 
   test('be able to identify Pitch for third on sus2 chords', () => {
     const expectedPitch = Pitch.D;
-    const pitch = new ClosedChord(Pitch.C, ChordPattern.Sus2).pitchForFunction(ChordFunction.Third);
+    const pitch = new ClosedChord(
+      Pitch.C,
+      ChordPattern.Sus2,
+      Duration.Quarter,
+      Octave.C4
+    ).pitchForFunction(ChordFunction.Third);
     expect(pitch).toStrictEqual(expectedPitch);
   });
 
   test('be able to identify Pitch for third on sus4 chords', () => {
     const expectedPitch = Pitch.F;
-    const pitch = new ClosedChord(Pitch.C, ChordPattern.Sus4).pitchForFunction(ChordFunction.Third);
+    const pitch = new ClosedChord(
+      Pitch.C,
+      ChordPattern.Sus4,
+      Duration.Quarter,
+      Octave.C4
+    ).pitchForFunction(ChordFunction.Third);
     expect(pitch).toStrictEqual(expectedPitch);
   });
 
   test('be able to identify Pitch for fifth', () => {
     const expectedPitch = Pitch.GFlat;
-    const pitch = new ClosedChord(Pitch.C, ChordPattern.Diminished).pitchForFunction(
-      ChordFunction.Fifth
-    );
+    const pitch = new ClosedChord(
+      Pitch.C,
+      ChordPattern.Diminished,
+      Duration.Quarter,
+      Octave.C4
+    ).pitchForFunction(ChordFunction.Fifth);
     expect(pitch).toStrictEqual(expectedPitch);
   });
 
   test('be able to remove Pitch for fifth', () => {
-    const baseChord = new ClosedChord(Pitch.C, ChordPattern.Diminished7);
+    const baseChord = new ClosedChord(
+      Pitch.C,
+      ChordPattern.Diminished7,
+      Duration.Quarter,
+      Octave.C4
+    );
 
     const chord = baseChord.remove(ChordFunction.Fifth);
 
@@ -328,7 +425,12 @@ describe('Chords should', () => {
   });
 
   test('be able to remove Pitch for fifth on drop 2 chord', () => {
-    const baseChord = new ClosedChord(Pitch.C, ChordPattern.Major7).drop2();
+    const baseChord = new ClosedChord(
+      Pitch.C,
+      ChordPattern.Major7,
+      Duration.Quarter,
+      Octave.C4
+    ).drop2();
 
     const chord = baseChord.remove(ChordFunction.Fifth);
 
@@ -337,7 +439,12 @@ describe('Chords should', () => {
   });
 
   test('be able to remove Pitch for fifth on drop 3 chord', () => {
-    const baseChord = new ClosedChord(Pitch.C, ChordPattern.Major7).drop3();
+    const baseChord = new ClosedChord(
+      Pitch.C,
+      ChordPattern.Major7,
+      Duration.Quarter,
+      Octave.C4
+    ).drop3();
 
     const chord = baseChord.remove(ChordFunction.Fifth);
 
@@ -346,7 +453,12 @@ describe('Chords should', () => {
   });
 
   test('be able to remove Pitch for seventh', () => {
-    const baseChord = new ClosedChord(Pitch.C, ChordPattern.Diminished7);
+    const baseChord = new ClosedChord(
+      Pitch.C,
+      ChordPattern.Diminished7,
+      Duration.Quarter,
+      Octave.C4
+    );
 
     const chord = baseChord.remove(ChordFunction.Seventh);
 
@@ -355,70 +467,80 @@ describe('Chords should', () => {
   });
 
   test('be able to be inverted to first inversion', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4);
 
     const expectedPitches = [Pitch.E, Pitch.G, Pitch.C];
     expect(Array.from(chord.invert())).toStrictEqual(expectedPitches);
   });
 
   test('be able to be inverted to second inversion', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4);
 
     const expectedPitches = [Pitch.G, Pitch.C, Pitch.E];
     expect(Array.from(chord.invert().invert())).toStrictEqual(expectedPitches);
   });
 
   test('be able to be inverted to third inversion', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
 
     const expectedPitches = [Pitch.B, Pitch.C, Pitch.E, Pitch.G];
     expect(Array.from(chord.invert().invert().invert())).toStrictEqual(expectedPitches);
   });
 
   test('be able to be transformed into drop 2 chords', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
 
     const expectedPitches = [Pitch.C, Pitch.G, Pitch.B, Pitch.E];
     expect(Array.from(chord.drop2())).toStrictEqual(expectedPitches);
   });
 
   test('not be able to be transformed into drop 2 chords when its a 3 note chord', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4);
 
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G];
     expect(Array.from(chord.drop2())).toStrictEqual(expectedPitches);
   });
 
   test('be able to be transformed drop 2 chords to closed chords', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7).drop2();
+    const chord = new ClosedChord(
+      Pitch.C,
+      ChordPattern.Major7,
+      Duration.Quarter,
+      Octave.C4
+    ).drop2();
 
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B];
     expect(Array.from(chord.closed())).toStrictEqual(expectedPitches);
   });
 
   test('be able to be transformed into drop 3 chords', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
 
     const expectedPitches = [Pitch.C, Pitch.B, Pitch.E, Pitch.G];
     expect(Array.from(chord.drop3())).toStrictEqual(expectedPitches);
   });
 
   test('not be able to be transformed into drop 3 chords when its a 3 note chord', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4);
 
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G];
     expect(Array.from(chord.drop3())).toStrictEqual(expectedPitches);
   });
 
   test('be able to be transformed drop 3 chords to closed chords', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7).drop3();
+    const chord = new ClosedChord(
+      Pitch.C,
+      ChordPattern.Major7,
+      Duration.Quarter,
+      Octave.C4
+    ).drop3();
 
     const expectedPitches = [Pitch.C, Pitch.E, Pitch.G, Pitch.B];
     expect(Array.from(chord.closed())).toStrictEqual(expectedPitches);
   });
 
   test('be able to be inverted to first inversion when in drop2 format', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
 
     const expectedPitches = [Pitch.E, Pitch.B, Pitch.C, Pitch.G];
     expect(Array.from(chord.drop2().invert()).map((p) => p.Name)).toStrictEqual(
@@ -427,7 +549,7 @@ describe('Chords should', () => {
   });
 
   test('be able to be inverted to second inversion when in drop2 format', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
 
     const expectedPitches = [Pitch.G, Pitch.C, Pitch.E, Pitch.B];
     expect(Array.from(chord.drop2().invert().invert()).map((p) => p.Name)).toStrictEqual(
@@ -436,7 +558,7 @@ describe('Chords should', () => {
   });
 
   test('be able to be inverted to third inversion when in drop2 format', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
 
     const expectedPitches = [Pitch.B, Pitch.E, Pitch.G, Pitch.C];
     expect(Array.from(chord.drop2().invert().invert().invert()).map((p) => p.Name)).toStrictEqual(
@@ -445,7 +567,7 @@ describe('Chords should', () => {
   });
 
   test('be able to be inverted to first inversion when in drop3 format', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
 
     const expectedPitches = [Pitch.E, Pitch.C, Pitch.G, Pitch.B];
     expect(Array.from(chord.drop3().invert()).map((p) => p.Name)).toStrictEqual(
@@ -454,7 +576,7 @@ describe('Chords should', () => {
   });
 
   test('be able to be inverted to second inversion when in drop3 format', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
 
     const expectedPitches = [Pitch.G, Pitch.E, Pitch.B, Pitch.C];
     expect(Array.from(chord.drop3().invert().invert()).map((p) => p.Name)).toStrictEqual(
@@ -463,7 +585,7 @@ describe('Chords should', () => {
   });
 
   test('be able to be inverted to third inversion when in drop3 format', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
 
     const expectedPitches = [Pitch.B, Pitch.G, Pitch.C, Pitch.E];
     expect(Array.from(chord.drop3().invert().invert().invert()).map((p) => p.Name)).toStrictEqual(
@@ -472,7 +594,7 @@ describe('Chords should', () => {
   });
 
   test('be able to create chord from primitive types', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Augmented);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Augmented, Duration.Quarter, Octave.C4);
     const from = ClosedChord.From(chord.To);
 
     expect(chord.Name).toBe(from?.Name);
@@ -495,7 +617,7 @@ describe('Chords should', () => {
   });
 
   test('Converting a drop 2 chord to drop 2 returns same chord', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
     const drop = chord.drop2();
     const other = drop.drop2();
 
@@ -503,7 +625,7 @@ describe('Chords should', () => {
   });
 
   test('Converting a drop 3 chord to drop 3 returns same chord', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
     const drop = chord.drop3();
     const other = drop.drop3();
 
@@ -511,7 +633,7 @@ describe('Chords should', () => {
   });
 
   test('Converting a closed chord to closed returns same chord', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
     const other = chord.closed();
 
     expect(chord).toBe(other);
@@ -534,7 +656,7 @@ describe('Chords should', () => {
   });
 
   test('has a duration', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
 
     expect(chord.Duration).toBe(Duration.Quarter);
     expect(chord.DurationName).toBe(Duration.Quarter.Name);
@@ -543,7 +665,7 @@ describe('Chords should', () => {
   });
 
   test('to have pitches', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
 
     expect([...chord.Pitches]).toHaveLength(4);
   });
@@ -556,7 +678,7 @@ describe('Chords should', () => {
   });
 
   test('does have a note', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter);
+    const chord = new ClosedChord(Pitch.C, ChordPattern.Major7, Duration.Quarter, Octave.C4);
 
     expect([...chord.Notes]).toHaveLength(4);
     expect([...chord.MidiNumbers]).toHaveLength(4);
@@ -570,7 +692,7 @@ describe('Chord properties', () => {
         fc.constantFrom(...Pitch.pitches),
         fc.constantFrom(...ChordPattern.patterns),
         (root: Pitch, pattern: ChordPattern) => {
-          const chord = new ClosedChord(root, pattern);
+          const chord = new ClosedChord(root, pattern, Duration.Quarter, Octave.C4);
           const expectedChordPitches = Array.from(chord);
           const inversions = expectedChordPitches.length;
           let invertedChord = chord.invert();
@@ -592,7 +714,7 @@ describe('Chord properties', () => {
         fc.constantFrom(...Pitch.pitches),
         fc.constantFrom(...ChordPattern.patterns),
         (root: Pitch, pattern: ChordPattern) => {
-          const chord = new ClosedChord(root, pattern).drop2();
+          const chord = new ClosedChord(root, pattern, Duration.Quarter, Octave.C4).drop2();
           const expectedChordPitches = Array.from(chord);
           const inversions = expectedChordPitches.length;
 
@@ -619,7 +741,7 @@ describe('Chord properties', () => {
         fc.constantFrom(...Pitch.pitches),
         fc.constantFrom(...ChordPattern.patterns),
         (root: Pitch, pattern: ChordPattern) => {
-          const chord = new ClosedChord(root, pattern).drop3();
+          const chord = new ClosedChord(root, pattern, Duration.Quarter, Octave.C4).drop3();
           const expectedChordPitches = Array.from(chord);
           const inversions = expectedChordPitches.length;
 
@@ -646,7 +768,7 @@ describe('Chord properties', () => {
         fc.constantFrom(...Pitch.pitches),
         fc.constantFrom(...ChordPattern.patterns),
         (root: Pitch, pattern: ChordPattern) => {
-          const chord = new ClosedChord(root, pattern);
+          const chord = new ClosedChord(root, pattern, Duration.Quarter, Octave.C4);
           const primitivesChord = chord.To;
           const from = ClosedChord.From(primitivesChord);
 

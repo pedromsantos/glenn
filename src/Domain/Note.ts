@@ -48,6 +48,16 @@ export class Octave {
     };
   }
 
+  static From(state: OctavePrimitives) {
+    const octave = Octave.all.find((o) => o.value === state.value && o.Name === state.name);
+
+    if (!octave) {
+      throw 'Invalid octave value';
+    }
+
+    return octave;
+  }
+
   public static get octaves() {
     return Octave.all;
   }

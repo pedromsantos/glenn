@@ -289,19 +289,19 @@ describe('Note', () => {
     const note = new Note(Pitch.C, Duration.Quarter, Octave.C1);
 
     test('C Major', () => {
-      const chord = new ClosedChord(Pitch.C, ChordPattern.Major);
+      const chord = new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4);
 
       expect(note.isChordToneOf(chord)).toBeTruthy();
     });
 
     test('A minor 6', () => {
-      const chord = new ClosedChord(Pitch.A, ChordPattern.Minor6);
+      const chord = new ClosedChord(Pitch.A, ChordPattern.Minor6, Duration.Quarter, Octave.C4);
 
       expect(note.isChordToneOf(chord)).toBeTruthy();
     });
 
     test('D minor 7', () => {
-      const chord = new ClosedChord(Pitch.D, ChordPattern.Minor7);
+      const chord = new ClosedChord(Pitch.D, ChordPattern.Minor7, Duration.Quarter, Octave.C4);
 
       expect(note.isChordToneOf(chord)).toBeTruthy();
     });
@@ -311,7 +311,7 @@ describe('Note', () => {
     const note = new Note(Pitch.C, Duration.Quarter, Octave.C1);
 
     test('D minor', () => {
-      const chord = new ClosedChord(Pitch.D, ChordPattern.Minor);
+      const chord = new ClosedChord(Pitch.D, ChordPattern.Minor, Duration.Quarter, Octave.C4);
 
       expect(note.isChordToneOf(chord)).toBeFalsy();
     });

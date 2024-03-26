@@ -155,14 +155,14 @@ class BaseChord implements Chord, Iterable<Pitch> {
     root: Pitch,
     pattern: ChordPattern,
     duration: Duration,
-    octave: Octave = Octave.C4,
-    overridePitches?: ChordPitches
+    octave: Octave,
+    chordPitches?: ChordPitches
   ) {
     this.pattern = pattern;
     this.root = new ChordPitch(root, ChordFunction.Root);
     this.duration = duration;
     this.octave = octave;
-    this._pitches = overridePitches ?? ChordPitches.createFromRootAndPattern(root, pattern);
+    this._pitches = chordPitches ?? ChordPitches.createFromRootAndPattern(root, pattern);
   }
 
   get Pitches(): Iterable<Pitch> {
@@ -297,7 +297,7 @@ class BaseChord implements Chord, Iterable<Pitch> {
   }
 
   closed(): Chord {
-    return new ClosedChord(this.Root, this.pattern, this.duration);
+    return new ClosedChord(this.Root, this.pattern, this.duration, this.octave);
   }
 
   *[Symbol.iterator](): Iterator<Pitch> {
@@ -312,7 +312,12 @@ class BaseChord implements Chord, Iterable<Pitch> {
     if (root === undefined || pattern === undefined) {
       throw new TypeError('Cannot create instance from state');
     }
-    return new BaseChord(root, pattern, Duration.From(state.duration.value)!);
+    return new BaseChord(
+      root,
+      pattern,
+      Duration.From(state.duration.value)!,
+      Octave.From(state.octave)
+    );
   }
 }
 
@@ -320,8 +325,8 @@ export class ClosedChord extends BaseChord implements Iterable<Pitch> {
   constructor(
     root: Pitch,
     pattern: ChordPattern,
-    duration: Duration = Duration.Whole,
-    octave: Octave = Octave.C4,
+    duration: Duration,
+    octave: Octave,
     overridePitches?: ChordPitches
   ) {
     super(root, pattern, duration, octave, overridePitches);
