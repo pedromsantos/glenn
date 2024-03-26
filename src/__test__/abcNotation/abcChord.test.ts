@@ -6,10 +6,10 @@ import { Pitch } from '../../Domain/Pitch';
 
 describe('abc Chord should', () => {
   test('convert a C major triad to abc notation', () => {
-    const chord = new ClosedChord(Pitch.C, ChordPattern.Major, Duration.Quarter, Octave.C4);
+    const chord = new ClosedChord(Pitch.G, ChordPattern.Major, Duration.Quarter, Octave.C4);
     const abc_chord = new AbcChord(chord.To, Duration.Whole.To);
 
-    expect(abc_chord.toString()).toBe('[C/4E/4G/4]');
+    expect(abc_chord.toString()).toBe('[G/4B/4D/4]');
   });
 
   test('convert a C major 7 to abc notation', () => {
