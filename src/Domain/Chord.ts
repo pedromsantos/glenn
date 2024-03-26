@@ -98,7 +98,6 @@ export class ChordPitches implements Iterable<Pitch> {
     }
   }
 
-  /* istanbul ignore next */
   private first(): Pitch {
     const pitch = this.pitches[0];
 
@@ -109,7 +108,6 @@ export class ChordPitches implements Iterable<Pitch> {
     return pitch.Pitch;
   }
 
-  /* istanbul ignore next */
   private last(): Pitch {
     const pitch = this.pitches.slice(-1)[0];
 
