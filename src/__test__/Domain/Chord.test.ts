@@ -517,7 +517,7 @@ describe('Chords should', () => {
     expect(chord).toBe(other);
   });
 
-  test('not be able to create chord from invalid primitive types', () => {
+  test('not be able to create chord from invalid primitive', () => {
     const chordPrimitives = {
       name: 'C Major',
       abbreviation: 'CM',
