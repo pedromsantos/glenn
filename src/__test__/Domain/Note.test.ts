@@ -272,6 +272,19 @@ describe('Note', () => {
     );
   });
 
+  test('Has a single pitch and octave and single note', () => {
+    const note = new Note(Pitch.C, Duration.Quarter, Octave.C1);
+
+    expect(note.Pitch).toBe(Pitch.C);
+    expect([...note.Pitches][0]).toBe(Pitch.C);
+    expect([...note.Pitches]).toHaveLength(1);
+    expect([...note.Notes][0]).toBe(note);
+    expect([...note.Notes]).toHaveLength(1);
+    expect([...note.Octaves][0]).toBe(Octave.C1);
+    expect([...note.Octaves]).toHaveLength(1);
+    expect(note.OctaveNames).toBe(Octave.C1.Name);
+  });
+
   describe('C is chord tone of', () => {
     const note = new Note(Pitch.C, Duration.Quarter, Octave.C1);
 
