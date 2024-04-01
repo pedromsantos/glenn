@@ -261,10 +261,7 @@ export class GuitarStrings implements Iterable<GuitarString> {
     );
   }
 
-  filterStringsByDirectionAndPreviousString(
-    lineDirection: PitchLineDirection,
-    previousString: GuitarString
-  ) {
+  sortByDirectionAndString(lineDirection: PitchLineDirection, previousString: GuitarString) {
     return lineDirection === PitchLineDirection.Descending
       ? this.higherThan(previousString).lowerToHigher()
       : this.lowerThan(previousString);
@@ -811,10 +808,7 @@ export class GuitarPitchLine {
     const lastFret = this.line.last();
 
     if (lastFret) {
-      return guitarStrings.filterStringsByDirectionAndPreviousString(
-        lineDirection,
-        lastFret.String
-      );
+      return guitarStrings.sortByDirectionAndString(lineDirection, lastFret.String);
     }
 
     return guitarStrings;
