@@ -931,7 +931,7 @@ export class Tab {
       .prefixWith(TabColumn.StandardTunning)
       .sufixWith(TabColumn.End)
       .render()
-      .reduce((acc, column) => acc.map((row, i) => row.concat(column[i] ?? '')))
+      .reduce((acc = [], column) => acc.map((row, i) => row.concat(column[i] ?? '')))
       .join('\n');
   }
 
