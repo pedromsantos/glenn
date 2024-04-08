@@ -31,6 +31,8 @@ describe('Measure', () => {
           .add(new Note(Pitch.C, Duration.Half, Octave.C2))
           .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C3))
       ).toBeInstanceOf(FullMeasure);
+
+      expect([...measure]).toHaveLength(2);
     });
 
     test('4 quarter notes fill it', () => {
@@ -41,6 +43,8 @@ describe('Measure', () => {
           .add(new Note(Pitch.C, Duration.Quarter, Octave.C3))
           .add(new Note(Pitch.C, Duration.Quarter, Octave.C4))
       ).toBeInstanceOf(FullMeasure);
+
+      expect([...measure]).toHaveLength(4);
     });
 
     test('2 dotted quarter notes and a quarter note fill it', () => {
@@ -51,6 +55,8 @@ describe('Measure', () => {
           .add(new Note(Pitch.C, Duration.Quarter, Octave.C3))
           .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C4))
       ).toBeInstanceOf(FullMeasure);
+
+      expect([...measure]).toHaveLength(3);
     });
 
     test('8 eighth notes fill it', () => {
@@ -66,6 +72,8 @@ describe('Measure', () => {
           .add(new Note(Pitch.C, Duration.Eighth, Octave.C8))
           .add(new Note(Pitch.C, Duration.SixtyFourth, Octave.C0))
       ).toBeInstanceOf(FullMeasure);
+
+      expect([...measure]).toHaveLength(8);
     });
 
     test('cannot add half note to 3 quarter notes', () => {
