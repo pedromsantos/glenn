@@ -23,10 +23,6 @@ export class AbcMeasure {
       return new AbcNote(playable.note, this.defaultDuration).toString();
     }
 
-    if (playable.rest) {
-      return new AbcRest(playable.rest, this.defaultDuration).toString();
-    }
-
-    return '';
+    return new AbcRest(playable.rest, this.defaultDuration).toString();
   }
 }
