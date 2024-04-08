@@ -180,7 +180,7 @@ class VerticalFrets extends Frets {
   adjustOpenStringOctaves() {
     if (
       this.frets.some((f) => f.Number === Position.Open.Low) &&
-      this.frets.some((f) => f.Number > Position.Open.High)
+      this.frets.some((f) => f.Number >= Position.Open.High)
     ) {
       this.frets = this.frets.map((f) => (f.Number === 0 ? f.raiseOctave() : f));
     }
@@ -189,7 +189,7 @@ class VerticalFrets extends Frets {
   isTooFar(fret: Fret): boolean {
     return this.frets
       .filter((f) => f.Number !== -1)
-      .some((f) => Math.abs(f.Number - fret.Number) > 4);
+      .some((f) => Math.abs(f.Number - fret.Number) >= 4);
   }
 
   override toString(): string {
@@ -197,7 +197,7 @@ class VerticalFrets extends Frets {
   }
 
   toTab(): TabColumn {
-    return TabColumn.fromFrets([...this.frets].reverse());
+    return TabColumn.fromFrets([...this.frets]);
   }
 }
 
@@ -605,7 +605,7 @@ export class PositionFrets {
 
   horizontalFretsFor(guitarString: GuitarString) {
     for (const fretsOnString of this.frets) {
-      if (fretsOnString.every((f) => f.String == guitarString)) {
+      if (fretsOnString.some((f) => f.String == guitarString)) {
         return new HorizontalFrets(fretsOnString);
       }
     }
@@ -626,7 +626,7 @@ export class PositionFrets {
 
   map(line: PitchLine): HorizontalFrets | undefined {
     const fretsOnStrings =
-      line.Direction == PitchLineDirection.Descending ? this.frets.slice().reverse() : this.frets;
+      line.Direction == PitchLineDirection.Descending ? this.frets.reverse() : this.frets;
     const fretLines = [];
 
     while (fretsOnStrings.length != 0) {
