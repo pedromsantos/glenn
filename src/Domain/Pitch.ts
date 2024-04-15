@@ -590,14 +590,16 @@ export class PitchLine implements Iterable<Pitch> {
   melodicLine(startingOctave: Octave, duration: Duration): MelodicLine {
     const donePitches = new Set();
     const notes: Note[] = [];
+    let octave = startingOctave;
 
     for (const p of this.line) {
       if (donePitches.has(p)) {
-        notes.push(new Note(p, duration, this.octaveShift(startingOctave)));
+        octave = this.octaveShift(startingOctave);
+        notes.push(new Note(p, duration, octave));
         continue;
       }
 
-      notes.push(new Note(p, duration, startingOctave));
+      notes.push(new Note(p, duration, octave));
 
       donePitches.add(p);
     }
