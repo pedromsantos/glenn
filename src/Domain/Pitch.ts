@@ -1,5 +1,7 @@
 import { PitchPrimitives } from '../primitives/Pitch';
+import { Duration } from './Duration';
 import { Interval } from './Interval';
+import { MelodicLine, Note, Octave } from './Note';
 
 export enum Accidental {
   Flat = -1,
@@ -583,6 +585,24 @@ export class PitchLine implements Iterable<Pitch> {
 
   pitchAt(index: number) {
     return this.line[index];
+  }
+
+  melodicLine(startingOctave: Octave, duration: Duration): MelodicLine {
+    const donePitches = new Set();
+    const notes: Note[] = [];
+
+    for (const p of this.line) {
+      if (donePitches.has(p)) {
+        notes.push(new Note(p, duration, startingOctave));
+        continue;
+      }
+
+      notes.push(new Note(p, duration, startingOctave));
+
+      donePitches.add(p);
+    }
+
+    return new MelodicLine(notes);
   }
 
   *[Symbol.iterator](): Iterator<Pitch> {

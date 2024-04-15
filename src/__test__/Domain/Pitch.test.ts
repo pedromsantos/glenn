@@ -3,8 +3,22 @@
 
 import * as fc from 'fast-check';
 
+import { Duration } from '../../Domain/Duration';
 import { Interval } from '../../Domain/Interval';
-import { Pitch } from '../../Domain/Pitch';
+import { Note, Octave } from '../../Domain/Note';
+import { Pitch, PitchLine, PitchLineDirection } from '../../Domain/Pitch';
+
+describe('Pitch line', () => {
+  describe('convert to melodic line', () => {
+    test('a single pitch', () => {
+      const line = new PitchLine([Pitch.C], PitchLineDirection.Ascending);
+
+      const melodicLine = line.melodicLine(Octave.C4, Duration.Eighth);
+
+      expect([...melodicLine][0]).toStrictEqual(new Note(Pitch.C, Duration.Eighth, Octave.C4));
+    });
+  });
+});
 
 describe('Pitch', () => {
   describe('sharp should raise it by half a tone', () => {
