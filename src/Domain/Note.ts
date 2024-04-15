@@ -17,20 +17,76 @@ export class Octave {
   private constructor(
     private readonly octaveName: string,
     private readonly value: number,
-    private readonly midiBaseValue: number
+    private readonly midiBaseValue: number,
+    public readonly up: () => Octave,
+    public readonly down: () => Octave
   ) {
     Octave.all.push(this);
   }
 
-  public static readonly C0: Octave = new Octave('Sub contra', -16, 0);
-  public static readonly C1: Octave = new Octave('Contra', -8, 12);
-  public static readonly C2: Octave = new Octave('Great', -4, 24);
-  public static readonly C3: Octave = new Octave('Small', -2, 36);
-  public static readonly C4: Octave = new Octave('One line', 1, 48);
-  public static readonly C5: Octave = new Octave('Two line', 2, 60);
-  public static readonly C6: Octave = new Octave('Three line', 4, 72);
-  public static readonly C7: Octave = new Octave('Four line', 8, 84);
-  public static readonly C8: Octave = new Octave('Five line', 16, 96);
+  public static readonly C0: Octave = new Octave(
+    'Sub contra',
+    -16,
+    0,
+    () => Octave.C1,
+    () => Octave.C0
+  );
+  public static readonly C1: Octave = new Octave(
+    'Contra',
+    -8,
+    12,
+    () => Octave.C2,
+    () => Octave.C0
+  );
+  public static readonly C2: Octave = new Octave(
+    'Great',
+    -4,
+    24,
+    () => Octave.C3,
+    () => Octave.C1
+  );
+  public static readonly C3: Octave = new Octave(
+    'Small',
+    -2,
+    36,
+    () => Octave.C4,
+    () => Octave.C2
+  );
+  public static readonly C4: Octave = new Octave(
+    'One line',
+    1,
+    48,
+    () => Octave.C5,
+    () => Octave.C3
+  );
+  public static readonly C5: Octave = new Octave(
+    'Two line',
+    2,
+    60,
+    () => Octave.C6,
+    () => Octave.C4
+  );
+  public static readonly C6: Octave = new Octave(
+    'Three line',
+    4,
+    72,
+    () => Octave.C7,
+    () => Octave.C5
+  );
+  public static readonly C7: Octave = new Octave(
+    'Four line',
+    8,
+    84,
+    () => Octave.C8,
+    () => Octave.C6
+  );
+  public static readonly C8: Octave = new Octave(
+    'Five line',
+    16,
+    96,
+    () => Octave.C8,
+    () => Octave.C7
+  );
 
   get Name() {
     return this.octaveName;

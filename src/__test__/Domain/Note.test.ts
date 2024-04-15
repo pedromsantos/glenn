@@ -359,6 +359,16 @@ describe('calculate interval between C1 and', () => {
 });
 
 describe('Octave', () => {
+  test('should go up in frequency', () => {
+    expect(Octave.C0.up().up().up().up().up().up().up().up().up()).toBe(Octave.C8);
+  });
+
+  test('should go down in frequency', () => {
+    expect(Octave.C8.down().down().down().down().down().down().down().down().down()).toBe(
+      Octave.C0
+    );
+  });
+
   test('convert to primitive octave', () => {
     expect(Octave.C1.To).toStrictEqual({
       midi: 12,
