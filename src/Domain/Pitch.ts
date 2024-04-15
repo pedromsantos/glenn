@@ -593,7 +593,7 @@ export class PitchLine implements Iterable<Pitch> {
 
     for (const p of this.line) {
       if (donePitches.has(p)) {
-        notes.push(new Note(p, duration, startingOctave));
+        notes.push(new Note(p, duration, this.octaveShift(startingOctave)));
         continue;
       }
 
@@ -608,6 +608,19 @@ export class PitchLine implements Iterable<Pitch> {
   *[Symbol.iterator](): Iterator<Pitch> {
     for (const pitch of this.line) {
       yield pitch;
+    }
+  }
+
+  private octaveShift(octave: Octave) {
+    switch (this.Direction) {
+      case PitchLineDirection.Ascending:
+        return octave.up();
+      case PitchLineDirection.Descending:
+        return octave.down();
+      case PitchLineDirection.OctaveDown:
+        return octave.down();
+      case PitchLineDirection.Neutral:
+        return octave;
     }
   }
 }

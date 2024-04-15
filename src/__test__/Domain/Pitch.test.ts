@@ -17,6 +17,55 @@ describe('Pitch line', () => {
 
       expect([...melodicLine][0]).toStrictEqual(new Note(Pitch.C, Duration.Eighth, Octave.C4));
     });
+
+    test('multiple pitches', () => {
+      const line = new PitchLine([Pitch.C, Pitch.D, Pitch.E], PitchLineDirection.Ascending);
+
+      const melodicLine = line.melodicLine(Octave.C4, Duration.Eighth);
+
+      expect([...melodicLine][0]).toStrictEqual(new Note(Pitch.C, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][1]).toStrictEqual(new Note(Pitch.D, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][2]).toStrictEqual(new Note(Pitch.E, Duration.Eighth, Octave.C4));
+    });
+
+    test('multiple pitches when repeated stay on same octave on neutral lines', () => {
+      const line = new PitchLine([Pitch.C, Pitch.D, Pitch.E, Pitch.C], PitchLineDirection.Neutral);
+
+      const melodicLine = line.melodicLine(Octave.C4, Duration.Eighth);
+
+      expect([...melodicLine][0]).toStrictEqual(new Note(Pitch.C, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][1]).toStrictEqual(new Note(Pitch.D, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][2]).toStrictEqual(new Note(Pitch.E, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][3]).toStrictEqual(new Note(Pitch.C, Duration.Eighth, Octave.C4));
+    });
+
+    test('multiple pitches when repeated go up an octave on ascending lines', () => {
+      const line = new PitchLine(
+        [Pitch.C, Pitch.D, Pitch.E, Pitch.C],
+        PitchLineDirection.Ascending
+      );
+
+      const melodicLine = line.melodicLine(Octave.C4, Duration.Eighth);
+
+      expect([...melodicLine][0]).toStrictEqual(new Note(Pitch.C, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][1]).toStrictEqual(new Note(Pitch.D, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][2]).toStrictEqual(new Note(Pitch.E, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][3]).toStrictEqual(new Note(Pitch.C, Duration.Eighth, Octave.C5));
+    });
+
+    test('multiple pitches when repeated go up an octave on descending lines', () => {
+      const line = new PitchLine(
+        [Pitch.C, Pitch.D, Pitch.E, Pitch.C],
+        PitchLineDirection.Descending
+      );
+
+      const melodicLine = line.melodicLine(Octave.C4, Duration.Eighth);
+
+      expect([...melodicLine][0]).toStrictEqual(new Note(Pitch.C, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][1]).toStrictEqual(new Note(Pitch.D, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][2]).toStrictEqual(new Note(Pitch.E, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][3]).toStrictEqual(new Note(Pitch.C, Duration.Eighth, Octave.C3));
+    });
   });
 });
 
