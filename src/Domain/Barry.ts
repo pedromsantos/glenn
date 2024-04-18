@@ -1,3 +1,5 @@
+import { Duration } from './Duration';
+import { MelodicLine, Octave } from './Note';
 import { Pitch, PitchLine, PitchLineDirection } from './Pitch';
 import { Scale, ScaleDegree } from './Scale';
 
@@ -20,6 +22,18 @@ export class PitchLines implements Iterable<PitchLine> {
     }
 
     return undefined;
+  }
+
+  melodicLine(startingOctave: Octave, duration: Duration) {
+    let octave = startingOctave;
+    const melodicLine = new MelodicLine([]);
+
+    for (const line of this.lines) {
+      octave = melodicLine.lastOctave() ?? startingOctave;
+      melodicLine.concat(line.melodicLine(octave, duration));
+    }
+
+    return melodicLine;
   }
 
   *[Symbol.iterator](): Iterator<PitchLine> {

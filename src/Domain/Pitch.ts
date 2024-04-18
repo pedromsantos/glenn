@@ -588,12 +588,12 @@ export class PitchLine implements Iterable<Pitch> {
   }
 
   melodicLine(startingOctave: Octave, duration: Duration): MelodicLine {
-    const donePitches = new Set();
     const notes: Note[] = [];
+    let lastPitch = Pitch.C;
     let octave = startingOctave;
 
     for (const p of this.line) {
-      if (donePitches.has(p)) {
+      if (this.needOctaveShift(p, lastPitch)) {
         octave = this.octaveShift(startingOctave);
         notes.push(new Note(p, duration, octave));
         continue;
@@ -601,7 +601,7 @@ export class PitchLine implements Iterable<Pitch> {
 
       notes.push(new Note(p, duration, octave));
 
-      donePitches.add(p);
+      lastPitch = p;
     }
 
     return new MelodicLine(notes);
@@ -610,6 +610,19 @@ export class PitchLine implements Iterable<Pitch> {
   *[Symbol.iterator](): Iterator<Pitch> {
     for (const pitch of this.line) {
       yield pitch;
+    }
+  }
+
+  private needOctaveShift(currentPitch: Pitch, lastPitch: Pitch) {
+    switch (this.Direction) {
+      case PitchLineDirection.Ascending:
+        return currentPitch.NumericValue < lastPitch.NumericValue;
+      case PitchLineDirection.Descending:
+        return lastPitch.NumericValue > currentPitch.NumericValue;
+      case PitchLineDirection.OctaveDown:
+        return lastPitch.NumericValue > currentPitch.NumericValue;
+      case PitchLineDirection.Neutral:
+        return false;
     }
   }
 

@@ -1,5 +1,7 @@
 import { BarryHarrisLine } from '../../Domain/Barry';
+import { Duration } from '../../Domain/Duration';
 import { GuitarPitchLines, Position, Tab } from '../../Domain/Guitar';
+import { Octave } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
 import { Scale, ScaleDegree, ScalePattern } from '../../Domain/Scale';
 
@@ -272,6 +274,27 @@ D|---2-5-------------5-3-2-5-------3-------|
 A|-3---------------------------------------|
 E|-----------------------------------------|`);
       });
+    });
+  });
+
+  describe('transform combined lines into melodic line', () => {
+    const scale = new Scale(ScalePattern.Mixolydian, Pitch.C);
+
+    test('Arpeggio up, scale down', () => {
+      const lines = new BarryHarrisLine(scale)
+        .arpeggioUpFrom(ScaleDegree.I)
+        .resolveTo(Pitch.D)
+        .scaleDownFromLastPitchTo(ScaleDegree.III)
+        .arpeggioUpFromLastPitch()
+        .resolveTo(Pitch.E)
+        .pivotArpeggioUpFromLastPitch()
+        .resolveTo(Pitch.BFlat)
+        .build();
+
+      const melodicLine = [...lines.melodicLine(Octave.C4, Duration.Eighth)];
+
+      expect(melodicLine.length).toBeGreaterThan(0);
+      expect(melodicLine[5]?.Octaves[0]).toBe(Octave.C5);
     });
   });
 });

@@ -276,10 +276,24 @@ export class Rest implements Playable {
 }
 
 export class MelodicLine implements Iterable<Note> {
-  private readonly phrase: Note[] = [];
+  private phrase: Note[] = [];
 
   constructor(notes: Note[]) {
     this.phrase = notes;
+  }
+
+  concat(melodicLine: MelodicLine) {
+    this.phrase = this.phrase.concat([...melodicLine]);
+  }
+
+  lastOctave() {
+    const last = this.phrase[this.phrase.length - 1];
+
+    if (last) {
+      return last.Octaves[0];
+    }
+
+    return undefined;
   }
 
   *[Symbol.iterator](): Iterator<Note> {
