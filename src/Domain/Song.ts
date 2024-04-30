@@ -77,14 +77,6 @@ export class Song implements Iterable<Measure> {
     private readonly key: Key
   ) {}
 
-  get Key() {
-    return this.key;
-  }
-
-  get TimeSignature() {
-    return this.timeSignature;
-  }
-
   addMeasure(measure: FullMeasure) {
     this.measures.push(measure);
     return this;
