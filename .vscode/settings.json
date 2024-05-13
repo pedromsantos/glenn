@@ -2,5 +2,9 @@
   "jest.jestCommandLine": "yarn test",
   "conventionalCommits.scopes": ["guitar"],
   "spellright.language": ["en"],
-  "spellright.documentTypes": ["markdown", "latex", "asciidoc", "typescript"]
+  "spellright.documentTypes": ["markdown", "latex", "asciidoc", "typescript"],
+  "sonarlint.connectedMode.project": {
+    "connectionId": "pedromsantos",
+    "projectKey": "pedromsantos_glenn"
+  }
 }
