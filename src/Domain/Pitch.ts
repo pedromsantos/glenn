@@ -65,7 +65,7 @@ export class Pitch {
     const pitch = Pitch.pitches.find((p) => p.value === state.value && p.name === state.name);
 
     if (!pitch) {
-      throw 'Invalid pitch value';
+      throw new Error('Invalid pitch value');
     }
 
     return pitch;
