@@ -35,14 +35,19 @@ export class Clef {
     };
   }
 
-  public static Treble: Clef = new Clef(Pitch.G, Octave.C4, ClefLine.Second, ClefType.G);
-  public static FrenchViolin: Clef = new Clef(Pitch.G, Octave.C4, ClefLine.First, ClefType.G);
-  public static BaritoneF: Clef = new Clef(Pitch.F, Octave.C3, ClefLine.Third, ClefType.F);
-  public static BaritoneC: Clef = new Clef(Pitch.C, Octave.C4, ClefLine.Fifth, ClefType.C);
-  public static Bass: Clef = new Clef(Pitch.F, Octave.C3, ClefLine.Fourth, ClefType.F);
-  public static SubBass: Clef = new Clef(Pitch.F, Octave.C3, ClefLine.Fifth, ClefType.F);
-  public static Alto: Clef = new Clef(Pitch.C, Octave.C4, ClefLine.Third, ClefType.C);
-  public static Tenor: Clef = new Clef(Pitch.C, Octave.C4, ClefLine.Fourth, ClefType.C);
-  public static Mezzo: Clef = new Clef(Pitch.C, Octave.C4, ClefLine.Second, ClefType.C);
-  public static Soprano: Clef = new Clef(Pitch.C, Octave.C4, ClefLine.First, ClefType.C);
+  public static readonly Treble: Clef = new Clef(Pitch.G, Octave.C4, ClefLine.Second, ClefType.G);
+  public static readonly FrenchViolin: Clef = new Clef(
+    Pitch.G,
+    Octave.C4,
+    ClefLine.First,
+    ClefType.G
+  );
+  public static readonly BaritoneF: Clef = new Clef(Pitch.F, Octave.C3, ClefLine.Third, ClefType.F);
+  public static readonly BaritoneC: Clef = new Clef(Pitch.C, Octave.C4, ClefLine.Fifth, ClefType.C);
+  public static readonly Bass: Clef = new Clef(Pitch.F, Octave.C3, ClefLine.Fourth, ClefType.F);
+  public static readonly SubBass: Clef = new Clef(Pitch.F, Octave.C3, ClefLine.Fifth, ClefType.F);
+  public static readonly Alto: Clef = new Clef(Pitch.C, Octave.C4, ClefLine.Third, ClefType.C);
+  public static readonly Tenor: Clef = new Clef(Pitch.C, Octave.C4, ClefLine.Fourth, ClefType.C);
+  public static readonly Mezzo: Clef = new Clef(Pitch.C, Octave.C4, ClefLine.Second, ClefType.C);
+  public static readonly Soprano: Clef = new Clef(Pitch.C, Octave.C4, ClefLine.First, ClefType.C);
 }
