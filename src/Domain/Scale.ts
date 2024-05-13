@@ -418,8 +418,7 @@ export class TriadHarmonizer implements ScaleHarmonizer {
       chordPitches.pitchForFunction(ChordFunction.Root),
       ChordPattern.patternFor(chordPitches.toIntervals()) ?? ChordPattern.Major,
       Duration.Whole,
-      Octave.C4,
-      chordPitches
+      Octave.C4
     );
   }
 }
@@ -441,8 +440,7 @@ export class SeventhHarmonizer implements ScaleHarmonizer {
       chordPitches.pitchForFunction(ChordFunction.Root),
       ChordPattern.patternFor(chordPitches.toIntervals()) ?? ChordPattern.Major7,
       Duration.Whole,
-      Octave.C4,
-      chordPitches
+      Octave.C4
     );
   }
 }
