@@ -99,9 +99,7 @@ export class BarryHarrisLine {
   }
 
   scaleDown(to: ScaleDegree, from: ScaleDegree) {
-    let rawLine = new PitchLine();
-
-    rawLine = this.scale.down(from, to);
+    let rawLine = this.scale.down(from, to);
 
     if (this.lineStartsAtChordTone(from)) {
       rawLine = rawLine.insertHalfToneBetween(
