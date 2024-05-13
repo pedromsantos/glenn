@@ -99,23 +99,11 @@ export class ChordPitches implements Iterable<Pitch> {
   }
 
   private first(): Pitch {
-    const pitch = this.pitches[0];
-
-    if (!pitch) {
-      throw Error('first pitch cannot be null/undefined');
-    }
-
-    return pitch.Pitch;
+    return this.pitches[0]!.Pitch;
   }
 
   private last(): Pitch {
-    const pitch = this.pitches.slice(-1)[0];
-
-    if (!pitch) {
-      throw Error('last pitch cannot be null/undefined');
-    }
-
-    return pitch.Pitch;
+    return this.pitches.slice(-1)[0]!.Pitch;
   }
 
   private pitchMove(fromIndex: number, toIndex: number): this {
