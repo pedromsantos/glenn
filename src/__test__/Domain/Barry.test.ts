@@ -170,6 +170,15 @@ describe('Barry Harrys lines', () => {
     });
 
     describe('combined lines', () => {
+      describe('Empty lines', () => {
+        test('have no last pitch', () => {
+          const lines = new BarryHarrisLine(scale).arpeggioUpFromLastPitch().build();
+
+          const flatLine = [...lines].flatMap((l) => [...l]);
+          expect(flatLine).toHaveLength(0);
+        });
+      });
+
       test('Arpeggio up, scale down', () => {
         const lines = new BarryHarrisLine(scale)
           .arpeggioUpFrom(ScaleDegree.I)
