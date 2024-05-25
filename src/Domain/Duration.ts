@@ -341,6 +341,9 @@ export class Duration {
 }
 
 export class BeatsPerMinute {
+  private readonly miliSecondsMultiplier = 60 * 1000;
+  private readonly secondsMultiplier = 60;
+
   constructor(
     private bpm: number,
     private duration: Duration = Duration.Quarter
@@ -355,22 +358,22 @@ export class BeatsPerMinute {
   }
 
   seconds(beats = 1): number {
-    return (beats / this.bpm) * 60;
+    return (beats / this.bpm) * this.secondsMultiplier;
   }
 
   miliSeconds(beats = 1): number {
-    return (beats / this.bpm) * 60 * 1000;
+    return (beats / this.bpm) * this.miliSecondsMultiplier;
   }
 
   secondsFor(duration: Duration): number {
     const durationToBeats = duration.value / this.duration.value;
 
-    return (durationToBeats / this.bpm) * 60;
+    return (durationToBeats / this.bpm) * this.secondsMultiplier;
   }
 
   miliSecondsFor(duration: Duration): number {
     const durationToBeats = duration.value / this.duration.value;
 
-    return (durationToBeats / this.bpm) * 60 * 1000;
+    return (durationToBeats / this.bpm) * this.miliSecondsMultiplier;
   }
 }
