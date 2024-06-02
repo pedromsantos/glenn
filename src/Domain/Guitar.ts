@@ -87,7 +87,7 @@ export class Fret {
     return this.String == other.String.NextAscending || this.String == other.String.NextDescending;
   }
 
-  isOnAdjacentOfAdjacentStringAs(other: Fret) {
+  isSkipingASingleStringAs(other: Fret) {
     const nextNextAscending = other.String.NextAscending.NextAscending;
     const nextNextDescending = other.String.NextDescending.NextDescending;
     return this.String == nextNextAscending || this.String == nextNextDescending;
@@ -158,12 +158,12 @@ abstract class Frets implements Iterable<Fret> {
     );
   }
 
-  protected areAllFretsWithinAdjacentOfAdjacentGuitarStrings() {
+  protected areAllFretsSkipingASinleString() {
     return this.frets.every(
       (f) =>
         f.isOnSameStringAs(this.frets[0]!) ||
         f.isOnAdjacentStringAs(this.frets[0]!) ||
-        f.isOnAdjacentOfAdjacentStringAs(this.frets[0]!)
+        f.isSkipingASingleStringAs(this.frets[0]!)
     );
   }
 }
@@ -232,7 +232,7 @@ export class HorizontalFrets extends Frets {
       return 1;
     }
 
-    if (this.areAllFretsWithinAdjacentOfAdjacentGuitarStrings()) {
+    if (this.areAllFretsSkipingASinleString()) {
       return 2;
     }
 
