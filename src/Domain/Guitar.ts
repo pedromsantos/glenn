@@ -257,7 +257,7 @@ export class GuitarStrings implements Iterable<GuitarString> {
 
   lowerToHigher() {
     return new GuitarStrings(
-      this.guitarStrings.toSorted((s1: GuitarString, s2: GuitarString) => s1.Index - s2.Index)
+      this.guitarStrings.sort((s1: GuitarString, s2: GuitarString) => s1.Index - s2.Index)
     );
   }
 
@@ -626,7 +626,7 @@ export class PositionFrets {
 
   map(line: PitchLine): HorizontalFrets | undefined {
     const fretsOnStrings =
-      line.Direction == PitchLineDirection.Descending ? this.frets.toReversed() : this.frets;
+      line.Direction == PitchLineDirection.Descending ? this.frets.reverse() : this.frets;
     const fretLines = [];
 
     while (fretsOnStrings.length != 0) {
