@@ -31,3 +31,5 @@ yarn-error.log*
 reports
 dist
 coverage-ts
+.turbo/cookies/1.cookie
+.turbo/daemon/6c864339ca08ad0b-turbo.log.2024-06-03

@@ -11,7 +11,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "lib": ["es2020"],
+    "lib": ["ESNext", "ESNext.Array"],
     "module": "commonjs",
     "moduleResolution": "Node",
     "noEmit": true,
