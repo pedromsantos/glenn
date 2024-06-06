@@ -1,7 +1,7 @@
 import { Duration } from './Duration';
 import { MelodicLine, Octave } from './Note';
 import { Pitch, PitchLine, PitchLineDirection } from './Pitch';
-import { Scale, ScaleDegree } from './Scale';
+import { Scale, ScaleDegree, ScalePattern } from './Scale';
 
 export class PitchLines implements Iterable<PitchLine> {
   constructor(private readonly lines: PitchLine[] = []) {}
@@ -40,6 +40,106 @@ export class PitchLines implements Iterable<PitchLine> {
     for (const line of this.lines) {
       yield line;
     }
+  }
+}
+
+class BarryHalfStepRule {
+  private constructor(
+    private readonly startDegree: ScaleDegree,
+    private readonly endDegree: ScaleDegree
+  ) {}
+
+  public static readonly FirstAndSeventh = new BarryHalfStepRule(ScaleDegree.I, ScaleDegree.VII);
+  public static readonly SecondAndFirst = new BarryHalfStepRule(ScaleDegree.II, ScaleDegree.I);
+  public static readonly ThirdAndSecond = new BarryHalfStepRule(ScaleDegree.III, ScaleDegree.II);
+
+  apply(line: PitchLine, scale: Scale) {
+    line.insertHalfToneBetween(scale.pitchFor(this.startDegree), scale.pitchFor(this.endDegree));
+  }
+}
+
+class BarryHalfStepRules {
+  private static readonly all: BarryHalfStepRules[] = [];
+
+  private constructor(
+    private chordTonesMin: BarryHalfStepRule[],
+    private noChordTonesMin: BarryHalfStepRule[],
+    private chordTonesMax: BarryHalfStepRule[],
+    private noChordTonesMax: BarryHalfStepRule[],
+    private applyesTo: (scale: Scale) => boolean
+  ) {
+    BarryHalfStepRules.all.push(this);
+  }
+
+  public static readonly Dominant: BarryHalfStepRules = new BarryHalfStepRules(
+    [BarryHalfStepRule.FirstAndSeventh],
+    [],
+    [
+      BarryHalfStepRule.FirstAndSeventh,
+      BarryHalfStepRule.SecondAndFirst,
+      BarryHalfStepRule.ThirdAndSecond,
+    ],
+    [BarryHalfStepRule.FirstAndSeventh, BarryHalfStepRule.SecondAndFirst],
+    (scale: Scale) => scale.hasPattern(ScalePattern.Mixolydian)
+  );
+
+  public static readonly Default: BarryHalfStepRules = new BarryHalfStepRules(
+    [],
+    [],
+    [],
+    [],
+    () => false
+  );
+
+  static barryRulesFor(scale: Scale) {
+    return (
+      BarryHalfStepRules.all.find((rule) => rule.applyesTo(scale)) || BarryHalfStepRules.Default
+    );
+  }
+
+  applyMin(scale: Scale, from: ScaleDegree, to: ScaleDegree) {
+    const line = scale.down(from, to);
+
+    if (this.lineStartsAtChordTone(from)) {
+      for (const rule of this.chordTonesMin) {
+        rule.apply(line, scale);
+      }
+
+      return line;
+    }
+
+    for (const rule of this.noChordTonesMin) {
+      rule.apply(line, scale);
+    }
+
+    return line;
+  }
+
+  applyMax(scale: Scale, from: ScaleDegree, to: ScaleDegree) {
+    const line = scale.down(from, to);
+
+    if (this.lineStartsAtChordTone(from)) {
+      for (const rule of this.chordTonesMax) {
+        rule.apply(line, scale);
+      }
+
+      return line;
+    }
+
+    for (const rule of this.noChordTonesMax) {
+      rule.apply(line, scale);
+    }
+
+    return line;
+  }
+
+  private lineStartsAtChordTone(degree: ScaleDegree) {
+    return !!(
+      degree === ScaleDegree.I ||
+      degree === ScaleDegree.III ||
+      degree === ScaleDegree.V ||
+      degree === ScaleDegree.VII
+    );
   }
 }
 
@@ -99,48 +199,13 @@ export class BarryHarrisLine {
   }
 
   scaleDown(to: ScaleDegree, from: ScaleDegree) {
-    let rawLine = this.scale.down(from, to);
-
-    if (this.lineStartsAtChordTone(from)) {
-      rawLine = rawLine.insertHalfToneBetween(
-        this.scale.pitchFor(ScaleDegree.I),
-        this.scale.pitchFor(ScaleDegree.VII)
-      );
-    }
-
-    this.line.add(rawLine);
+    this.line.add(BarryHalfStepRules.barryRulesFor(this.scale).applyMin(this.scale, from, to));
 
     return this;
   }
 
   scaleDownExtraHalfSteps(to: ScaleDegree, from: ScaleDegree) {
-    let rawLine = this.scale.down(from, to);
-
-    if (this.lineStartsAtChordTone(from)) {
-      rawLine = rawLine.insertHalfToneBetween(
-        this.scale.pitchFor(ScaleDegree.III),
-        this.scale.pitchFor(ScaleDegree.II)
-      );
-      rawLine = rawLine.insertHalfToneBetween(
-        this.scale.pitchFor(ScaleDegree.II),
-        this.scale.pitchFor(ScaleDegree.I)
-      );
-      rawLine = rawLine.insertHalfToneBetween(
-        this.scale.pitchFor(ScaleDegree.I),
-        this.scale.pitchFor(ScaleDegree.VII)
-      );
-    } else {
-      rawLine = rawLine.insertHalfToneBetween(
-        this.scale.pitchFor(ScaleDegree.II),
-        this.scale.pitchFor(ScaleDegree.I)
-      );
-      rawLine = rawLine.insertHalfToneBetween(
-        this.scale.pitchFor(ScaleDegree.I),
-        this.scale.pitchFor(ScaleDegree.VII)
-      );
-    }
-
-    this.line.add(rawLine);
+    this.line.add(BarryHalfStepRules.barryRulesFor(this.scale).applyMax(this.scale, from, to));
 
     return this;
   }
@@ -183,14 +248,5 @@ export class BarryHarrisLine {
     if (lastPitch) from = this.scale.degreeFor(lastPitch);
 
     return from;
-  }
-
-  private lineStartsAtChordTone(degree: ScaleDegree) {
-    return !!(
-      degree === ScaleDegree.I ||
-      degree === ScaleDegree.III ||
-      degree === ScaleDegree.V ||
-      degree === ScaleDegree.VII
-    );
   }
 }

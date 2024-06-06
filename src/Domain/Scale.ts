@@ -304,6 +304,10 @@ export class ScalePattern {
     };
   }
 
+  public equals(other: ScalePattern) {
+    return this.name === other.name;
+  }
+
   public static From(primitive: ScalePatternPrimitives) {
     return new ScalePattern(
       primitive.name,
@@ -389,6 +393,10 @@ export class Scale implements Iterable<Pitch> {
       .concat(this.pitches)
       .filter((_, i) => i % 2 != 0 || i == 0)
       .slice(0, 7);
+  }
+
+  hasPattern(other: ScalePattern) {
+    return this.scalePattern.equals(other);
   }
 
   *[Symbol.iterator](): Iterator<Pitch> {
