@@ -49,8 +49,8 @@ class BarryHalfStepRule {
     private readonly endDegree: ScaleDegree
   ) {}
 
-  public static readonly FirstAndSeventh = new BarryHalfStepRule(ScaleDegree.I, ScaleDegree.VII);
-  public static readonly SecondAndFirst = new BarryHalfStepRule(ScaleDegree.II, ScaleDegree.I);
+  public static readonly RootAndSeventh = new BarryHalfStepRule(ScaleDegree.I, ScaleDegree.VII);
+  public static readonly SecondAndRoot = new BarryHalfStepRule(ScaleDegree.II, ScaleDegree.I);
   public static readonly ThirdAndSecond = new BarryHalfStepRule(ScaleDegree.III, ScaleDegree.II);
 
   apply(line: PitchLine, scale: Scale) {
@@ -72,14 +72,14 @@ class BarryHalfStepRules {
   }
 
   public static readonly Dominant: BarryHalfStepRules = new BarryHalfStepRules(
-    [BarryHalfStepRule.FirstAndSeventh],
+    [BarryHalfStepRule.RootAndSeventh],
     [],
     [
-      BarryHalfStepRule.FirstAndSeventh,
-      BarryHalfStepRule.SecondAndFirst,
+      BarryHalfStepRule.RootAndSeventh,
+      BarryHalfStepRule.SecondAndRoot,
       BarryHalfStepRule.ThirdAndSecond,
     ],
-    [BarryHalfStepRule.FirstAndSeventh, BarryHalfStepRule.SecondAndFirst],
+    [BarryHalfStepRule.RootAndSeventh, BarryHalfStepRule.SecondAndRoot],
     (scale: Scale) => scale.hasPattern(ScalePattern.Mixolydian)
   );
 
