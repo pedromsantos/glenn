@@ -24,16 +24,20 @@ export class PitchLines implements Iterable<PitchLine> {
     return undefined;
   }
 
-  melodicLine(startingOctave: Octave, duration: Duration) {
+  melodicLine(startingOctave: Octave, pitchDurations: Duration) {
     let octave = startingOctave;
     const melodicLine = new MelodicLine([]);
 
     for (const line of this.lines) {
       octave = melodicLine.lastOctave() ?? startingOctave;
-      melodicLine.concat(line.melodicLine(octave, duration));
+      melodicLine.concat(line.melodicLine(octave, pitchDurations));
     }
 
     return melodicLine;
+  }
+
+  flatPitches() {
+    return this.lines.flatMap((l) => [...l]);
   }
 
   *[Symbol.iterator](): Iterator<PitchLine> {
@@ -52,6 +56,7 @@ class BarryHalfStepRule {
   public static readonly RootAndSeventh = new BarryHalfStepRule(ScaleDegree.I, ScaleDegree.VII);
   public static readonly SecondAndRoot = new BarryHalfStepRule(ScaleDegree.II, ScaleDegree.I);
   public static readonly ThirdAndSecond = new BarryHalfStepRule(ScaleDegree.III, ScaleDegree.II);
+  public static readonly SixthAndFifth = new BarryHalfStepRule(ScaleDegree.VI, ScaleDegree.V);
 
   apply(line: PitchLine, scale: Scale) {
     line.insertHalfToneBetween(scale.pitchFor(this.startDegree), scale.pitchFor(this.endDegree));
@@ -81,6 +86,30 @@ class BarryHalfStepRules {
     ],
     [BarryHalfStepRule.RootAndSeventh, BarryHalfStepRule.SecondAndRoot],
     (scale: Scale) => scale.hasPattern(ScalePattern.Mixolydian)
+  );
+
+  public static readonly Major: BarryHalfStepRules = new BarryHalfStepRules(
+    [BarryHalfStepRule.SixthAndFifth],
+    [],
+    [
+      BarryHalfStepRule.SecondAndRoot,
+      BarryHalfStepRule.ThirdAndSecond,
+      BarryHalfStepRule.SixthAndFifth,
+    ],
+    [BarryHalfStepRule.RootAndSeventh, BarryHalfStepRule.SixthAndFifth],
+    (scale: Scale) => scale.hasPattern(ScalePattern.Ionian)
+  );
+
+  public static readonly Minor: BarryHalfStepRules = new BarryHalfStepRules(
+    [BarryHalfStepRule.SixthAndFifth],
+    [],
+    [
+      BarryHalfStepRule.SecondAndRoot,
+      BarryHalfStepRule.ThirdAndSecond,
+      BarryHalfStepRule.SixthAndFifth,
+    ],
+    [BarryHalfStepRule.RootAndSeventh, BarryHalfStepRule.SixthAndFifth],
+    (scale: Scale) => scale.hasPattern(ScalePattern.HarmonicMinor)
   );
 
   public static readonly Default: BarryHalfStepRules = new BarryHalfStepRules(
