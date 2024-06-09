@@ -69,13 +69,13 @@ class BarryHarrisLineBuilder {
   buildTab(positionPrimitives: PositionPrimitives) {
     const position = Position.From(positionPrimitives);
 
-    const line = this.line.build();
+    const line = this.line.buildPitchLines();
     const guitarLine = new GuitarPitchLines(line, position);
     return Tab.render(guitarLine.toTab());
   }
 
   buildPitches() {
-    const line = this.line.build();
+    const line = this.line.buildPitchLines();
     const flatLine = [...line].flatMap((l) => [...l]);
     return flatLine.map((p) => p.To);
   }

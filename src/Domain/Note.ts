@@ -96,6 +96,14 @@ export class Octave {
     return this.midiBaseValue;
   }
 
+  lowerThan(other: Octave) {
+    return this.value < other.value;
+  }
+
+  higherThan(other: Octave) {
+    return this.value > other.value;
+  }
+
   get To(): OctavePrimitives {
     return {
       name: this.octaveName,
@@ -294,6 +302,34 @@ export class MelodicLine implements Iterable<Note> {
     }
 
     return undefined;
+  }
+
+  highestOctave() {
+    let highesOctaveInLine = Octave.C0;
+
+    for (const note of this.phrase) {
+      if (note.Octaves[0]?.higherThan(highesOctaveInLine)) {
+        highesOctaveInLine = note.Octaves[0];
+      }
+    }
+
+    return highesOctaveInLine;
+  }
+
+  lowestOctave() {
+    let lowestOctaveInLine = Octave.C8;
+
+    for (const note of this.phrase) {
+      if (note.Octaves[0]?.lowerThan(lowestOctaveInLine)) {
+        lowestOctaveInLine = note.Octaves[0];
+      }
+    }
+
+    return lowestOctaveInLine;
+  }
+
+  pitches() {
+    return this.phrase.map((n) => n.Pitch);
   }
 
   *[Symbol.iterator](): Iterator<Note> {

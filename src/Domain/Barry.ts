@@ -259,7 +259,19 @@ export class BarryHarrisLine {
     return this;
   }
 
-  build(): PitchLines {
+  build(startingOctave: Octave, pitchDurations: Duration) {
+    let octave = startingOctave;
+    const melodicLine = new MelodicLine([]);
+
+    for (const line of this.line) {
+      octave = melodicLine.lastOctave() ?? startingOctave;
+      melodicLine.concat(line.melodicLine(octave, pitchDurations));
+    }
+
+    return melodicLine;
+  }
+
+  buildPitchLines() {
     return this.line;
   }
 
