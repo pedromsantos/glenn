@@ -1,6 +1,7 @@
 import { FretPrimitives, GuitarStringPrimitives, PositionPrimitives } from '../primitives/Guitar';
 import { PitchLines } from './Barry';
 import { Chord } from './Chord';
+import { MelodicLine, Octave } from './Note';
 import { Pitch, PitchLine, PitchLineDirection } from './Pitch';
 
 export class TabColumn {
@@ -30,7 +31,8 @@ export class Fret {
   constructor(
     protected readonly string: GuitarString,
     private readonly fret: number,
-    private readonly pitch?: Pitch
+    private readonly pitch?: Pitch,
+    private readonly octave?: Octave
   ) {}
 
   get Number(): number {
@@ -45,6 +47,10 @@ export class Fret {
     return this.pitch;
   }
 
+  get Octave() {
+    return this.octave;
+  }
+
   get To(): FretPrimitives {
     return {
       string: this.String.To,
@@ -57,7 +63,7 @@ export class Fret {
   }
 
   raiseOctave(): Fret {
-    return new Fret(this.string, this.fret + 12);
+    return new Fret(this.string, this.fret + 12, this.pitch, this.octave?.up());
   }
 
   isWithin(lowFret: Fret, highFret: Fret, lowerMargin = 0, higherMargin = 0) {
@@ -288,6 +294,7 @@ export class GuitarString {
   private constructor(
     private readonly name: string,
     private openStringPitch: Pitch,
+    private openStringOctave: Octave,
     private readonly index: number,
     private readonly nextAscending: () => GuitarString,
     private readonly nextDescending: () => GuitarString
@@ -305,6 +312,7 @@ export class GuitarString {
   public static readonly Sixth: GuitarString = new GuitarString(
     'Sixth',
     Pitch.E,
+    Octave.C2,
     6,
     () => GuitarString.Fifth,
     () => GuitarString.Sixth
@@ -312,6 +320,7 @@ export class GuitarString {
   public static readonly Fifth: GuitarString = new GuitarString(
     'Fifth',
     Pitch.A,
+    Octave.C2,
     5,
     () => GuitarString.Fourth,
     () => GuitarString.Sixth
@@ -319,6 +328,7 @@ export class GuitarString {
   public static readonly Fourth: GuitarString = new GuitarString(
     'Fourth',
     Pitch.D,
+    Octave.C3,
     4,
     () => GuitarString.Third,
     () => GuitarString.Fifth
@@ -326,6 +336,7 @@ export class GuitarString {
   public static readonly Third: GuitarString = new GuitarString(
     'Third',
     Pitch.G,
+    Octave.C3,
     3,
     () => GuitarString.Second,
     () => GuitarString.Fourth
@@ -333,6 +344,7 @@ export class GuitarString {
   public static readonly Second: GuitarString = new GuitarString(
     'Second',
     Pitch.B,
+    Octave.C3,
     2,
     () => GuitarString.First,
     () => GuitarString.Third
@@ -340,6 +352,7 @@ export class GuitarString {
   public static readonly First: GuitarString = new GuitarString(
     'First',
     Pitch.E,
+    Octave.C4,
     1,
     () => GuitarString.First,
     () => GuitarString.Second
@@ -353,6 +366,7 @@ export class GuitarString {
     return new GuitarString(
       this.name,
       tunning.openStringPitchFor(this),
+      this.openStringOctave,
       this.Index,
       () => this.NextDescending,
       () => this.NextAscending
@@ -370,13 +384,22 @@ export class GuitarString {
   fretsFromTo(from: number, to: number) {
     const frets: Fret[] = [];
     let pitch = this.openStringPitch;
+    let octave = this.openStringOctave;
 
     for (let i = from; i--; ) {
+      if (pitch == Pitch.C) {
+        octave = octave.up();
+      }
+
       pitch = pitch.sharp();
     }
 
     for (let i = from; i <= to; i++) {
-      frets.push(new Fret(this, i, pitch));
+      if (pitch == Pitch.C) {
+        octave = octave.up();
+      }
+
+      frets.push(new Fret(this, i, pitch, octave));
       pitch = pitch.sharp();
     }
 
@@ -531,62 +554,62 @@ export class Position {
 
   public static readonly Open: Position = new Position(
     'Open',
-    new Fret(GuitarString.Sixth, 0),
-    new Fret(GuitarString.First, 4)
+    new Fret(GuitarString.Sixth, 0, Pitch.E, Octave.C2),
+    new Fret(GuitarString.First, 4, Pitch.GSharp, Octave.C4)
   );
 
   public static readonly C: Position = new Position(
     'C',
-    new Fret(GuitarString.Sixth, 1),
-    new Fret(GuitarString.First, 5)
+    new Fret(GuitarString.Sixth, 1, Pitch.F, Octave.C2),
+    new Fret(GuitarString.First, 5, Pitch.A, Octave.C4)
   );
 
   public static readonly A: Position = new Position(
     'A',
-    new Fret(GuitarString.Sixth, 4),
-    new Fret(GuitarString.First, 8)
+    new Fret(GuitarString.Sixth, 4, Pitch.AFlat, Octave.C2),
+    new Fret(GuitarString.First, 8, Pitch.C, Octave.C5)
   );
 
   public static readonly G: Position = new Position(
     'G',
-    new Fret(GuitarString.Sixth, 6),
-    new Fret(GuitarString.First, 10)
+    new Fret(GuitarString.Sixth, 6, Pitch.BFlat, Octave.C2),
+    new Fret(GuitarString.First, 10, Pitch.D, Octave.C5)
   );
 
   public static readonly E: Position = new Position(
     'E',
-    new Fret(GuitarString.Sixth, 9),
-    new Fret(GuitarString.First, 12)
+    new Fret(GuitarString.Sixth, 9, Pitch.DFlat, Octave.C3),
+    new Fret(GuitarString.First, 12, Pitch.E, Octave.C5)
   );
 
   public static readonly D: Position = new Position(
     'D',
-    new Fret(GuitarString.Sixth, 11),
-    new Fret(GuitarString.First, 15)
+    new Fret(GuitarString.Sixth, 11, Pitch.EFlat, Octave.C3),
+    new Fret(GuitarString.First, 15, Pitch.G, Octave.C5)
   );
 
   public static readonly C8: Position = new Position(
     'C8',
-    new Fret(GuitarString.Sixth, 14),
-    new Fret(GuitarString.First, 17)
+    new Fret(GuitarString.Sixth, 14, Pitch.GFlat, Octave.C3),
+    new Fret(GuitarString.First, 17, Pitch.A, Octave.C5)
   );
 
   public static readonly A8: Position = new Position(
     'A8',
-    new Fret(GuitarString.Sixth, 16),
-    new Fret(GuitarString.First, 20)
+    new Fret(GuitarString.Sixth, 16, Pitch.AFlat, Octave.C3),
+    new Fret(GuitarString.First, 20, Pitch.C, Octave.C6)
   );
 
   public static readonly G8: Position = new Position(
     'G8',
-    new Fret(GuitarString.Sixth, 18),
-    new Fret(GuitarString.First, 22)
+    new Fret(GuitarString.Sixth, 18, Pitch.BFlat, Octave.C3),
+    new Fret(GuitarString.First, 22, Pitch.D, Octave.C6)
   );
 
   public static readonly E8: Position = new Position(
     'E8',
-    new Fret(GuitarString.Sixth, 21),
-    new Fret(GuitarString.First, 24)
+    new Fret(GuitarString.Sixth, 21, Pitch.DFlat, Octave.C4),
+    new Fret(GuitarString.First, 24, Pitch.E, Octave.C6)
   );
 
   contains(fret: Fret, lowerMargin = 0, higherMargin = 0): boolean {
@@ -622,6 +645,44 @@ export class PositionFrets {
     }
 
     return new VerticalFrets(vFrets);
+  }
+
+  mapMelodicLine(line: MelodicLine): HorizontalFrets {
+    const fretsForLine: HorizontalFrets = new HorizontalFrets();
+
+    for (const note of line) {
+      const frets = this.frets.flatMap((fs) =>
+        fs.filter((f) => note.Pitch === f.Pitch && note.Octaves[0] === f.Octave)
+      );
+
+      if (frets && frets.length === 1) {
+        fretsForLine.push(frets[0]!);
+        continue;
+      }
+
+      if (frets && frets.length > 1) {
+        if (!fretsForLine.last()) {
+          fretsForLine.push(frets[0]!);
+          continue;
+        }
+
+        for (const f of frets) {
+          if (f.isOnSameStringAs(fretsForLine.last()!)) {
+            fretsForLine.push(f);
+            break;
+          }
+        }
+
+        // for (const f of frets) {
+        //   if (f.isOnAdjacentStringAs(fretsForLine.last()!)) {
+        //     fretsForLine.push(f);
+        //     break;
+        //   }
+        // }
+      }
+    }
+
+    return fretsForLine;
   }
 
   map(line: PitchLine): HorizontalFrets | undefined {

@@ -338,6 +338,10 @@ export class MelodicLine implements Iterable<Note> {
     }
   }
 
+  get length() {
+    return this.phrase.length;
+  }
+
   get To(): MelodicPhrasePrimitives {
     return {
       notes: this.phrase.map((note) => note.To),

@@ -10,6 +10,7 @@ import {
   Position,
   PositionFrets,
 } from '../../Domain/Guitar';
+import { Octave } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
 
 describe('Fret should', () => {
@@ -193,15 +194,75 @@ describe('Guitar String should', () => {
       );
     });
 
-    test('map frets on C position', () => {
+    test('map frets on C position sixth string', () => {
       const frets = GuitarString.Sixth.fretsFor(Position.C);
 
       expect([...frets]).toStrictEqual([
-        new Fret(GuitarString.Sixth, 1, Pitch.F),
-        new Fret(GuitarString.Sixth, 2, Pitch.FSharp),
-        new Fret(GuitarString.Sixth, 3, Pitch.G),
-        new Fret(GuitarString.Sixth, 4, Pitch.GSharp),
-        new Fret(GuitarString.Sixth, 5, Pitch.A),
+        new Fret(GuitarString.Sixth, 1, Pitch.F, Octave.C2),
+        new Fret(GuitarString.Sixth, 2, Pitch.FSharp, Octave.C2),
+        new Fret(GuitarString.Sixth, 3, Pitch.G, Octave.C2),
+        new Fret(GuitarString.Sixth, 4, Pitch.GSharp, Octave.C2),
+        new Fret(GuitarString.Sixth, 5, Pitch.A, Octave.C2),
+      ]);
+    });
+
+    test('map frets on C position fifth string', () => {
+      const frets = GuitarString.Fifth.fretsFor(Position.C);
+
+      expect([...frets]).toStrictEqual([
+        new Fret(GuitarString.Fifth, 1, Pitch.ASharp, Octave.C2),
+        new Fret(GuitarString.Fifth, 2, Pitch.B, Octave.C2),
+        new Fret(GuitarString.Fifth, 3, Pitch.C, Octave.C3),
+        new Fret(GuitarString.Fifth, 4, Pitch.CSharp, Octave.C3),
+        new Fret(GuitarString.Fifth, 5, Pitch.D, Octave.C3),
+      ]);
+    });
+
+    test('map frets on C position fourth string', () => {
+      const frets = GuitarString.Fourth.fretsFor(Position.C);
+
+      expect([...frets]).toStrictEqual([
+        new Fret(GuitarString.Fourth, 1, Pitch.DSharp, Octave.C3),
+        new Fret(GuitarString.Fourth, 2, Pitch.E, Octave.C3),
+        new Fret(GuitarString.Fourth, 3, Pitch.F, Octave.C3),
+        new Fret(GuitarString.Fourth, 4, Pitch.FSharp, Octave.C3),
+        new Fret(GuitarString.Fourth, 5, Pitch.G, Octave.C3),
+      ]);
+    });
+
+    test('map frets on C position third string', () => {
+      const frets = GuitarString.Third.fretsFor(Position.C);
+
+      expect([...frets]).toStrictEqual([
+        new Fret(GuitarString.Third, 1, Pitch.GSharp, Octave.C3),
+        new Fret(GuitarString.Third, 2, Pitch.A, Octave.C3),
+        new Fret(GuitarString.Third, 3, Pitch.ASharp, Octave.C3),
+        new Fret(GuitarString.Third, 4, Pitch.B, Octave.C3),
+        new Fret(GuitarString.Third, 5, Pitch.C, Octave.C4),
+      ]);
+    });
+
+    test('map frets on C position second string', () => {
+      const frets = GuitarString.Second.fretsFor(Position.C);
+
+      expect([...frets]).toStrictEqual([
+        new Fret(GuitarString.Second, 1, Pitch.C, Octave.C4),
+        new Fret(GuitarString.Second, 2, Pitch.CSharp, Octave.C4),
+        new Fret(GuitarString.Second, 3, Pitch.D, Octave.C4),
+        new Fret(GuitarString.Second, 4, Pitch.DSharp, Octave.C4),
+        new Fret(GuitarString.Second, 5, Pitch.E, Octave.C4),
+      ]);
+    });
+
+    test('map frets on C position first string', () => {
+      const frets = GuitarString.First.fretsFor(Position.C);
+
+      expect([...frets]).toStrictEqual([
+        new Fret(GuitarString.First, 1, Pitch.F, Octave.C4),
+        new Fret(GuitarString.First, 2, Pitch.FSharp, Octave.C4),
+        new Fret(GuitarString.First, 3, Pitch.G, Octave.C4),
+        new Fret(GuitarString.First, 4, Pitch.GSharp, Octave.C4),
+        new Fret(GuitarString.First, 5, Pitch.A, Octave.C4),
       ]);
     });
 
@@ -209,11 +270,11 @@ describe('Guitar String should', () => {
       const frets = GuitarString.Sixth.fretsFor(Position.A);
 
       expect([...frets]).toStrictEqual([
-        new Fret(GuitarString.Sixth, 4, Pitch.GSharp),
-        new Fret(GuitarString.Sixth, 5, Pitch.A),
-        new Fret(GuitarString.Sixth, 6, Pitch.ASharp),
-        new Fret(GuitarString.Sixth, 7, Pitch.B),
-        new Fret(GuitarString.Sixth, 8, Pitch.C),
+        new Fret(GuitarString.Sixth, 4, Pitch.GSharp, Octave.C2),
+        new Fret(GuitarString.Sixth, 5, Pitch.A, Octave.C2),
+        new Fret(GuitarString.Sixth, 6, Pitch.ASharp, Octave.C2),
+        new Fret(GuitarString.Sixth, 7, Pitch.B, Octave.C2),
+        new Fret(GuitarString.Sixth, 8, Pitch.C, Octave.C3),
       ]);
     });
 
@@ -221,11 +282,11 @@ describe('Guitar String should', () => {
       const frets = GuitarString.Sixth.fretsFor(Position.G);
 
       expect([...frets]).toStrictEqual([
-        new Fret(GuitarString.Sixth, 6, Pitch.ASharp),
-        new Fret(GuitarString.Sixth, 7, Pitch.B),
-        new Fret(GuitarString.Sixth, 8, Pitch.C),
-        new Fret(GuitarString.Sixth, 9, Pitch.CSharp),
-        new Fret(GuitarString.Sixth, 10, Pitch.D),
+        new Fret(GuitarString.Sixth, 6, Pitch.ASharp, Octave.C2),
+        new Fret(GuitarString.Sixth, 7, Pitch.B, Octave.C2),
+        new Fret(GuitarString.Sixth, 8, Pitch.C, Octave.C3),
+        new Fret(GuitarString.Sixth, 9, Pitch.CSharp, Octave.C3),
+        new Fret(GuitarString.Sixth, 10, Pitch.D, Octave.C3),
       ]);
     });
 
@@ -233,10 +294,10 @@ describe('Guitar String should', () => {
       const frets = GuitarString.Sixth.fretsFor(Position.E);
 
       expect([...frets]).toStrictEqual([
-        new Fret(GuitarString.Sixth, 9, Pitch.CSharp),
-        new Fret(GuitarString.Sixth, 10, Pitch.D),
-        new Fret(GuitarString.Sixth, 11, Pitch.DSharp),
-        new Fret(GuitarString.Sixth, 12, Pitch.E),
+        new Fret(GuitarString.Sixth, 9, Pitch.CSharp, Octave.C3),
+        new Fret(GuitarString.Sixth, 10, Pitch.D, Octave.C3),
+        new Fret(GuitarString.Sixth, 11, Pitch.DSharp, Octave.C3),
+        new Fret(GuitarString.Sixth, 12, Pitch.E, Octave.C3),
       ]);
     });
 
@@ -244,11 +305,11 @@ describe('Guitar String should', () => {
       const frets = GuitarString.Sixth.fretsFor(Position.D);
 
       expect([...frets]).toStrictEqual([
-        new Fret(GuitarString.Sixth, 11, Pitch.DSharp),
-        new Fret(GuitarString.Sixth, 12, Pitch.E),
-        new Fret(GuitarString.Sixth, 13, Pitch.F),
-        new Fret(GuitarString.Sixth, 14, Pitch.FSharp),
-        new Fret(GuitarString.Sixth, 15, Pitch.G),
+        new Fret(GuitarString.Sixth, 11, Pitch.DSharp, Octave.C3),
+        new Fret(GuitarString.Sixth, 12, Pitch.E, Octave.C3),
+        new Fret(GuitarString.Sixth, 13, Pitch.F, Octave.C3),
+        new Fret(GuitarString.Sixth, 14, Pitch.FSharp, Octave.C3),
+        new Fret(GuitarString.Sixth, 15, Pitch.G, Octave.C3),
       ]);
     });
 
