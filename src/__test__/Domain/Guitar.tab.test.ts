@@ -13,7 +13,7 @@ import {
   TabColumn,
 } from '../../Domain/Guitar';
 import { MelodicLine, Note, Octave } from '../../Domain/Note';
-import { Pitch, PitchLine, PitchLineDirection } from '../../Domain/Pitch';
+import { Pitch } from '../../Domain/Pitch';
 import { ScalePattern } from '../../Domain/Scale';
 
 describe('Blank fret should', () => {
