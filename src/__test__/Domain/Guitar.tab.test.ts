@@ -257,7 +257,7 @@ E|---------------------------|`;
           expect(renderedTab).toBe(expectedTab);
         });
 
-        test('D mixolydian scale ascending on C position 2 octaves', () => {
+        test('D mixolydian scale ascending 2 octaves', () => {
           const expectedTab = `e|-------------------2-3-5-|
 B|---------------3-5-------|
 G|---------2-4-5-----------|
@@ -271,18 +271,21 @@ E|-------------------------|`;
         });
 
         function render(pitch: Pitch, pattern: ScalePattern, position: Position) {
-          const line = pattern.createPitchLineScale(pitch);
+          const line = pattern.createScale(pitch).melodicLine(Duration.Eighth, Octave.C3);
           const guitarStrings = new GuitarStrings();
           const positionFrets = new PositionFrets(position, guitarStrings);
-          const fretLine = positionFrets.map(line);
+          const fretLine = positionFrets.mapMelodicLine(line);
           return Tab.render(fretLine?.toTab(guitarStrings));
         }
 
         function renderDoubleOctave(pitch: Pitch, pattern: ScalePattern, position: Position) {
-          const line = pattern.createPitchLineScale(pitch).addOctave();
+          const line = pattern
+            .createScale(pitch)
+            .melodicLine(Duration.Eighth, Octave.C3)
+            .appendOctaveAbove();
           const guitarStrings = new GuitarStrings();
           const positionFrets = new PositionFrets(position, guitarStrings);
-          const fretLine = positionFrets.map(line);
+          const fretLine = positionFrets.mapMelodicLine(line);
           return Tab.render(fretLine?.toTab(guitarStrings));
         }
       });

@@ -1,6 +1,8 @@
 import * as fc from 'fast-check';
 
 import { ChordPattern } from '../../Domain/Chord';
+import { Duration } from '../../Domain/Duration';
+import { Note, Octave } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
 import { ScaleDegree, ScalePattern, SeventhHarmonizer, TriadHarmonizer } from '../../Domain/Scale';
 import { convertPitchesToDistances } from '../utils';
@@ -408,6 +410,66 @@ describe('C Scales', () => {
       Pitch.GSharp,
       Pitch.BFlat,
       Pitch.B,
+    ]);
+  });
+
+  test('melodic line from scale', () => {
+    const line = ScalePattern.Ionian.createScale(Pitch.C).melodicLine(Duration.Eighth, Octave.C4);
+
+    expect(Array.from(line)).toStrictEqual([
+      new Note(Pitch.C, Duration.Eighth, Octave.C4),
+      new Note(Pitch.D, Duration.Eighth, Octave.C4),
+      new Note(Pitch.E, Duration.Eighth, Octave.C4),
+      new Note(Pitch.F, Duration.Eighth, Octave.C4),
+      new Note(Pitch.G, Duration.Eighth, Octave.C4),
+      new Note(Pitch.A, Duration.Eighth, Octave.C4),
+      new Note(Pitch.B, Duration.Eighth, Octave.C4),
+    ]);
+  });
+
+  test('melodic line from scale with octave above', () => {
+    const line = ScalePattern.Ionian.createScale(Pitch.C)
+      .melodicLine(Duration.Eighth, Octave.C4)
+      .appendOctaveAbove();
+
+    expect(Array.from(line)).toStrictEqual([
+      new Note(Pitch.C, Duration.Eighth, Octave.C4),
+      new Note(Pitch.D, Duration.Eighth, Octave.C4),
+      new Note(Pitch.E, Duration.Eighth, Octave.C4),
+      new Note(Pitch.F, Duration.Eighth, Octave.C4),
+      new Note(Pitch.G, Duration.Eighth, Octave.C4),
+      new Note(Pitch.A, Duration.Eighth, Octave.C4),
+      new Note(Pitch.B, Duration.Eighth, Octave.C4),
+      new Note(Pitch.C, Duration.Eighth, Octave.C5),
+      new Note(Pitch.D, Duration.Eighth, Octave.C5),
+      new Note(Pitch.E, Duration.Eighth, Octave.C5),
+      new Note(Pitch.F, Duration.Eighth, Octave.C5),
+      new Note(Pitch.G, Duration.Eighth, Octave.C5),
+      new Note(Pitch.A, Duration.Eighth, Octave.C5),
+      new Note(Pitch.B, Duration.Eighth, Octave.C5),
+    ]);
+  });
+
+  test('melodic line from scale with octave bellow', () => {
+    const line = ScalePattern.Ionian.createScale(Pitch.C)
+      .melodicLine(Duration.Eighth, Octave.C4)
+      .prependOctaveDown();
+
+    expect(Array.from(line)).toStrictEqual([
+      new Note(Pitch.C, Duration.Eighth, Octave.C3),
+      new Note(Pitch.D, Duration.Eighth, Octave.C3),
+      new Note(Pitch.E, Duration.Eighth, Octave.C3),
+      new Note(Pitch.F, Duration.Eighth, Octave.C3),
+      new Note(Pitch.G, Duration.Eighth, Octave.C3),
+      new Note(Pitch.A, Duration.Eighth, Octave.C3),
+      new Note(Pitch.B, Duration.Eighth, Octave.C3),
+      new Note(Pitch.C, Duration.Eighth, Octave.C4),
+      new Note(Pitch.D, Duration.Eighth, Octave.C4),
+      new Note(Pitch.E, Duration.Eighth, Octave.C4),
+      new Note(Pitch.F, Duration.Eighth, Octave.C4),
+      new Note(Pitch.G, Duration.Eighth, Octave.C4),
+      new Note(Pitch.A, Duration.Eighth, Octave.C4),
+      new Note(Pitch.B, Duration.Eighth, Octave.C4),
     ]);
   });
 });

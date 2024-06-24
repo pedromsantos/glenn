@@ -3,6 +3,7 @@ import { PitchPrimitives } from './Pitch';
 
 export type OctavePrimitives = {
   name: string;
+  shortName: string;
   value: number;
   midi: number;
 };

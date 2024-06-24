@@ -15,7 +15,8 @@ export class Octave {
   private static readonly all: Octave[] = [];
 
   private constructor(
-    private readonly octaveName: string,
+    private readonly name: string,
+    private readonly shortName: string,
     private readonly value: number,
     private readonly midiBaseValue: number,
     public readonly up: () => Octave,
@@ -26,6 +27,7 @@ export class Octave {
 
   public static readonly C0: Octave = new Octave(
     'Sub contra',
+    'C0',
     -16,
     0,
     () => Octave.C1,
@@ -33,6 +35,7 @@ export class Octave {
   );
   public static readonly C1: Octave = new Octave(
     'Contra',
+    'C1',
     -8,
     12,
     () => Octave.C2,
@@ -40,6 +43,7 @@ export class Octave {
   );
   public static readonly C2: Octave = new Octave(
     'Great',
+    'C2',
     -4,
     24,
     () => Octave.C3,
@@ -47,6 +51,7 @@ export class Octave {
   );
   public static readonly C3: Octave = new Octave(
     'Small',
+    'C3',
     -2,
     36,
     () => Octave.C4,
@@ -54,6 +59,7 @@ export class Octave {
   );
   public static readonly C4: Octave = new Octave(
     'One line',
+    'C4',
     1,
     48,
     () => Octave.C5,
@@ -61,6 +67,7 @@ export class Octave {
   );
   public static readonly C5: Octave = new Octave(
     'Two line',
+    'C5',
     2,
     60,
     () => Octave.C6,
@@ -68,6 +75,7 @@ export class Octave {
   );
   public static readonly C6: Octave = new Octave(
     'Three line',
+    'C6',
     4,
     72,
     () => Octave.C7,
@@ -75,6 +83,7 @@ export class Octave {
   );
   public static readonly C7: Octave = new Octave(
     'Four line',
+    'C7',
     8,
     84,
     () => Octave.C8,
@@ -82,6 +91,7 @@ export class Octave {
   );
   public static readonly C8: Octave = new Octave(
     'Five line',
+    'C8',
     16,
     96,
     () => Octave.C8,
@@ -89,7 +99,7 @@ export class Octave {
   );
 
   get Name() {
-    return this.octaveName;
+    return this.shortName;
   }
 
   get MidiBaseValue() {
@@ -106,17 +116,20 @@ export class Octave {
 
   get To(): OctavePrimitives {
     return {
-      name: this.octaveName,
+      name: this.name,
+      shortName: this.shortName,
       value: this.value,
       midi: this.midiBaseValue,
     };
   }
 
   static From(state: OctavePrimitives) {
-    const octave = Octave.all.find((o) => o.value === state.value && o.Name === state.name);
+    const octave = Octave.all.find(
+      (o) => o.value === state.value && o.shortName === state.shortName
+    );
 
     if (!octave) {
-      throw 'Invalid octave value';
+      throw new Error('Invalid octave value');
     }
 
     return octave;
@@ -148,6 +161,14 @@ export class Note implements Playable {
 
   transpose(interval: Interval) {
     return new Note(this.pitch.transpose(interval), this.duration, this.octave);
+  }
+
+  octaveUp() {
+    return new Note(this.pitch, this.duration, this.octave.up());
+  }
+
+  octaveDown() {
+    return new Note(this.pitch, this.duration, this.octave.down());
   }
 
   intervalTo(to: Note) {
@@ -182,6 +203,14 @@ export class Note implements Playable {
 
   isSamePitch(other: Note) {
     return this.MidiNumbers.pop() === other.MidiNumbers.pop();
+  }
+
+  hasSamePitch(pitch: Pitch) {
+    return this.pitch.equal(pitch);
+  }
+
+  hasSameOctave(octave: Octave) {
+    return this.octave === octave;
   }
 
   get Pitches() {
@@ -292,6 +321,14 @@ export class MelodicLine implements Iterable<Note> {
 
   concat(melodicLine: MelodicLine) {
     this.phrase = this.phrase.concat([...melodicLine]);
+  }
+
+  appendOctaveAbove() {
+    return new MelodicLine(this.phrase.concat(this.phrase.map((n) => n.octaveUp())));
+  }
+
+  prependOctaveDown() {
+    return new MelodicLine(this.phrase.map((n) => n.octaveDown()).concat(this.phrase));
   }
 
   lastOctave() {

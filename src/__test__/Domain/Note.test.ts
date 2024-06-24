@@ -253,7 +253,7 @@ describe('Note', () => {
     expect(notePrimitive).toStrictEqual({
       duration: { value: 0.25, name: 'Quarter', fraction: '1/4' },
       pitch: { name: 'C', naturalName: 'C', value: 0, accidental: 0 },
-      octave: { midi: 12, name: 'Contra', value: -8 },
+      octave: { midi: 12, name: 'Contra', shortName: 'C1', value: -8 },
     });
   });
 
@@ -371,8 +371,9 @@ describe('Octave', () => {
 
   test('convert to primitive octave', () => {
     expect(Octave.C1.To).toStrictEqual({
-      midi: 12,
       name: 'Contra',
+      shortName: 'C1',
+      midi: 12,
       value: -8,
     });
   });
@@ -380,9 +381,10 @@ describe('Octave', () => {
   test('convert from primitive octave', () => {
     expect(
       Octave.From({
-        midi: 12,
         name: 'Contra',
+        shortName: 'C1',
         value: -8,
+        midi: 12,
       })
     ).toBe(Octave.C1);
   });
@@ -408,7 +410,7 @@ describe('Melodic line', () => {
         {
           duration: { value: 0.25, name: 'Quarter', fraction: '1/4' },
           pitch: { name: 'C', value: 0, naturalName: 'C', accidental: 0 },
-          octave: { midi: 12, name: 'Contra', value: -8 },
+          octave: { midi: 12, name: 'Contra', shortName: 'C1', value: -8 },
         },
       ],
     });

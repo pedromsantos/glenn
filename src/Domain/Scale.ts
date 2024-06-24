@@ -2,7 +2,7 @@ import { ScalePatternPrimitives, ScalePrimitives } from '../primitives/Scale';
 import { Chord, ChordFunction, ChordPattern, ChordPitch, ChordPitches, ClosedChord } from './Chord';
 import { Duration } from './Duration';
 import { Interval } from './Interval';
-import { Octave } from './Note';
+import { MelodicLine, Note, Octave } from './Note';
 import { Pitch, PitchLine, PitchLineDirection } from './Pitch';
 
 export const enum ScaleDegree {
@@ -375,6 +375,14 @@ export class Scale implements Iterable<Pitch> {
     const line1 = this.pitches.slice(0, from + 1).reverse();
     const line2 = this.pitches.slice(to).reverse();
     return new PitchLine(line1.concat(line2), PitchLineDirection.Descending);
+  }
+
+  melodicLine(duration: Duration, octave: Octave) {
+    return new MelodicLine(
+      this.pitches.map(
+        (p, i) => new Note(p, duration, p === Pitch.C && i !== 0 ? octave.up() : octave)
+      )
+    );
   }
 
   thirdsFrom(degree: ScaleDegree): Array<Pitch> {

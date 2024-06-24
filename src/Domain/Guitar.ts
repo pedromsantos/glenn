@@ -653,7 +653,7 @@ export class PositionFrets {
 
     for (const note of line) {
       const frets = this.frets.flatMap((fs) =>
-        fs.filter((f) => note.Pitch === f.Pitch && note.Octaves[0] === f.Octave)
+        fs.filter((f) => note.hasSamePitch(f.Pitch!) && note.hasSameOctave(f.Octave!))
       );
 
       if (frets && frets.length === 1) {
@@ -673,57 +673,7 @@ export class PositionFrets {
             break;
           }
         }
-
-        // for (const f of frets) {
-        //   if (f.isOnAdjacentStringAs(fretsForLine.last()!)) {
-        //     fretsForLine.push(f);
-        //     break;
-        //   }
-        // }
       }
-    }
-
-    return fretsForLine;
-  }
-
-  map(line: PitchLine): HorizontalFrets | undefined {
-    const fretsOnStrings =
-      line.Direction == PitchLineDirection.Descending ? this.frets.reverse() : this.frets;
-    const fretLines = [];
-
-    while (fretsOnStrings.length != 0) {
-      const fretLine = this.lineToFrets(fretsOnStrings, line);
-
-      fretLines.push(fretLine);
-
-      fretsOnStrings.shift();
-    }
-
-    fretLines.sort((fl1, fl2) => {
-      const d1 = Math.abs(fl1.length - line.length);
-      const d2 = Math.abs(fl2.length - line.length);
-
-      return fl1.smoothness() + d1 - (fl2.smoothness() + d2);
-    });
-
-    return fretLines[0];
-  }
-
-  private lineToFrets(fretsOnStrings: Fret[][], line: PitchLine) {
-    const fretsForLine: HorizontalFrets = new HorizontalFrets();
-    let pitchIndex = 0;
-
-    for (const fretsOnString of fretsOnStrings) {
-      if (PitchLineDirection.Descending) {
-        fretsOnString.reverse();
-      }
-
-      fretsOnString.forEach((f) => {
-        if (line.pitchAt(pitchIndex)?.equal(f.Pitch)) {
-          fretsForLine.push(f);
-          pitchIndex++;
-        }
-      });
     }
 
     return fretsForLine;
