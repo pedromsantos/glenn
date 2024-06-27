@@ -30,7 +30,7 @@ export class PitchLines implements Iterable<PitchLine> {
 
     for (const line of this.lines) {
       octave = melodicLine.lastOctave() ?? startingOctave;
-      melodicLine.concat(line.melodicLine(octave, pitchDurations));
+      melodicLine.concat(line.toMelodicLine(octave, pitchDurations));
     }
 
     return melodicLine;
@@ -265,7 +265,7 @@ export class BarryHarrisLine {
 
     for (const line of this.line) {
       octave = melodicLine.lastOctave() ?? startingOctave;
-      melodicLine.concat(line.melodicLine(octave, pitchDurations));
+      melodicLine.concat(line.toMelodicLine(octave, pitchDurations));
     }
 
     return melodicLine;

@@ -587,7 +587,7 @@ export class PitchLine implements Iterable<Pitch> {
     return this.line[index];
   }
 
-  melodicLine(startingOctave: Octave, duration: Duration, lastPitch?: Pitch): MelodicLine {
+  toMelodicLine(startingOctave: Octave, duration: Duration, lastPitch?: Pitch): MelodicLine {
     const notes: Note[] = [];
     let octave = startingOctave;
 
