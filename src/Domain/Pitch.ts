@@ -627,6 +627,8 @@ export class PitchLine implements Iterable<Pitch> {
         return lastPitch.NumericValue > currentPitch.NumericValue;
       case PitchLineDirection.Neutral:
         return false;
+      default:
+        return false;
     }
   }
 
