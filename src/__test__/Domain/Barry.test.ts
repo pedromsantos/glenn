@@ -224,6 +224,35 @@ describe('Barry Harrys lines', () => {
         expect(pitchesInLine[pitchesInLine.length - 1]).toBe(Pitch.D);
       });
 
+      test('Arpeggio up, resolve, scale down, arpeggio up to correct octaves', () => {
+        const line = new BarryHarrisLine(scale)
+          .arpeggioUpFrom(ScaleDegree.I)
+          .resolveTo(Pitch.A)
+          .scaleDownFromLastPitchTo(ScaleDegree.III)
+          .arpeggioUpFromLastPitch()
+          .resolveTo(Pitch.E)
+          .pivotArpeggioUpFromLastPitch()
+          .build(Octave.C3, Duration.Eighth);
+
+        expect([...line].map((n) => n.Pitch.Name + ' ' + n.Octaves[0].Name)).toStrictEqual([
+          'C C3',
+          'E C3',
+          'G C3',
+          'Bb C3',
+          'A C3',
+          'G C3',
+          'F C3',
+          'E C3',
+          'G C3',
+          'Bb C3',
+          'D C4',
+          'E C4',
+          'F C3',
+          'A C3',
+          'C C4',
+        ]);
+      });
+
       test('Guitar Tab for: Arpeggio up, resolve to, scale down, arpeggio up', () => {
         const line = new BarryHarrisLine(scale)
           .arpeggioUpFrom(ScaleDegree.I)
@@ -302,8 +331,8 @@ E|-----------------------------------------|`);
         .resolveTo(Pitch.BFlat)
         .build(Octave.C4, Duration.Eighth);
 
-      expect(melodicLine.lowestOctave()).toBe(Octave.C4);
-      expect(melodicLine.highestOctave()).toBe(Octave.C6);
+      expect(melodicLine.lowestOctave()).toBe(Octave.C3);
+      expect(melodicLine.highestOctave()).toBe(Octave.C4);
     });
   });
 });

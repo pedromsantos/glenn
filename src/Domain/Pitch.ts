@@ -44,6 +44,14 @@ export class Pitch {
     return this.NumericValue == other?.NumericValue;
   }
 
+  isHiger(other: Pitch): boolean {
+    return this.value > other.value;
+  }
+
+  isLower(other: Pitch): boolean {
+    return this.value < other.value;
+  }
+
   get NumericValue(): number {
     return this.value;
   }
@@ -620,11 +628,15 @@ export class PitchLine implements Iterable<Pitch> {
   private needOctaveShift(currentPitch: Pitch, lastPitch: Pitch) {
     switch (this.Direction) {
       case PitchLineDirection.Ascending:
-        return currentPitch.NumericValue < lastPitch.NumericValue;
+        return (
+          currentPitch.isLower(lastPitch) || (currentPitch === Pitch.C && lastPitch !== Pitch.C)
+        );
       case PitchLineDirection.Descending:
-        return lastPitch.NumericValue > currentPitch.NumericValue;
+        return (
+          currentPitch.isHiger(lastPitch) || (currentPitch === Pitch.C && lastPitch !== Pitch.C)
+        );
       case PitchLineDirection.OctaveDown:
-        return lastPitch.NumericValue > currentPitch.NumericValue;
+        return true;
       case PitchLineDirection.Neutral:
         return false;
       default:

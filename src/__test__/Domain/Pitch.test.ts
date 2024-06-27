@@ -70,31 +70,32 @@ describe('Pitch line', () => {
 
     test('multiple pitches when repeated go down an octave on descending lines', () => {
       const line = new PitchLine(
-        [Pitch.C, Pitch.D, Pitch.E, Pitch.C],
+        [Pitch.C, Pitch.B, Pitch.A, Pitch.G],
         PitchLineDirection.Descending
       );
 
       const melodicLine = line.toMelodicLine(Octave.C4, Duration.Eighth);
 
       expect([...melodicLine][0]).toStrictEqual(new Note(Pitch.C, Duration.Eighth, Octave.C4));
-      expect([...melodicLine][1]).toStrictEqual(new Note(Pitch.D, Duration.Eighth, Octave.C4));
-      expect([...melodicLine][2]).toStrictEqual(new Note(Pitch.E, Duration.Eighth, Octave.C4));
-      expect([...melodicLine][3]).toStrictEqual(new Note(Pitch.C, Duration.Eighth, Octave.C3));
+      expect([...melodicLine][1]).toStrictEqual(new Note(Pitch.B, Duration.Eighth, Octave.C3));
+      expect([...melodicLine][2]).toStrictEqual(new Note(Pitch.A, Duration.Eighth, Octave.C3));
+      expect([...melodicLine][3]).toStrictEqual(new Note(Pitch.G, Duration.Eighth, Octave.C3));
     });
 
     test('multiple pitches after 1 repeat go down an octave on descending lines', () => {
       const line = new PitchLine(
-        [Pitch.C, Pitch.D, Pitch.E, Pitch.C, Pitch.B],
+        [Pitch.A, Pitch.G, Pitch.F, Pitch.E, Pitch.D, Pitch.C],
         PitchLineDirection.Descending
       );
 
       const melodicLine = line.toMelodicLine(Octave.C4, Duration.Eighth);
 
-      expect([...melodicLine][0]).toStrictEqual(new Note(Pitch.C, Duration.Eighth, Octave.C4));
-      expect([...melodicLine][1]).toStrictEqual(new Note(Pitch.D, Duration.Eighth, Octave.C4));
-      expect([...melodicLine][2]).toStrictEqual(new Note(Pitch.E, Duration.Eighth, Octave.C4));
-      expect([...melodicLine][3]).toStrictEqual(new Note(Pitch.C, Duration.Eighth, Octave.C3));
-      expect([...melodicLine][4]).toStrictEqual(new Note(Pitch.B, Duration.Eighth, Octave.C3));
+      expect([...melodicLine][0]).toStrictEqual(new Note(Pitch.A, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][1]).toStrictEqual(new Note(Pitch.G, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][2]).toStrictEqual(new Note(Pitch.F, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][3]).toStrictEqual(new Note(Pitch.E, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][4]).toStrictEqual(new Note(Pitch.D, Duration.Eighth, Octave.C4));
+      expect([...melodicLine][5]).toStrictEqual(new Note(Pitch.C, Duration.Eighth, Octave.C3));
     });
   });
 });

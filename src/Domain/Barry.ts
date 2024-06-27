@@ -223,7 +223,14 @@ export class BarryHarrisLine {
   }
 
   resolveTo(pitch: Pitch) {
-    this.line.addPitch(pitch);
+    this.line.add(
+      new PitchLine(
+        [pitch],
+        this.line.lastPitch()! > pitch
+          ? PitchLineDirection.Descending
+          : PitchLineDirection.Ascending
+      )
+    );
     return this;
   }
 
