@@ -9,8 +9,6 @@ import { CompoundTimeSignature, Duration, SimpleTimeSignature } from './Domain/D
 import {
   GuitarChord,
   GuitarHarmonicLine,
-  GuitarPitchLine,
-  GuitarPitchLines,
   GuitarString,
   Position,
   Tab,
@@ -48,8 +46,6 @@ export {
   Duration,
   GuitarChord,
   GuitarHarmonicLine,
-  GuitarPitchLine as GuitarMelodicLine,
-  GuitarPitchLines,
   GuitarString,
   Interval,
   Key,
