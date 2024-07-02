@@ -30,7 +30,7 @@ export class IntervalQuality {
       case 'Perfect':
         return IntervalQuality.Perfect;
       default:
-        throw 'Invalid interval quality';
+        throw new Error('Invalid interval quality');
     }
   }
 }
@@ -72,7 +72,7 @@ export class Interval {
     );
 
     if (!interval) {
-      throw 'Invalid interval primitive';
+      throw new Error('Invalid interval primitive');
     }
 
     return interval;
