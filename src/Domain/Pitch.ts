@@ -548,7 +548,7 @@ export const enum PitchLineDirection {
 export class PitchLine implements Iterable<Pitch> {
   constructor(
     private readonly line: Pitch[] = [],
-    private readonly direction: PitchLineDirection = PitchLineDirection.Ascending
+    private readonly direction: PitchLineDirection = PitchLineDirection.Neutral
   ) {}
 
   addOctave(): PitchLine {
@@ -641,6 +641,7 @@ export class PitchLine implements Iterable<Pitch> {
         return false;
       default:
         return false;
+        tc;
     }
   }
 

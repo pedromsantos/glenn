@@ -25,6 +25,49 @@ describe('Scale properties', () => {
     );
   });
 
+  test('Converting to melodic thirds first degrees', () => {
+    const scaleDegrees = [ScaleDegree.I, ScaleDegree.II];
+    fc.assert(
+      fc.property(fc.constantFrom(...scaleDegrees), (scaleDegree: ScaleDegree) => {
+        const thirds = [
+          ...ScalePattern.Ionian.createScale(Pitch.C).melodicThirdsFrom(
+            scaleDegree,
+            Duration.Eighth,
+            Octave.C3
+          ),
+        ].map((note) => note.Octaves[0]);
+
+        expect(thirds).toContain(Octave.C3);
+        expect(thirds).toContain(Octave.C4);
+      })
+    );
+  });
+
+  test('Converting to melodic thirds last degrees', () => {
+    const scaleDegrees = [
+      ScaleDegree.III,
+      ScaleDegree.IV,
+      ScaleDegree.V,
+      ScaleDegree.VI,
+      ScaleDegree.VII,
+    ];
+    fc.assert(
+      fc.property(fc.constantFrom(...scaleDegrees), (scaleDegree: ScaleDegree) => {
+        const thirds = [
+          ...ScalePattern.Ionian.createScale(Pitch.C).melodicThirdsFrom(
+            scaleDegree,
+            Duration.Eighth,
+            Octave.C3
+          ),
+        ].map((note) => note.Octaves[0]);
+
+        expect(thirds).toContain(Octave.C3);
+        expect(thirds).toContain(Octave.C4);
+        expect(thirds).toContain(Octave.C5);
+      })
+    );
+  });
+
   test('any Dorian should have same notes as C Dorian transposed by the interval from C to pitch', () => {
     fc.assert(
       fc.property(fc.constantFrom(...Pitch.natural), (pitch) => {

@@ -1,5 +1,7 @@
 import { BarryHarrisLine } from '../Domain/Barry';
-import { GuitarPitchLines, Position, Tab } from '../Domain/Guitar';
+import { Duration } from '../Domain/Duration';
+import { GuitarStrings, Position, PositionFrets, Tab } from '../Domain/Guitar';
+import { Octave } from '../Domain/Note';
 import { Pitch } from '../Domain/Pitch';
 import { Scale } from '../Domain/Scale';
 import { BarryHarrisCommand } from '../primitives/Barry';
@@ -24,7 +26,7 @@ export class BarryHarrisLineUseCase {
       builder.executeCommand(command);
     }
 
-    return builder.buildPitches();
+    return builder.build();
   }
 }
 
@@ -32,7 +34,7 @@ class BarryHarrisLineBuilder {
   private readonly line: BarryHarrisLine;
 
   constructor(scalePrimitives: ScalePrimitives) {
-    this.line = new BarryHarrisLine(Scale.From(scalePrimitives));
+    this.line = new BarryHarrisLine(Scale.From(scalePrimitives), Octave.C3, Duration.Eighth);
   }
 
   executeCommand(command: BarryHarrisCommand) {
@@ -49,8 +51,11 @@ class BarryHarrisLineBuilder {
       case 'PivotArpeggioUpFromLastPitch':
         this.line.pivotArpeggioUpFromLastPitch();
         break;
-      case 'ResolveTo':
-        this.line.resolveTo(Pitch.From(command.pitch));
+      case 'ResolveDownTo':
+        this.line.resolveDownTo(Pitch.From(command.pitch));
+        break;
+      case 'ResolveUpTo':
+        this.line.resolveUpTo(Pitch.From(command.pitch));
         break;
       case 'ScaleDown':
         this.line.scaleDown(command.to, command.from);
@@ -69,14 +74,12 @@ class BarryHarrisLineBuilder {
   buildTab(positionPrimitives: PositionPrimitives) {
     const position = Position.From(positionPrimitives);
 
-    const line = this.line.buildPitchLines();
-    const guitarLine = new GuitarPitchLines(line, position);
-    return Tab.render(guitarLine.toTab());
+    const line = this.line.build();
+    const guitarLine = new PositionFrets(position, new GuitarStrings()).mapMelodicLine(line);
+    return Tab.render(guitarLine.toTab(new GuitarStrings()));
   }
 
-  buildPitches() {
-    const line = this.line.buildPitchLines();
-    const flatLine = [...line].flatMap((l) => [...l]);
-    return flatLine.map((p) => p.To);
+  build() {
+    return this.line.build();
   }
 }

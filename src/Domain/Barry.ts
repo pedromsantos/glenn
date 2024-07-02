@@ -1,51 +1,7 @@
 import { Duration } from './Duration';
-import { MelodicLine, Octave } from './Note';
-import { Pitch, PitchLine, PitchLineDirection } from './Pitch';
+import { MelodicLine, Note, Octave } from './Note';
+import { Pitch, PitchLine } from './Pitch';
 import { Scale, ScaleDegree, ScalePattern } from './Scale';
-
-export class PitchLines implements Iterable<PitchLine> {
-  constructor(private readonly lines: PitchLine[] = []) {}
-
-  add(line: PitchLine) {
-    this.lines.push(line);
-  }
-
-  addPitch(pitch: Pitch) {
-    this.lines[this.lines.length - 1]?.push(pitch);
-  }
-
-  lastPitch() {
-    const lastLine = this.lines[this.lines.length - 1];
-
-    if (lastLine) {
-      return lastLine.lastPitch();
-    }
-
-    return undefined;
-  }
-
-  melodicLine(startingOctave: Octave, pitchDurations: Duration) {
-    let octave = startingOctave;
-    const melodicLine = new MelodicLine([]);
-
-    for (const line of this.lines) {
-      octave = melodicLine.lastOctave() ?? startingOctave;
-      melodicLine.concat(line.toMelodicLine(octave, pitchDurations));
-    }
-
-    return melodicLine;
-  }
-
-  flatPitches() {
-    return this.lines.flatMap((l) => [...l]);
-  }
-
-  *[Symbol.iterator](): Iterator<PitchLine> {
-    for (const line of this.lines) {
-      yield line;
-    }
-  }
-}
 
 class BarryHalfStepRule {
   private constructor(
@@ -173,19 +129,21 @@ class BarryHalfStepRules {
 }
 
 export class BarryHarrisLine {
-  private readonly line: PitchLines;
+  private readonly line: MelodicLine;
 
-  constructor(private readonly scale: Scale) {
-    this.line = new PitchLines();
+  constructor(
+    private readonly scale: Scale,
+    private octave: Octave,
+    private pitchDurations: Duration
+  ) {
+    this.line = new MelodicLine([]);
   }
 
-  arpeggioUpFrom(degree: ScaleDegree) {
-    const arpeggio = new PitchLine(
-      this.scale.thirdsFrom(degree).slice(0, 4),
-      PitchLineDirection.Ascending
+  arpeggioUpFrom(from: ScaleDegree) {
+    this.line.concat(
+      this.scale.melodicThirdsFrom(from, this.pitchDurations, this.octave).slice(0, 4)
     );
-
-    this.line.add(arpeggio);
+    this.updateOctave();
 
     return this;
   }
@@ -194,20 +152,22 @@ export class BarryHarrisLine {
     const from = this.lastDegree();
 
     if (from) {
-      const arpeggio = new PitchLine(
-        this.scale.thirdsFrom(from).slice(1, 4),
-        PitchLineDirection.Ascending
+      this.line.concat(
+        this.scale.melodicThirdsFrom(from, this.pitchDurations, this.octave).slice(1, 4)
       );
-
-      this.line.add(arpeggio);
     }
+
+    this.updateOctave();
 
     return this;
   }
 
   pivotArpeggioUpFrom(degree: ScaleDegree) {
-    const arpeggio = this.scale.thirdsTo(degree).slice(0, 4);
+    const arpeggio = this.scale
+      .melodicThirdsTo(degree, this.pitchDurations, this.octave)
+      .slice(0, 4);
     this.createPivotArpeggioLine(arpeggio, 0, 1);
+    this.updateOctave();
     return this;
   }
 
@@ -215,33 +175,82 @@ export class BarryHarrisLine {
     const from = this.lastDegree();
 
     if (from) {
-      const arpeggio = this.scale.thirdsTo(from).slice(0, 4);
-      this.createPivotArpeggioLine(arpeggio, 1, 2);
+      const arpeggio = [
+        ...this.scale.melodicThirdsTo(from, this.pitchDurations, this.octave),
+      ].slice(0, 4);
+      this.createPivotArpeggioLine(new MelodicLine(arpeggio), 1, 2);
     }
 
     return this;
   }
 
-  resolveTo(pitch: Pitch) {
-    this.line.add(
-      new PitchLine(
-        [pitch],
-        this.line.lastPitch()! > pitch
-          ? PitchLineDirection.Descending
-          : PitchLineDirection.Ascending
-      )
+  resolveUpTo(pitch: Pitch) {
+    const octave = this.line.lastNote?.Pitch.isHiger(pitch) ? this.octave.up() : this.octave;
+    this.line.concat(new MelodicLine([new Note(pitch, this.pitchDurations, octave)]));
+
+    this.updateOctave();
+
+    return this;
+  }
+
+  resolveDownTo(pitch: Pitch) {
+    this.line.concat(
+      new MelodicLine([
+        new Note(
+          pitch,
+          this.pitchDurations,
+          this.line.lastNote?.Pitch.isLower(pitch) ? this.octave.down() : this.octave
+        ),
+      ])
     );
+
+    this.updateOctave();
+
     return this;
   }
 
   scaleDown(to: ScaleDegree, from: ScaleDegree) {
-    this.line.add(BarryHalfStepRules.barryRulesFor(this.scale).applyMin(this.scale, from, to));
+    const scaleDown = [
+      ...BarryHalfStepRules.barryRulesFor(this.scale).applyMin(this.scale, from, to),
+    ];
+
+    const line = new MelodicLine(
+      scaleDown.map(
+        (p, i) =>
+          new Note(
+            p,
+            this.pitchDurations,
+            this.neddOctaveDown(p, i, scaleDown) ? this.shiftOctaveDown() : this.octave
+          )
+      )
+    );
+
+    this.line.concat(line);
+
+    this.updateOctave();
 
     return this;
   }
 
   scaleDownExtraHalfSteps(to: ScaleDegree, from: ScaleDegree) {
-    this.line.add(BarryHalfStepRules.barryRulesFor(this.scale).applyMax(this.scale, from, to));
+    const scaleDown = [
+      ...BarryHalfStepRules.barryRulesFor(this.scale).applyMax(this.scale, from, to),
+    ];
+
+    this.line.concat(
+      new MelodicLine(
+        scaleDown.map(
+          (p, i) =>
+            new Note(
+              p,
+              this.pitchDurations,
+              this.neddOctaveDown(p, i, scaleDown) ? this.shiftOctaveDown() : this.octave
+            )
+        )
+      )
+    );
+
+    this.updateOctave();
 
     return this;
   }
@@ -253,6 +262,8 @@ export class BarryHarrisLine {
       this.scaleDown(to, from - 1);
     }
 
+    this.updateOctave();
+
     return this;
   }
 
@@ -263,38 +274,46 @@ export class BarryHarrisLine {
       this.scaleDownExtraHalfSteps(to, from - 1);
     }
 
+    this.updateOctave();
+
     return this;
   }
 
-  build(startingOctave: Octave, pitchDurations: Duration) {
-    let octave = startingOctave;
-    const melodicLine = new MelodicLine([]);
-
-    for (const line of this.line) {
-      octave = melodicLine.lastOctave() ?? startingOctave;
-      melodicLine.concat(line.toMelodicLine(octave, pitchDurations));
-    }
-
-    return melodicLine;
-  }
-
-  buildPitchLines() {
+  build() {
     return this.line;
   }
 
-  private createPivotArpeggioLine(line: Pitch[], lowCut: number, highCut: number) {
-    const arpeggioRoot = new PitchLine(line.slice(lowCut, highCut), PitchLineDirection.OctaveDown);
-    this.line.add(arpeggioRoot);
-    const pivot = new PitchLine(line.slice(highCut), PitchLineDirection.Ascending);
-    this.line.add(pivot);
+  private createPivotArpeggioLine(line: MelodicLine, lowCut: number, highCut: number) {
+    const arpeggioRoot = new MelodicLine(
+      [...line].slice(lowCut, highCut).map((note) => note.octaveDown())
+    );
+    this.line.concat(arpeggioRoot);
+    this.updateOctave();
+
+    const pivot = new MelodicLine([...line].slice(highCut).map((note) => note.octaveDown()));
+    this.line.concat(pivot);
+    this.updateOctave();
   }
 
   private lastDegree() {
-    const lastPitch = this.line.lastPitch();
+    const lastPitch = this.line.lastNote?.Pitch;
     let from: ScaleDegree | undefined = undefined;
 
     if (lastPitch) from = this.scale.degreeFor(lastPitch);
 
     return from;
+  }
+
+  private updateOctave() {
+    this.octave = this.line.lastOctave() || this.octave;
+  }
+
+  private shiftOctaveDown() {
+    this.octave = this.octave.down();
+    return this.octave;
+  }
+
+  private neddOctaveDown(p: Pitch, i: number, line: Pitch[]) {
+    return (p === Pitch.C && i !== 0) || (i !== 0 && line && line[i - 1] === Pitch.C);
   }
 }

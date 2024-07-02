@@ -10,12 +10,12 @@ describe('Barry Harrys use case', () => {
     test('Guitar Tab for: commands', () => {
       const commands: BarryHarrisCommand[] = [
         { command: 'ArpeggioUpFrom', degree: 0 },
-        { command: 'ResolveTo', pitch: Pitch.D.To },
+        { command: 'ResolveUpTo', pitch: Pitch.D.To },
         { command: 'ScaleDownFromLastPitchTo', to: 2 },
         { command: 'ArpeggioUpFromLastPitch' },
-        { command: 'ResolveTo', pitch: Pitch.E.To },
+        { command: 'ResolveUpTo', pitch: Pitch.E.To },
         { command: 'PivotArpeggioUpFromLastPitch' },
-        { command: 'ResolveTo', pitch: Pitch.BFlat.To },
+        { command: 'ResolveDownTo', pitch: Pitch.BFlat.To },
       ];
 
       const scale = new Scale(ScalePattern.Mixolydian, Pitch.C).To;
@@ -55,7 +55,7 @@ E|---------|`);
     test('Resolve To', () => {
       const commands: BarryHarrisCommand[] = [
         { command: 'ArpeggioUpFrom', degree: 0 },
-        { command: 'ResolveTo', pitch: Pitch.D.To },
+        { command: 'ResolveUpTo', pitch: Pitch.D.To },
       ];
 
       const { line, tab } = execute(useCase, scale, commands);
@@ -102,7 +102,7 @@ E|---------------|`);
     test('Pivot Arpeggio Up From Last Pitch with resolve', () => {
       const commands: BarryHarrisCommand[] = [
         { command: 'ArpeggioUpFrom', degree: 0 },
-        { command: 'ResolveTo', pitch: Pitch.D.To },
+        { command: 'ResolveUpTo', pitch: Pitch.D.To },
         { command: 'PivotArpeggioUpFromLastPitch' },
       ];
 
@@ -137,17 +137,17 @@ E|-------------------|`);
     test('Scale Down Extra Half Steps', () => {
       const commands: BarryHarrisCommand[] = [
         { command: 'ArpeggioUpFrom', degree: 0 },
-        { command: 'ScaleDownExtraHalfSteps', from: 7, to: 0 },
+        { command: 'ScaleDownExtraHalfSteps', from: 6, to: 0 },
       ];
 
       const { line, tab } = execute(useCase, scale, commands);
 
-      expect(line).toHaveLength(13);
+      expect(line).toHaveLength(14);
       expect(tab).toBe(`e|---------------------------|
 B|---------------------------|
 G|-------3-4-3-2-------------|
-D|---2-5---------5-3-2-------|
-A|-3-------------------5-4-3-|
+D|---2-5---------5-3-2-1-----|
+A|-3---------------------5-4-|
 E|---------------------------|`);
     });
 
@@ -160,12 +160,12 @@ E|---------------------------|`);
       const { line, tab } = execute(useCase, scale, commands);
 
       expect(line).toHaveLength(11);
-      expect(tab).toBe(`e|-----------------------|
-B|-----------------------|
-G|-------3-2-------------|
-D|---2-5-----5-3-2-------|
-A|-3---------------5-4-3-|
-E|-----------------------|`);
+      expect(tab).toBe(`e|---------------------|
+B|---------------------|
+G|-------3-2-----------|
+D|---2-5-----5-3-2-----|
+A|-3---------------5-4-|
+E|---------------------|`);
     });
   });
 });

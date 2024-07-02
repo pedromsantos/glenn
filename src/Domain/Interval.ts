@@ -330,8 +330,8 @@ export class Interval {
     () => Interval.MajorThirteenth
   );
 
-  isLargarThan(reference: Interval): boolean {
-    return this.distance > reference.distance;
+  isLargarThan(other: Interval): boolean {
+    return this.distance > other.distance;
   }
 
   public static get intervals(): Interval[] {

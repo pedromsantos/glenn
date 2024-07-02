@@ -4,7 +4,8 @@ export type ArpeggioUpFrom = { command: 'ArpeggioUpFrom'; degree: number };
 export type ArpeggioUpFromLastPitch = { command: 'ArpeggioUpFromLastPitch' };
 export type PivotArpeggioUpFrom = { command: 'PivotArpeggioUpFrom'; degree: number };
 export type PivotArpeggioUpFromLastPitch = { command: 'PivotArpeggioUpFromLastPitch' };
-export type ResolveTo = { command: 'ResolveTo'; pitch: PitchPrimitives };
+export type ResolveUpTo = { command: 'ResolveUpTo'; pitch: PitchPrimitives };
+export type ResolveDownTo = { command: 'ResolveDownTo'; pitch: PitchPrimitives };
 export type ScaleDown = { command: 'ScaleDown'; from: number; to: number };
 export type ScaleDownExtraHalfSteps = {
   command: 'ScaleDownExtraHalfSteps';
@@ -22,7 +23,8 @@ export type BarryHarrisCommand =
   | ArpeggioUpFromLastPitch
   | PivotArpeggioUpFrom
   | PivotArpeggioUpFromLastPitch
-  | ResolveTo
+  | ResolveUpTo
+  | ResolveDownTo
   | ScaleDown
   | ScaleDownExtraHalfSteps
   | ScaleDownFromLastPitchTo

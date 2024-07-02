@@ -319,6 +319,10 @@ export class MelodicLine implements Iterable<Note> {
     this.phrase = notes;
   }
 
+  slice(start: number, end: number) {
+    return new MelodicLine(this.phrase.slice(start, end));
+  }
+
   concat(melodicLine: MelodicLine) {
     this.phrase = this.phrase.concat([...melodicLine]);
   }
@@ -367,6 +371,10 @@ export class MelodicLine implements Iterable<Note> {
 
   pitches() {
     return this.phrase.map((n) => n.Pitch);
+  }
+
+  get lastNote() {
+    return this.phrase[this.phrase.length - 1];
   }
 
   *[Symbol.iterator](): Iterator<Note> {

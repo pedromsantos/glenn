@@ -394,6 +394,18 @@ export class Scale implements Iterable<Pitch> {
       .slice(0, 7);
   }
 
+  melodicThirdsFrom(degree: ScaleDegree, pitchDurations: Duration, octave: Octave) {
+    return new MelodicLine(
+      this.pitches
+        .slice(degree)
+        .map((p) => new Note(p, pitchDurations, octave))
+        .concat(this.pitches.map((p) => new Note(p, pitchDurations, octave.up())))
+        .concat(this.pitches.map((p) => new Note(p, pitchDurations, octave.up().up())))
+        .filter((_, i) => i % 2 === 0)
+        .slice(0, 7)
+    );
+  }
+
   thirdsTo(degree: ScaleDegree): Array<Pitch> {
     return this.pitches
       .slice(degree)
@@ -401,6 +413,18 @@ export class Scale implements Iterable<Pitch> {
       .concat(this.pitches)
       .filter((_, i) => i % 2 != 0 || i == 0)
       .slice(0, 7);
+  }
+
+  melodicThirdsTo(degree: ScaleDegree, pitchDurations: Duration, startingOctave: Octave) {
+    return new MelodicLine(
+      this.pitches
+        .slice(degree)
+        .map((p) => new Note(p, pitchDurations, startingOctave))
+        .concat(this.pitches.map((p) => new Note(p, pitchDurations, startingOctave.up())))
+        .concat(this.pitches.map((p) => new Note(p, pitchDurations, startingOctave.up().up())))
+        .filter((_, i) => i % 2 != 0 || i == 0)
+        .slice(0, 7)
+    );
   }
 
   hasPattern(other: ScalePattern) {

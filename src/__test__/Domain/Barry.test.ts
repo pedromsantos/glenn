@@ -1,6 +1,6 @@
 import { BarryHarrisLine } from '../../Domain/Barry';
 import { Duration } from '../../Domain/Duration';
-import { GuitarPitchLines, Position, Tab } from '../../Domain/Guitar';
+import { GuitarStrings, Position, PositionFrets, Tab } from '../../Domain/Guitar';
 import { Octave } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
 import { Scale, ScaleDegree, ScalePattern } from '../../Domain/Scale';
@@ -21,9 +21,9 @@ describe('Barry Harrys lines', () => {
         [ScaleDegree.VI, [Pitch.A, Pitch.C, Pitch.E, Pitch.G]],
         [ScaleDegree.VII, [Pitch.BFlat, Pitch.D, Pitch.F, Pitch.A]],
       ])('From', (degree, expected) => {
-        const line = new BarryHarrisLine(scale)
+        const line = new BarryHarrisLine(scale, Octave.C4, Duration.Eighth)
           .arpeggioUpFrom(degree)
-          .build(Octave.C4, Duration.Eighth);
+          .build();
 
         expect(line.pitches()).toStrictEqual(expected);
       });
@@ -41,9 +41,9 @@ describe('Barry Harrys lines', () => {
         [ScaleDegree.II, [Pitch.D, Pitch.E, Pitch.G, Pitch.BFlat]],
         [ScaleDegree.I, [Pitch.C, Pitch.D, Pitch.F, Pitch.A]],
       ])('From', (degree, expected) => {
-        const line = new BarryHarrisLine(scale)
+        const line = new BarryHarrisLine(scale, Octave.C4, Duration.Eighth)
           .pivotArpeggioUpFrom(degree)
-          .build(Octave.C4, Duration.Eighth);
+          .build();
 
         expect(line.pitches()).toStrictEqual(expected);
       });
@@ -80,9 +80,9 @@ describe('Barry Harrys lines', () => {
           [Pitch.E, Pitch.D, Pitch.C, Pitch.B, Pitch.BFlat, Pitch.A, Pitch.G, Pitch.F, Pitch.E],
         ],
       ])('From', (from, to, expected) => {
-        const line = new BarryHarrisLine(scale)
+        const line = new BarryHarrisLine(scale, Octave.C4, Duration.Eighth)
           .scaleDown(to, from)
-          .build(Octave.C4, Duration.Eighth);
+          .build();
 
         expect(line.pitches()).toStrictEqual(expected);
       });
@@ -161,9 +161,9 @@ describe('Barry Harrys lines', () => {
           ],
         ],
       ])('From', (from, to, expected) => {
-        const line = new BarryHarrisLine(scale)
+        const line = new BarryHarrisLine(scale, Octave.C4, Duration.Eighth)
           .scaleDownExtraHalfSteps(to, from)
-          .build(Octave.C4, Duration.Eighth);
+          .build();
 
         expect(line.pitches()).toStrictEqual(expected);
       });
@@ -172,19 +172,19 @@ describe('Barry Harrys lines', () => {
     describe('combined lines', () => {
       describe('Empty lines', () => {
         test('have no last pitch', () => {
-          const line = new BarryHarrisLine(scale)
+          const line = new BarryHarrisLine(scale, Octave.C4, Duration.Eighth)
             .arpeggioUpFromLastPitch()
-            .build(Octave.C4, Duration.Eighth);
+            .build();
 
           expect(line.pitches()).toHaveLength(0);
         });
       });
 
       test('Arpeggio up, scale down', () => {
-        const line = new BarryHarrisLine(scale)
+        const line = new BarryHarrisLine(scale, Octave.C4, Duration.Eighth)
           .arpeggioUpFrom(ScaleDegree.I)
           .scaleDownFromLastPitchTo(ScaleDegree.III)
-          .build(Octave.C4, Duration.Eighth);
+          .build();
 
         const pitchesInLine = line.pitches();
 
@@ -195,12 +195,12 @@ describe('Barry Harrys lines', () => {
         expect(pitchesInLine[pitchesInLine.length - 1]).toBe(Pitch.E);
       });
 
-      test('Arpeggio u,p resolve, scale down', () => {
-        const line = new BarryHarrisLine(scale)
+      test('Arpeggio up, resolve, scale down', () => {
+        const line = new BarryHarrisLine(scale, Octave.C4, Duration.Eighth)
           .arpeggioUpFrom(ScaleDegree.I)
-          .resolveTo(Pitch.A)
+          .resolveDownTo(Pitch.A)
           .scaleDownFromLastPitchTo(ScaleDegree.II)
-          .build(Octave.C4, Duration.Eighth);
+          .build();
 
         const pitchesInLine = line.pitches();
         expect(pitchesInLine).toHaveLength(9);
@@ -208,12 +208,12 @@ describe('Barry Harrys lines', () => {
       });
 
       test('Arpeggio up, resolve, scale down, arpeggio up', () => {
-        const line = new BarryHarrisLine(scale)
+        const line = new BarryHarrisLine(scale, Octave.C4, Duration.Eighth)
           .arpeggioUpFrom(ScaleDegree.I)
-          .resolveTo(Pitch.A)
+          .resolveDownTo(Pitch.A)
           .scaleDownFromLastPitchTo(ScaleDegree.III)
           .arpeggioUpFromLastPitch()
-          .build(Octave.C4, Duration.Eighth);
+          .build();
 
         const pitchesInLine = line.pitches();
 
@@ -225,14 +225,14 @@ describe('Barry Harrys lines', () => {
       });
 
       test('Arpeggio up, resolve, scale down, arpeggio up to correct octaves', () => {
-        const line = new BarryHarrisLine(scale)
+        const line = new BarryHarrisLine(scale, Octave.C3, Duration.Eighth)
           .arpeggioUpFrom(ScaleDegree.I)
-          .resolveTo(Pitch.A)
+          .resolveDownTo(Pitch.A)
           .scaleDownFromLastPitchTo(ScaleDegree.III)
           .arpeggioUpFromLastPitch()
-          .resolveTo(Pitch.E)
+          .resolveUpTo(Pitch.E)
           .pivotArpeggioUpFromLastPitch()
-          .build(Octave.C3, Duration.Eighth);
+          .build();
 
         expect([...line].map((n) => n.Pitch.Name + ' ' + n.Octaves[0].Name)).toStrictEqual([
           'C C3',
@@ -254,15 +254,15 @@ describe('Barry Harrys lines', () => {
       });
 
       test('Guitar Tab for: Arpeggio up, resolve to, scale down, arpeggio up', () => {
-        const line = new BarryHarrisLine(scale)
+        const line = new BarryHarrisLine(scale, Octave.C3, Duration.Eighth)
           .arpeggioUpFrom(ScaleDegree.I)
-          .resolveTo(Pitch.A)
+          .resolveDownTo(Pitch.A)
           .scaleDownFromLastPitchTo(ScaleDegree.III)
           .arpeggioUpFromLastPitch()
-          .buildPitchLines();
+          .build();
 
-        const guitarLine = new GuitarPitchLines(line, Position.C);
-        const tab = Tab.render(guitarLine.toTab());
+        const guitarLine = new PositionFrets(Position.C, new GuitarStrings()).mapMelodicLine(line);
+        const tab = Tab.render(guitarLine.toTab(new GuitarStrings()));
 
         expect(tab).toBe(`e|-----------------------|
 B|---------------------3-|
@@ -273,17 +273,17 @@ E|-----------------------|`);
       });
 
       test('Guitar Tab for: Arpeggio up, resolve to, scale down, arpeggio up, resolve and pivot', () => {
-        const line = new BarryHarrisLine(scale)
+        const line = new BarryHarrisLine(scale, Octave.C3, Duration.Eighth)
           .arpeggioUpFrom(ScaleDegree.I)
-          .resolveTo(Pitch.A)
+          .resolveDownTo(Pitch.A)
           .scaleDownFromLastPitchTo(ScaleDegree.III)
           .arpeggioUpFromLastPitch()
-          .resolveTo(Pitch.E)
+          .resolveUpTo(Pitch.E)
           .pivotArpeggioUpFromLastPitch()
-          .buildPitchLines();
+          .build();
 
-        const guitarLine = new GuitarPitchLines(line, Position.C);
-        const tab = Tab.render(guitarLine.toTab());
+        const guitarLine = new PositionFrets(Position.C, new GuitarStrings()).mapMelodicLine(line);
+        const tab = Tab.render(guitarLine.toTab(new GuitarStrings()));
 
         expect(tab).toBe(`e|-------------------------------|
 B|---------------------3-5-------|
@@ -294,18 +294,18 @@ E|-------------------------------|`);
       });
 
       test('Guitar Tab for: Arpeggio up, resolve to, scale down, arpeggio up, resolve and pivot, alternate version', () => {
-        const line = new BarryHarrisLine(scale)
+        const line = new BarryHarrisLine(scale, Octave.C3, Duration.Eighth)
           .arpeggioUpFrom(ScaleDegree.I)
-          .resolveTo(Pitch.D)
+          .resolveUpTo(Pitch.D)
           .scaleDownFromLastPitchTo(ScaleDegree.III)
           .arpeggioUpFromLastPitch()
-          .resolveTo(Pitch.E)
+          .resolveUpTo(Pitch.E)
           .pivotArpeggioUpFromLastPitch()
-          .resolveTo(Pitch.BFlat)
-          .buildPitchLines();
+          .resolveDownTo(Pitch.BFlat)
+          .build();
 
-        const guitarLine = new GuitarPitchLines(line, Position.C);
-        const tab = Tab.render(guitarLine.toTab());
+        const guitarLine = new PositionFrets(Position.C, new GuitarStrings()).mapMelodicLine(line);
+        const tab = Tab.render(guitarLine.toTab(new GuitarStrings()));
 
         expect(tab).toBe(`e|-----------------------------------------|
 B|---------3-1-----------------3-5---------|
@@ -321,15 +321,15 @@ E|-----------------------------------------|`);
     const scale = new Scale(ScalePattern.Mixolydian, Pitch.C);
 
     test('Arpeggio up, scale down', () => {
-      const melodicLine = new BarryHarrisLine(scale)
+      const melodicLine = new BarryHarrisLine(scale, Octave.C3, Duration.Eighth)
         .arpeggioUpFrom(ScaleDegree.I)
-        .resolveTo(Pitch.D)
+        .resolveUpTo(Pitch.D)
         .scaleDownFromLastPitchTo(ScaleDegree.III)
         .arpeggioUpFromLastPitch()
-        .resolveTo(Pitch.E)
+        .resolveUpTo(Pitch.E)
         .pivotArpeggioUpFromLastPitch()
-        .resolveTo(Pitch.BFlat)
-        .build(Octave.C4, Duration.Eighth);
+        .resolveDownTo(Pitch.BFlat)
+        .build();
 
       expect(melodicLine.lowestOctave()).toBe(Octave.C3);
       expect(melodicLine.highestOctave()).toBe(Octave.C4);
