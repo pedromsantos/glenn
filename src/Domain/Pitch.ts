@@ -641,7 +641,6 @@ export class PitchLine implements Iterable<Pitch> {
         return false;
       default:
         return false;
-        tc;
     }
   }
 
