@@ -152,25 +152,6 @@ abstract class Frets implements Iterable<Fret> {
   reverse() {
     this.frets.reverse();
   }
-
-  protected areAllFretsOnSameGuitarString() {
-    return this.frets.every((f) => f.isOnSameStringAs(this.frets[0]!));
-  }
-
-  protected areAllFretsWithinAdjacentGuitarStrings() {
-    return this.frets.every(
-      (f) => f.isOnSameStringAs(this.frets[0]!) || f.isOnAdjacentStringAs(this.frets[0]!)
-    );
-  }
-
-  protected areAllFretsSkipingASinleString() {
-    return this.frets.every(
-      (f) =>
-        f.isOnSameStringAs(this.frets[0]!) ||
-        f.isOnAdjacentStringAs(this.frets[0]!) ||
-        f.isSkipingASingleStringAs(this.frets[0]!)
-    );
-  }
 }
 
 class VerticalFrets extends Frets {
@@ -222,22 +203,6 @@ export class HorizontalFrets extends Frets {
   toTab(guitarStrings: GuitarStrings): Tab {
     const column = this.frets.map((fret) => fret.toTab(guitarStrings));
     return new Tab(...column);
-  }
-
-  smoothness() {
-    if (this.areAllFretsOnSameGuitarString()) {
-      return 0;
-    }
-
-    if (this.areAllFretsWithinAdjacentGuitarStrings()) {
-      return 1;
-    }
-
-    if (this.areAllFretsSkipingASinleString()) {
-      return 2;
-    }
-
-    return 3;
   }
 }
 

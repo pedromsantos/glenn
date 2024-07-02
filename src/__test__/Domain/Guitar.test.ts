@@ -6,9 +6,7 @@ import {
   GuitarString,
   GuitarStrings,
   GuitarTuning,
-  HorizontalFrets,
   Position,
-  PositionFrets,
 } from '../../Domain/Guitar';
 import { Octave } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
@@ -110,36 +108,6 @@ describe('Fret should', () => {
         }
       )
     );
-  });
-});
-
-describe('HorizontalFrets smoothness should', () => {
-  test('be 0 if all frets are on same string', () => {
-    const guitarStrings = new GuitarStrings();
-    const positionFrets = new PositionFrets(Position.C, guitarStrings);
-    const horizontalFrets = positionFrets.horizontalFretsFor(GuitarString.Fourth);
-
-    expect(horizontalFrets.smoothness()).toBe(0);
-  });
-
-  test('be 1 if all frets are within adjacent strings', () => {
-    const horizontalFrets = new HorizontalFrets([
-      new Fret(GuitarString.Fourth, 2, Pitch.E),
-      new Fret(GuitarString.Fifth, 3, Pitch.C),
-      new Fret(GuitarString.Third, 2, Pitch.BFlat),
-    ]);
-
-    expect(horizontalFrets.smoothness()).toBe(1);
-  });
-
-  test('be 2 if all frets are within adjacent of adjacent strings', () => {
-    const horizontalFrets = new HorizontalFrets([
-      new Fret(GuitarString.Third, 2, Pitch.BFlat),
-      new Fret(GuitarString.Fifth, 3, Pitch.C),
-      new Fret(GuitarString.First, 3, Pitch.G),
-    ]);
-
-    expect(horizontalFrets.smoothness()).toBe(2);
   });
 });
 
