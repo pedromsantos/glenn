@@ -1,8 +1,7 @@
 import { FretPrimitives, GuitarStringPrimitives, PositionPrimitives } from '../primitives/Guitar';
-import { PitchLines } from './Barry';
 import { Chord } from './Chord';
 import { MelodicLine, Octave } from './Note';
-import { Pitch, PitchLine, PitchLineDirection } from './Pitch';
+import { Pitch, PitchLineDirection } from './Pitch';
 
 export class TabColumn {
   private readonly maxRowLength: number = 0;
