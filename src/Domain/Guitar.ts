@@ -1,7 +1,7 @@
 import { FretPrimitives, GuitarStringPrimitives, PositionPrimitives } from '../primitives/Guitar';
 import { Chord } from './Chord';
 import { MelodicLine, Octave } from './Note';
-import { Pitch, PitchLineDirection } from './Pitch';
+import { Pitch } from './Pitch';
 
 export class TabColumn {
   private readonly maxRowLength: number = 0;
@@ -139,7 +139,7 @@ export class BlankFret extends Fret {
 abstract class Frets implements Iterable<Fret> {
   protected frets: Fret[] = [];
 
-  protected constructor(frets: Fret[] = []) {
+  protected constructor(frets: Fret[]) {
     this.frets = frets;
   }
 
@@ -215,10 +215,6 @@ export class HorizontalFrets extends Frets {
     this.frets.push(fret);
   }
 
-  concat(frets: HorizontalFrets) {
-    this.frets = this.frets.concat(frets.frets);
-  }
-
   last() {
     return this.frets[this.frets.length - 1];
   }
@@ -243,10 +239,6 @@ export class HorizontalFrets extends Frets {
 
     return 3;
   }
-
-  get length() {
-    return this.frets.length;
-  }
 }
 
 export class GuitarStrings implements Iterable<GuitarString> {
@@ -260,30 +252,10 @@ export class GuitarStrings implements Iterable<GuitarString> {
     return this.guitarStrings.find((gs) => gs.Index == guitarStringIndex)!;
   }
 
-  lowerToHigher() {
-    return new GuitarStrings(
-      this.guitarStrings.sort((s1: GuitarString, s2: GuitarString) => s1.Index - s2.Index)
-    );
-  }
-
-  sortByDirectionAndString(lineDirection: PitchLineDirection, previousString: GuitarString) {
-    return lineDirection === PitchLineDirection.Descending
-      ? this.higherThan(previousString).lowerToHigher()
-      : this.lowerThan(previousString);
-  }
-
   *[Symbol.iterator](): Iterator<GuitarString> {
     for (const guitarString of this.guitarStrings) {
       yield guitarString;
     }
-  }
-
-  private higherThan(guitarString: GuitarString) {
-    return new GuitarStrings(this.guitarStrings.filter((s) => !s.isLowerIndexThan(guitarString)));
-  }
-
-  private lowerThan(guitarString: GuitarString) {
-    return new GuitarStrings(this.guitarStrings.filter((s) => !s.isHigherIndexThan(guitarString)));
   }
 }
 
@@ -407,14 +379,6 @@ export class GuitarString {
 
   equals(other: GuitarString): boolean {
     return this.index === other.index;
-  }
-
-  isHigherIndexThan(other: GuitarString): boolean {
-    return other.index < this.index;
-  }
-
-  isLowerIndexThan(other: GuitarString): boolean {
-    return other.index > this.index;
   }
 
   get Index() {
