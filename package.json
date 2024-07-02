@@ -90,7 +90,7 @@
     "tsx": "^4.15.1",
     "turbo": "^2.0.6",
     "type-coverage": "^2.29.0",
-    "typescript": "^5.3.2"
+    "typescript": "^5.5.3"
   },
   "packageManager": "yarn@1.22.22",
   "husky": {
