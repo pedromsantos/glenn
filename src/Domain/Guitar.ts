@@ -88,16 +88,6 @@ export class Fret {
     return this.String == other.String;
   }
 
-  isOnAdjacentStringAs(other: Fret) {
-    return this.String == other.String.NextAscending || this.String == other.String.NextDescending;
-  }
-
-  isSkipingASingleStringAs(other: Fret) {
-    const nextNextAscending = other.String.NextAscending.NextAscending;
-    const nextNextDescending = other.String.NextDescending.NextDescending;
-    return this.String == nextNextAscending || this.String == nextNextDescending;
-  }
-
   private isHigher(other: Fret, margin: number) {
     return this.fret + margin > other.fret;
   }
