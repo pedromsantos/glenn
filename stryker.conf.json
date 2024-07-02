@@ -4,7 +4,6 @@
   "mutate": ["src/Domain/**/*.ts", "src/abcNotation/**/*.ts"],
   "reporters": ["progress", "dots", "dashboard", "html"],
   "testRunner": "jest",
-  "checkers": ["typescript"],
   "tsconfigFile": "tsconfig.json",
   "ignoreStatic": true,
   "dashboard": {
