@@ -552,28 +552,6 @@ export class PitchLine implements Iterable<Pitch> {
     private readonly direction: PitchLineDirection = PitchLineDirection.Neutral
   ) {}
 
-  addOctave(): PitchLine {
-    return new PitchLine(this.line.concat(this.line), this.direction);
-  }
-
-  push(pitch: Pitch) {
-    this.line.push(pitch);
-  }
-
-  lastPitch() {
-    const lastPitch = this.line[this.line.length - 1];
-
-    if (lastPitch) {
-      return lastPitch;
-    }
-
-    return undefined;
-  }
-
-  get length() {
-    return this.line.length;
-  }
-
   insertHalfToneBetween(first: Pitch, second: Pitch) {
     const firstIndex = this.line.findIndex((p) => p === first);
     const secondIndex = this.line.findIndex((p) => p === second);
