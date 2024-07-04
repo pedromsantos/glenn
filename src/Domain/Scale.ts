@@ -285,10 +285,6 @@ export class ScalePattern {
     return this.pattern.map((interval) => root.transpose(interval));
   }
 
-  public createPitchLineScale(root: Pitch): PitchLine {
-    return this.createScale(root).PitchLine;
-  }
-
   public get Name(): string {
     return this.name;
   }
