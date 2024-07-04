@@ -398,15 +398,6 @@ export class Scale implements Iterable<Pitch> {
     );
   }
 
-  thirdsTo(degree: ScaleDegree): Array<Pitch> {
-    return this.pitches
-      .slice(degree)
-      .concat(this.pitches)
-      .concat(this.pitches)
-      .filter((_, i) => i % 2 != 0 || i == 0)
-      .slice(0, 7);
-  }
-
   melodicThirdsTo(degree: ScaleDegree, pitchDurations: Duration, startingOctave: Octave) {
     return new MelodicLine(
       this.pitches
