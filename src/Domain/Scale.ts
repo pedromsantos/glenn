@@ -329,10 +329,6 @@ export class Scale implements Iterable<Pitch> {
     private readonly pitches: Pitch[] = scalePattern.createScalePitches(root)
   ) {}
 
-  get PitchLine(): PitchLine {
-    return new PitchLine(this.pitches, PitchLineDirection.Ascending);
-  }
-
   get To(): Readonly<ScalePrimitives> {
     return {
       pattern: this.scalePattern.To,
