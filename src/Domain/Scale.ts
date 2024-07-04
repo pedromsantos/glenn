@@ -1,6 +1,7 @@
 import { ScalePatternPrimitives, ScalePrimitives } from '../primitives/Scale';
 import { Chord, ChordFunction, ChordPattern, ChordPitch, ChordPitches, ClosedChord } from './Chord';
 import { Duration } from './Duration';
+import { throwExpression } from './Ensure';
 import { Interval } from './Interval';
 import { MelodicLine, Note, Octave } from './Note';
 import { Pitch, PitchLine, PitchLineDirection } from './Pitch';
@@ -439,7 +440,8 @@ export class TriadHarmonizer implements ScaleHarmonizer {
 
     return new ClosedChord(
       chordPitches.pitchForFunction(ChordFunction.Root),
-      ChordPattern.patternFor(chordPitches.toIntervals()) ?? ChordPattern.Major,
+      ChordPattern.patternFor(chordPitches.toIntervals()) ??
+        throwExpression('Invalid chord pattern'),
       Duration.Whole,
       Octave.C4
     );
@@ -461,7 +463,8 @@ export class SeventhHarmonizer implements ScaleHarmonizer {
 
     return new ClosedChord(
       chordPitches.pitchForFunction(ChordFunction.Root),
-      ChordPattern.patternFor(chordPitches.toIntervals()) ?? ChordPattern.Major7,
+      ChordPattern.patternFor(chordPitches.toIntervals()) ??
+        throwExpression('Invalid chord pattern'),
       Duration.Whole,
       Octave.C4
     );

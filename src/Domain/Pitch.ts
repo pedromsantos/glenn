@@ -1,5 +1,6 @@
 import { PitchPrimitives } from '../primitives/Pitch';
 import { Duration } from './Duration';
+import { throwExpression } from './Ensure';
 import { Interval } from './Interval';
 import { MelodicLine, Note, Octave } from './Note';
 
@@ -37,7 +38,7 @@ export class Pitch {
   intervalTo(to: Pitch): Interval {
     const intervalTo = this.intervals().intervalTo(to);
 
-    return intervalTo ?? Interval.Unison;
+    return intervalTo ?? throwExpression('Invalid interval');
   }
 
   equal(other?: Pitch) {
