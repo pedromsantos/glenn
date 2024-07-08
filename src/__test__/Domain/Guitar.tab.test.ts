@@ -51,34 +51,6 @@ describe('Position should', () => {
     positionFrets = new PositionFrets(Position.C, guitarStrings);
   });
 
-  test('map vertical frets for fret number', () => {
-    const verticalFrets = positionFrets.verticalFretsAt(3);
-    const renderedTab = Tab.render(new Tab(verticalFrets.toTab()));
-
-    const expectedTab = `e|-3-|
-B|-3-|
-G|-3-|
-D|-3-|
-A|-3-|
-E|-3-|`;
-
-    expect(renderedTab).toBe(expectedTab);
-  });
-
-  test('map horizontal frets for guitar string', () => {
-    const horizontalFrets = positionFrets.horizontalFretsFor(GuitarString.Fourth);
-    const renderedTab = Tab.render(horizontalFrets.toTab(guitarStrings));
-
-    const expectedTab = `e|-----------|
-B|-----------|
-G|-----------|
-D|-1-2-3-4-5-|
-A|-----------|
-E|-----------|`;
-
-    expect(renderedTab).toBe(expectedTab);
-  });
-
   test('map C E G ascending on C position', () => {
     const line = new MelodicLine([
       new Note(Pitch.C, Duration.Eighth, Octave.C3),

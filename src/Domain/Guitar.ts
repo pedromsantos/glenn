@@ -553,27 +553,6 @@ export class PositionFrets {
     }
   }
 
-  horizontalFretsFor(guitarString: GuitarString) {
-    for (const fretsOnString of this.frets) {
-      if (fretsOnString.some((f) => f.String == guitarString)) {
-        return new HorizontalFrets(fretsOnString);
-      }
-    }
-    return new HorizontalFrets();
-  }
-
-  verticalFretsAt(fretNumber: number) {
-    const vFrets: Fret[] = [];
-    for (const fretsOnString of this.frets) {
-      const fret = fretsOnString.find((f) => f.Number == fretNumber);
-      if (fret) {
-        vFrets.push(fret);
-      }
-    }
-
-    return new VerticalFrets(vFrets);
-  }
-
   mapMelodicLine(line: MelodicLine): HorizontalFrets {
     const fretsForLine: HorizontalFrets = new HorizontalFrets();
 
