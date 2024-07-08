@@ -312,20 +312,14 @@ export class GuitarString {
     let pitch = this.openStringPitch;
     let octave = this.openStringOctave;
 
-    for (let i = from; i--; ) {
+    [pitch, octave] = [...this.pitchAndOctaveFor(from)];
+
+    for (let fretNumber = from; fretNumber <= to; fretNumber++) {
       if (pitch == Pitch.C) {
         octave = octave.up();
       }
 
-      pitch = pitch.sharp();
-    }
-
-    for (let i = from; i <= to; i++) {
-      if (pitch == Pitch.C) {
-        octave = octave.up();
-      }
-
-      frets.push(new Fret(this, i, pitch, octave));
+      frets.push(new Fret(this, fretNumber, pitch, octave));
       pitch = pitch.sharp();
     }
 
@@ -346,6 +340,21 @@ export class GuitarString {
 
   get NextDescending(): GuitarString {
     return this.nextDescending();
+  }
+
+  private pitchAndOctaveFor(fretNumber: number): [Pitch, Octave] {
+    let pitch = this.openStringPitch;
+    let octave = this.openStringOctave;
+
+    for (let i = 0; i < fretNumber; i++) {
+      if (pitch == Pitch.C) {
+        octave = octave.up();
+      }
+
+      pitch = pitch.sharp();
+    }
+
+    return [pitch, octave];
   }
 }
 
