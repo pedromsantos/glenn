@@ -3,7 +3,7 @@ export default function ensure<T>(
   message = 'This value was promised to be there.'
 ): T {
   if (argument === undefined || argument === null) {
-    throw new TypeError(message);
+    throwExpression(message);
   }
 
   return argument;
