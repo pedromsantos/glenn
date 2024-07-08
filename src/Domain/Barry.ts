@@ -23,10 +23,10 @@ class BarryHalfStepRules {
   private static readonly all: BarryHalfStepRules[] = [];
 
   private constructor(
-    private chordTonesMin: BarryHalfStepRule[],
-    private noChordTonesMin: BarryHalfStepRule[],
-    private chordTonesMax: BarryHalfStepRule[],
-    private noChordTonesMax: BarryHalfStepRule[],
+    private rootChordTonesMin: BarryHalfStepRule[],
+    private noRootChordTonesMin: BarryHalfStepRule[],
+    private rootChordTonesMax: BarryHalfStepRule[],
+    private noRootChordTonesMax: BarryHalfStepRule[],
     private applyesTo: (scale: Scale) => boolean
   ) {
     BarryHalfStepRules.all.push(this);
@@ -86,14 +86,14 @@ class BarryHalfStepRules {
     const line = scale.down(from, to);
 
     if (this.lineStartsAtChordTone(from)) {
-      for (const rule of this.chordTonesMin) {
+      for (const rule of this.rootChordTonesMin) {
         rule.apply(line, scale);
       }
 
       return line;
     }
 
-    for (const rule of this.noChordTonesMin) {
+    for (const rule of this.noRootChordTonesMin) {
       rule.apply(line, scale);
     }
 
@@ -104,14 +104,14 @@ class BarryHalfStepRules {
     const line = scale.down(from, to);
 
     if (this.lineStartsAtChordTone(from)) {
-      for (const rule of this.chordTonesMax) {
+      for (const rule of this.rootChordTonesMax) {
         rule.apply(line, scale);
       }
 
       return line;
     }
 
-    for (const rule of this.noChordTonesMax) {
+    for (const rule of this.noRootChordTonesMax) {
       rule.apply(line, scale);
     }
 
