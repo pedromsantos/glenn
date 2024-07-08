@@ -8,7 +8,7 @@ import {
   GuitarString,
   GuitarStrings,
   Position,
-  PositionFreatboard,
+  PositionFretboard,
   Tab,
   TabColumn,
 } from '../../Domain/Guitar';
@@ -45,10 +45,10 @@ describe('Guitar matrix should', () => {
 
 describe('Position should', () => {
   const guitarStrings = new GuitarStrings();
-  let positionFrets = new PositionFreatboard(Position.C, guitarStrings);
+  let positionFrets = new PositionFretboard(Position.C, guitarStrings);
 
   beforeEach(() => {
-    positionFrets = new PositionFreatboard(Position.C, guitarStrings);
+    positionFrets = new PositionFretboard(Position.C, guitarStrings);
   });
 
   test('map C E G ascending on C position', () => {
@@ -75,7 +75,7 @@ E|-------|`;
       new Note(Pitch.E, Duration.Eighth, Octave.C4),
       new Note(Pitch.C, Duration.Eighth, Octave.C4),
     ]);
-    const fretLine = new PositionFreatboard(Position.C, guitarStrings).mapMelodicLine(line);
+    const fretLine = new PositionFretboard(Position.C, guitarStrings).mapMelodicLine(line);
     const renderedTab = Tab.render(fretLine?.toTab(guitarStrings));
 
     const expectedTab = `e|-3-----|
@@ -93,7 +93,7 @@ E|-------|`;
       new Note(Pitch.G, Duration.Eighth, Octave.C3),
       new Note(Pitch.E, Duration.Eighth, Octave.C3),
     ]);
-    const fretLine = new PositionFreatboard(Position.C, guitarStrings).mapMelodicLine(line);
+    const fretLine = new PositionFretboard(Position.C, guitarStrings).mapMelodicLine(line);
     const renderedTab = Tab.render(fretLine?.toTab(guitarStrings));
 
     const expectedTab = `e|-------|
@@ -245,7 +245,7 @@ E|-------------------------|`;
         function render(pitch: Pitch, pattern: ScalePattern, position: Position) {
           const line = pattern.createScale(pitch).melodicLine(Duration.Eighth, Octave.C3);
           const guitarStrings = new GuitarStrings();
-          const positionFrets = new PositionFreatboard(position, guitarStrings);
+          const positionFrets = new PositionFretboard(position, guitarStrings);
           const fretLine = positionFrets.mapMelodicLine(line);
           return Tab.render(fretLine?.toTab(guitarStrings));
         }
@@ -256,7 +256,7 @@ E|-------------------------|`;
             .melodicLine(Duration.Eighth, Octave.C3)
             .appendOctaveAbove();
           const guitarStrings = new GuitarStrings();
-          const positionFrets = new PositionFreatboard(position, guitarStrings);
+          const positionFrets = new PositionFretboard(position, guitarStrings);
           const fretLine = positionFrets.mapMelodicLine(line);
           return Tab.render(fretLine?.toTab(guitarStrings));
         }
