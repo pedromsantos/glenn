@@ -85,7 +85,7 @@ class BarryHalfStepRules {
   applyMin(scale: Scale, from: ScaleDegree, to: ScaleDegree) {
     const line = scale.down(from, to);
 
-    if (this.lineStartsAtChordTone(from)) {
+    if (this.lineStartsAtRootChordTone(from)) {
       for (const rule of this.rootChordTonesMin) {
         rule.apply(line, scale);
       }
@@ -103,7 +103,7 @@ class BarryHalfStepRules {
   applyMax(scale: Scale, from: ScaleDegree, to: ScaleDegree) {
     const line = scale.down(from, to);
 
-    if (this.lineStartsAtChordTone(from)) {
+    if (this.lineStartsAtRootChordTone(from)) {
       for (const rule of this.rootChordTonesMax) {
         rule.apply(line, scale);
       }
@@ -118,7 +118,7 @@ class BarryHalfStepRules {
     return line;
   }
 
-  private lineStartsAtChordTone(degree: ScaleDegree) {
+  private lineStartsAtRootChordTone(degree: ScaleDegree) {
     return !!(
       degree === ScaleDegree.I ||
       degree === ScaleDegree.III ||
