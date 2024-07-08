@@ -1,8 +1,6 @@
 import { PitchPrimitives } from '../primitives/Pitch';
-import { Duration } from './Duration';
 import { throwExpression } from './Ensure';
 import { Interval } from './Interval';
-import { MelodicLine, Note, Octave } from './Note';
 
 export enum Accidental {
   Flat = -1,
@@ -574,65 +572,9 @@ export class PitchLine implements Iterable<Pitch> {
     return this.line[index];
   }
 
-  toMelodicLine(startingOctave: Octave, duration: Duration, lastPitch?: Pitch): MelodicLine {
-    const notes: Note[] = [];
-    let octave = startingOctave;
-
-    for (const p of this.line) {
-      if (!lastPitch) {
-        lastPitch = p;
-      }
-
-      if (this.needOctaveShift(p, lastPitch)) {
-        octave = this.octaveShift(startingOctave);
-        notes.push(new Note(p, duration, octave));
-        lastPitch = p;
-        continue;
-      }
-
-      notes.push(new Note(p, duration, octave));
-
-      lastPitch = p;
-    }
-
-    return new MelodicLine(notes);
-  }
-
   *[Symbol.iterator](): Iterator<Pitch> {
     for (const pitch of this.line) {
       yield pitch;
-    }
-  }
-
-  private needOctaveShift(currentPitch: Pitch, lastPitch: Pitch) {
-    switch (this.Direction) {
-      case PitchLineDirection.Ascending:
-        return (
-          currentPitch.isLower(lastPitch) || (currentPitch === Pitch.C && lastPitch !== Pitch.C)
-        );
-      case PitchLineDirection.Descending:
-        return (
-          currentPitch.isHiger(lastPitch) || (currentPitch === Pitch.C && lastPitch !== Pitch.C)
-        );
-      case PitchLineDirection.OctaveDown:
-        return true;
-      case PitchLineDirection.Neutral:
-        return false;
-      default:
-        return false;
-    }
-  }
-
-  private octaveShift(octave: Octave) {
-    switch (this.Direction) {
-      case PitchLineDirection.Ascending:
-        return octave.up();
-      case PitchLineDirection.Descending:
-        return octave.down();
-      case PitchLineDirection.OctaveDown:
-        return octave.down();
-      case PitchLineDirection.Neutral:
-        return octave;
     }
   }
 }
