@@ -13,4 +13,5 @@
   "testTimeout": 10000,
   "transform": {
     "^.+\\.(t|j)sx?$": "@swc/jest"
+    }
 }
