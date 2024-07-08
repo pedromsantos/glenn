@@ -570,26 +570,29 @@ export class PositionFrets {
     const fretsForLine: HorizontalFrets = new HorizontalFrets();
 
     for (const note of line) {
+      const lastFret = fretsForLine.last();
       const frets = this.frets.flatMap((fs) =>
         fs.filter((f) => note.hasSamePitch(f.Pitch!) && note.hasSameOctave(f.Octave!))
       );
 
-      if (frets && frets.length === 1) {
+      if (!frets) {
+        break;
+      }
+
+      if (frets.length === 1) {
         fretsForLine.push(frets[0]!);
         continue;
       }
 
-      if (frets) {
-        if (!fretsForLine.last()) {
-          fretsForLine.push(frets[0]!);
-          continue;
-        }
+      if (!lastFret) {
+        fretsForLine.push(frets[0]!);
+        continue;
+      }
 
-        for (const f of frets) {
-          if (f.isOnSameStringAs(fretsForLine.last()!)) {
-            fretsForLine.push(f);
-            break;
-          }
+      for (const f of frets) {
+        if (f.isOnSameStringAs(lastFret)) {
+          fretsForLine.push(f);
+          break;
         }
       }
     }
