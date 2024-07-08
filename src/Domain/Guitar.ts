@@ -565,7 +565,6 @@ export class PositionFrets {
     return new VerticalFrets(vFrets);
   }
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   mapMelodicLine(line: MelodicLine): HorizontalFrets {
     const fretsForLine: HorizontalFrets = new HorizontalFrets();
 
@@ -589,12 +588,7 @@ export class PositionFrets {
         continue;
       }
 
-      for (const f of frets) {
-        if (f.isOnSameStringAs(lastFret)) {
-          fretsForLine.push(f);
-          break;
-        }
-      }
+      frets.filter((f) => f.isOnSameStringAs(lastFret)).forEach((f) => fretsForLine.push(f));
     }
 
     return fretsForLine;
