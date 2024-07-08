@@ -579,7 +579,7 @@ export class PositionFrets {
         continue;
       }
 
-      if (frets && frets.length > 1) {
+      if (frets) {
         if (!fretsForLine.last()) {
           fretsForLine.push(frets[0]!);
           continue;
