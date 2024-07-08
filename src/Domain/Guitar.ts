@@ -544,7 +544,7 @@ export class Position {
   }
 }
 
-export class PositionFretboard {
+export class FretboardPosition {
   private readonly frets: Fret[][] = [];
 
   constructor(position: Position, guitarStrings: GuitarStrings) {
