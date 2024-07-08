@@ -1,7 +1,7 @@
 import { ScalePatternPrimitives, ScalePrimitives } from '../primitives/Scale';
 import { Chord, ChordFunction, ChordPattern, ChordPitch, ChordPitches, ClosedChord } from './Chord';
 import { Duration } from './Duration';
-import { throwExpression } from './Ensure';
+import ensure, { throwExpression } from './Ensure';
 import { Interval } from './Interval';
 import { MelodicLine, Note, Octave } from './Note';
 import { Pitch, PitchLine, PitchLineDirection } from './Pitch';
@@ -351,12 +351,10 @@ export class Scale implements Iterable<Pitch> {
   }
 
   degreeFor(pitch: Pitch) {
-    const degree: ScaleDegree = this.pitches.findIndex((p) => p === pitch);
-    if (degree) {
-      return degree;
-    }
-
-    return undefined;
+    return ensure(
+      this.pitches.findIndex((p) => p === pitch),
+      'Pitch not found in scale'
+    );
   }
 
   down(from: ScaleDegree, to: ScaleDegree) {
