@@ -1,6 +1,6 @@
 import { BarryHarrisLine } from '../Domain/Barry';
 import { Duration } from '../Domain/Duration';
-import { GuitarStrings, Position, PositionFrets, Tab } from '../Domain/Guitar';
+import { GuitarStrings, Position, PositionFreatboard, Tab } from '../Domain/Guitar';
 import { Octave } from '../Domain/Note';
 import { Pitch } from '../Domain/Pitch';
 import { Scale } from '../Domain/Scale';
@@ -75,7 +75,7 @@ class BarryHarrisLineBuilder {
     const position = Position.From(positionPrimitives);
 
     const line = this.line.build();
-    const guitarLine = new PositionFrets(position, new GuitarStrings()).mapMelodicLine(line);
+    const guitarLine = new PositionFreatboard(position, new GuitarStrings()).mapMelodicLine(line);
     return Tab.render(guitarLine.toTab(new GuitarStrings()));
   }
 

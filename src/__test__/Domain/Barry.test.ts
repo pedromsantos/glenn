@@ -1,6 +1,6 @@
 import { BarryHarrisLine } from '../../Domain/Barry';
 import { Duration } from '../../Domain/Duration';
-import { GuitarStrings, Position, PositionFrets, Tab } from '../../Domain/Guitar';
+import { GuitarStrings, Position, PositionFreatboard, Tab } from '../../Domain/Guitar';
 import { Octave } from '../../Domain/Note';
 import { Pitch } from '../../Domain/Pitch';
 import { Scale, ScaleDegree, ScalePattern } from '../../Domain/Scale';
@@ -259,7 +259,9 @@ describe('Barry Harrys lines', () => {
           .arpeggioUpFromLastPitch()
           .build();
 
-        const guitarLine = new PositionFrets(Position.C, new GuitarStrings()).mapMelodicLine(line);
+        const guitarLine = new PositionFreatboard(Position.C, new GuitarStrings()).mapMelodicLine(
+          line
+        );
         const tab = Tab.render(guitarLine.toTab(new GuitarStrings()));
 
         expect(tab).toBe(`e|-----------------------|
@@ -280,7 +282,9 @@ E|-----------------------|`);
           .pivotArpeggioUpFromLastPitch()
           .build();
 
-        const guitarLine = new PositionFrets(Position.C, new GuitarStrings()).mapMelodicLine(line);
+        const guitarLine = new PositionFreatboard(Position.C, new GuitarStrings()).mapMelodicLine(
+          line
+        );
         const tab = Tab.render(guitarLine.toTab(new GuitarStrings()));
 
         expect(tab).toBe(`e|-------------------------------|
@@ -302,7 +306,9 @@ E|-------------------------------|`);
           .resolveDownTo(Pitch.BFlat)
           .build();
 
-        const guitarLine = new PositionFrets(Position.C, new GuitarStrings()).mapMelodicLine(line);
+        const guitarLine = new PositionFreatboard(Position.C, new GuitarStrings()).mapMelodicLine(
+          line
+        );
         const tab = Tab.render(guitarLine.toTab(new GuitarStrings()));
 
         expect(tab).toBe(`e|-----------------------------------------|
