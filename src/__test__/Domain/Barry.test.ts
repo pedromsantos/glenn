@@ -170,14 +170,12 @@ describe('Barry Harrys lines', () => {
     });
 
     describe('combined lines', () => {
-      describe('Empty lines', () => {
-        test('have no last pitch', () => {
-          const line = new BarryHarrisLine(scale, Octave.C4, Duration.Eighth)
-            .arpeggioUpFromLastPitch()
-            .build();
+      test('Empty lines have no last pitch', () => {
+        const line = new BarryHarrisLine(scale, Octave.C4, Duration.Eighth)
+          .arpeggioUpFromLastPitch()
+          .build();
 
-          expect(line.pitches()).toHaveLength(0);
-        });
+        expect(line.pitches()).toHaveLength(0);
       });
 
       test('Arpeggio up, scale down', () => {
