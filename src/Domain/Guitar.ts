@@ -309,10 +309,7 @@ export class GuitarString {
 
   fretsFromTo(from: number, to: number) {
     const frets: Fret[] = [];
-    let pitch = this.openStringPitch;
-    let octave = this.openStringOctave;
-
-    [pitch, octave] = [...this.pitchAndOctaveFor(from)];
+    let [pitch, octave] = [...this.pitchAndOctaveFor(from)];
 
     for (let fretNumber = from; fretNumber <= to; fretNumber++) {
       if (pitch == Pitch.C) {
