@@ -101,7 +101,7 @@ export class CompoundTimeSignature extends TimeSignature {
 }
 
 enum Durations {
-  Double = 2.0 / 1.0,
+  Double = 2.0,
   Whole = 1.0,
   Half = 1.0 / 2.0,
   Quarter = 1.0 / 4.0,

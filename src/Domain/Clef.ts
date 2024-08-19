@@ -2,8 +2,6 @@ import { ClefPrimitives } from '../primitives/Clef';
 import { Octave } from './Note';
 import { Pitch } from './Pitch';
 
-export const cleffBrainDump = 'clefBrainDump';
-
 export const enum ClefLine {
   First = 1,
   Second,

@@ -119,7 +119,7 @@ class BarryHalfStepRules {
   }
 
   private lineStartsAtRootChordTone(degree: ScaleDegree) {
-    return !!(
+    return (
       degree === ScaleDegree.I ||
       degree === ScaleDegree.III ||
       degree === ScaleDegree.V ||
