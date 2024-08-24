@@ -55,7 +55,8 @@
     "lint": "eslint . --color --ext .ts --ignore-pattern 'node_modules/'",
     "lint:fix": "eslint . --ext .ts --ignore-pattern 'node_modules/' --fix",
     "types": "type-coverage -at-least 99",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "clean": "rm -rf .cache .tmp .turbo coverage coverage-ts dist reports"
   },
   "dependencies": {},
   "devDependencies": {
