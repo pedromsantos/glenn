@@ -452,6 +452,10 @@ export class ChordPattern {
     return ChordPattern.patterns.find((n) => n.Name === name);
   }
 
+  private createChordNote(interval: Interval, root: Pitch) {
+    return new ChordPitch(root.transpose(interval), ChordFunction.functionForInterval(interval));
+  }
+
   public static readonly Major: ChordPattern = new ChordPattern('Major', '', [
     Interval.MajorThird,
     Interval.PerfectFifth,
@@ -461,6 +465,7 @@ export class ChordPattern {
     Interval.MajorThird,
     Interval.AugmentedFifth,
   ]);
+
   public static readonly Major6: ChordPattern = new ChordPattern('Major 6', 'Maj6', [
     Interval.MajorThird,
     Interval.PerfectFifth,
@@ -684,8 +689,4 @@ export class ChordPattern {
     'Sus4aug',
     [Interval.PerfectFourth, Interval.AugmentedFifth]
   );
-
-  private createChordNote(interval: Interval, root: Pitch) {
-    return new ChordPitch(root.transpose(interval), ChordFunction.functionForInterval(interval));
-  }
 }
