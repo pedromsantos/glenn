@@ -63,10 +63,10 @@
     "@changesets/cli": "^2.26.2",
     "@commitlint/cli": "^19.0.1",
     "@commitlint/config-conventional": "^19.0.0",
-    "@stryker-mutator/core": "^8.2.3",
-    "@stryker-mutator/jest-runner": "^8.2.3",
-    "@stryker-mutator/typescript-checker": "^8.2.3",
-    "@swc/core": "^1.5.27",
+    "@stryker-mutator/core": "^8.6.0",
+    "@stryker-mutator/jest-runner": "^8.6.0",
+    "@stryker-mutator/typescript-checker": "^8.6.0",
+    "@swc/core": "^1.7.35",
     "@swc/jest": "^0.2.36",
     "@types/jest": "^29.5.10",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
@@ -91,7 +91,7 @@
     "tsx": "^4.15.1",
     "turbo": "^2.0.14",
     "type-coverage": "^2.29.0",
-    "typescript": "^5.5.3"
+    "typescript": "^5.6.3"
   },
   "packageManager": "yarn@1.22.22",
   "husky": {
