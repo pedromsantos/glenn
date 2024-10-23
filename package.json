@@ -58,8 +58,11 @@
     "prepare": "husky install",
     "clean": "rm -rf .cache .tmp .turbo coverage coverage-ts dist reports"
   },
-  "dependencies": {},
   "devDependencies": {
+    "@babel/helper-function-name": "^7.24.7",
+    "@babel/helper-environment-visitor": "^7.24.7",
+    "@babel/helper-hoist-variables": "^7.24.7",
+    "@babel/helper-split-export-declaration": "^7.24.7",
     "@changesets/cli": "^2.26.2",
     "@commitlint/cli": "^19.0.1",
     "@commitlint/config-conventional": "^19.0.0",
@@ -122,5 +125,6 @@
   },
   "typeCoverage": {
     "atLeast": 99
-  }
+  },
+  "dependencies": {}
 }

@@ -10,7 +10,6 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:prettier/recommended",
-    "plugin:sonarjs/recommended",
     "plugin:jest/recommended",
     "plugin:jest/style"
   ],

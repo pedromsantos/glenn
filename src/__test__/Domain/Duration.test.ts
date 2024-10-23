@@ -262,18 +262,15 @@ describe('BeatsPerMinute', () => {
       expect(bpm.miliSecondsFor(Duration.Whole)).toBe(2000);
     });
 
-    // eslint-disable-next-line sonarjs/no-duplicate-string
     test('time for 1/2 note', () => {
       expect(bpm.secondsFor(Duration.Half)).toBe(1);
       expect(bpm.miliSecondsFor(Duration.Half)).toBe(1000);
     });
 
-    // eslint-disable-next-line sonarjs/no-duplicate-string
     test('time in milliseconds for 1/4 note', () => {
       expect(bpm.miliSecondsFor(Duration.Quarter)).toBe(500);
     });
 
-    // eslint-disable-next-line sonarjs/no-duplicate-string
     test('time in milliseconds for 1/8 note', () => {
       expect(bpm.miliSecondsFor(Duration.Eighth)).toBe(250);
     });

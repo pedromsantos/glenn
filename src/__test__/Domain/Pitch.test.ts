@@ -1,5 +1,4 @@
 /* eslint-disable jest/no-conditional-expect */
-/* eslint-disable sonarjs/cognitive-complexity */
 
 import * as fc from 'fast-check';
 

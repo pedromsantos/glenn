@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 import { CompoundTimeSignature, Duration, SimpleTimeSignature } from '../../Domain/Duration';
 import { Key } from '../../Domain/Key';
 import { Note, Octave } from '../../Domain/Note';
