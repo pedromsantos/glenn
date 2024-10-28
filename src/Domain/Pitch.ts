@@ -578,3 +578,205 @@ export class PitchLine implements Iterable<Pitch> {
     }
   }
 }
+
+// const PITCHES: number = 12;
+// const NATURAL_PITCHES: number = 7;
+
+// enum Direction {
+//     Ascending,
+//     Descending,
+// }
+
+// enum PitchLetter {
+//     C,
+//     D,
+//     E,
+//     F,
+//     G,
+//     A,
+//     B,
+// }
+
+// const PITCH_LETTERS: PitchLetter[] = [
+//     PitchLetter.C,
+//     PitchLetter.D,
+//     PitchLetter.E,
+//     PitchLetter.F,
+//     PitchLetter.G,
+//     PitchLetter.A,
+//     PitchLetter.B,
+// ];
+
+// enum Accidental {
+//     Flat,
+//     Sharp,
+//     None,
+// }
+
+// const NO_ACCIDENTALS: Accidental[] = [Accidental.None, Accidental.None, Accidental.None];
+// const SHARP: Accidental[] = [Accidental.Sharp, Accidental.None, Accidental.None];
+// const FLAT: Accidental[] = [Accidental.Flat, Accidental.None, Accidental.None];
+
+// class Octave {
+//     // Implement Octave class here
+//     // ...
+// }
+
+// class Interval {
+//     // Implement Interval class here
+//     // ...
+// }
+
+// class Pitch {
+//     private letter: PitchLetter;
+//     private accidentals: Accidental[];
+//     private octave: Octave;
+
+//     constructor(letter: PitchLetter, accidentals: Accidental[], octave: Octave) {
+//         this.letter = letter;
+//         this.accidentals = accidentals;
+//         this.octave = octave;
+//     }
+
+//     public name(): string {
+//         return `${PitchLetter[this.letter]}${this.accidentalsToString()}`;
+//     }
+
+//     public midiValue(): number {
+//         return this.letterValue() + this.accidentalModifier() + this.octave.midiValue();
+//     }
+
+//     public octaveUp(): Pitch {
+//         return new Pitch(this.letter, [...this.accidentals], this.octave.up());
+//     }
+
+//     public octaveDown(): Pitch {
+//         return new Pitch(this.letter, [...this.accidentals], this.octave.down());
+//     }
+
+//     public isEnharmonicWith(other: Pitch): boolean {
+//         return this.midiValue() === other.midiValue();
+//     }
+
+//     public hasSamePitchLetterAs(other: Pitch): boolean {
+//         return this.letter === other.letter;
+//     }
+
+//     public absoluteDistanceTo(other: Pitch): number {
+//         return (this.absoluteDistance(other.letter)
+//             + this.accidentalModifier()
+//             + other.accidentalModifier()) % PITCHES;
+//     }
+
+//     public sharp(): Pitch {
+//         if (this.isNaturalCOrBOrHasSharpAccidental()) {
+//             return this.transpose(Interval.MinorSecond, Direction.Ascending);
+//         } else {
+//             return this.sameLetterSharp();
+//         }
+//     }
+
+//     public flat(): Pitch {
+//         if (this.isNaturalCOrFOrHasFlatAccidental()) {
+//             return this.transpose(Interval.MinorSecond, Direction.Descending);
+//         } else {
+//             return this.sameLetterFlat();
+//         }
+//     }
+
+//     public transpose(interval: Interval, direction: Direction): Pitch {
+//         const newPitchLetter = this.transposeLetter(interval, direction);
+//         if (newPitchLetter !== null) {
+//             const distanceToNewPitchLetter = this.calculateDistanceToNewPitchLetter(newPitchLetter);
+//             const remainingDistance = this.calculateRemainingDistance(
+//                 interval,
+//                 direction,
+//                 distanceToNewPitchLetter
+//             );
+//             const newAccidentals = this.adjustAccidentals(remainingDistance);
+//             const newOctave = this.adjustOctave(interval, newPitchLetter, direction);
+
+//             return new Pitch(newPitchLetter, newAccidentals, newOctave);
+//         } else {
+//             return this.clone();
+//         }
+//     }
+
+//     // ... implement other methods ...
+
+//     private accidentalsToString(): string {
+//         return this.accidentals.map(accidental => Accidental[accidental]).join('');
+//     }
+
+//     private sameLetterFlat(): Pitch {
+//         return this.transpose(Interval.AugmentedUnison, Direction.Descending);
+//     }
+
+//     private sameLetterSharp(): Pitch {
+//         return this.transpose(Interval.AugmentedUnison, Direction.Ascending);
+//     }
+
+//     private accidentalModifier(): number {
+//         return this.accidentals.reduce((sum, acc) => sum + this.accidentalValue(acc), 0);
+//     }
+
+//     private accidentalValue(accidental: Accidental): number {
+//         switch (accidental) {
+//             case Accidental.Flat: return -1;
+//             case Accidental.Sharp: return 1;
+//             case Accidental.None: return 0;
+//         }
+//     }
+
+//     private isNaturalCOrBOrHasSharpAccidental(): boolean {
+//         return ((this.letter === PitchLetter.B || this.letter === PitchLetter.E)
+//                 && this.accidentals.every(acc => acc === Accidental.None))
+//             || this.accidentals.includes(Accidental.Sharp);
+//     }
+
+//     private isNaturalCOrFOrHasFlatAccidental(): boolean {
+//         return ((this.letter === PitchLetter.C || this.letter === PitchLetter.F)
+//                 && this.accidentals.every(acc => acc === Accidental.None))
+//             || this.accidentals.includes(Accidental.Flat);
+//     }
+
+//     // ... implement other private methods ...
+
+//     public static c(octave: Octave): Pitch {
+//         return new Pitch(PitchLetter.C, NO_ACCIDENTALS, octave);
+//     }
+
+//     public static cSharp(octave: Octave): Pitch {
+//         return new Pitch(PitchLetter.C, SHARP, octave);
+//     }
+
+//     // ... implement other static factory methods ...
+// }
+
+// class Line {
+//     private line: Pitch[];
+
+//     constructor(pitches: Pitch[]) {
+//         this.line = pitches;
+//     }
+
+//     public *[Symbol.iterator](): Iterator<Pitch> {
+//         yield* this.line;
+//     }
+
+//     public toString(): string {
+//         return this.line.map(pitch => pitch.toString()).join(' ');
+//     }
+// }
+
+// // ... implement other constants and exports ...
+
+// export {
+//     Direction,
+//     PitchLetter,
+//     Accidental,
+//     Octave,
+//     Interval,
+//     Pitch,
+//     Line,
+// };
