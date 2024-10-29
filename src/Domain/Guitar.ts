@@ -248,8 +248,8 @@ export class GuitarString {
 
   private constructor(
     private readonly name: string,
-    private openStringPitch: Pitch,
-    private openStringOctave: Octave,
+    private readonly openStringPitch: Pitch,
+    private readonly openStringOctave: Octave,
     private readonly index: number,
     private readonly nextAscending: () => GuitarString,
     private readonly nextDescending: () => GuitarString
@@ -313,8 +313,8 @@ export class GuitarString {
     () => GuitarString.Second
   );
 
-  static get standardTunning(): GuitarString[] {
-    return GuitarString.all;
+  static get standardTunning(): readonly GuitarString[] {
+    return [...GuitarString.all];
   }
 
   toTunning(tunning: GuitarTuning) {
@@ -338,15 +338,15 @@ export class GuitarString {
 
   fretsFromTo(from: number, to: number) {
     const frets: Fret[] = [];
-    let [pitch, octave] = [...this.pitchAndOctaveFor(from)];
+    let [currentPitch, currentOctave] = this.pitchAndOctaveFor(from);
 
     for (let fretNumber = from; fretNumber <= to; fretNumber++) {
-      if (pitch == Pitch.C) {
-        octave = octave.up();
+      if (currentPitch === Pitch.C) {
+        currentOctave = currentOctave.up();
       }
 
-      frets.push(new Fret(this, fretNumber, pitch, octave));
-      pitch = pitch.sharp();
+      frets.push(new Fret(this, fretNumber, currentPitch, currentOctave));
+      currentPitch = currentPitch.sharp();
     }
 
     return frets;
@@ -373,10 +373,9 @@ export class GuitarString {
     let octave = this.openStringOctave;
 
     for (let i = 0; i < fretNumber; i++) {
-      if (pitch == Pitch.C) {
+      if (pitch === Pitch.C) {
         octave = octave.up();
       }
-
       pitch = pitch.sharp();
     }
 
