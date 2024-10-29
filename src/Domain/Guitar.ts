@@ -4,25 +4,47 @@ import { MelodicLine, Octave } from './Note';
 import { Pitch } from './Pitch';
 
 export class TabColumn {
+  private static readonly DEFAULT_STRING_COUNT = 6;
   private readonly maxRowLength: number;
 
   private constructor(private readonly rows: string[]) {
+    if (!TabColumn.isValidRowCount(rows)) {
+      throw new Error(`TabColumn must have exactly ${TabColumn.DEFAULT_STRING_COUNT} rows`);
+    }
     this.maxRowLength = Math.max(...rows.map((r) => r.length));
   }
 
-  public static readonly Start: TabColumn = new TabColumn(Array<string>(6).fill('|-'));
-  public static readonly Bar: TabColumn = new TabColumn(Array<string>(6).fill('-|-'));
-  public static readonly End: TabColumn = new TabColumn(Array<string>(6).fill('-|'));
-  public static readonly Rest: TabColumn = new TabColumn(Array<string>(6).fill(`-`));
-  public static readonly Separator: TabColumn = new TabColumn(Array<string>(6).fill(`-`));
+  public static readonly Start: TabColumn = TabColumn.withRepeting('|-');
+  public static readonly Bar: TabColumn = TabColumn.withRepeting('-|-');
+  public static readonly End: TabColumn = TabColumn.withRepeting('-|');
+  public static readonly Rest: TabColumn = TabColumn.withRepeting('-');
+  public static readonly Separator: TabColumn = TabColumn.withRepeting('-');
   public static readonly StandardTunning: TabColumn = new TabColumn(['e', 'B', 'G', 'D', 'A', 'E']);
 
   render(): string[] {
-    return this.rows.map((r) => (r.length < this.maxRowLength ? `-${r}` : r));
+    return this.rows.map((row) => this.padRow(row));
   }
 
   static fromFrets(frets: Fret[]): TabColumn {
+    if (!frets?.length) {
+      return TabColumn.Rest;
+    }
     return new TabColumn(frets.map((f) => f.toString()));
+  }
+
+  private static withRepeting(value: string): TabColumn {
+    return new TabColumn(Array<string>(TabColumn.DEFAULT_STRING_COUNT).fill(value));
+  }
+
+  private padRow(row: string): string {
+    if (row.length >= this.maxRowLength) {
+      return row;
+    }
+    return `-${row}`;
+  }
+
+  private static isValidRowCount(rows: string[]): boolean {
+    return Array.isArray(rows) && rows.length === TabColumn.DEFAULT_STRING_COUNT;
   }
 }
 
@@ -106,10 +128,9 @@ export class BlankFret extends Fret {
     super(string, -1);
   }
 
-  override toTab(guitarStrings: GuitarStrings = new GuitarStrings()): TabColumn {
-    const frets = [...guitarStrings].map((gs) => new BlankFret(gs));
-
-    return TabColumn.fromFrets([...frets]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  override toTab(_guitarStrings: GuitarStrings = new GuitarStrings()): TabColumn {
+    return TabColumn.Rest;
   }
 
   override toString() {
@@ -121,7 +142,7 @@ export class BlankFret extends Fret {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  override isWithin(_lowFret: Fret, _highFret: Fret, _lowerMargin = 0, _higherMargin = 0) {
+  override isWithin(_lowFret: Fret, _highFret: Fret) {
     return false;
   }
 }

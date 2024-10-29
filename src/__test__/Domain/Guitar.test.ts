@@ -438,7 +438,7 @@ describe('BlankFret', () => {
     const highFret = new Fret(GuitarString.First, 7);
 
     expect(blankFret.isWithin(lowFret, highFret)).toBe(false);
-    expect(blankFret.isWithin(lowFret, highFret, 1, 1)).toBe(false);
+    expect(blankFret.isWithin(lowFret, highFret)).toBe(false);
   });
 
   test('should create blank tab column', () => {
@@ -446,8 +446,7 @@ describe('BlankFret', () => {
     const tab = blankFret.toTab();
     const renderedTab = tab.render();
 
-    // All strings should show '-'
     expect(renderedTab.every((row) => row === '-')).toBe(true);
-    expect(renderedTab).toStrictEqual(Array(48).fill('-'));
+    expect(renderedTab).toStrictEqual(Array(6).fill('-'));
   });
 });
