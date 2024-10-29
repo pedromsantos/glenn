@@ -226,7 +226,7 @@ export class HorizontalFrets extends Frets {
 }
 
 export class GuitarStrings implements Iterable<GuitarString> {
-  constructor(private readonly guitarStrings: GuitarString[] = GuitarString.standardTunning) {}
+  constructor(private guitarStrings: GuitarString[] = GuitarString.standardTunning) {}
 
   toTunning(tunning: GuitarTuning) {
     return new GuitarStrings(this.guitarStrings.map((gs) => gs.toTunning(tunning)));
