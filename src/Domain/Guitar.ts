@@ -570,41 +570,54 @@ export class Position {
 }
 
 export class FretboardPosition {
-  private readonly frets: Fret[][] = [];
+  private readonly frets: readonly Fret[][];
 
   constructor(position: Position, guitarStrings: GuitarStrings) {
-    for (const guitarString of guitarStrings) {
-      this.frets.push([...guitarString.fretsFromTo(position.Low, position.High)]);
-    }
+    this.frets = this.initializeFretboard(position, guitarStrings);
   }
 
   mapMelodicLine(line: MelodicLine): HorizontalFrets {
-    const fretsForLine: HorizontalFrets = new HorizontalFrets();
+    const fretsForLine = new HorizontalFrets();
 
     for (const note of line) {
-      const lastFret = fretsForLine.last();
-      const frets = this.frets.flatMap((fs) =>
-        fs.filter((f) => note.hasSamePitch(f.Pitch!) && note.hasSameOctave(f.Octave!))
-      );
+      const matchingFrets = this.findMatchingFrets(note);
 
-      if (!frets) {
+      if (!matchingFrets.length) {
         break;
       }
 
-      if (frets.length === 1) {
-        fretsForLine.push(frets[0]!);
-        continue;
-      }
-
+      const lastFret = fretsForLine.last();
       if (!lastFret) {
-        fretsForLine.push(frets[0]!);
+        fretsForLine.push(matchingFrets[0]!);
         continue;
       }
 
-      frets.filter((f) => f.isOnSameStringAs(lastFret)).forEach((f) => fretsForLine.push(f));
+      const fretsOnSameString = matchingFrets.filter((fret) => fret.isOnSameStringAs(lastFret));
+      if (fretsOnSameString.length) {
+        fretsForLine.push(fretsOnSameString[0]!);
+      } else if (matchingFrets.length === 1) {
+        fretsForLine.push(matchingFrets[0]!);
+      }
     }
 
     return fretsForLine;
+  }
+
+  private initializeFretboard(position: Position, guitarStrings: GuitarStrings): Fret[][] {
+    return [...guitarStrings].map((guitarString) => [
+      ...guitarString.fretsFromTo(position.Low, position.High),
+    ]);
+  }
+
+  private findMatchingFrets(note: {
+    hasSamePitch: (pitch: Pitch) => boolean;
+    hasSameOctave: (octave: Octave) => boolean;
+  }): Fret[] {
+    return this.frets.flatMap((stringFrets) =>
+      stringFrets.filter(
+        (fret) => note.hasSamePitch(fret.Pitch!) && note.hasSameOctave(fret.Octave!)
+      )
+    );
   }
 }
 
