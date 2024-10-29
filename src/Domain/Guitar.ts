@@ -65,10 +65,10 @@ export class Fret {
     return new Fret(this.string, this.fret + 12, this.pitch, this.octave?.up());
   }
 
-  isWithin(lowFret: Fret, highFret: Fret, lowerMargin = 0, higherMargin = 0) {
+  isWithin(lowFret: Fret, highFret: Fret) {
     return (
-      (this.isHigher(lowFret, lowerMargin) || this.isSameFretNumber(lowFret)) &&
-      (this.isLower(highFret, higherMargin) || this.isSameFretNumber(highFret))
+      (this.isHigher(lowFret) || this.isSameFretNumber(lowFret)) &&
+      (this.isLower(highFret) || this.isSameFretNumber(highFret))
     );
   }
 
@@ -88,12 +88,12 @@ export class Fret {
     return this.String == other.String;
   }
 
-  private isHigher(other: Fret, margin: number) {
-    return this.fret + margin > other.fret;
+  private isHigher(other: Fret) {
+    return this.fret > other.fret;
   }
 
-  private isLower(other: Fret, margin: number) {
-    return this.fret - margin < other.fret;
+  private isLower(other: Fret) {
+    return this.fret < other.fret;
   }
 
   private isSameFretNumber(other: Fret) {
@@ -102,8 +102,8 @@ export class Fret {
 }
 
 export class BlankFret extends Fret {
-  constructor(string: GuitarString = GuitarString.Sixth, fret = -1) {
-    super(string, fret);
+  constructor(string: GuitarString = GuitarString.Sixth) {
+    super(string, -1);
   }
 
   override toTab(guitarStrings: GuitarStrings = new GuitarStrings()): TabColumn {
@@ -117,7 +117,7 @@ export class BlankFret extends Fret {
   }
 
   override raiseOctave(): Fret {
-    return new BlankFret(this.string, -1);
+    return new BlankFret(this.string);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -536,8 +536,8 @@ export class Position {
     new Fret(GuitarString.First, 24, Pitch.E, Octave.C6)
   );
 
-  contains(fret: Fret, lowerMargin = 0, higherMargin = 0): boolean {
-    return fret.isWithin(this.lowFret, this.highFret, lowerMargin, higherMargin);
+  contains(fret: Fret): boolean {
+    return fret.isWithin(this.lowFret, this.highFret);
   }
 }
 
@@ -657,7 +657,7 @@ export class GuitarChord implements Iterable<Fret> {
       for (const pitch of chord) {
         const fret = guitarString.fretFor(pitch);
 
-        if (this.position.contains(fret, 1, 1)) {
+        if (this.position.contains(fret)) {
           mappedeFrets.push(fret);
           break;
         }
@@ -678,7 +678,7 @@ export class GuitarChord implements Iterable<Fret> {
 
         const fret = guitarString.fretFor(pitch);
 
-        if (this.position.contains(fret, 1, 1)) {
+        if (this.position.contains(fret)) {
           mappedeFrets.push(fret);
         }
       }

@@ -38,8 +38,10 @@ describe('Fret should', () => {
 
   test('still be a blank fret when raised by an octave', () => {
     const fret = new BlankFret();
+    const raisedFret = fret.raiseOctave();
 
-    expect(fret.raiseOctave().Number).toBe(-1);
+    expect(raisedFret instanceof BlankFret).toBe(true);
+    expect(raisedFret.Number).toBe(-1);
   });
 
   test('not be within a range when a blank fret', () => {
@@ -109,6 +111,49 @@ describe('Fret should', () => {
       )
     );
   });
+
+  describe('isWithin', () => {
+    test('fret is within normal range', () => {
+      const fret = new Fret(GuitarString.First, 6);
+      const lowFret = new Fret(GuitarString.First, 5);
+      const highFret = new Fret(GuitarString.First, 7);
+
+      expect(fret.isWithin(lowFret, highFret)).toBe(true);
+    });
+
+    test('fret is exactly at boundaries', () => {
+      const lowFret = new Fret(GuitarString.First, 5);
+      const highFret = new Fret(GuitarString.First, 7);
+
+      const fretAtLow = new Fret(GuitarString.First, 5);
+      const fretAtHigh = new Fret(GuitarString.First, 7);
+
+      expect(fretAtLow.isWithin(lowFret, highFret)).toBe(true);
+      expect(fretAtHigh.isWithin(lowFret, highFret)).toBe(true);
+    });
+
+    test('fret is outside normal range', () => {
+      const lowFret = new Fret(GuitarString.First, 5);
+      const highFret = new Fret(GuitarString.First, 7);
+
+      const fretTooLow = new Fret(GuitarString.First, 4);
+      const fretTooHigh = new Fret(GuitarString.First, 8);
+
+      expect(fretTooLow.isWithin(lowFret, highFret)).toBe(false);
+      expect(fretTooHigh.isWithin(lowFret, highFret)).toBe(false);
+    });
+
+    test('fret is within range with margins', () => {
+      const lowFret = new Fret(GuitarString.First, 5);
+      const highFret = new Fret(GuitarString.First, 7);
+
+      // Test frets outside even with margins
+      const fretTooLow = new Fret(GuitarString.First, 3);
+      const fretTooHigh = new Fret(GuitarString.First, 9);
+      expect(fretTooLow.isWithin(lowFret, highFret)).toBe(false);
+      expect(fretTooHigh.isWithin(lowFret, highFret)).toBe(false);
+    });
+  });
 });
 
 describe('Guitar String should', () => {
@@ -123,12 +168,12 @@ describe('Guitar String should', () => {
   });
 
   test('move descending across strings', () => {
-    const strings = GuitarString.standardTunning.reverse();
+    const strings = [...GuitarString.standardTunning].reverse();
     for (let i = 0; i < 5; i++) {
-      expect(strings?.[i]?.NextDescending).toBe(strings[i + 1]);
+      expect(strings[i].NextDescending).toBe(strings[i + 1]);
     }
 
-    expect(GuitarString.standardTunning?.[5]?.NextDescending).toBe(GuitarString.Sixth);
+    expect(strings[5].NextDescending).toBe(GuitarString.Sixth);
   });
 
   describe('Map pitches to frets on Sixth string', () => {
@@ -374,5 +419,35 @@ describe('Position should', () => {
         highestFret: { string: { name: 'first', index: 0 }, fret: 0 },
       })
     ).toThrow();
+  });
+});
+
+describe('BlankFret', () => {
+  test('should maintain blank properties when raised by octave', () => {
+    const blankFret = new BlankFret();
+    const raisedFret = blankFret.raiseOctave();
+
+    expect(raisedFret).toBeInstanceOf(BlankFret);
+    expect(raisedFret.Number).toBe(-1);
+    expect(raisedFret.toString()).toBe('-');
+  });
+
+  test('should always return false for isWithin', () => {
+    const blankFret = new BlankFret();
+    const lowFret = new Fret(GuitarString.First, 5);
+    const highFret = new Fret(GuitarString.First, 7);
+
+    expect(blankFret.isWithin(lowFret, highFret)).toBe(false);
+    expect(blankFret.isWithin(lowFret, highFret, 1, 1)).toBe(false);
+  });
+
+  test('should create blank tab column', () => {
+    const blankFret = new BlankFret();
+    const tab = blankFret.toTab();
+    const renderedTab = tab.render();
+
+    // All strings should show '-'
+    expect(renderedTab.every((row) => row === '-')).toBe(true);
+    expect(renderedTab).toStrictEqual(Array(48).fill('-'));
   });
 });
