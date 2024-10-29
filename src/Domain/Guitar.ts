@@ -4,7 +4,7 @@ import { MelodicLine, Octave } from './Note';
 import { Pitch } from './Pitch';
 
 export class TabColumn {
-  private readonly maxRowLength: number = 0;
+  private readonly maxRowLength: number;
 
   private constructor(private readonly rows: string[]) {
     this.maxRowLength = Math.max(...rows.map((r) => r.length));
@@ -73,7 +73,7 @@ export class Fret {
   }
 
   toTab(guitarStrings: GuitarStrings = new GuitarStrings()): TabColumn {
-    const frets: Fret[] = [...guitarStrings].map((gs) =>
+    const frets = [...guitarStrings].map((gs) =>
       this.String.equals(gs) ? this : new BlankFret(gs)
     );
 
@@ -107,7 +107,7 @@ export class BlankFret extends Fret {
   }
 
   override toTab(guitarStrings: GuitarStrings = new GuitarStrings()): TabColumn {
-    const frets: Fret[] = [...guitarStrings].map((gs) => new BlankFret(gs));
+    const frets = [...guitarStrings].map((gs) => new BlankFret(gs));
 
     return TabColumn.fromFrets([...frets]);
   }
