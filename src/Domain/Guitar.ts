@@ -124,8 +124,11 @@ export class Fret {
 }
 
 export class BlankFret extends Fret {
+  private static readonly BLANK_FRET_NUMBER = -1;
+  private static readonly BLANK_SYMBOL = '-';
+
   constructor(string: GuitarString = GuitarString.Sixth) {
-    super(string, -1);
+    super(string, BlankFret.BLANK_FRET_NUMBER);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -134,7 +137,7 @@ export class BlankFret extends Fret {
   }
 
   override toString() {
-    return '-';
+    return BlankFret.BLANK_SYMBOL;
   }
 
   override raiseOctave(): Fret {
@@ -166,27 +169,32 @@ abstract class Frets implements Iterable<Fret> {
 }
 
 class VerticalFrets extends Frets {
-  constructor(frets: Fret[] = Array<Fret>(6).fill(new BlankFret())) {
+  private static readonly DEFAULT_FRET_COUNT = 6;
+  private static readonly MAX_FRET_DISTANCE = 4;
+  private static readonly BLANK_FRET_NUMBER = -1;
+
+  constructor(frets: Fret[] = Array<Fret>(VerticalFrets.DEFAULT_FRET_COUNT).fill(new BlankFret())) {
     super(frets);
   }
 
-  updateFretAt(fret: Fret, position: number) {
+  updateFretAt(fret: Fret, position: number): void {
     this.frets[position] = fret;
   }
 
-  adjustOpenStringOctaves() {
-    if (
-      this.frets.some((f) => f.Number === Position.Open.Low) &&
-      this.frets.some((f) => f.Number >= Position.Open.High)
-    ) {
+  adjustOpenStringOctaves(): void {
+    const hasOpenString = this.frets.some((f) => f.Number === Position.Open.Low);
+    const hasHighFret = this.frets.some((f) => f.Number >= Position.Open.High);
+
+    if (hasOpenString && hasHighFret) {
       this.frets = this.frets.map((f) => (f.Number === 0 ? f.raiseOctave() : f));
     }
   }
 
   isTooFar(fret: Fret): boolean {
-    return this.frets
-      .filter((f) => f.Number !== -1)
-      .some((f) => Math.abs(f.Number - fret.Number) >= 4);
+    const playedFrets = this.frets.filter((f) => f.Number !== VerticalFrets.BLANK_FRET_NUMBER);
+    return playedFrets.some(
+      (f) => Math.abs(f.Number - fret.Number) >= VerticalFrets.MAX_FRET_DISTANCE
+    );
   }
 
   override toString(): string {
