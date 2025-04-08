@@ -102,8 +102,6 @@ describe('CompoundTimeSignature', () => {
     const timeSignature = new CompoundTimeSignature(6, Duration.Eighth, 60);
 
     expect(timeSignature.beatDurationMiliseconds).toBe(1000);
-    expect(timeSignature.beatDurationMiliseconds).toBe(1000);
-    expect(timeSignature.beatDurationMiliseconds).toBe(1000);
   });
 
   test('Beat duration in ticks', () => {
@@ -111,8 +109,6 @@ describe('CompoundTimeSignature', () => {
 
     expect(timeSignature.ticksPerSecond).toBe(480);
 
-    expect(timeSignature.beatDurationTicks).toBe(Duration.Eighth.tick);
-    expect(timeSignature.beatDurationTicks).toBe(Duration.Eighth.tick);
     expect(timeSignature.beatDurationTicks).toBe(Duration.Eighth.tick);
   });
 
