@@ -55,5 +55,7 @@ jobs:
         uses: paambaati/codeclimate-action@v9.0.0
         env:
           CC_TEST_REPORTER_ID: 8413ee0825958297044236ac7f922553fb7bc1f6c075ebaab1aaa52c8a6142c0
-        with:
-          coverageCommand: yarn test:ci
+          run: |
+            ./cc-reporter after-build -t lcov --exit-code ${{ job.status }}
+            with:
+              coverageCommand: yarn test:ci
