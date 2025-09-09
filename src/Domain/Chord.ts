@@ -5,7 +5,6 @@ import ensure from './Ensure';
 import { Interval } from './Interval';
 import { Note, Octave, Playable } from './Note';
 import { Pitch } from './Pitch';
-import { OctavePrimitives } from '../primitives/Note';
 
 export class ChordPitch {
   constructor(
@@ -234,7 +233,7 @@ class BaseChord implements Chord, Iterable<Pitch> {
       bass: this.Bass.To,
       lead: this.Lead.To,
       duration: this.duration.To,
-      octave: this.octave.To as OctavePrimitives,
+      octave: this.octave.To,
     };
   }
 

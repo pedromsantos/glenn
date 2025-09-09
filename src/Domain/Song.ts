@@ -51,7 +51,7 @@ export class Measure implements Iterable<Playable> {
 
   get To(): MeasurePrimitives {
     return {
-      playables: [...this.playables].map((p) => p.ToPlayablePrimitives),
+      playables: [...this.playables].map((p: Playable) => p.ToPlayablePrimitives),
       timeSignature: this.timeSignature.To,
     };
   }

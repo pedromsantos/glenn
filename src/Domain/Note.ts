@@ -3,8 +3,7 @@ import {
   NotePrimitives,
   OctavePrimitives,
   RestPrimitives,
-} from 'src/primitives/Note';
-
+} from '../primitives/Note';
 import { PlayablePrimitives } from '../primitives/Playables';
 import { Chord } from './Chord';
 import { Duration } from './Duration';
@@ -123,10 +122,10 @@ export class Octave {
     };
   }
 
-  static From(state: OctavePrimitives) {
-    const octave = Octave.all.find(
-      (o) => o.value === state.value && o.shortName === state.shortName
-    );
+  static From(state: OctavePrimitives): Octave {
+    const value = state.value;
+    const shortName = state.shortName;
+    const octave = Octave.all.find((o: Octave) => o.value === value && o.shortName === shortName);
 
     if (!octave) {
       throw new Error('Invalid octave value');
@@ -250,17 +249,19 @@ export class Note implements Playable {
   }
 
   get To(): NotePrimitives {
-    return {
+    const notePrimitives: NotePrimitives = {
       pitch: this.pitch.To,
       duration: this.duration.To,
       octave: this.octave.To,
     };
+    return notePrimitives;
   }
 
   get ToPlayablePrimitives(): PlayablePrimitives {
-    return {
+    const playablePrimitives: PlayablePrimitives = {
       note: this.To,
     };
+    return playablePrimitives;
   }
 }
 
@@ -306,9 +307,10 @@ export class Rest implements Playable {
   }
 
   get ToPlayablePrimitives(): PlayablePrimitives {
-    return {
+    const playablePrimitives: PlayablePrimitives = {
       rest: this.To,
     };
+    return playablePrimitives;
   }
 }
 
@@ -388,8 +390,9 @@ export class MelodicLine implements Iterable<Note> {
   }
 
   get To(): MelodicPhrasePrimitives {
-    return {
+    const melodicPhrasePrimitives: MelodicPhrasePrimitives = {
       notes: this.phrase.map((note) => note.To),
     };
+    return melodicPhrasePrimitives;
   }
 }
