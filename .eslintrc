@@ -2,16 +2,13 @@
   "parser": "@typescript-eslint/parser",
   "env": {
     "es2021": true,
-    "jest": true,
     "node": true
   },
   "extends": [
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:prettier/recommended",
-    "plugin:jest/recommended",
-    "plugin:jest/style"
+    "plugin:prettier/recommended"
   ],
   "ignorePatterns": [".eslintrc.js"],
   "parserOptions": {
@@ -23,7 +20,8 @@
     "@typescript-eslint/eslint-plugin",
     "simple-import-sort",
     "import",
-    "hexagonal-architecture"
+    "hexagonal-architecture",
+    "@vitest/eslint-plugin"
   ],
   "rules": {
     "no-console": 1,
