@@ -15,7 +15,12 @@ class BarryHalfStepRule {
   public static readonly SixthAndFifth = new BarryHalfStepRule(ScaleDegree.VI, ScaleDegree.V);
 
   apply(line: PitchLine, scale: Scale) {
-    line.insertHalfToneBetween(scale.pitchFor(this.startDegree), scale.pitchFor(this.endDegree));
+    const startPitch = scale.pitchFor(this.startDegree);
+    const endPitch = scale.pitchFor(this.endDegree);
+
+    if (startPitch && endPitch) {
+      line.insertHalfToneBetween(startPitch, endPitch);
+    }
   }
 }
 
@@ -82,7 +87,7 @@ class BarryHalfStepRules {
     );
   }
 
-  applyMin(scale: Scale, from: ScaleDegree, to: ScaleDegree) {
+  applyMin(scale: Scale, from: ScaleDegree, to: ScaleDegree): PitchLine {
     const line = scale.down(from, to);
 
     if (this.lineStartsAtRootChordTone(from)) {
@@ -100,7 +105,7 @@ class BarryHalfStepRules {
     return line;
   }
 
-  applyMax(scale: Scale, from: ScaleDegree, to: ScaleDegree) {
+  applyMax(scale: Scale, from: ScaleDegree, to: ScaleDegree): PitchLine {
     const line = scale.down(from, to);
 
     if (this.lineStartsAtRootChordTone(from)) {
@@ -166,7 +171,8 @@ export class BarryHarrisLine {
     const arpeggio = this.scale
       .melodicThirdsTo(degree, this.pitchDurations, this.octave)
       .slice(0, 4);
-    this.createPivotArpeggioLine(arpeggio, 0, 1);
+    const arpeggioArray = Array.from(arpeggio);
+    this.createPivotArpeggioLine(arpeggioArray, 0, 1);
     this.updateOctave();
     return this;
   }
@@ -175,10 +181,11 @@ export class BarryHarrisLine {
     const from = this.lastDegree();
 
     if (from) {
-      const arpeggio = [
-        ...this.scale.melodicThirdsTo(from, this.pitchDurations, this.octave),
-      ].slice(0, 4);
-      this.createPivotArpeggioLine(new MelodicLine(arpeggio), 1, 2);
+      const arpeggio = this.scale
+        .melodicThirdsTo(from, this.pitchDurations, this.octave)
+        .slice(0, 4);
+      const arpeggioArray = Array.from(arpeggio);
+      this.createPivotArpeggioLine(arpeggioArray, 1, 2);
     }
 
     return this;
@@ -210,9 +217,9 @@ export class BarryHarrisLine {
   }
 
   scaleDown(to: ScaleDegree, from: ScaleDegree) {
-    const scaleDown = [
-      ...BarryHalfStepRules.barryRulesFor(this.scale).applyMin(this.scale, from, to),
-    ];
+    const scaleDown: Pitch[] = Array.from(
+      BarryHalfStepRules.barryRulesFor(this.scale).applyMin(this.scale, from, to)
+    );
 
     const line = new MelodicLine(
       scaleDown.map(
@@ -233,9 +240,9 @@ export class BarryHarrisLine {
   }
 
   scaleDownExtraHalfSteps(to: ScaleDegree, from: ScaleDegree) {
-    const scaleDown = [
-      ...BarryHalfStepRules.barryRulesFor(this.scale).applyMax(this.scale, from, to),
-    ];
+    const scaleDown: Pitch[] = Array.from(
+      BarryHalfStepRules.barryRulesFor(this.scale).applyMax(this.scale, from, to)
+    );
 
     this.line.concat(
       new MelodicLine(
@@ -283,14 +290,14 @@ export class BarryHarrisLine {
     return this.line;
   }
 
-  private createPivotArpeggioLine(line: MelodicLine, lowCut: number, highCut: number) {
+  private createPivotArpeggioLine(line: Note[], lowCut: number, highCut: number) {
     const arpeggioRoot = new MelodicLine(
-      [...line].slice(lowCut, highCut).map((note) => note.octaveDown())
+      line.slice(lowCut, highCut).map((note) => note.octaveDown())
     );
     this.line.concat(arpeggioRoot);
     this.updateOctave();
 
-    const pivot = new MelodicLine([...line].slice(highCut).map((note) => note.octaveDown()));
+    const pivot = new MelodicLine(line.slice(highCut).map((note) => note.octaveDown()));
     this.line.concat(pivot);
     this.updateOctave();
   }

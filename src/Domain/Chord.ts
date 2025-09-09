@@ -5,6 +5,7 @@ import ensure from './Ensure';
 import { Interval } from './Interval';
 import { Note, Octave, Playable } from './Note';
 import { Pitch } from './Pitch';
+import { OctavePrimitives } from '../primitives/Note';
 
 export class ChordPitch {
   constructor(
@@ -99,11 +100,19 @@ export class ChordPitches implements Iterable<Pitch> {
   }
 
   private first(): Pitch {
-    return this.pitches[0]!.Pitch;
+    const first = this.pitches[0];
+    if (!first) {
+      throw new Error('ChordPitches is empty');
+    }
+    return first.Pitch;
   }
 
   private last(): Pitch {
-    return this.pitches.slice(-1)[0]!.Pitch;
+    const last = this.pitches.slice(-1)[0];
+    if (!last) {
+      throw new Error('ChordPitches is empty');
+    }
+    return last.Pitch;
   }
 
   private pitchMove(fromIndex: number, toIndex: number): this {
@@ -154,7 +163,7 @@ class BaseChord implements Chord, Iterable<Pitch> {
   }
 
   get Pitches(): Iterable<Pitch> {
-    return [...this.pitches];
+    return Array.from(this.pitches);
   }
 
   get Octaves(): Iterable<Octave> {
@@ -166,11 +175,13 @@ class BaseChord implements Chord, Iterable<Pitch> {
   }
 
   get MidiNumbers(): Iterable<number> {
-    return [...this.Notes].map((n) => n.MidiNumbers).flat();
+    return Array.from(this.Notes)
+      .map((n) => Array.from(n.MidiNumbers))
+      .flat();
   }
 
   get Notes(): Iterable<Note> {
-    return [...this.pitches].map((p) => new Note(p, this.duration, this.octave));
+    return Array.from(this.pitches).map((p) => new Note(p, this.duration, this.octave));
   }
 
   get Root() {
@@ -223,7 +234,7 @@ class BaseChord implements Chord, Iterable<Pitch> {
       bass: this.Bass.To,
       lead: this.Lead.To,
       duration: this.duration.To,
-      octave: this.octave.To,
+      octave: this.octave.To as OctavePrimitives,
     };
   }
 
@@ -303,7 +314,7 @@ class BaseChord implements Chord, Iterable<Pitch> {
     return new BaseChord(
       root,
       pattern,
-      Duration.From(state.duration.value)!,
+      Duration.From(state.duration.value) ?? Duration.Whole,
       Octave.From(state.octave)
     );
   }

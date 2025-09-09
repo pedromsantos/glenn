@@ -7,5 +7,5 @@ export function convertPitchesToDistances(pitches: Pitch[]): number[] {
       return result;
     }, [])
     .slice(0, -1)
-    .map((p) => (p[0] as Pitch).absoluteDistance(p[1] as Pitch));
+    .map((p) => p[0].absoluteDistance(p[1]));
 }

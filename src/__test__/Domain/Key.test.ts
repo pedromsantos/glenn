@@ -59,7 +59,7 @@ describe('properties', () => {
 
     fc.assert(
       fc.property(fc.constantFrom(...Key.majorKeys), (key: Key) => {
-        const keyNotes = Array.from(key).concat(Array.from(key)[0] as Pitch);
+        const keyNotes = Array.from(key).concat(Array.from(key)[0]);
         const distances = convertPitchesToDistances(keyNotes);
 
         expect(distances).toStrictEqual(majorKeyDistances);
@@ -73,7 +73,7 @@ describe('properties', () => {
 
     fc.assert(
       fc.property(fc.constantFrom(...Key.minorKeys), (key: Key) => {
-        const keyNotes = Array.from(key).concat(Array.from(key)[0] as Pitch);
+        const keyNotes = Array.from(key).concat(Array.from(key)[0]);
         const distances = convertPitchesToDistances(keyNotes);
 
         expect(distances).toStrictEqual(minorKeyDistances);

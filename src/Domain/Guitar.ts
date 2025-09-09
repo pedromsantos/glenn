@@ -233,7 +233,7 @@ export class GuitarStrings implements Iterable<GuitarString> {
   }
 
   guitarString(guitarStringIndex: number) {
-    return this.guitarStrings.find((gs) => gs.Index == guitarStringIndex)!;
+    return this.guitarStrings.find((gs) => gs.Index == guitarStringIndex);
   }
 
   *[Symbol.iterator](): Iterator<GuitarString> {
@@ -398,7 +398,7 @@ export class GuitarTuning {
   }
 
   openStringPitchFor(guitarString: GuitarString) {
-    return this.pitches[guitarString.Index - 1]!;
+    return this.pitches[guitarString.Index - 1];
   }
 
   public static readonly OpenA: GuitarTuning = new GuitarTuning(
@@ -588,15 +588,15 @@ export class FretboardPosition {
 
       const lastFret = fretsForLine.last();
       if (!lastFret) {
-        fretsForLine.push(matchingFrets[0]!);
+        fretsForLine.push(matchingFrets[0]);
         continue;
       }
 
       const fretsOnSameString = matchingFrets.filter((fret) => fret.isOnSameStringAs(lastFret));
       if (fretsOnSameString.length) {
-        fretsForLine.push(fretsOnSameString[0]!);
+        fretsForLine.push(fretsOnSameString[0]);
       } else if (matchingFrets.length === 1) {
-        fretsForLine.push(matchingFrets[0]!);
+        fretsForLine.push(matchingFrets[0]);
       }
     }
 
@@ -614,9 +614,7 @@ export class FretboardPosition {
     hasSameOctave: (octave: Octave) => boolean;
   }): Fret[] {
     return this.frets.flatMap((stringFrets) =>
-      stringFrets.filter(
-        (fret) => note.hasSamePitch(fret.Pitch!) && note.hasSameOctave(fret.Octave!)
-      )
+      stringFrets.filter((fret) => note.hasSamePitch(fret.Pitch) && note.hasSameOctave(fret.Octave))
     );
   }
 }

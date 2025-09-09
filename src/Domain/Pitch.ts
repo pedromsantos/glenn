@@ -550,7 +550,7 @@ export class PitchLine implements Iterable<Pitch> {
     private readonly direction: PitchLineDirection = PitchLineDirection.Neutral
   ) {}
 
-  insertHalfToneBetween(first: Pitch, second: Pitch) {
+  insertHalfToneBetween(first: Pitch, second: Pitch): PitchLine {
     const firstIndex = this.line.findIndex((p) => p === first);
     const secondIndex = this.line.findIndex((p) => p === second);
 

@@ -347,7 +347,7 @@ export class Scale implements Iterable<Pitch> {
   }
 
   pitchFor(degree: ScaleDegree) {
-    return this.pitches[degree]!;
+    return this.pitches[degree];
   }
 
   degreeFor(pitch: Pitch) {
@@ -431,9 +431,9 @@ export class TriadHarmonizer implements ScaleHarmonizer {
     const thirds = this.scale.thirdsFrom(degree);
 
     const chordPitches = new ChordPitches([
-      new ChordPitch(thirds[0]!, ChordFunction.Root),
-      new ChordPitch(thirds[1]!, ChordFunction.Third),
-      new ChordPitch(thirds[2]!, ChordFunction.Fifth),
+      new ChordPitch(thirds[0], ChordFunction.Root),
+      new ChordPitch(thirds[1], ChordFunction.Third),
+      new ChordPitch(thirds[2], ChordFunction.Fifth),
     ]);
 
     return new ClosedChord(
@@ -453,10 +453,10 @@ export class SeventhHarmonizer implements ScaleHarmonizer {
     const thirds = this.scale.thirdsFrom(degree);
 
     const chordPitches = new ChordPitches([
-      new ChordPitch(thirds[0]!, ChordFunction.Root),
-      new ChordPitch(thirds[1]!, ChordFunction.Third),
-      new ChordPitch(thirds[2]!, ChordFunction.Fifth),
-      new ChordPitch(thirds[3]!, ChordFunction.Seventh),
+      new ChordPitch(thirds[0], ChordFunction.Root),
+      new ChordPitch(thirds[1], ChordFunction.Third),
+      new ChordPitch(thirds[2], ChordFunction.Fifth),
+      new ChordPitch(thirds[3], ChordFunction.Seventh),
     ]);
 
     return new ClosedChord(
