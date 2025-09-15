@@ -1264,16 +1264,6 @@
   resolved "https://registry.npmjs.org/@sindresorhus/merge-streams/-/merge-streams-4.0.0.tgz"
   integrity sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==
 
-"@stryker-mutator/api@8.6.0":
-  version "8.6.0"
-  resolved "https://registry.npmjs.org/@stryker-mutator/api/-/api-8.6.0.tgz"
-  integrity sha512-iEZYV40zpSJBDXombffbLuEVr0j/rJseEgmDcfGJQfSc0yxuEg7+MEFRweUQCaJICXu+2A10o9TnCWTyqK5OKg==
-  dependencies:
-    mutation-testing-metrics "3.3.0"
-    mutation-testing-report-schema "3.3.0"
-    tslib "~2.7.0"
-    typed-inject "~4.0.0"
-
 "@stryker-mutator/api@9.1.1":
   version "9.1.1"
   resolved "https://registry.npmjs.org/@stryker-mutator/api/-/api-9.1.1.tgz"
@@ -1334,19 +1324,14 @@
     semver "~7.7.0"
     weapon-regex "~1.3.2"
 
-"@stryker-mutator/typescript-checker@^8.6.0":
-  version "8.6.0"
-  resolved "https://registry.npmjs.org/@stryker-mutator/typescript-checker/-/typescript-checker-8.6.0.tgz"
-  integrity sha512-P+/6yVD4cH3xosNw+MKl+lTXpbqqPWYuMoRhYOudhufDdIofyULyj8Apc4lOceJ857VXp0hWyDjwEs+kN88row==
+"@stryker-mutator/typescript-checker@^9.1.1":
+  version "9.1.1"
+  resolved "https://registry.yarnpkg.com/@stryker-mutator/typescript-checker/-/typescript-checker-9.1.1.tgz#b1f44b5c3bf9bf5f3f54959c1f4c7a49e3a1856b"
+  integrity sha512-SYXAiOO/2pME6Dq34RbLuYv3yf3GU35hIpjicEcVebiF+RsyFOrG91SCX1hSaE/Q5AWhaFBvwGDJ3VwZaGjDAw==
   dependencies:
-    "@stryker-mutator/api" "8.6.0"
-    "@stryker-mutator/util" "8.6.0"
-    semver "~7.6.3"
-
-"@stryker-mutator/util@8.6.0":
-  version "8.6.0"
-  resolved "https://registry.npmjs.org/@stryker-mutator/util/-/util-8.6.0.tgz"
-  integrity sha512-SruyNDhioBTR7Eq1sSxr9YYBLGHF5s999W63xcOJ+4RdRwyLwNUX1H8DiYnjQC5vs5X/Ap/UsmGwyVnv1ObSnQ==
+    "@stryker-mutator/api" "9.1.1"
+    "@stryker-mutator/util" "9.1.1"
+    semver "~7.7.0"
 
 "@stryker-mutator/util@9.1.1":
   version "9.1.1"
@@ -4487,24 +4472,12 @@ mutation-testing-elements@3.5.3:
   resolved "https://registry.npmjs.org/mutation-testing-elements/-/mutation-testing-elements-3.5.3.tgz"
   integrity sha512-Vr76a77/mFGsiSAUL+1xFEDb3n5lFs7UJKGWHtaJ+C85kutpBU3QVQ88zobo8Y0dNZPgcMrfThjOzp7W4nmLlQ==
 
-mutation-testing-metrics@3.3.0:
-  version "3.3.0"
-  resolved "https://registry.npmjs.org/mutation-testing-metrics/-/mutation-testing-metrics-3.3.0.tgz"
-  integrity sha512-vZEJ84SpK3Rwyk7k28SORS5o6ZDtehwifLPH6fQULrozJqlz2Nj8vi52+CjA+aMZCyyKB+9eYUh1HtiWVo4o/A==
-  dependencies:
-    mutation-testing-report-schema "3.3.0"
-
 mutation-testing-metrics@3.5.1:
   version "3.5.1"
   resolved "https://registry.npmjs.org/mutation-testing-metrics/-/mutation-testing-metrics-3.5.1.tgz"
   integrity sha512-mNgEcnhyBDckgoKg1kjG/4Uo3aBCW0WdVUxINVEazMTggPtqGfxaAlQ9GjItyudu/8S9DuspY3xUaIRLozFG9g==
   dependencies:
     mutation-testing-report-schema "3.5.1"
-
-mutation-testing-report-schema@3.3.0:
-  version "3.3.0"
-  resolved "https://registry.npmjs.org/mutation-testing-report-schema/-/mutation-testing-report-schema-3.3.0.tgz"
-  integrity sha512-DF56q0sb0GYzxYUYNdzlfQzyE5oJBEasz8zL76bt3OFJU8q4iHSdUDdihPWWJD+4JLxSs3neM/R968zYdy0SWQ==
 
 mutation-testing-report-schema@3.5.1:
   version "3.5.1"
@@ -5322,11 +5295,6 @@ semver@^6.0.0, semver@^6.3.1:
   resolved "https://registry.npmjs.org/semver/-/semver-6.3.1.tgz"
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
 
-semver@~7.6.3:
-  version "7.6.3"
-  resolved "https://registry.npmjs.org/semver/-/semver-7.6.3.tgz"
-  integrity sha512-oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==
-
 set-blocking@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/set-blocking/-/set-blocking-2.0.0.tgz"
@@ -5902,7 +5870,7 @@ tsconfig-paths@^3.15.0:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
-"tslib@1 || 2", tslib@^2.1.0, tslib@~2.7.0:
+"tslib@1 || 2", tslib@^2.1.0:
   version "2.7.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.7.0.tgz"
   integrity sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==
@@ -6058,11 +6026,6 @@ typed-array-length@^1.0.7:
     is-typed-array "^1.1.13"
     possible-typed-array-names "^1.0.0"
     reflect.getprototypeof "^1.0.6"
-
-typed-inject@~4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/typed-inject/-/typed-inject-4.0.0.tgz"
-  integrity sha512-OuBL3G8CJlS/kjbGV/cN8Ni32+ktyyi6ADDZpKvksbX0fYBV5WcukhRCYa7WqLce7dY/Br2dwtmJ9diiadLFpg==
 
 typed-inject@~5.0.0:
   version "5.0.0"

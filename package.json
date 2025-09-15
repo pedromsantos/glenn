@@ -65,7 +65,7 @@
     "@commitlint/cli": "^19.0.1",
     "@commitlint/config-conventional": "^19.0.0",
     "@stryker-mutator/core": "^9.1.1",
-    "@stryker-mutator/typescript-checker": "^8.6.0",
+    "@stryker-mutator/typescript-checker": "^9.1.1",
     "@swc/core": "^1.7.35",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.1.0",
