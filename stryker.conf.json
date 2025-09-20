@@ -3,20 +3,16 @@
   "coverageAnalysis": "perTest",
   "mutate": ["src/Domain/**/*.ts", "src/abcNotation/**/*.ts"],
   "reporters": ["progress", "dots", "dashboard", "html"],
-  "testRunner": "jest",
-  "checkers": ["typescript"],
-  "tsconfigFile": "tsconfig.json",
+  "testRunner": "vitest",
+  "checkers": [],
+  "tsconfigFile": "tsconfig.test.json",
   "ignoreStatic": true,
+  "ignorePatterns": [".qlty/**"],
   "dashboard": {
     "project": "github.com/pedromsantos/glenn",
     "version": "master",
     "module": "glenn",
     "reportType": "full"
-  },
-  "jest": {
-    "projectType": "custom",
-    "configFile": "./jest.config.json",
-    "enableFindRelatedTests": true
   },
   "clearTextReporter": {
     "allowColor": true,

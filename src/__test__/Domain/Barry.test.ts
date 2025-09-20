@@ -232,7 +232,7 @@ describe('Barry Harrys lines', () => {
           .pivotArpeggioUpFromLastPitch()
           .build();
 
-        expect([...line].map((n) => n.Pitch.Name + ' ' + n.Octaves[0].Name)).toStrictEqual([
+        expect([...line].map((n) => n.Pitch.Name + ' ' + n.Octaves[0]!.Name)).toStrictEqual([
           'C C3',
           'E C3',
           'G C3',

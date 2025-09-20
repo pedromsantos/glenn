@@ -394,6 +394,7 @@ describe('Octave', () => {
       Octave.From({
         midi: 12,
         name: 'Contra',
+        shortName: 'C',
         value: -99,
       })
     ).toThrow();
