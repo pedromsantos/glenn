@@ -92,7 +92,7 @@ export class Song implements Iterable<Measure> {
 
     try {
       ensure(lastMeasure).add(playable);
-    } catch (err) {
+    } catch {
       this.measures.push(new Measure(this.timeSignature));
       lastMeasure = this.measures[this.measures.length - 1];
       ensure(lastMeasure).add(playable);
