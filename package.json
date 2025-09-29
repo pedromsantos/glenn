@@ -62,7 +62,7 @@
     "@babel/helper-hoist-variables": "^7.24.7",
     "@babel/helper-split-export-declaration": "^7.24.7",
     "@changesets/cli": "^2.26.2",
-    "@commitlint/cli": "^19.0.1",
+    "@commitlint/cli": "^20.0.0",
     "@commitlint/config-conventional": "^19.0.0",
     "@stryker-mutator/core": "^9.1.1",
     "@stryker-mutator/typescript-checker": "^9.1.1",
