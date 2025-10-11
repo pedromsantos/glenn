@@ -1,10 +1,1 @@
-#!/bin/sh
-# Load NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-# Use Node version from .nvmrc if it exists, otherwise let nvm decide
-[ -f ".nvmrc" ] && nvm use
-
-# The original command
 pnpm precommit

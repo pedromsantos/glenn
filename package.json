@@ -54,7 +54,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "types": "type-coverage -at-least 99",
-    "prepare": "husky install",
+    "prepare": "husky",
     "clean": "rm -rf .cache .tmp .turbo coverage coverage-ts dist reports"
   },
   "devDependencies": {
@@ -99,11 +99,6 @@
     "node": ">=22"
   },
   "packageManager": "pnpm@10.18.2",
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E  HUSKY_GIT_PARAMS"
-    }
-  },
   "lint-staged": {
     "**/*.ts": "prettier --write --ignore-unknown"
   },
