@@ -12,32 +12,31 @@ jobs:
         with:
           fetch-depth: --unshallow
 
-      - name: Cache node modules
-        uses: actions/cache@v4.3.0
-        env:
-          cache-name: cache-node-modules
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          version: 10.18.2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22.x"
+          cache: "pnpm"
 
       - name: Install Dependencies
-        run: yarn install
+        run: pnpm install
 
       - name: Lint
-        run: yarn lint
+        run: pnpm lint
 
       - name: Types
-        run: yarn types
+        run: pnpm types
 
       - name: Test
-        run: yarn test:ci
+        run: pnpm test:ci
 
       - name: Build
-        run: yarn build
+        run: pnpm build
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
@@ -46,8 +45,8 @@ jobs:
 
       - uses: actions/setup-node@v5
         with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
-      - run: yarn publish
+          node-version: "22.x"
+          registry-url: "https://registry.npmjs.org"
+      - run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
