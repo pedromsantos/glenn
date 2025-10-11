@@ -1358,6 +1358,15 @@
   resolved "https://registry.yarnpkg.com/@stryker-mutator/util/-/util-9.2.0.tgz#b2297194f69d27802abfe87e4c21d59bb80bff30"
   integrity sha512-wJuWqXLq/8PKjPUBqHU/N0pshFWPhFA7muVrsNiTVPjHK5DYLkjOrzUl8cUJjusHX35INDr/2uM66kWaYuQu3g==
 
+"@stryker-mutator/vitest-runner@^9.1.1":
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/@stryker-mutator/vitest-runner/-/vitest-runner-9.2.0.tgz#7fb4d83103393546eee8ed92796184534d2aacab"
+  integrity sha512-wTRLQl5OZoLUYK+bdc9eqWQHKjVmJu8GakjCwBmTwCX2ohzL/tqXZRUGMwcodsC1omEtPmktGNs6e2nfk0j5QA==
+  dependencies:
+    "@stryker-mutator/api" "9.2.0"
+    "@stryker-mutator/util" "9.2.0"
+    tslib "~2.8.0"
+
 "@swc/core-darwin-arm64@1.13.5":
   version "1.13.5"
   resolved "https://registry.yarnpkg.com/@swc/core-darwin-arm64/-/core-darwin-arm64-1.13.5.tgz#7638c073946f9297753ed9a2eb198d07b2336a24"
