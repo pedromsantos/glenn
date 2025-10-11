@@ -125,7 +125,9 @@ export class Octave {
   static From(state: OctavePrimitives): Octave {
     const value = state.value;
     const shortName = state.shortName;
-    const octave = Octave.all.find((o: Octave) => o.value === value && o.shortName === shortName);
+    const octave: Octave | undefined = Octave.all.find(
+      (o: Octave) => o.value === value && o.shortName === shortName
+    );
 
     if (!octave) {
       throw new Error('Invalid octave value');
@@ -321,15 +323,15 @@ export class MelodicLine implements Iterable<Note> {
     this.phrase = notes;
   }
 
-  slice(start: number, end: number) {
+  slice(start: number, end?: number): MelodicLine {
     return new MelodicLine(this.phrase.slice(start, end));
   }
 
-  concat(melodicLine: MelodicLine) {
+  concat(melodicLine: MelodicLine): void {
     this.phrase = this.phrase.concat([...melodicLine]);
   }
 
-  appendOctaveAbove() {
+  appendOctaveAbove(): MelodicLine {
     return new MelodicLine(this.phrase.concat(this.phrase.map((n) => n.octaveUp())));
   }
 

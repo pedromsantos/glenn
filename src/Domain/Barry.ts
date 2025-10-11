@@ -81,10 +81,13 @@ class BarryHalfStepRules {
     () => false
   );
 
-  static barryRulesFor(scale: Scale) {
-    return (
-      BarryHalfStepRules.all.find((rule) => rule.applyesTo(scale)) || BarryHalfStepRules.Default
-    );
+  static barryRulesFor(scale: Scale): BarryHalfStepRules {
+    for (const rule of BarryHalfStepRules.all) {
+      if (rule.applyesTo(scale)) {
+        return rule;
+      }
+    }
+    return BarryHalfStepRules.Default;
   }
 
   applyMin(scale: Scale, from: ScaleDegree, to: ScaleDegree): PitchLine {
@@ -171,7 +174,7 @@ export class BarryHarrisLine {
     const arpeggio = this.scale
       .melodicThirdsTo(degree, this.pitchDurations, this.octave)
       .slice(0, 4);
-    const arpeggioArray = Array.from(arpeggio);
+    const arpeggioArray: Note[] = Array.from(arpeggio as Iterable<Note>);
     this.createPivotArpeggioLine(arpeggioArray, 0, 1);
     this.updateOctave();
     return this;
