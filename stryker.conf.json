@@ -5,6 +5,7 @@
   "reporters": ["progress", "dots", "dashboard", "html"],
   "testRunner": "vitest",
   "checkers": [],
+  "plugins": ["@stryker-mutator/vitest-runner"],
   "tsconfigFile": "tsconfig.test.json",
   "ignoreStatic": true,
   "ignorePatterns": [".qlty/**"],
