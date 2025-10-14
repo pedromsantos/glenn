@@ -75,7 +75,7 @@ export default [
       'simple-import-sort/imports': 'error',
       // TODO: Fix type safety issues properly - temporary disable for build stability
       '@typescript-eslint/no-unsafe-argument': 'warn',
-      '@typescript-eslint/no-unsafe-assignment': 'warn', 
+      '@typescript-eslint/no-unsafe-assignment': 'warn',
       '@typescript-eslint/no-unsafe-call': 'warn',
       '@typescript-eslint/no-unsafe-member-access': 'warn',
       '@typescript-eslint/no-unsafe-return': 'warn',
