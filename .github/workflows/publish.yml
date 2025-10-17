@@ -6,22 +6,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22]
 
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      - name: Use Node.js
-        uses: actions/setup-node@v5
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          node-version: "22.x"
-          cache: "pnpm"
+          node-version: ${{ matrix.node-version }}
 
-      - name: Enable Corepack (pnpm)
-        run: corepack enable
+      - name: Install pnpm globally (fallback for CI)
+        run: npm install -g pnpm
 
-      - name: Install Dependencies
+      - name: Verify pnpm installation
+        run: pnpm --version
+
+      - name: Install dependencies
         run: pnpm install
 
       - name: Lint
