@@ -5,22 +5,27 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22]
 
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
-      - name: Use Node.js
-        uses: actions/setup-node@v5
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: "22.x"
+          version: 10
+      - name: Use Node.js ${{ matrix.node-version }}
+
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
           cache: "pnpm"
 
-      - name: Enable Corepack (pnpm)
-        run: corepack enable
-
-      - name: Install Dependencies
+      - name: Install dependencies
         run: pnpm install
 
       - name: Lint
