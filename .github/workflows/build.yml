@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "pnpm"
@@ -24,7 +24,7 @@ jobs:
         run: corepack enable
 
       - name: Activate pnpm
-        run: corepack prepare pnpm@10 --activate
+        run: corepack prepare pnpm@latest --activate
 
       - name: Install dependencies
         run: pnpm install
