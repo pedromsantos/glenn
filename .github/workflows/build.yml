@@ -25,15 +25,6 @@ jobs:
       - name: Verify pnpm installation
         run: pnpm --version
 
-      - name: Activate pnpm
-        run: corepack prepare pnpm@latest --activate
-
-      - name: Install pnpm globally (fallback)
-        run: npm install -g pnpm
-
-      - name: Verify pnpm installation
-        run: pnpm --version
-
       - name: Install dependencies
         run: pnpm install
 
