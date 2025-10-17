@@ -20,8 +20,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "pnpm"
 
-      - name: Enable Corepack
-        run: corepack enable
+      - name: Install pnpm globally (fallback for CI)
+        run: npm install -g pnpm
+
+      - name: Verify pnpm installation
+        run: pnpm --version
 
       - name: Activate pnpm
         run: corepack prepare pnpm@latest --activate
