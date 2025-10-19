@@ -19,14 +19,18 @@ jobs:
 
       - name: Install pnpm globally (fallback for CI)
         run: npm install -g pnpm
+        working-directory: .
 
       - name: Verify pnpm installation
         run: pnpm --version
+        working-directory: .
 
       - name: Install dependencies
         run: pnpm install
+        working-directory: .
 
       - name: Mutation
         run: pnpm mutants
+        working-directory: .
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
