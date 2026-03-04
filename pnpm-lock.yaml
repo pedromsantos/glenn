@@ -85,7 +85,7 @@ importers:
         version: 4.5.3
       globals:
         specifier: ^17.0.0
-        version: 17.3.0
+        version: 17.4.0
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -2335,6 +2335,10 @@ packages:
 
   globals@17.3.0:
     resolution: {integrity: sha512-yMqGUQVVCkD4tqjOJf3TnrvaaHDMYp4VlUSObbkIiuCPe/ofdMBFIAcBbCSRFWOnos6qRiTVStDwqPLUclaxIw==}
+    engines: {node: '>=18'}
+
+  globals@17.4.0:
+    resolution: {integrity: sha512-hjrNztw/VajQwOLsMNT1cbJiH2muO3OROCHnbehc8eY5JyD2gqz4AcMHPqgaOR59DjgUjYAYLeH699g/eWi2jw==}
     engines: {node: '>=18'}
 
   globalthis@1.0.4:
@@ -6426,6 +6430,8 @@ snapshots:
   globals@14.0.0: {}
 
   globals@17.3.0: {}
+
+  globals@17.4.0: {}
 
   globalthis@1.0.4:
     dependencies:
