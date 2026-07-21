@@ -511,7 +511,7 @@ class IntervalsToPitches {
           ({
             with: it.with,
             to: it.to().sharp,
-          }) as IntervalToPitch
+          })
       )
     );
   };
@@ -523,7 +523,7 @@ class IntervalsToPitches {
           ({
             with: it.with,
             to: it.to().flat,
-          }) as IntervalToPitch
+          })
       )
     );
   };

@@ -20,7 +20,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install pnpm globally (fallback for CI)
-        run: npm install -g pnpm
+        run: npm install -g pnpm@10.18.2
 
       - name: Verify pnpm installation
         run: pnpm --version
@@ -38,6 +38,7 @@ jobs:
         run: pnpm build
 
       - name: SonarCloud Scan
+        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: SonarSource/sonarcloud-github-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
