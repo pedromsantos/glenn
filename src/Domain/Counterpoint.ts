@@ -109,7 +109,7 @@ class OnlyChordTones implements CounterPointRule {
 
     for (const note of parts.counterPoint.phrase) {
       const chord = harmony[index];
-      const isChordTone = chord ? (note as Note).isChordToneOf(chord) : false;
+      const isChordTone = chord ? (note).isChordToneOf(chord) : false;
 
       if (!isChordTone) {
         return { isValid: false, message: 'not a chord tone', index: index };
@@ -127,7 +127,7 @@ class OnlyWholeToneNotes implements CounterPointRule {
     let index = 0;
 
     for (const note of parts.counterPoint.phrase) {
-      if ((note as Note).Duration !== Duration.Whole) {
+      if ((note).Duration !== Duration.Whole) {
         return { isValid: false, message: 'not a whole note', index: index };
       }
 
@@ -144,8 +144,8 @@ class OnlyNotesInRange implements CounterPointRule {
 
     for (const note of parts.counterPoint.phrase) {
       if (
-        (note as Note).MidiNumbers > parts.counterPoint.voice.Max.MidiNumbers ||
-        (note as Note).MidiNumbers < parts.counterPoint.voice.Min.MidiNumbers
+        (note).MidiNumbers > parts.counterPoint.voice.Max.MidiNumbers ||
+        (note).MidiNumbers < parts.counterPoint.voice.Min.MidiNumbers
       ) {
         return { isValid: false, message: 'not in range', index: index };
       }
@@ -163,10 +163,10 @@ class NoRepeatedNotes implements CounterPointRule {
     let previous: Note | undefined = undefined;
 
     for (const note of parts.counterPoint.phrase) {
-      if (previous && (note as Note).isSamePitch(previous)) {
+      if (previous && (note).isSamePitch(previous)) {
         return { isValid: false, message: 'repeated note', index: index };
       }
-      previous = note as Note;
+      previous = note;
       index++;
     }
 
@@ -180,10 +180,10 @@ class NoBigLeaps implements CounterPointRule {
     let previous: Note | undefined = undefined;
 
     for (const note of parts.counterPoint.phrase) {
-      if (previous && (note as Note).intervalTo(previous).isLargarThan(Interval.MajorSixth)) {
+      if (previous && (note).intervalTo(previous).isLargarThan(Interval.MajorSixth)) {
         return { isValid: false, message: 'invalid leap', index: index };
       }
-      previous = note as Note;
+      previous = note;
       index++;
     }
 
@@ -202,7 +202,7 @@ class NoInvalidIntervals implements CounterPointRule {
       const cantusFirmusNote = cantusFirmus[index];
 
       for (const interval of this.intervals) {
-        if (cantusFirmusNote?.intervalTo(note as Note) === interval) {
+        if (cantusFirmusNote?.intervalTo(note) === interval) {
           return {
             isValid: false,
             message: `invalid interval of a ${interval.Name}`,

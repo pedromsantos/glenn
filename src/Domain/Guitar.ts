@@ -581,10 +581,7 @@ export class FretboardPosition {
 
     for (const note of line) {
       const matchingFrets = this.findMatchingFrets(
-        note as {
-          hasSamePitch: (pitch: Pitch) => boolean;
-          hasSameOctave: (octave: Octave) => boolean;
-        }
+        note
       );
 
       if (!matchingFrets.length) {
@@ -689,7 +686,7 @@ export class GuitarChord implements Iterable<Fret> {
 
   private mapFromBassString(chord: Chord, guitarString: GuitarString) {
     for (const pitch of chord) {
-      let fret = guitarString.fretFor(pitch as Pitch);
+      let fret = guitarString.fretFor(pitch);
 
       if (this.chordFrets.isTooFar(fret)) {
         fret = fret.raiseOctave();
@@ -697,7 +694,7 @@ export class GuitarChord implements Iterable<Fret> {
 
       if (this.chordFrets.isTooFar(fret)) {
         guitarString = guitarString.NextAscending;
-        fret = guitarString.fretFor(pitch as Pitch);
+        fret = guitarString.fretFor(pitch);
       }
 
       this.addFretFor(fret, guitarString);
@@ -714,7 +711,7 @@ export class GuitarChord implements Iterable<Fret> {
 
     for (const guitarString of guitarStrings) {
       for (const pitch of chord) {
-        const fret = (guitarString as GuitarString).fretFor(pitch as Pitch);
+        const fret = (guitarString).fretFor(pitch);
 
         if (this.position.contains(fret)) {
           mappedeFrets.push(fret);
@@ -735,14 +732,14 @@ export class GuitarChord implements Iterable<Fret> {
           continue;
         }
 
-        const fret = (guitarString as GuitarString).fretFor(pitch as Pitch);
+        const fret = (guitarString).fretFor(pitch);
 
         if (this.position.contains(fret)) {
           mappedeFrets.push(fret);
         }
       }
 
-      if (!mappedeFrets.find((f) => f.String === (guitarString as GuitarString))) {
+      if (!mappedeFrets.find((f) => f.String === (guitarString))) {
         mappedeFrets.push(new BlankFret());
       }
     }
