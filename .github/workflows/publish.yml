@@ -21,7 +21,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install pnpm globally (fallback for CI)
-        run: npm install -g pnpm@10.18.2
+        run: npm install -g pnpm@10.18.2 --ignore-scripts
         working-directory: .
 
       - name: Verify pnpm installation
@@ -29,7 +29,7 @@ jobs:
         working-directory: .
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --ignore-scripts
         working-directory: .
 
       - name: Lint
