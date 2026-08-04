@@ -28,11 +28,11 @@ class BarryHalfStepRules {
   private static readonly all: BarryHalfStepRules[] = [];
 
   private constructor(
-    private rootChordTonesMin: BarryHalfStepRule[],
-    private noRootChordTonesMin: BarryHalfStepRule[],
-    private rootChordTonesMax: BarryHalfStepRule[],
-    private noRootChordTonesMax: BarryHalfStepRule[],
-    private applyesTo: (scale: Scale) => boolean
+    private readonly rootChordTonesMin: BarryHalfStepRule[],
+    private readonly noRootChordTonesMin: BarryHalfStepRule[],
+    private readonly rootChordTonesMax: BarryHalfStepRule[],
+    private readonly noRootChordTonesMax: BarryHalfStepRule[],
+    private readonly applyesTo: (scale: Scale) => boolean
   ) {
     BarryHalfStepRules.all.push(this);
   }
@@ -142,7 +142,7 @@ export class BarryHarrisLine {
   constructor(
     private readonly scale: Scale,
     private octave: Octave,
-    private pitchDurations: Duration
+    private readonly pitchDurations: Duration
   ) {
     this.line = new MelodicLine([]);
   }
@@ -324,6 +324,6 @@ export class BarryHarrisLine {
   }
 
   private neddOctaveDown(p: Pitch, i: number, line: Pitch[]) {
-    return (p === Pitch.C && i !== 0) || (i !== 0 && line && line[i - 1] === Pitch.C);
+    return (p === Pitch.C && i !== 0) || (i !== 0 && line?.[i - 1] === Pitch.C);
   }
 }

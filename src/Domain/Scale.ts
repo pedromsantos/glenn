@@ -352,7 +352,7 @@ export class Scale implements Iterable<Pitch> {
 
   degreeFor(pitch: Pitch) {
     return ensure(
-      this.pitches.findIndex((p) => p === pitch),
+      this.pitches.indexOf(pitch),
       'Pitch not found in scale'
     );
   }
@@ -425,7 +425,7 @@ export interface ScaleHarmonizer {
 }
 
 export class TriadHarmonizer implements ScaleHarmonizer {
-  constructor(private scale: Scale) {}
+  constructor(private readonly scale: Scale) {}
 
   chordFor(degree: ScaleDegree): Chord {
     const thirds = this.scale.thirdsFrom(degree);
@@ -447,7 +447,7 @@ export class TriadHarmonizer implements ScaleHarmonizer {
 }
 
 export class SeventhHarmonizer implements ScaleHarmonizer {
-  constructor(private scale: Scale) {}
+  constructor(private readonly scale: Scale) {}
 
   chordFor(degree: ScaleDegree): Chord {
     const thirds = this.scale.thirdsFrom(degree);

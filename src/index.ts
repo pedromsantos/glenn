@@ -1,12 +1,12 @@
-import { AbcChord } from './abcNotation/abcChord';
-import { AbcClef } from './abcNotation/abcClef';
-import { AbcNote, AbcRest } from './abcNotation/abcNote';
-import { AbcTune } from './abcNotation/abcTune';
-import { BarryHarrisLine } from './Domain/Barry';
-import { ChordFunction, ChordPattern, ClosedChord, Drop2Chord, Drop3Chord } from './Domain/Chord';
-import { Clef } from './Domain/Clef';
-import { CompoundTimeSignature, Duration, SimpleTimeSignature } from './Domain/Duration';
-import {
+export { AbcChord as abcChord } from './abcNotation/abcChord';
+export { AbcClef as abcClef } from './abcNotation/abcClef';
+export { AbcNote as abcNote, AbcRest as abcRest } from './abcNotation/abcNote';
+export { AbcTune as abcTune } from './abcNotation/abcTune';
+export { BarryHarrisLine } from './Domain/Barry';
+export { ChordFunction, ChordPattern, ClosedChord, Drop2Chord, Drop3Chord } from './Domain/Chord';
+export { Clef } from './Domain/Clef';
+export { CompoundTimeSignature, Duration, SimpleTimeSignature } from './Domain/Duration';
+export {
   GuitarChord,
   GuitarHarmonicLine,
   GuitarString,
@@ -14,56 +14,16 @@ import {
   Tab,
   TabColumn,
 } from './Domain/Guitar';
-import { Interval } from './Domain/Interval';
-import { Key } from './Domain/Key';
-import { MelodicLine, Note, Octave, Rest } from './Domain/Note';
-import { Pitch, PitchLine } from './Domain/Pitch';
-import {
+export { Interval } from './Domain/Interval';
+export { Key } from './Domain/Key';
+export { MelodicLine as MelodicPhrase, Note, Octave, Rest } from './Domain/Note';
+export { PitchLine as MelodicLine, Pitch } from './Domain/Pitch';
+export {
   Scale,
   ScaleDegree,
   ScalePattern,
   SeventhHarmonizer,
   TriadHarmonizer,
 } from './Domain/Scale';
-import { Measure, Song } from './Domain/Song';
-import { BarryHarrisLineUseCase } from './UseCases/Barry';
-
-export {
-  AbcChord as abcChord,
-  AbcClef as abcClef,
-  AbcNote as abcNote,
-  AbcRest as abcRest,
-  AbcTune as abcTune,
-  BarryHarrisLine,
-  BarryHarrisLineUseCase,
-  ChordFunction,
-  ChordPattern,
-  Clef,
-  ClosedChord,
-  CompoundTimeSignature,
-  Drop2Chord,
-  Drop3Chord,
-  Duration,
-  GuitarChord,
-  GuitarHarmonicLine,
-  GuitarString,
-  Interval,
-  Key,
-  Measure,
-  PitchLine as MelodicLine,
-  MelodicLine as MelodicPhrase,
-  Note,
-  Octave,
-  Pitch,
-  Position,
-  Rest,
-  Scale,
-  ScaleDegree,
-  ScalePattern,
-  SeventhHarmonizer,
-  SimpleTimeSignature,
-  Song,
-  Tab,
-  TabColumn,
-  TriadHarmonizer,
-};
+export { Measure, Song } from './Domain/Song';
+export { BarryHarrisLineUseCase } from './UseCases/Barry';

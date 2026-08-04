@@ -174,9 +174,7 @@ class BaseChord implements Chord, Iterable<Pitch> {
   }
 
   get MidiNumbers(): Iterable<number> {
-    return Array.from(this.Notes)
-      .map((n) => Array.from(n.MidiNumbers))
-      .flat();
+    return Array.from(this.Notes).flatMap((n) => Array.from(n.MidiNumbers));
   }
 
   get Notes(): Iterable<Note> {
@@ -365,7 +363,7 @@ type IntervalsToFunction = [Interval[], ChordFunction];
 export class ChordFunction {
   private static readonly all: ChordFunction[] = [];
 
-  private constructor(private name: string) {
+  private constructor(private readonly name: string) {
     ChordFunction.all.push(this);
   }
 

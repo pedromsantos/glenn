@@ -33,7 +33,7 @@ export class TabColumn {
   }
 
   private static withRepeting(value: string): TabColumn {
-    return new TabColumn(Array<string>(TabColumn.DEFAULT_STRING_COUNT).fill(value));
+    return new TabColumn(new Array<string>(TabColumn.DEFAULT_STRING_COUNT).fill(value));
   }
 
   private padRow(row: string): string {
@@ -173,7 +173,9 @@ class VerticalFrets extends Frets {
   private static readonly MAX_FRET_DISTANCE = 4;
   private static readonly BLANK_FRET_NUMBER = -1;
 
-  constructor(frets: Fret[] = Array<Fret>(VerticalFrets.DEFAULT_FRET_COUNT).fill(new BlankFret())) {
+  constructor(
+    frets: Fret[] = new Array<Fret>(VerticalFrets.DEFAULT_FRET_COUNT).fill(new BlankFret())
+  ) {
     super(frets);
   }
 
@@ -466,9 +468,9 @@ export class Position {
   private static readonly all: Position[] = [];
 
   private constructor(
-    private name: string,
-    private lowFret: Fret,
-    private highFret: Fret
+    private readonly name: string,
+    private readonly lowFret: Fret,
+    private readonly highFret: Fret
   ) {
     Position.all.push(this);
   }
@@ -580,38 +582,31 @@ export class FretboardPosition {
     const fretsForLine = new HorizontalFrets();
 
     for (const note of line) {
-      const matchingFrets = this.findMatchingFrets(
-        note
-      );
-
+      const matchingFrets = this.findMatchingFrets(note);
       if (!matchingFrets.length) {
         break;
       }
 
-      const lastFret = fretsForLine.last();
-      if (!lastFret) {
-        const firstFret = matchingFrets[0];
-        if (firstFret) {
-          fretsForLine.push(firstFret);
-        }
-        continue;
-      }
-
-      const fretsOnSameString = matchingFrets.filter((fret) => fret.isOnSameStringAs(lastFret));
-      if (fretsOnSameString.length) {
-        const sameStringFret = fretsOnSameString[0];
-        if (sameStringFret) {
-          fretsForLine.push(sameStringFret);
-        }
-      } else if (matchingFrets.length === 1) {
-        const matchingFret = matchingFrets[0];
-        if (matchingFret) {
-          fretsForLine.push(matchingFret);
-        }
+      const selectedFret = this.selectFret(matchingFrets, fretsForLine.last());
+      if (selectedFret) {
+        fretsForLine.push(selectedFret);
       }
     }
 
     return fretsForLine;
+  }
+
+  private selectFret(matchingFrets: Fret[], lastFret: Fret | undefined): Fret | undefined {
+    if (!lastFret) {
+      return matchingFrets[0];
+    }
+
+    const fretsOnSameString = matchingFrets.filter((fret) => fret.isOnSameStringAs(lastFret));
+    if (fretsOnSameString.length) {
+      return fretsOnSameString[0];
+    }
+
+    return matchingFrets.length === 1 ? matchingFrets[0] : undefined;
   }
 
   private initializeFretboard(position: Position, guitarStrings: GuitarStrings): Fret[][] {
@@ -728,7 +723,7 @@ export class GuitarChord implements Iterable<Fret> {
 
     for (const guitarString of guitarStrings) {
       for (const pitch of chord) {
-        if (mappedeFrets.find((f) => f.Pitch === pitch)) {
+        if (mappedeFrets.some((f) => f.Pitch === pitch)) {
           continue;
         }
 
@@ -739,7 +734,7 @@ export class GuitarChord implements Iterable<Fret> {
         }
       }
 
-      if (!mappedeFrets.find((f) => f.String === (guitarString))) {
+      if (!mappedeFrets.some((f) => f.String === (guitarString))) {
         mappedeFrets.push(new BlankFret());
       }
     }
@@ -802,7 +797,7 @@ export class Tab {
       .prefixWith(TabColumn.StandardTunning)
       .sufixWith(TabColumn.End)
       .render()
-      .reduce((acc, column) => acc.map((row, i) => row.concat(column[i] ?? ''), []))
+      .reduce((acc, column) => acc.map((row, i) => row.concat(column[i] ?? '')))
       .join('\n');
   }
 

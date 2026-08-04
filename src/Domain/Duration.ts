@@ -1,7 +1,7 @@
 import { DurationPrimitives, TimeSignaturePrimitives } from '../primitives/Duration';
 
 export abstract class TimeSignature {
-  private bpm: BeatsPerMinute = new BeatsPerMinute(60, Duration.Quarter);
+  private readonly bpm: BeatsPerMinute = new BeatsPerMinute(60, Duration.Quarter);
 
   protected constructor(
     protected readonly beats: number,
@@ -345,8 +345,8 @@ export class BeatsPerMinute {
   private readonly secondsMultiplier = 60;
 
   constructor(
-    private bpm: number,
-    private duration: Duration = Duration.Quarter
+    private readonly bpm: number,
+    private readonly duration: Duration = Duration.Quarter
   ) {}
 
   get beatsPerMinute(): number {

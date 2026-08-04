@@ -2,15 +2,7 @@ import { Duration } from './Duration';
 import { Voice } from './Instrument';
 import { Interval } from './Interval';
 import { MelodicLine, Note } from './Note';
-import { Pitch } from './Pitch';
-import {
-  Scale,
-  ScaleDegree,
-  ScaleHarmonizer,
-  ScalePattern,
-  SeventhHarmonizer,
-  TriadHarmonizer,
-} from './Scale';
+import { Scale, ScaleDegree, ScaleHarmonizer, SeventhHarmonizer } from './Scale';
 
 export interface CounterPointParts {
   counterPoint: {
@@ -48,7 +40,7 @@ export class CounterPointHarmony implements Iterable<ScaleDegree> {
 }
 
 export class FirstSpecies {
-  private rules: CounterPoinRules;
+  private readonly rules: CounterPoinRules;
 
   constructor(
     private readonly parts: CounterPointParts,
@@ -69,7 +61,7 @@ interface CounterPointRuleStatus {
 }
 
 class CounterPoinRules {
-  private rules: CounterPointRule[] = [];
+  private readonly rules: CounterPointRule[] = [];
 
   constructor(scale: Scale) {
     this.rules = [
@@ -95,9 +87,7 @@ interface CounterPointRule {
 }
 
 class OnlyChordTones implements CounterPointRule {
-  private harmonizer: ScaleHarmonizer = new TriadHarmonizer(
-    new Scale(ScalePattern.Ionian, Pitch.C)
-  );
+  private readonly harmonizer: ScaleHarmonizer;
 
   constructor(harmonizer: ScaleHarmonizer) {
     this.harmonizer = harmonizer;

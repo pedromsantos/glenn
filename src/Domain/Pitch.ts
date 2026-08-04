@@ -551,8 +551,8 @@ export class PitchLine implements Iterable<Pitch> {
   ) {}
 
   insertHalfToneBetween(first: Pitch, second: Pitch): PitchLine {
-    const firstIndex = this.line.findIndex((p) => p === first);
-    const secondIndex = this.line.findIndex((p) => p === second);
+    const firstIndex = this.line.indexOf(first);
+    const secondIndex = this.line.indexOf(second);
 
     if (firstIndex !== -1 && secondIndex !== -1) {
       const newLine = this.line;
