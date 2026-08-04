@@ -791,13 +791,18 @@ export class Tab {
   }
 
   static render(tab: Tab = new Tab()): string {
-    return tab
+    const columns = tab
       .separateWith('-')
       .prefixWith(TabColumn.Start)
       .prefixWith(TabColumn.StandardTunning)
       .sufixWith(TabColumn.End)
-      .render()
-      .reduce((acc, column) => acc.map((row, i) => row.concat(column[i] ?? '')))
+      .render();
+
+    const rowCount = columns[0]?.length ?? 0;
+    const blankRows = new Array<string>(rowCount).fill('');
+
+    return columns
+      .reduce((acc, column) => acc.map((row, i) => row.concat(column[i] ?? '')), blankRows)
       .join('\n');
   }
 
