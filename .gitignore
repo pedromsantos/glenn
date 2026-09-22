@@ -35,3 +35,6 @@ dist
 coverage-ts
 .turbo/cookies
 .turbo/daemon
+
+# reviewer response cache (pedromsantos/refine-code); safe to delete
+.reviewer-cache/

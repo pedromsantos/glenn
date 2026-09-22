@@ -1,0 +1,29 @@
+# Design / test-quality review of each pull request with pedromsantos/refine-code
+# (private action shared with this owner's repositories). Gated on NEW,
+# non-borderline findings at warn+ against reviewer-baseline.json — refresh
+# that file from master with `reviewer . --baseline-write reviewer-baseline.json`
+# when master's findings change.
+name: Review
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    # Forks don't receive secrets; skip rather than fail their PRs.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # diff mode needs the base branch's history
+      - uses: pedromsantos/refine-code@v0.2.0
+        with:
+          typesafe-api-key: ${{ secrets.TYPESAFE_API_KEY }}
+          fail-on: warn
+          baseline: reviewer-baseline.json
+          fail-on-new: "true"
