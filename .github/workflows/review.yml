@@ -1,8 +1,11 @@
-# Design / test-quality review of each pull request with pedromsantos/refine-code
-# (private action shared with this owner's repositories). Gated on NEW,
-# non-borderline findings at warn+ against reviewer-baseline.json — refresh
-# that file from master with `reviewer . --baseline-write reviewer-baseline.json`
-# when master's findings change.
+# Design / test-quality review of each pull request with
+# pedromsantos/refine-code. That repository is private and this one is
+# public, so GitHub won't let us `uses:` its action here; instead the CLI
+# is installed from git with a read-only token (secret REFINE_CODE_TOKEN,
+# a fine-grained PAT with Contents: read on refine-code) and the action's
+# steps are inlined below. Gated on NEW, non-borderline findings at warn+
+# against reviewer-baseline.json — refresh that file from master with
+# `reviewer . --baseline-write reviewer-baseline.json` when master changes.
 name: Review
 
 on:
@@ -11,6 +14,9 @@ on:
 permissions:
   contents: read
   pull-requests: write
+
+env:
+  REVIEWER_REF: v0.2.0
 
 jobs:
   review:
@@ -21,9 +27,88 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # diff mode needs the base branch's history
-      - uses: pedromsantos/refine-code@v0.2.0
+
+      - uses: astral-sh/setup-uv@v3
+
+      - name: Install reviewer from the private repository
+        env:
+          REFINE_CODE_TOKEN: ${{ secrets.REFINE_CODE_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "$REFINE_CODE_TOKEN" ]; then
+            echo "::error::REFINE_CODE_TOKEN secret is not set (fine-grained PAT, Contents: read on pedromsantos/refine-code)"; exit 2
+          fi
+          # Credential goes into git's URL rewriting, never onto a command line.
+          git config --global url."https://x-access-token:${REFINE_CODE_TOKEN}@github.com/".insteadOf "https://github.com/"
+          uv tool install --python 3.14 "git+https://github.com/pedromsantos/refine-code@${REVIEWER_REF}"
+          git config --global --unset url."https://x-access-token:${REFINE_CODE_TOKEN}@github.com/".insteadOf
+          reviewer --help >/dev/null
+
+      - name: Restore response cache
+        uses: actions/cache/restore@v4
         with:
-          typesafe-api-key: ${{ secrets.TYPESAFE_API_KEY }}
-          fail-on: warn
-          baseline: reviewer-baseline.json
-          fail-on-new: "true"
+          path: .reviewer-cache
+          key: reviewer-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: reviewer-${{ runner.os }}-
+
+      - name: Review
+        id: review
+        env:
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -uo pipefail
+          args=(--changed-since "$BASE_SHA" --baseline reviewer-baseline.json --fail-on-new --fail-on warn)
+          out="$RUNNER_TEMP/reviewer"; mkdir -p "$out"
+          set +e
+          reviewer . "${args[@]}" --format json --output "$out/review.json"
+          code=$?
+          set -e
+          reviewer . "${args[@]}" --fail-on none --format markdown --output "$out/review.md"
+          echo "exit-code=$code" >> "$GITHUB_OUTPUT"
+          echo "report=$out/review.md" >> "$GITHUB_OUTPUT"
+          echo "json=$out/review.json" >> "$GITHUB_OUTPUT"
+
+      - name: Save response cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .reviewer-cache
+          key: reviewer-${{ runner.os }}-${{ github.run_id }}
+
+      - name: Comment on the pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPORT: ${{ steps.review.outputs.report }}
+          JSON: ${{ steps.review.outputs.json }}
+          CODE: ${{ steps.review.outputs.exit-code }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          marker='<!-- reviewer-report -->'
+          total=$(jq '.flags | length' "$JSON")
+          errors=$(jq '[.flags[] | select(.severity == "error")] | length' "$JSON")
+          if [ "$CODE" = "2" ]; then status="review incomplete (a check failed — see *-error flags)"
+          elif [ "$total" = "0" ]; then status="clean"
+          elif [ "$CODE" = "1" ]; then status="$total finding(s), $errors error(s) — new findings at or above fail-on: warn"
+          else status="$total finding(s), $errors error(s) — nothing new (fail-on-new)"; fi
+          body_file="$RUNNER_TEMP/reviewer/comment.md"
+          { echo "$marker"; echo "**reviewer** — $status"; echo; head -c 60000 "$REPORT"; } > "$body_file"
+          existing=$(gh api "repos/$REPO/issues/$PR/comments" --paginate --jq ".[] | select(.body | startswith(\"$marker\")) | .id" | head -n1)
+          if [ -n "$existing" ]; then gh api --method PATCH "repos/$REPO/issues/comments/$existing" -F body=@"$body_file" >/dev/null
+          else gh api --method POST "repos/$REPO/issues/$PR/comments" -F body=@"$body_file" >/dev/null; fi
+
+      - name: Upload reports as an artifact
+        if: always() && steps.review.outputs.report != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: reviewer-report
+          path: ${{ runner.temp }}/reviewer/review.*
+          if-no-files-found: ignore
+
+      - name: Fail on new findings
+        if: steps.review.outputs.exit-code != '0'
+        env:
+          CODE: ${{ steps.review.outputs.exit-code }}
+        run: exit "$CODE"
