@@ -416,4 +416,27 @@ describe('Melodic line', () => {
       ],
     });
   });
+
+  test('retrograde reverses the order of the notes', () => {
+    const phrase = new MelodicLine([
+      new Note(Pitch.C, Duration.Quarter, Octave.C1),
+      new Note(Pitch.E, Duration.Quarter, Octave.C1),
+      new Note(Pitch.G, Duration.Quarter, Octave.C1),
+    ]);
+
+    const retrograde = phrase.retrograde();
+
+    expect(retrograde.pitches()).toStrictEqual([Pitch.G, Pitch.E, Pitch.C]);
+  });
+
+  test('retrograde does not mutate the original line', () => {
+    const phrase = new MelodicLine([
+      new Note(Pitch.C, Duration.Quarter, Octave.C1),
+      new Note(Pitch.E, Duration.Quarter, Octave.C1),
+    ]);
+
+    phrase.retrograde();
+
+    expect(phrase.pitches()).toStrictEqual([Pitch.C, Pitch.E]);
+  });
 });

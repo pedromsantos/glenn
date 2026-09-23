@@ -339,6 +339,10 @@ export class MelodicLine implements Iterable<Note> {
     return new MelodicLine(this.phrase.map((n) => n.octaveDown()).concat(this.phrase));
   }
 
+  retrograde(): MelodicLine {
+    return new MelodicLine([...this.phrase].reverse());
+  }
+
   lastOctave() {
     const last = this.phrase[this.phrase.length - 1];
 
