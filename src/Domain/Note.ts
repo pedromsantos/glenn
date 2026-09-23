@@ -335,6 +335,10 @@ export class MelodicLine implements Iterable<Note> {
     return new MelodicLine(this.phrase.concat(this.phrase.map((n) => n.octaveUp())));
   }
 
+  transpose(interval: Interval): MelodicLine {
+    return new MelodicLine(this.phrase.map((n) => n.transpose(interval)));
+  }
+
   prependOctaveDown() {
     return new MelodicLine(this.phrase.map((n) => n.octaveDown()).concat(this.phrase));
   }

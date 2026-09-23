@@ -416,4 +416,24 @@ describe('Melodic line', () => {
       ],
     });
   });
+
+  test('transpose every note in the line by the same interval', () => {
+    const phrase = new MelodicLine([
+      new Note(Pitch.C, Duration.Quarter, Octave.C1),
+      new Note(Pitch.E, Duration.Quarter, Octave.C1),
+      new Note(Pitch.G, Duration.Quarter, Octave.C1),
+    ]);
+
+    const transposed = phrase.transpose(Interval.MajorSecond);
+
+    expect(transposed.pitches()).toStrictEqual([Pitch.D, Pitch.FSharp, Pitch.A]);
+  });
+
+  test('transpose does not mutate the original line', () => {
+    const phrase = new MelodicLine([new Note(Pitch.C, Duration.Quarter, Octave.C1)]);
+
+    phrase.transpose(Interval.MajorSecond);
+
+    expect(phrase.pitches()).toStrictEqual([Pitch.C]);
+  });
 });
