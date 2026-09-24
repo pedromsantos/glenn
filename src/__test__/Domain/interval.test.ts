@@ -104,6 +104,33 @@ describe('Interval', () => {
       );
     });
 
+    test('Diminished unison smaller than other intervals', () => {
+      fc.assert(
+        fc.property(fc.constantFrom(...Interval.intervals), (interval: Interval) => {
+          const smallerInterval = Interval.DiminishedUnison;
+
+          if (interval === Interval.DiminishedUnison) {
+            expect(smallerInterval.isSmallerThan(interval)).toBeFalsy();
+            return;
+          }
+
+          expect(smallerInterval.isSmallerThan(interval)).toBeTruthy();
+        })
+      );
+    });
+
+    test('isSmallerThan is the inverse of isLargarThan for distinct distances', () => {
+      fc.assert(
+        fc.property(
+          fc.constantFrom(...Interval.intervals),
+          fc.constantFrom(...Interval.intervals),
+          (a: Interval, b: Interval) => {
+            expect(a.isSmallerThan(b)).toBe(b.isLargarThan(a));
+          }
+        )
+      );
+    });
+
     test('Inverting an interval twice results in starting interval', () => {
       fc.assert(
         fc.property(fc.constantFrom(...Interval.intervals), (interval: Interval) => {
