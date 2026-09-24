@@ -3,9 +3,19 @@ import * as fc from 'fast-check';
 import { ChordPattern } from '../../Domain/Chord';
 import { Duration } from '../../Domain/Duration';
 import { Note, Octave } from '../../Domain/Note';
-import { Pitch } from '../../Domain/Pitch';
+import { Pitch, PitchLineDirection } from '../../Domain/Pitch';
 import { ScaleDegree, ScalePattern, SeventhHarmonizer, TriadHarmonizer } from '../../Domain/Scale';
 import { convertPitchesToDistances } from '../utils';
+
+const allScaleDegrees = [
+  ScaleDegree.I,
+  ScaleDegree.II,
+  ScaleDegree.III,
+  ScaleDegree.IV,
+  ScaleDegree.V,
+  ScaleDegree.VI,
+  ScaleDegree.VII,
+];
 
 describe('Scale properties', () => {
   test('Converting to thirds', () => {
@@ -140,6 +150,66 @@ describe('Scale properties', () => {
         }
       ),
       { verbose: false }
+    );
+  });
+});
+
+describe('Scale up and down', () => {
+  test('C Ionian up from I to V is C, D, E, F, G', () => {
+    const scale = ScalePattern.Ionian.createScale(Pitch.C);
+
+    expect([...scale.up(ScaleDegree.I, ScaleDegree.V)]).toStrictEqual([
+      Pitch.C,
+      Pitch.D,
+      Pitch.E,
+      Pitch.F,
+      Pitch.G,
+    ]);
+  });
+
+  test('C Ionian up from VI to II wraps around the octave', () => {
+    const scale = ScalePattern.Ionian.createScale(Pitch.C);
+
+    expect([...scale.up(ScaleDegree.VI, ScaleDegree.II)]).toStrictEqual([
+      Pitch.A,
+      Pitch.B,
+      Pitch.C,
+      Pitch.D,
+    ]);
+  });
+
+  test('up has direction Ascending', () => {
+    const scale = ScalePattern.Ionian.createScale(Pitch.C);
+
+    expect(scale.up(ScaleDegree.I, ScaleDegree.V).Direction).toBe(PitchLineDirection.Ascending);
+  });
+
+  test('down has direction Descending', () => {
+    const scale = ScalePattern.Ionian.createScale(Pitch.C);
+
+    expect(scale.down(ScaleDegree.V, ScaleDegree.I).Direction).toBe(
+      PitchLineDirection.Descending
+    );
+  });
+
+  test('up from a to b is the reverse of down from b to a', () => {
+    const distinctDegreePairs = allScaleDegrees.flatMap((from) =>
+      allScaleDegrees.filter((to) => to !== from).map((to) => [from, to] as const)
+    );
+
+    fc.assert(
+      fc.property(
+        fc.constantFrom(...distinctDegreePairs),
+        ([from, to]: readonly [ScaleDegree, ScaleDegree]) => {
+          const scale = ScalePattern.Ionian.createScale(Pitch.C);
+
+          const ascending = [...scale.up(from, to)];
+          const descending = [...scale.down(to, from)];
+
+          expect(descending).toStrictEqual([...ascending].reverse());
+        }
+      ),
+      { verbose: true }
     );
   });
 });
