@@ -334,6 +334,10 @@ export class Interval {
     return this.distance > other.distance;
   }
 
+  isSmallerThan(other: Interval): boolean {
+    return this.distance < other.distance;
+  }
+
   public static get intervals(): Interval[] {
     return Interval.all;
   }
