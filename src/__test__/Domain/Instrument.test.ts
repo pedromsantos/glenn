@@ -7,24 +7,26 @@ import { Pitch } from '../../Domain/Pitch';
 
 describe('Voice', () => {
   describe('Bass range (E2 to E4)', () => {
-    test('Min is in range', () => {
-      expect(Voice.Bass.isInRange(Voice.Bass.Min)).toBeTruthy();
-    });
-
-    test('Max is in range', () => {
-      expect(Voice.Bass.isInRange(Voice.Bass.Max)).toBeTruthy();
-    });
-
-    test('a note between Min and Max is in range', () => {
-      expect(Voice.Bass.isInRange(new Note(Pitch.C, Duration.Whole, Octave.C3))).toBeTruthy();
-    });
-
-    test('a note below Min is not in range', () => {
-      expect(Voice.Bass.isInRange(new Note(Pitch.C, Duration.Whole, Octave.C1))).toBeFalsy();
-    });
-
-    test('a note above Max is not in range', () => {
-      expect(Voice.Bass.isInRange(new Note(Pitch.C, Duration.Whole, Octave.C6))).toBeFalsy();
+    test.each([
+      { scenario: 'Min', note: Voice.Bass.Min, inRange: true },
+      { scenario: 'Max', note: Voice.Bass.Max, inRange: true },
+      {
+        scenario: 'a note between Min and Max',
+        note: new Note(Pitch.C, Duration.Whole, Octave.C3),
+        inRange: true,
+      },
+      {
+        scenario: 'a note below Min',
+        note: new Note(Pitch.C, Duration.Whole, Octave.C1),
+        inRange: false,
+      },
+      {
+        scenario: 'a note above Max',
+        note: new Note(Pitch.C, Duration.Whole, Octave.C6),
+        inRange: false,
+      },
+    ])('$scenario is in range: $inRange', ({ note, inRange }) => {
+      expect(Voice.Bass.isInRange(note)).toBe(inRange);
     });
   });
 
