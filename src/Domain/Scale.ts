@@ -468,3 +468,5 @@ export class SeventhHarmonizer implements ScaleHarmonizer {
     );
   }
 }
+
+// Verification touch for reviewer-app slice 02 live check (2026-09-25) -- no behavior change, safe to revert.
