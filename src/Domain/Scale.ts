@@ -476,3 +476,5 @@ export class SeventhHarmonizer implements ScaleHarmonizer {
 // Verification touch 3.
 
 // Verification touch 4 -- this head should win.
+
+// Verification touch 5.
