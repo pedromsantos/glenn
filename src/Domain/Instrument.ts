@@ -1,4 +1,5 @@
 import { Duration } from './Duration';
+import ensure from './Ensure';
 import { Note, Octave } from './Note';
 import { Pitch } from './Pitch';
 
@@ -18,6 +19,14 @@ export class Voice {
 
   get Max() {
     return this.maxRange;
+  }
+
+  isInRange(note: Note): boolean {
+    const midiNumber = ensure(note.MidiNumbers.pop(), 'Note has no midi number');
+    const minMidiNumber = ensure(this.minRange.MidiNumbers.pop(), 'Voice has no minimum midi number');
+    const maxMidiNumber = ensure(this.maxRange.MidiNumbers.pop(), 'Voice has no maximum midi number');
+
+    return midiNumber >= minMidiNumber && midiNumber <= maxMidiNumber;
   }
 
   public static readonly Bass: Voice = new Voice(

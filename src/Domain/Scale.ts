@@ -368,6 +368,17 @@ export class Scale implements Iterable<Pitch> {
     return new PitchLine(line1.concat(line2), PitchLineDirection.Descending);
   }
 
+  up(from: ScaleDegree, to: ScaleDegree) {
+    if (from <= to) {
+      const line = this.pitches.slice(from, to + 1);
+      return new PitchLine(line, PitchLineDirection.Ascending);
+    }
+
+    const line1 = this.pitches.slice(from);
+    const line2 = this.pitches.slice(0, to + 1);
+    return new PitchLine(line1.concat(line2), PitchLineDirection.Ascending);
+  }
+
   melodicLine(duration: Duration, octave: Octave) {
     return new MelodicLine(
       this.pitches.map(
