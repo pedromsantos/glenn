@@ -1,4 +1,6 @@
 import { KeyPrimitives } from '../primitives/Key';
+import { throwExpression } from './Ensure';
+import { Interval } from './Interval';
 import { Pitch } from './Pitch';
 
 enum KeyType {
@@ -46,6 +48,24 @@ export class Key implements Iterable<Pitch> {
 
   public get Abbreviation() {
     return this.type === KeyType.Major ? this.root.Name : this.root.Name + 'm';
+  }
+
+  public relativeKey(): Key {
+    if (this.type === KeyType.Major) {
+      const relativeRoot = this.root.transpose(Interval.MajorSixth);
+
+      return (
+        Key.minorKeys.find((k) => k.root.equal(relativeRoot)) ??
+        throwExpression(`No relative minor key found for ${this.Abbreviation}`)
+      );
+    }
+
+    const relativeRoot = this.root.transpose(Interval.MinorThird);
+
+    return (
+      Key.majorKeys.find((k) => k.root.equal(relativeRoot)) ??
+      throwExpression(`No relative major key found for ${this.Abbreviation}`)
+    );
   }
 
   private flatKey(fifths: Pitch[]): Pitch[] {

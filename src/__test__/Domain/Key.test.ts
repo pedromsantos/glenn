@@ -42,6 +42,43 @@ describe('Major keys', () => {
   });
 });
 
+describe('relative keys', () => {
+  test('C major relative minor is A minor', () => {
+    expect(Key.CMajor.relativeKey()).toBe(Key.AMinor);
+  });
+
+  test('G major relative minor is E minor', () => {
+    expect(Key.GMajor.relativeKey()).toBe(Key.EMinor);
+  });
+
+  test('D flat major relative minor is B flat minor', () => {
+    expect(Key.DFlatMajor.relativeKey()).toBe(Key.BFlatMinor);
+  });
+
+  test('A minor relative major is C major', () => {
+    expect(Key.AMinor.relativeKey()).toBe(Key.CMajor);
+  });
+
+  test('E minor relative major is G major', () => {
+    expect(Key.EMinor.relativeKey()).toBe(Key.GMajor);
+  });
+
+  test('relative key shares the same key signature', () => {
+    fc.assert(
+      fc.property(fc.constantFrom(...Key.majorKeys), (key: Key) => {
+        const numericValuesOf = (k: Key) =>
+          Array.from(k)
+            .map((p) => p.NumericValue)
+            .sort((a, b) => a - b);
+
+        expect(numericValuesOf(key.relativeKey())).toStrictEqual(numericValuesOf(key));
+      }),
+      { verbose: true }
+    );
+  });
+
+});
+
 describe('properties', () => {
   test('Keys are 7 notes', () => {
     fc.assert(
