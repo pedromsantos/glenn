@@ -53,7 +53,7 @@
     "build": "tsup",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "types": "type-coverage -at-least 99",
+    "types": "type-coverage -p tsconfig.src.json -at-least 99",
     "prepare": "husky",
     "clean": "rm -rf .cache .tmp .turbo coverage coverage-ts dist reports"
   },
